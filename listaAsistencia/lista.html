@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Asistencia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0f1117;
+    --surface:   #191c27;
+    --surface2:  #1f2333;
+    --border:    #2a2f45;
+    --accent:    #4f6ef7;
+    --accent2:   #7c3aed;
+    --green:     #22c55e;
+    --red:       #ef4444;
+    --yellow:    #f59e0b;
+    --text:      #e8eaf0;
+    --muted:     #6b7280;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'Inter', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left h1 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .header-left span {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+  .stats-bar {
+    display: flex;
+    gap: 20px;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .stat-num.present { color: var(--green); }
+  .stat-num.absent  { color: var(--red); }
+  .stat-num.total   { color: var(--accent); }
+  .stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 2px;
+  }
+
+  /* ── Tabs ── */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    padding: 16px 28px 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .tab {
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    border: 1px solid transparent;
+    border-bottom: none;
+    background: transparent;
+    transition: all .15s;
+  }
+  .tab.active {
+    color: var(--text);
+    background: var(--bg);
+    border-color: var(--border);
+    border-bottom-color: var(--bg);
+    margin-bottom: -1px;
+  }
+  .tab:hover:not(.active) { color: var(--text); }
+
+  /* ── Main ── */
+  main { padding: 24px 28px; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── Toolbar ── */
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn {
+    padding: 7px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .15s;
+    font-family: var(--sans);
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .btn-primary:hover { opacity: .85; }
+  .btn-ghost {
+    background: var(--surface2);
+    color: var(--text);
+  }
+  .btn-ghost:hover { border-color: var(--accent); }
+  .btn-danger {
+    background: transparent;
+    color: var(--red);
+    border-color: var(--red);
+  }
+  .btn-danger:hover { background: var(--red); color: #fff; }
+
+  /* ── Student Grid ── */
+  .students-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 12px;
+  }
+
+  .student-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 12px 12px;
+    cursor: pointer;
+    transition: border-color .15s, transform .1s;
+    text-align: center;
+    position: relative;
+    user-select: none;
+  }
+  .student-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .student-card.present { border-color: var(--green); }
+  .student-card.absent  { border-color: var(--red); }
+
+  .student-card .status-dot {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .student-card.present .status-dot { background: var(--green); }
+  .student-card.absent  .status-dot { background: var(--red); }
+
+  .student-photo {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    margin: 0 auto 10px;
+    display: block;
+    background: var(--surface2);
+  }
+  .student-card.present .student-photo { border-color: var(--green); }
+  .student-card.absent  .student-photo { border-color: var(--red); }
+
+  .student-name {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .student-ctrl {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .student-team-badge {
+    margin-top: 6px;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── Teams View ── */
+  .teams-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .teams-controls label {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .teams-controls input[type=number] {
+    width: 64px;
+    padding: 7px 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: var(--mono);
+  }
+  .teams-controls input[type=number]:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .team-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .team-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .team-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .team-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .team-members {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 60px;
+  }
+  .team-members.drag-over {
+    background: rgba(79,110,247,.08);
+    border-radius: 8px;
+  }
+
+  .member-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    background: var(--surface2);
+    border-radius: 8px;
+    cursor: grab;
+    transition: background .12s;
+    border: 1px solid transparent;
+  }
+  .member-row:hover { border-color: var(--border); }
+  .member-row.dragging { opacity: .4; }
+
+  .member-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .member-info { flex: 1; min-width: 0; }
+  .member-name {
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .member-ctrl {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .drag-handle {
+    color: var(--muted);
+    font-size: 14px;
+    cursor: grab;
+  }
+
+  /* Unassigned pool */
+  .unassigned-section { margin-bottom: 20px; }
+  .unassigned-section h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding-left: 4px;
+  }
+  .unassigned-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 50px;
+    padding: 10px;
+    background: var(--surface);
+    border-radius: 10px;
+    border: 1px dashed var(--border);
+  }
+  .unassigned-pool.drag-over { border-color: var(--accent); background: rgba(79,110,247,.05); }
+
+  .unassigned-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px 5px 6px;
+    background: var(--surface2);
+    border-radius: 20px;
+    cursor: grab;
+    border: 1px solid var(--border);
+    transition: border-color .12s;
+  }
+  .unassigned-chip:hover { border-color: var(--accent); }
+  .unassigned-chip img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--bg);
+  }
+  .unassigned-chip span {
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* ── Print view ── */
+  .print-section { max-width: 800px; }
+  .print-section h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .print-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .print-table th {
+    background: var(--surface2);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .print-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .print-table tr:hover td { background: var(--surface2); }
+  .print-table .tbl-photo {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .print-table .status-pill {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--mono);
+  }
+  .print-table .status-pill.present { background: rgba(34,197,94,.15); color: var(--green); }
+  .print-table .status-pill.absent  { background: rgba(239,68,68,.15);  color: var(--red); }
+  .print-table .status-pill.none    { background: var(--surface2); color: var(--muted); }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all .2s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ── Team colors ── */
+  .tc0 { background: rgba(79,110,247,.18); color: #7c9fff; }
+  .tc1 { background: rgba(124,58,237,.18); color: #b47fff; }
+  .tc2 { background: rgba(34,197,94,.18);  color: #4ade80; }
+  .tc3 { background: rgba(239,68,68,.18);  color: #f87171; }
+  .tc4 { background: rgba(245,158,11,.18); color: #fbbf24; }
+  .tc5 { background: rgba(6,182,212,.18);  color: #22d3ee; }
+  .tc6 { background: rgba(244,114,182,.18);color: #f9a8d4; }
+  .tc7 { background: rgba(16,185,129,.18); color: #34d399; }
+
+  .th0 { background: rgba(79,110,247,.15);  border-color: rgba(79,110,247,.4); }
+  .th1 { background: rgba(124,58,237,.15);  border-color: rgba(124,58,237,.4); }
+  .th2 { background: rgba(34,197,94,.15);   border-color: rgba(34,197,94,.4); }
+  .th3 { background: rgba(239,68,68,.15);   border-color: rgba(239,68,68,.4); }
+  .th4 { background: rgba(245,158,11,.15);  border-color: rgba(245,158,11,.4); }
+  .th5 { background: rgba(6,182,212,.15);   border-color: rgba(6,182,212,.4); }
+  .th6 { background: rgba(244,114,182,.15); border-color: rgba(244,114,182,.4); }
+  .th7 { background: rgba(16,185,129,.15);  border-color: rgba(16,185,129,.4); }
+
+  .tnc0 { color: #7c9fff; }
+  .tnc1 { color: #b47fff; }
+  .tnc2 { color: #4ade80; }
+  .tnc3 { color: #f87171; }
+  .tnc4 { color: #fbbf24; }
+  .tnc5 { color: #22d3ee; }
+  .tnc6 { color: #f9a8d4; }
+  .tnc7 { color: #34d399; }
+
+  /* ── Dashboard ── */
+  .dashboard-layout {
+    display: grid;
+    gap: 18px;
+  }
+
+  .dashboard-controls {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 14px;
+  }
+
+  .dashboard-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .dashboard-field label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .7px;
+  }
+
+  .dashboard-field input {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-family: var(--mono);
+  }
+
+  .dashboard-warning {
+    color: var(--yellow);
+    font-size: 12px;
+    display: none;
+  }
+
+  .dashboard-warning.show { display: block; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+
+  .kpi-card,
+  .dashboard-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+
+  .kpi-card h3 {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-bottom: 10px;
+  }
+
+  .kpi-value {
+    font-family: var(--mono);
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .kpi-value.green { color: var(--green); }
+  .kpi-value.red { color: var(--red); }
+  .kpi-value.yellow { color: var(--yellow); }
+  .kpi-value.blue { color: var(--accent); }
+
+  .dashboard-card h2 {
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 52px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .bar-track {
+    height: 10px;
+    background: var(--surface2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+  }
+
+  .dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .dashboard-table th {
+    background: var(--surface2);
+    color: var(--muted);
+    text-align: left;
+    padding: 10px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .7px;
+  }
+
+  .dashboard-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dashboard-table tr:hover td { background: var(--surface2); }
+
+  .dashboard-pill {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-family: var(--mono);
+    font-weight: 600;
+  }
+
+  .dashboard-pill.present {
+    background: rgba(34,197,94,.15);
+    color: var(--green);
+  }
+
+  .dashboard-pill.absent {
+    background: rgba(239,68,68,.15);
+    color: var(--red);
+  }
+
+  .dashboard-pill.none {
+    background: var(--surface2);
+    color: var(--muted);
+  }
+
+  @media (max-width: 600px) {
+    header { flex-direction: column; gap: 12px; align-items: flex-start; }
+    main { padding: 16px; }
+    .students-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    .tabs { padding: 12px 16px 0; }
+    .bar-row { grid-template-columns: 82px 1fr 44px; }
+  }
+
+  @media print {
+    header, .tabs, .toolbar, .teams-controls, #toast { display: none !important; }
+    body { background: #fff; color: #000; }
+    .print-table th { background: #f3f4f6; color: #374151; }
+    .print-table td { border-color: #e5e7eb; }
+    .print-table .status-pill.present { background: #dcfce7; color: #166534; }
+    .print-table .status-pill.absent  { background: #fee2e2; color: #991b1b; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Lista de Asistencia</h1>
+    <span id="dateDisplay"></span>
+  </div>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num total" id="statTotal">19</div><div class="stat-label">Total</div></div>
+    <div class="stat"><div class="stat-num present" id="statPresent">0</div><div class="stat-label">Presentes</div></div>
+    <div class="stat"><div class="stat-num absent" id="statAbsent">0</div><div class="stat-label">Ausentes</div></div>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" onclick="showView('lista')">📋 Lista</button>
+  <button class="tab" onclick="showView('equipos')">👥 Equipos</button>
+  <button class="tab" onclick="showView('reporte')">📊 Reporte</button>
+  <button class="tab" onclick="showView('dashboard')">📈 Dashboard</button>
+</div>
+
+<main>
+
+  <!-- ══ LISTA ══ -->
+  <div class="view active" id="view-lista">
+    <div class="toolbar">
+      <button class="btn btn-primary" onclick="addStudent()">➕ Agregar Alumno</button>
+      <button class="btn btn-primary" onclick="markAll('present')">✓ Todos presentes</button>
+      <button class="btn btn-ghost" onclick="markAll('absent')">✗ Todos ausentes</button>
+      <button class="btn btn-ghost" onclick="clearAll()">⟳ Limpiar</button>
+      <button class="btn btn-ghost" onclick="saveAttendance()">💾 Guardar</button>
+    </div>
+    <div class="students-grid" id="studentsGrid"></div>
+  </div>
+
+  <!-- ══ EQUIPOS ══ -->
+  <div class="view" id="view-equipos">
+    <div class="teams-controls">
+      <label for="numTeams">Número de equipos:</label>
+      <input type="number" id="numTeams" value="4" min="2" max="10">
+      <button class="btn btn-primary" onclick="generateTeams()">🎲 Generar aleatoriamente</button>
+      <button class="btn btn-ghost" onclick="generateTeams(true)">⚖️ Solo presentes</button>
+      <button class="btn btn-ghost" onclick="clearTeams()">🗑 Limpiar equipos</button>
+    </div>
+
+    <div class="unassigned-section">
+      <h3>Sin asignar</h3>
+      <div class="unassigned-pool" id="unassignedPool"
+           ondragover="dragOver(event)" ondrop="dropOnPool(event)" ondragleave="dragLeave(event)">
+      </div>
+    </div>
+
+    <div class="teams-grid" id="teamsGrid"></div>
+  </div>
+
+  <!-- ══ REPORTE ══ -->
+  <div class="view" id="view-reporte">
+    <div class="print-section">
+      <div class="toolbar">
+        <button class="btn btn-ghost" onclick="window.print()">🖨 Imprimir</button>
+        <button class="btn btn-ghost" onclick="exportCSV()">⬇ Exportar CSV</button>
+      </div>
+      <h2>Reporte de asistencia — <span id="reportDate"></span></h2>
+      <table class="print-table">
+        <thead>
+          <tr>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>No. Control</th>
+            <th>Equipo</th>
+            <th>Asistencia</th>
+          </tr>
+        </thead>
+        <tbody id="reportBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ DASHBOARD ══ -->
+  <div class="view" id="view-dashboard">
+    <div class="dashboard-layout">
+      <div class="dashboard-controls">
+        <div class="dashboard-field">
+          <label for="dashboardDate">Seleccionar día</label>
+          <input type="date" id="dashboardDate">
+        </div>
+        <button class="btn btn-primary" onclick="loadDashboardByDate()">Ver asistencia</button>
+        <button class="btn btn-ghost" onclick="setDashboardToday()">Hoy</button>
+        <button class="btn btn-ghost" onclick="exportDashboardCSV()">⬇ Exportar día</button>
+        <div class="dashboard-warning" id="dashboardWarning">Sábado y domingo no generan asistencia.</div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <h3>Total alumnos</h3>
+          <div class="kpi-value blue" id="dashTotal">0</div>
+        </div>
+        <div class="kpi-card">
+          <h3>Presentes</h3>
+          <div class="kpi-value green" id="dashPresent">0</div>
+        </div>
+        <div class="kpi-card">
+          <h3>Ausentes</h3>
+          <div class="kpi-value red" id="dashAbsent">0</div>
+        </div>
+        <div class="kpi-card">
+          <h3>Asistencia</h3>
+          <div class="kpi-value yellow" id="dashPercent">0%</div>
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <h2>Resumen semanal lunes a viernes</h2>
+        <div id="weeklyBars"></div>
+      </div>
+
+      <div class="dashboard-card">
+        <h2>Detalle del día seleccionado</h2>
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th>Alumno</th>
+              <th>No. Control</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="dashboardBody"></tbody>
+        </table>
+      </div>
+
+      <div class="dashboard-card">
+        <h2>Alumnos con más faltas registradas</h2>
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th>Alumno</th>
+              <th>No. Control</th>
+              <th>Faltas</th>
+            </tr>
+          </thead>
+          <tbody id="riskBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="toast"></div>
+
+<script>
+let STUDENTS = [
+  { name:"ANGUIANO TIRADO MARIANA ALEJANDRA",      ctrl:"22460261", photo:"photos/22460261.jpg" },
+  { name:"BASURTO SANDOVAL ESDRAS JOSUE",          ctrl:"21460490", photo:"photos/21460490.jpg" },
+  { name:"CASTELLANOS DEL TORO KARIM",             ctrl:"22460270", photo:"photos/22460270.jpg" },
+  { name:"CASTILLON RAMIREZ SEBASTIAN ALEJANDRO",  ctrl:"21460434", photo:"photos/21460434.jpg" },
+  { name:"CEDILLO SOLARES FRANCISCO JAVIER",       ctrl:"21460155", photo:"photos/21460155.jpg" },
+  { name:"CORTES CONTRERAS ADAN",                  ctrl:"22460277", photo:"photos/22460277.jpg" },
+  { name:"DOLORES ORTEGA RAUL HUMBERTO",           ctrl:"22460280", photo:"photos/22460280.jpg" },
+  { name:"EUSEBIO GARCIA BRANDON YAHIR",           ctrl:"22460282", photo:"photos/22460282.jpg" },
+  { name:"FLORES PRECIADO JESUS",                  ctrl:"21460442", photo:"photos/21460442.jpg" },
+  { name:"GAITAN JIMENEZ EUGENIO",                 ctrl:"21460198", photo:"photos/21460198.jpg" },
+  { name:"GOMEZ BRAMBILA LUIS ENRIQUE",            ctrl:"21460591", photo:"photos/21460591.jpg" },
+  { name:"GONZALEZ MEJIA DIEGO YAEL",              ctrl:"21460158", photo:"photos/21460158.jpg" },
+  { name:"GONZALEZ RALLAS ERICK RUBEN",            ctrl:"21460054", photo:"photos/21460054.jpg" },
+  { name:"GUTIERREZ SUAREZ AMANDA GUADALUPE",      ctrl:"22460293", photo:"photos/22460293.jpg" },
+  { name:"IBAÑEZ RAMIREZ EMMANUEL ALEXANDER",      ctrl:"21460488", photo:"photos/21460488.jpg" },
+  { name:"MAZA RIVERA DANIEL SANTIAGO",            ctrl:"21460681", photo:"photos/21460681.jpg" },
+  { name:"MURGUIA GALAN CRISTIAN EMMANUEL",        ctrl:"22460317", photo:"photos/22460317.jpg" },
+  { name:"POLANCO BARAJAS IVAN EDUARDO",           ctrl:"22460322", photo:"photos/22460322.jpg" },
+  { name:"VALENCIA GONZALEZ LUIS RAMON",           ctrl:"22460342", photo:"photos/22460342.jpg" }
+];
+
+const TEAM_NAMES = ["Alfa","Beta","Gamma","Delta","Épsilon","Zeta","Eta","Theta"];
+
+// State
+let attendance = {};  // ctrl -> 'present'|'absent'|null
+let teams = [];       // array of arrays of ctrl
+let unassigned = [];
+
+// Init
+STUDENTS.forEach(s => { attendance[s.ctrl] = null; });
+initStudentsFromJson();
+setTimeout(renderDashboard, 0);
+
+
+async function initStudentsFromJson() {
+  try {
+    const response = await fetch("students.json?cache=" + Date.now());
+
+    if (!response.ok) {
+      throw new Error("No se pudo leer students.json");
+    }
+
+    const jsonStudents = await response.json();
+
+    STUDENTS = jsonStudents.map(s => ({
+      name: s.name,
+      ctrl: s.ctrl || s.controlNumber,
+      photo: s.photo || s.photoUrl || ""
+    }));
+
+    document.getElementById('statTotal').textContent = STUDENTS.length;
+
+    localStorage.setItem("students_data", JSON.stringify(STUDENTS));
+
+    attendance = {};
+    STUDENTS.forEach(s => {
+      attendance[s.ctrl] = null;
+    });
+
+    loadSaved();
+    renderDate();
+    renderGrid();
+    renderReport();
+
+    if (typeof renderDashboard === "function") {
+      renderDashboard();
+    }
+
+    showToast("Alumnos cargados desde students.json");
+  } catch (error) {
+    console.error(error);
+
+    loadStudents();
+    loadSaved();
+    renderDate();
+    renderGrid();
+    renderReport();
+
+    showToast("No se pudo cargar students.json, usando datos locales");
+  }
+}
+
+
+/* ─── Dates ─── */
+function renderDate() {
+  const d = new Date();
+  const str = d.toLocaleDateString('es-MX', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  document.getElementById('dateDisplay').textContent = str;
+  document.getElementById('reportDate').textContent = str;
+}
+
+/* ─── Views ─── */
+function showView(v) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  event.target.classList.add('active');
+  if (v === 'reporte') renderReport();
+  if (v === 'equipos') renderTeamsView();
+  if (v === 'dashboard') renderDashboard();
+}
+
+/* ─── Grid ─── */
+function renderGrid() {
+  const grid = document.getElementById('studentsGrid');
+  grid.innerHTML = '';
+  STUDENTS.forEach(s => {
+    const st = attendance[s.ctrl];
+    const card = document.createElement('div');
+    card.className = 'student-card' + (st ? ' '+st : '');
+    card.dataset.ctrl = s.ctrl;
+
+    // Find team
+    let teamIdx = -1;
+    teams.forEach((t, i) => { if (t.includes(s.ctrl)) teamIdx = i; });
+
+    const badge = teamIdx >= 0
+      ? `<div class="student-team-badge tc${teamIdx % 8}">Equipo ${TEAM_NAMES[teamIdx % 8]}</div>`
+      : '';
+
+    card.innerHTML = `
+      <div class="status-dot"></div>
+      <img class="student-photo" src="${s.photo}" alt="${s.name}"
+           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 72 72%22><rect width=%2272%22 height=%2272%22 fill=%22%231f2333%22/><text x=%2236%22 y=%2244%22 text-anchor=%22middle%22 font-size=%2228%22 fill=%22%236b7280%22>👤</text></svg>'">
+      <div class="student-name">${s.name}</div>
+      <div class="student-ctrl">${s.ctrl}</div>
+      ${badge}
+    `;
+    card.addEventListener('click', () => toggleAttendance(s.ctrl));
+    grid.appendChild(card);
+  });
+  updateStats();
+}
+
+function toggleAttendance(ctrl) {
+  const cur = attendance[ctrl];
+  if (!cur)           attendance[ctrl] = 'present';
+  else if (cur === 'present') attendance[ctrl] = 'absent';
+  else                attendance[ctrl] = null;
+  renderGrid();
+  renderReport();
+  showToast(attendance[ctrl] === 'present' ? '✓ Presente' : attendance[ctrl] === 'absent' ? '✗ Ausente' : '— Sin marcar');
+}
+
+function markAll(status) {
+  STUDENTS.forEach(s => { attendance[s.ctrl] = status; });
+  renderGrid();
+  renderReport();
+}
+
+function clearAll() {
+  STUDENTS.forEach(s => { attendance[s.ctrl] = null; });
+  renderGrid();
+  renderReport();
+}
+
+function updateStats() {
+
+  document.getElementById('statTotal').textContent = STUDENTS.length;
+
+  let p = 0;
+  let a = 0;
+
+  STUDENTS.forEach(s => {
+    if (attendance[s.ctrl] === 'present') p++;
+    if (attendance[s.ctrl] === 'absent') a++;
+  });
+
+  document.getElementById('statPresent').textContent = p;
+  document.getElementById('statAbsent').textContent = a;
+}
+
+/* ─── Teams ─── */
+function generateTeams(onlyPresent = false) {
+  const n = parseInt(document.getElementById('numTeams').value) || 4;
+  let pool = onlyPresent
+    ? STUDENTS.filter(s => attendance[s.ctrl] === 'present').map(s => s.ctrl)
+    : STUDENTS.map(s => s.ctrl);
+
+  // Shuffle
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+
+  teams = Array.from({ length: n }, () => []);
+  pool.forEach((ctrl, i) => teams[i % n].push(ctrl));
+
+  unassigned = onlyPresent
+    ? STUDENTS.filter(s => attendance[s.ctrl] !== 'present').map(s => s.ctrl)
+    : [];
+
+  renderTeamsView();
+  renderGrid();
+  renderReport();
+  showToast(`${n} equipos generados 🎲`);
+}
+
+function clearTeams() {
+  teams = [];
+  unassigned = STUDENTS.map(s => s.ctrl);
+  renderTeamsView();
+  renderGrid();
+  renderReport();
+}
+
+function renderTeamsView() {
+  renderUnassigned();
+  const grid = document.getElementById('teamsGrid');
+  grid.innerHTML = '';
+
+  teams.forEach((members, ti) => {
+    const card = document.createElement('div');
+    card.className = 'team-card';
+    card.innerHTML = `
+      <div class="team-header th${ti % 8}">
+        <span class="team-name tnc${ti % 8}">Equipo ${TEAM_NAMES[ti % 8]}</span>
+        <span class="team-count">${members.length} integrantes</span>
+      </div>
+      <div class="team-members" id="team-${ti}"
+           ondragover="dragOver(event)" ondrop="dropOnTeam(event, ${ti})" ondragleave="dragLeave(event)">
+        ${members.map(ctrl => memberRowHTML(ctrl, ti)).join('')}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Add new team button
+  const addBtn = document.createElement('div');
+  addBtn.style.cssText = 'display:flex;align-items:center;justify-content:center;';
+  addBtn.innerHTML = `<button class="btn btn-ghost" style="height:100%;min-height:80px;width:100%;" onclick="addTeam()">+ Agregar equipo</button>`;
+  grid.appendChild(addBtn);
+
+  setupDrag();
+}
+
+function renderUnassigned() {
+  const pool = document.getElementById('unassignedPool');
+  if (!unassigned.length && teams.length > 0) {
+    pool.innerHTML = '<span style="color:var(--muted);font-size:12px;padding:4px 8px;">Todos asignados ✓</span>';
+    return;
+  }
+  if (!unassigned.length) {
+    unassigned = STUDENTS.map(s => s.ctrl);
+  }
+  pool.innerHTML = unassigned.map(ctrl => {
+    const s = STUDENTS.find(x => x.ctrl === ctrl);
+    if (!s) return '';
+    return `<div class="unassigned-chip" draggable="true" data-ctrl="${ctrl}">
+      <img src="${s.photo}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 fill=%22%231f2333%22/><text x=%2212%22 y=%2217%22 text-anchor=%22middle%22 font-size=%2214%22 fill=%22%236b7280%22>👤</text></svg>'">
+      <span>${s.name.split(' ')[0]} ${s.name.split(' ')[1]}</span>
+    </div>`;
+  }).join('');
+  setupDrag();
+}
+
+function memberRowHTML(ctrl, ti) {
+  const s = STUDENTS.find(x => x.ctrl === ctrl);
+  if (!s) return '';
+  return `<div class="member-row" draggable="true" data-ctrl="${ctrl}" data-team="${ti}">
+    <span class="drag-handle">⠿</span>
+    <img class="member-photo" src="${s.photo}" alt="" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 fill=%22%231f2333%22/><text x=%2216%22 y=%2222%22 text-anchor=%22middle%22 font-size=%2218%22 fill=%22%236b7280%22>👤</text></svg>'">
+    <div class="member-info">
+      <div class="member-name">${s.name}</div>
+      <div class="member-ctrl">${s.ctrl}</div>
+    </div>
+  </div>`;
+}
+
+function addTeam() {
+  teams.push([]);
+  renderTeamsView();
+}
+
+/* ─── Drag & Drop ─── */
+let dragCtrl = null;
+let dragSource = null; // 'pool' | team index
+
+function setupDrag() {
+  document.querySelectorAll('[draggable=true][data-ctrl]').forEach(el => {
+    el.addEventListener('dragstart', e => {
+      dragCtrl = el.dataset.ctrl;
+      dragSource = el.dataset.team !== undefined ? parseInt(el.dataset.team) : 'pool';
+      el.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    el.addEventListener('dragend', () => el.classList.remove('dragging'));
+  });
+}
+
+function dragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+function dragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+
+function dropOnTeam(e, ti) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragCtrl) return;
+  removeFromAll(dragCtrl);
+  teams[ti].push(dragCtrl);
+  dragCtrl = null;
+  renderTeamsView();
+  renderGrid();
+  renderReport();
+}
+
+function dropOnPool(e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragCtrl) return;
+  removeFromAll(dragCtrl);
+  if (!unassigned.includes(dragCtrl)) unassigned.push(dragCtrl);
+  dragCtrl = null;
+  renderTeamsView();
+  renderGrid();
+  renderReport();
+}
+
+function removeFromAll(ctrl) {
+  teams.forEach(t => {
+    const idx = t.indexOf(ctrl);
+    if (idx >= 0) t.splice(idx, 1);
+  });
+  const ui = unassigned.indexOf(ctrl);
+  if (ui >= 0) unassigned.splice(ui, 1);
+}
+
+/* ─── Report ─── */
+function renderReport() {
+  const tbody = document.getElementById('reportBody');
+  tbody.innerHTML = STUDENTS.map(s => {
+    const st = attendance[s.ctrl];
+    let teamIdx = -1;
+    teams.forEach((t, i) => { if (t.includes(s.ctrl)) teamIdx = i; });
+    const teamLabel = teamIdx >= 0
+      ? `<span class="student-team-badge tc${teamIdx % 8}" style="font-size:11px;">Equipo ${TEAM_NAMES[teamIdx % 8]}</span>`
+      : '—';
+    const pillClass = st === 'present' ? 'present' : st === 'absent' ? 'absent' : 'none';
+    const pillLabel = st === 'present' ? 'Presente' : st === 'absent' ? 'Ausente' : '—';
+    return `<tr>
+      <td><img class="tbl-photo" src="${s.photo}" alt=""
+          onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 36 36%22><rect width=%2236%22 height=%2236%22 fill=%22%231f2333%22/><text x=%2218%22 y=%2225%22 text-anchor=%22middle%22 font-size=%2220%22 fill=%22%236b7280%22>👤</text></svg>'"></td>
+      <td>${s.name}</td>
+      <td style="font-family:var(--mono);font-size:12px;">${s.ctrl}</td>
+      <td>${teamLabel}</td>
+      <td><span class="status-pill ${pillClass}">${pillLabel}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+/* ─── Save / Load ─── */
+function getDateKey(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function isWeekendDate(dateStr) {
+  const date = new Date(dateStr + 'T12:00:00');
+  const day = date.getDay();
+  return day === 0 || day === 6;
+}
+
+function saveAttendance() {
+  const key = getDateKey();
+  if (isWeekendDate(key)) {
+    showToast('Sábado y domingo no generan asistencia');
+    return;
+  }
+
+  const data = { attendance, teams, unassigned, date: new Date().toISOString() };
+  try {
+    localStorage.setItem('attendance_data', JSON.stringify(data));
+    localStorage.setItem('attendance_history_' + key, JSON.stringify(data));
+    showToast('💾 Guardado correctamente');
+    renderDashboard();
+  } catch(e) { showToast('Error al guardar'); }
+}
+
+function loadSaved() {
+  try {
+    const raw = localStorage.getItem('attendance_data');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data.attendance) attendance = data.attendance;
+    if (data.teams) teams = data.teams;
+    if (data.unassigned) unassigned = data.unassigned;
+  } catch(e) {}
+}
+
+/* ─── Export CSV ─── */
+function exportCSV() {
+  const rows = [['Nombre','No. Control','Equipo','Asistencia']];
+  STUDENTS.forEach(s => {
+    let teamIdx = -1;
+    teams.forEach((t, i) => { if (t.includes(s.ctrl)) teamIdx = i; });
+    const team = teamIdx >= 0 ? `Equipo ${TEAM_NAMES[teamIdx % 8]}` : '';
+    const st = attendance[s.ctrl] || '';
+    const label = st === 'present' ? 'Presente' : st === 'absent' ? 'Ausente' : '';
+    rows.push([s.name, s.ctrl, team, label]);
+  });
+  const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv);
+  a.download = `asistencia_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showToast('📥 CSV descargado');
+}
+
+/* ─── Dashboard ─── */
+function getAttendanceRecord(dateStr) {
+  try {
+    const raw = localStorage.getItem('attendance_history_' + dateStr);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) {
+    return null;
+  }
+}
+
+function setDashboardToday() {
+  const input = document.getElementById('dashboardDate');
+  if (!input) return;
+  input.value = getDateKey();
+  loadDashboardByDate();
+}
+
+function loadDashboardByDate() {
+  renderDashboard();
+}
+
+function getWeekDates(dateStr) {
+  const selected = new Date(dateStr + 'T12:00:00');
+  const day = selected.getDay();
+  const diffToMonday = day === 0 ? -6 : 1 - day;
+  const monday = new Date(selected);
+  monday.setDate(selected.getDate() + diffToMonday);
+
+  return Array.from({ length: 5 }, (_, i) => {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    return getDateKey(d);
+  });
+}
+
+function renderDashboard() {
+  const input = document.getElementById('dashboardDate');
+  if (!input) return;
+
+  if (!input.value) input.value = getDateKey();
+
+  const dateStr = input.value;
+  const warning = document.getElementById('dashboardWarning');
+  const weekend = isWeekendDate(dateStr);
+
+  if (warning) warning.classList.toggle('show', weekend);
+
+  const record = weekend ? null : getAttendanceRecord(dateStr);
+  const selectedAttendance = record?.attendance || {};
+
+  const total = STUDENTS.length;
+  let present = 0;
+  let absent = 0;
+
+  STUDENTS.forEach(s => {
+    const status = selectedAttendance[s.ctrl];
+    if (status === 'present') present++;
+    else if (status === 'absent') absent++;
+  });
+
+  const percent = total ? Math.round((present / total) * 100) : 0;
+
+  document.getElementById('dashTotal').textContent = total;
+  document.getElementById('dashPresent').textContent = present;
+  document.getElementById('dashAbsent').textContent = absent;
+  document.getElementById('dashPercent').textContent = percent + '%';
+
+  renderDashboardTable(selectedAttendance, weekend);
+  renderWeeklyBars(dateStr);
+  renderRiskTable();
+}
+
+function renderDashboardTable(selectedAttendance, weekend) {
+  const tbody = document.getElementById('dashboardBody');
+  if (!tbody) return;
+
+  if (weekend) {
+    tbody.innerHTML = '<tr><td colspan="3">No se generan asistencias en sábado o domingo.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = STUDENTS.map(s => {
+    const status = selectedAttendance[s.ctrl] || '';
+    const label = status === 'present' ? 'Presente' : status === 'absent' ? 'Ausente' : 'Sin marcar';
+    const cls = status === 'present' ? 'present' : status === 'absent' ? 'absent' : 'none';
+
+    return `<tr>
+      <td>${s.name}</td>
+      <td style="font-family:var(--mono);">${s.ctrl}</td>
+      <td><span class="dashboard-pill ${cls}">${label}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderWeeklyBars(dateStr) {
+  const container = document.getElementById('weeklyBars');
+  if (!container) return;
+
+  const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+  const dates = getWeekDates(dateStr);
+
+  container.innerHTML = dates.map((date, index) => {
+    const record = getAttendanceRecord(date);
+    const att = record?.attendance || {};
+    const present = STUDENTS.filter(s => att[s.ctrl] === 'present').length;
+    const percent = STUDENTS.length ? Math.round((present / STUDENTS.length) * 100) : 0;
+
+    return `<div class="bar-row">
+      <strong>${days[index]}</strong>
+      <div class="bar-track"><div class="bar-fill" style="width:${percent}%"></div></div>
+      <span>${percent}%</span>
+    </div>`;
+  }).join('');
+}
+
+function renderRiskTable() {
+  const tbody = document.getElementById('riskBody');
+  if (!tbody) return;
+
+  const absenceCount = STUDENTS.map(s => {
+    let absences = 0;
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key || !key.startsWith('attendance_history_')) continue;
+
+      try {
+        const record = JSON.parse(localStorage.getItem(key));
+        if (record?.attendance?.[s.ctrl] === 'absent') absences++;
+      } catch(e) {}
+    }
+
+    return { student: s, absences };
+  })
+  .sort((a, b) => b.absences - a.absences)
+  .slice(0, 8);
+
+  tbody.innerHTML = absenceCount.map(item => `
+    <tr>
+      <td>${item.student.name}</td>
+      <td style="font-family:var(--mono);">${item.student.ctrl}</td>
+      <td><span class="dashboard-pill absent">${item.absences}</span></td>
+    </tr>
+  `).join('');
+}
+
+function exportDashboardCSV() {
+  const input = document.getElementById('dashboardDate');
+  const dateStr = input?.value || getDateKey();
+
+  if (isWeekendDate(dateStr)) {
+    showToast('Sábado y domingo no generan asistencia');
+    return;
+  }
+
+  const record = getAttendanceRecord(dateStr);
+  const selectedAttendance = record?.attendance || {};
+
+  const rows = [['Fecha','Nombre','No. Control','Asistencia']];
+  STUDENTS.forEach(s => {
+    const status = selectedAttendance[s.ctrl];
+    const label = status === 'present' ? 'Presente' : status === 'absent' ? 'Ausente' : 'Sin marcar';
+    rows.push([dateStr, s.name, s.ctrl, label]);
+  });
+
+  const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv);
+  a.download = `dashboard_asistencia_${dateStr}.csv`;
+  a.click();
+
+  showToast('📥 Dashboard exportado');
+}
+
+/* ─── Toast ─── */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+
+
+function addStudent() {
+
+  const name = prompt("Nombre completo del alumno:");
+
+  if (!name) return;
+
+  const ctrl = prompt("Número de control:");
+
+  if (!ctrl) return;
+
+  const exists = STUDENTS.some(s => s.ctrl === ctrl);
+
+  if (exists) {
+    alert("Ya existe un alumno con ese número de control");
+    return;
+  }
+
+  STUDENTS.push({
+    name,
+    ctrl,
+    photo: ""
+  });
+
+  attendance[ctrl] = null;
+
+  saveStudents();
+
+  renderGrid();
+  renderReport();
+
+  showToast("Alumno agregado correctamente");
+}
+
+function saveStudents() {
+  localStorage.setItem(
+    "students_data",
+    JSON.stringify(STUDENTS)
+  );
+}
+
+function loadStudents() {
+
+  const saved =
+    localStorage.getItem("students_data");
+
+  if (!saved) return;
+
+  try {
+    STUDENTS = JSON.parse(saved);
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+
+// Auto-save on change
+setInterval(saveAttendance, 30000);
+</script>
+
+<script>
+window.addEventListener('load', () => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const dateKey = yesterday.toISOString().slice(0, 10);
+  const storageKey = 'attendance_history_' + dateKey;
+
+  if (!localStorage.getItem(storageKey)) {
+    const attendance = {};
+
+    STUDENTS.forEach(student => {
+      attendance[student.ctrl] = 'present';
+    });
+
+    localStorage.setItem(storageKey, JSON.stringify({
+      attendance,
+      teams: {},
+      unassigned: [],
+      date: yesterday.toISOString()
+    }));
+
+    console.log('✅ Asistencia generada para', dateKey);
+  }
+});
+</script>
+
+</body>
+</html>
