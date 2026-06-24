@@ -1,5 +1,5 @@
 (() => {
-  const routes = { 'clase-1': 'clase1.html', 'clase-2': 'clase2.html', home: 'index.html' };
+  const routes = { 'clase-1': 'clase1.html', 'clase-2': 'clase2.html', 'clase-3': 'clase3.html', home: 'index.html' };
   let sections = [];
   let currentSection = 0;
   function refreshActiveSections() { sections = Array.from(document.querySelectorAll('section[data-section]')); currentSection = Math.min(currentSection, Math.max(sections.length - 1, 0)); }
