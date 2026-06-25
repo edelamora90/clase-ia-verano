@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clase 4 · IA Aplicada a Problemas Reales</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="clase4" data-active-lesson="clase-4">
+  <div id="progress-bar"></div>
+  <div class="nav-controls">
+    <button class="nav-btn" id="btn-prev" title="Sección anterior" disabled>&#8592;</button>
+    <button class="nav-btn" id="btn-next" title="Siguiente sección">&#8594;</button>
+  </div>
+  <div class="section-indicator" id="section-indicator">1 / 1</div>
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Mostrar/ocultar menú">☰</button>
+
+  <aside class="course-sidebar" id="course-sidebar" aria-label="Navegación del curso">
+    <p class="course-kicker">Curso</p>
+    <h2 class="course-title"><a href="index.html">Inteligencia Artificial</a></h2>
+    <div class="progress-panel">
+      <p><span>Clases disponibles</span><strong>4 / 30 aprox.</strong></p>
+      <p><span>Semana actual</span><strong>Semana 1</strong></p>
+      <p><span>Estado</span><strong>Curso en desarrollo</strong></p>
+    </div>
+    <p class="week-label">Semana 1</p>
+    <a class="lesson-tab" href="clase1.html" data-lesson="clase-1">
+      <strong>Clase 1</strong>
+      Introducción a la Inteligencia Artificial
+    </a>
+    <a class="lesson-tab" href="clase2.html" data-lesson="clase-2">
+      <strong>Clase 2</strong>
+      Agentes inteligentes y toma de decisiones
+    </a>
+    <a class="lesson-tab" href="clase3.html" data-lesson="clase-3">
+      <strong>Clase 3</strong>
+      Espacios de estado y técnicas de búsqueda
+    </a>
+    <a class="lesson-tab active" href="clase4.html" data-lesson="clase-4">
+      <strong>Clase 4</strong>
+      Áreas de aplicación de la IA
+    </a>
+  </aside>
+
+  <main class="lesson-page class4-page" id="clase-4">
+    <section class="class4-sheet visible" data-section="1">
+      <div class="container class4-sheet-inner">
+        <div class="class4-topline">
+          <span>Clases</span>
+          <span>/</span>
+          <strong>Clase 4</strong>
+        </div>
+
+        <header class="class4-sheet-header class4-grid-hero">
+          <div>
+            <span class="class4-badge">Laboratorio de diagnóstico</span>
+            <h1>Clase 4: IA Aplicada a Problemas Reales</h1>
+            <p>Cómo elegir el área de Inteligencia Artificial adecuada según el problema, los datos disponibles y la salida esperada.</p>
+            <div class="class4-meta-chips">
+              <span>Semana 1</span>
+              <span>Jueves 10:00 - 12:00</span>
+              <span>Duración: 2 horas</span>
+              <span>Evidencia en PDF</span>
+            </div>
+            <button class="btn btn-primary btn-small" data-c4-start>Iniciar laboratorio</button>
+          </div>
+          <figure class="class4-hero-figure">
+            <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=700&q=80" alt="Robot y tecnología representando inteligencia artificial aplicada" loading="lazy" onerror="this.style.display='none'">
+            <figcaption>Problema real + datos + técnica + evaluación</figcaption>
+          </figure>
+        </header>
+
+        <div class="class4-divider" id="class4-lab-start"></div>
+
+        <div class="class4-grid">
+          <article class="class4-panel">
+            <h2>1. ¿Qué significa aplicar IA?</h2>
+            <p>Aplicar IA no empieza por escoger una técnica de moda. Empieza por entender qué problema real se quiere resolver, qué datos existen, qué salida será útil y qué acción tomará una persona o sistema después.</p>
+            <div class="class4-flow">
+              <span class="class4-flow-step">Problema</span><i>→</i>
+              <span class="class4-flow-step">Datos</span><i>→</i>
+              <span class="class4-flow-step">Técnica</span><i>→</i>
+              <span class="class4-flow-step">Salida</span><i>→</i>
+              <span class="class4-flow-step">Acción</span>
+            </div>
+            <div class="class4-note">
+              <span>!</span>
+              <p><strong>Mensaje clave</strong> Sin datos claros y sin una salida útil, no hay una verdadera solución de IA.</p>
+            </div>
+          </article>
+
+          <article class="class4-panel">
+            <h2>Ejemplo: alumnos en riesgo</h2>
+            <table class="class4-table compact">
+              <tbody>
+                <tr><th>Problema</th><td>Identificar alumnos en riesgo académico.</td></tr>
+                <tr><th>Datos</th><td>Asistencia, tareas, calificaciones y participación.</td></tr>
+                <tr><th>Área</th><td>Redes neuronales / aprendizaje automático.</td></tr>
+                <tr><th>Salida</th><td>Riesgo bajo, medio o alto.</td></tr>
+                <tr><th>Acción</th><td>Tutoría o seguimiento académico.</td></tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+
+        <div class="class4-divider"></div>
+
+        <article class="class4-panel">
+          <h2>2. Diagnóstico inicial</h2>
+          <p>Si una escuela quiere detectar alumnos en riesgo académico, ¿qué área de IA debería usar?</p>
+          <div class="class4-trigger-options" id="c4-trigger-options">
+            <button data-answer="vision" type="button">Visión artificial</button>
+            <button data-answer="pln" type="button">Procesamiento de Lenguaje Natural (PLN)</button>
+            <button data-answer="redes" type="button">Redes neuronales / Machine Learning (ML)</button>
+            <button data-answer="robotica" type="button">Robótica</button>
+            <button data-answer="expertos" type="button">Sistemas expertos</button>
+            <button data-answer="difusa" type="button">Lógica difusa</button>
+          </div>
+          <div class="class4-feedback" id="c4-trigger-feedback">
+            Selecciona una opción para recibir retroalimentación según el tipo de datos y la salida esperada.
+          </div>
+        </article>
+
+        <div class="class4-divider"></div>
+
+        <article class="class4-panel">
+          <h2>3. Mapa de decisión</h2>
+          <p>Empieza con la pregunta: <strong>¿qué tipo de datos tiene el problema?</strong></p>
+          <div class="class4-decision-tree">
+            <div class="class4-dt-card"><span>Imagen o video</span><strong>Visión artificial</strong><p>Detecta objetos, condiciones o patrones visuales.</p></div>
+            <div class="class4-dt-card"><span>Texto o voz</span><strong>Procesamiento de Lenguaje Natural (PLN)</strong><p>Interpreta preguntas, comentarios, documentos o audio transcrito.</p></div>
+            <div class="class4-dt-card"><span>Sensores + movimiento</span><strong>Robótica</strong><p>Permite actuar físicamente en un entorno.</p></div>
+            <div class="class4-dt-card"><span>Reglas SI/ENTONCES</span><strong>Sistemas expertos</strong><p>Usa conocimiento explícito de especialistas.</p></div>
+            <div class="class4-dt-card"><span>Datos históricos</span><strong>Redes neuronales / Machine Learning (ML)</strong><p>Aprende patrones desde registros previos.</p></div>
+            <div class="class4-dt-card"><span>Grados bajo/medio/alto</span><strong>Lógica difusa</strong><p>Decide con valores intermedios.</p></div>
+          </div>
+        </article>
+
+        <div class="class4-divider"></div>
+
+        <div class="class4-grid-3">
+          <article class="class4-panel class4-area-card">
+            <img src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=700&q=80" alt="Robot autónomo en un entorno tecnológico" loading="lazy" onerror="this.style.display='none'">
+            <h2>Robótica</h2>
+            <p>Útil cuando una máquina debe percibir y actuar físicamente.</p>
+            <table class="class4-table compact"><tbody><tr><th>Datos</th><td>Sensores, mapa, ubicación.</td></tr><tr><th>Salida</th><td>Movimiento seguro.</td></tr></tbody></table>
+            <div class="class4-note"><span>!</span><p><strong>Riesgo:</strong> obstáculos, batería y seguridad.</p></div>
+          </article>
+          <article class="class4-panel class4-area-card">
+            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=700&q=80" alt="Código y datos para aprendizaje automático" loading="lazy" onerror="this.style.display='none'">
+            <h2>Redes neuronales / Machine Learning (ML)</h2>
+            <p>Aprenden patrones desde ejemplos históricos.</p>
+            <table class="class4-table compact"><tbody><tr><th>Datos</th><td>Registros, etiquetas, historial.</td></tr><tr><th>Salida</th><td>Predicción o recomendación.</td></tr></tbody></table>
+            <div class="class4-note"><span>!</span><p><strong>Riesgo:</strong> sesgos o datos incompletos.</p></div>
+          </article>
+          <article class="class4-panel class4-area-card">
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=700&q=80" alt="Análisis visual con tecnología" loading="lazy" onerror="this.style.display='none'">
+            <h2>Visión artificial</h2>
+            <p>Procesa imágenes o video para detectar patrones visuales.</p>
+            <table class="class4-table compact"><tbody><tr><th>Datos</th><td>Fotos, video, píxeles.</td></tr><tr><th>Salida</th><td>Detección o clasificación.</td></tr></tbody></table>
+            <div class="class4-note"><span>!</span><p><strong>Riesgo:</strong> privacidad e iluminación.</p></div>
+          </article>
+          <article class="class4-panel class4-area-card">
+            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=700&q=80" alt="Panel de automatización industrial" loading="lazy" onerror="this.style.display='none'">
+            <h2>Lógica difusa</h2>
+            <p>Decide con grados intermedios, no solo verdadero/falso.</p>
+            <table class="class4-table compact"><tbody><tr><th>Datos</th><td>Temperatura, rangos, variables.</td></tr><tr><th>Salida</th><td>Nivel bajo, medio o alto.</td></tr></tbody></table>
+            <div class="class4-note"><span>!</span><p><strong>Riesgo:</strong> mala calibración de reglas.</p></div>
+          </article>
+          <article class="class4-panel class4-area-card">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=700&q=80" alt="Comunicación mediante texto en computadora" loading="lazy" onerror="this.style.display='none'">
+            <h2>Procesamiento de Lenguaje Natural (PLN)</h2>
+            <p>Trabaja con lenguaje humano: texto, voz o documentos.</p>
+            <table class="class4-table compact"><tbody><tr><th>Datos</th><td>Preguntas, mensajes, documentos.</td></tr><tr><th>Salida</th><td>Respuesta, resumen o intención.</td></tr></tbody></table>
+            <div class="class4-note"><span>!</span><p><strong>Riesgo:</strong> ambigüedad o respuesta incorrecta.</p></div>
+          </article>
+          <article class="class4-panel class4-area-card">
+            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=700&q=80" alt="Equipo analizando reglas de decisión" loading="lazy" onerror="this.style.display='none'">
+            <h2>Sistemas expertos</h2>
+            <p>Representan conocimiento especializado mediante reglas.</p>
+            <table class="class4-table compact"><tbody><tr><th>Datos</th><td>Síntomas, condiciones, reglas.</td></tr><tr><th>Salida</th><td>Recomendación explicable.</td></tr></tbody></table>
+            <div class="class4-note"><span>!</span><p><strong>Riesgo:</strong> reglas incompletas.</p></div>
+          </article>
+        </div>
+
+        <div class="class4-divider"></div>
+
+        <article class="class4-panel">
+          <h2>4. Guía rápida por estrategia</h2>
+          <div class="class4-strategy-grid">
+            <div class="class4-strategy-card c4-robotica"><h3>Robótica</h3><ul><li>Usa sensores.</li><li>Ejecuta acciones físicas.</li><li>Evalúa seguridad.</li></ul></div>
+            <div class="class4-strategy-card c4-redes"><h3>Redes / Machine Learning (ML)</h3><ul><li>Usa datos históricos.</li><li>Predice o recomienda.</li><li>Revisa sesgos.</li></ul></div>
+            <div class="class4-strategy-card c4-vision"><h3>Visión artificial</h3><ul><li>Usa imágenes.</li><li>Detecta objetos.</li><li>Cuida privacidad.</li></ul></div>
+            <div class="class4-strategy-card c4-difusa"><h3>Lógica difusa</h3><ul><li>Usa grados.</li><li>Controla intensidad.</li><li>Calibra rangos.</li></ul></div>
+            <div class="class4-strategy-card c4-pln"><h3>Procesamiento de Lenguaje Natural (PLN)</h3><ul><li>Usa lenguaje.</li><li>Clasifica o responde.</li><li>Valida contexto.</li></ul></div>
+            <div class="class4-strategy-card c4-expertos"><h3>Sistemas expertos</h3><ul><li>Usa reglas.</li><li>Explica decisiones.</li><li>Mantén reglas actualizadas.</li></ul></div>
+          </div>
+        </article>
+
+        <div class="class4-divider"></div>
+
+        <article class="class4-panel">
+          <h2>5. Tablero de diagnóstico</h2>
+          <p>Revisa el problema, los datos y la salida. Luego revela el área recomendada.</p>
+          <div class="class4-problem-board c4-problem-board">
+            <article class="class4-problem-card c4-problem-card" data-problem="vision">
+              <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=700&q=80" alt="Persona usando equipo de seguridad en laboratorio tecnológico" loading="lazy" onerror="this.style.display='none'">
+              <div><h3>Equipo de seguridad en laboratorio</h3><p><strong>Datos:</strong> imágenes o video.</p><p><strong>Salida:</strong> cumple / no cumple.</p><button class="btn btn-secondary btn-small" type="button">Revelar área recomendada</button><div class="c4-problem-reveal" hidden></div></div>
+            </article>
+            <article class="class4-problem-card c4-problem-card" data-problem="pln">
+              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=700&q=80" alt="Estudiante consultando información en una computadora" loading="lazy" onerror="this.style.display='none'">
+              <div><h3>Responder dudas administrativas</h3><p><strong>Datos:</strong> preguntas en texto.</p><p><strong>Salida:</strong> respuesta natural.</p><button class="btn btn-secondary btn-small" type="button">Revelar área recomendada</button><div class="c4-problem-reveal" hidden></div></div>
+            </article>
+            <article class="class4-problem-card c4-problem-card" data-problem="robotica">
+              <img src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=700&q=80" alt="Robot autónomo representando entregas dentro de campus" loading="lazy" onerror="this.style.display='none'">
+              <div><h3>Robot que entrega documentos</h3><p><strong>Datos:</strong> sensores, ubicación y mapa.</p><p><strong>Salida:</strong> movimiento seguro.</p><button class="btn btn-secondary btn-small" type="button">Revelar área recomendada</button><div class="c4-problem-reveal" hidden></div></div>
+            </article>
+            <article class="class4-problem-card c4-problem-card" data-problem="expertos">
+              <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=700&q=80" alt="Personas revisando reglas y diagnóstico en una mesa de trabajo" loading="lazy" onerror="this.style.display='none'">
+              <div><h3>Diagnosticar fallas</h3><p><strong>Datos:</strong> síntomas.</p><p><strong>Salida:</strong> recomendación.</p><button class="btn btn-secondary btn-small" type="button">Revelar área recomendada</button><div class="c4-problem-reveal" hidden></div></div>
+            </article>
+            <article class="class4-problem-card c4-problem-card" data-problem="difusa">
+              <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=700&q=80" alt="Sistema automatizado para control de temperatura" loading="lazy" onerror="this.style.display='none'">
+              <div><h3>Regular temperatura de salón</h3><p><strong>Datos:</strong> temperatura y ocupación.</p><p><strong>Salida:</strong> intensidad del aire.</p><button class="btn btn-secondary btn-small" type="button">Revelar área recomendada</button><div class="c4-problem-reveal" hidden></div></div>
+            </article>
+            <article class="class4-problem-card c4-problem-card" data-problem="redes">
+              <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=700&q=80" alt="Datos en pantalla para análisis predictivo" loading="lazy" onerror="this.style.display='none'">
+              <div><h3>Predecir alumnos en riesgo</h3><p><strong>Datos:</strong> asistencia, calificaciones y tareas.</p><p><strong>Salida:</strong> nivel de riesgo.</p><button class="btn btn-secondary btn-small" type="button">Revelar área recomendada</button><div class="c4-problem-reveal" hidden></div></div>
+            </article>
+          </div>
+        </article>
+
+        <div class="class4-divider"></div>
+
+        <article class="class4-panel">
+          <h2>6. Caja de herramientas</h2>
+          <p>Elige una herramienta para abrir una página de referencia con definición, técnica, ejemplos, riesgos y una mini actividad.</p>
+          <div class="class4-tool-grid c4-tool-grid" id="c4-tool-grid"></div>
+        </article>
+
+        <div class="class4-divider"></div>
+
+        <article class="class4-panel">
+          <h2>7. Simulador: Elige la IA correcta</h2>
+          <p>Resuelve cada caso usando solo botones. Al terminar, captura o transcribe tu resultado en la evidencia PDF.</p>
+          <div class="class4-classifier c4-simulator" id="c4-simulator"></div>
+        </article>
+
+        <div class="class4-divider"></div>
+
+        <article class="class4-panel">
+          <h2>8. Comparación rápida</h2>
+          <div class="class4-table-wrapper">
+            <table class="class4-table">
+              <thead><tr><th>Tipo de problema</th><th>Datos</th><th>Área recomendada</th><th>Evidencia</th></tr></thead>
+              <tbody>
+                <tr><td>Imagen o video</td><td>Píxeles</td><td>Visión artificial</td><td>Foto, video o detección marcada.</td></tr>
+                <tr><td>Texto o voz</td><td>Lenguaje</td><td>Procesamiento de Lenguaje Natural (PLN)</td><td>Pregunta, intención o respuesta.</td></tr>
+                <tr><td>Movimiento físico</td><td>Sensores</td><td>Robótica</td><td>Ruta, acción o estado del robot.</td></tr>
+                <tr><td>Diagnóstico con reglas</td><td>Síntomas</td><td>Sistemas expertos</td><td>Regla SI/ENTONCES aplicada.</td></tr>
+                <tr><td>Predicción histórica</td><td>Registros</td><td>Redes neuronales / Machine Learning (ML)</td><td>Probabilidad o nivel de riesgo.</td></tr>
+                <tr><td>Decisiones graduadas</td><td>Variables continuas</td><td>Lógica difusa</td><td>Grado bajo, medio o alto.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="class4-note"><span>+</span><p><strong>Combinaciones posibles:</strong> un robot guía puede usar robótica, visión artificial, Procesamiento de Lenguaje Natural (PLN) y búsqueda de rutas.</p></div>
+        </article>
+
+        <article class="activities-panel">
+          <div class="activities-header">
+            <div>
+              <h2>Actividades de la clase</h2>
+              <p>Usen esta guía como formato de trabajo. La evidencia evaluable se entrega en PDF (Portable Document Format).</p>
+            </div>
+            <span>Trabajo de equipo · PDF</span>
+          </div>
+
+          <div class="class4-activity-guide">
+            <section class="class4-activity-brief">
+              <div class="class4-activity-heading">
+                <span class="activity-icon">1</span>
+                <div>
+                  <strong>Actividad 1</strong>
+                  <h3>Diagnóstico de problemas</h3>
+                  <p>Objetivo: identificar qué herramienta de Inteligencia Artificial (IA) conviene según el tipo de datos, la salida esperada y el riesgo del caso.</p>
+                </div>
+              </div>
+              <div class="class4-activity-body">
+                <div>
+                  <h4>Qué deben realizar</h4>
+                  <ol>
+                    <li>Elijan 3 problemas del “Tablero de diagnóstico”.</li>
+                    <li>Para cada problema, escriban qué datos recibe el sistema.</li>
+                    <li>Seleccionen el área principal de IA: robótica, Machine Learning (ML), visión artificial, lógica difusa, Procesamiento de Lenguaje Natural (PLN) o sistemas expertos.</li>
+                    <li>Definan la salida esperada: alerta, recomendación, clasificación, movimiento, respuesta o nivel.</li>
+                    <li>Agreguen un riesgo realista y una justificación breve.</li>
+                  </ol>
+                  <div class="class4-checklist">
+                    <strong>Está bien si...</strong>
+                    <p>La herramienta elegida coincide con el tipo de dato principal y la justificación explica por qué no eligieron otra.</p>
+                  </div>
+                </div>
+                <div class="class4-example-matrix">
+                  <span>Ejemplo de matriz esperada</span>
+                  <div class="class4-table-wrapper">
+                    <table class="class4-table compact">
+                      <thead><tr><th>Problema</th><th>Datos</th><th>Área</th><th>Salida</th><th>Riesgo</th><th>Justificación</th></tr></thead>
+                      <tbody>
+                        <tr><td>Detectar equipo de seguridad</td><td>Imágenes de laboratorio</td><td>Visión artificial</td><td>Cumple / no cumple</td><td>Mala iluminación</td><td>El dato principal es imagen o video.</td></tr>
+                        <tr><td>Responder dudas escolares</td><td>Preguntas en texto</td><td>Procesamiento de Lenguaje Natural (PLN)</td><td>Respuesta clara</td><td>Respuesta incorrecta</td><td>El sistema interpreta lenguaje humano.</td></tr>
+                        <tr><td>Robot repartidor</td><td>Sensores, cámara y mapa</td><td>Robótica</td><td>Ruta y movimiento seguro</td><td>Choques u obstáculos</td><td>Debe actuar físicamente en el entorno.</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="class4-activity-brief">
+              <div class="class4-activity-heading">
+                <span class="activity-icon">2</span>
+                <div>
+                  <strong>Actividad 2</strong>
+                  <h3>Diseño de solución con IA</h3>
+                  <p>Objetivo: proponer una solución de IA para un problema real del entorno escolar, familiar o comunitario.</p>
+                </div>
+              </div>
+              <div class="class4-activity-body two-columns">
+                <div>
+                  <h4>Qué deben entregar</h4>
+                  <ol>
+                    <li>Nombre de la solución.</li>
+                    <li>Problema que resuelve y usuarios beneficiados.</li>
+                    <li>Datos de entrada y cómo se obtendrían.</li>
+                    <li>Área principal de IA elegida.</li>
+                    <li>Proceso: qué hace el sistema paso a paso.</li>
+                    <li>Salida esperada y acción que tomaría una persona.</li>
+                    <li>Riesgo, limitación y forma de evaluar si funciona.</li>
+                  </ol>
+                </div>
+                <div class="class4-result-example">
+                  <span>Ejemplo de resultado esperado</span>
+                  <h4>Alerta Temprana Escolar</h4>
+                  <p><strong>Problema:</strong> algunos alumnos bajan rendimiento antes de pedir ayuda.</p>
+                  <p><strong>Usuarios:</strong> tutores, docentes y coordinación académica.</p>
+                  <p><strong>Datos:</strong> asistencia, tareas, calificaciones y retardos.</p>
+                  <p><strong>Área:</strong> Machine Learning (ML).</p>
+                  <p><strong>Proceso:</strong> compara patrones históricos y estima nivel de riesgo.</p>
+                  <p><strong>Salida:</strong> riesgo bajo, medio o alto con recomendación de tutoría.</p>
+                  <p><strong>Evaluación:</strong> revisar si las alertas ayudan a intervenir antes de reprobar.</p>
+                </div>
+              </div>
+              <div class="class4-checklist">
+                <strong>Está bien si...</strong>
+                <p>La solución no intenta “usar IA por usar IA”, sino resolver un problema concreto con datos claros y una salida útil.</p>
+              </div>
+            </section>
+
+            <section class="class4-activity-brief">
+              <div class="class4-activity-heading">
+                <span class="activity-icon">PDF</span>
+                <div>
+                  <strong>Tarea 4</strong>
+                  <h3>Análisis de aplicación real</h3>
+                  <p>Objetivo: analizar una aplicación existente e identificar qué problema resuelve, qué datos usa y qué área de IA participa.</p>
+                </div>
+              </div>
+              <div class="class4-activity-body two-columns">
+                <div>
+                  <h4>Qué debe incluir el PDF</h4>
+                  <ol>
+                    <li>Nombre de la aplicación elegida.</li>
+                    <li>Problema real que resuelve.</li>
+                    <li>Usuarios o contexto donde se usa.</li>
+                    <li>Datos de entrada.</li>
+                    <li>Área principal de IA y áreas secundarias si aplica.</li>
+                    <li>Salida que entrega al usuario.</li>
+                    <li>Beneficio principal.</li>
+                    <li>Riesgo o limitación.</li>
+                    <li>Reflexión: qué decisión humana mejora o complica.</li>
+                  </ol>
+                </div>
+                <div class="class4-result-example">
+                  <span>Ejemplo de resultado esperado</span>
+                  <h4>Google Maps</h4>
+                  <p><strong>Problema:</strong> encontrar una ruta eficiente entre dos lugares.</p>
+                  <p><strong>Datos:</strong> ubicación, mapas, tráfico, accidentes y tiempos históricos.</p>
+                  <p><strong>Área principal:</strong> búsqueda en espacios de estados y Machine Learning (ML) para estimar tiempos.</p>
+                  <p><strong>Salida:</strong> rutas sugeridas, tiempo estimado y alertas.</p>
+                  <p><strong>Beneficio:</strong> ayuda a tomar mejores decisiones de traslado.</p>
+                  <p><strong>Riesgo:</strong> datos desactualizados o rutas poco adecuadas para peatones.</p>
+                  <p><strong>Reflexión:</strong> la IA recomienda, pero el usuario debe valorar seguridad y contexto.</p>
+                </div>
+              </div>
+              <div class="class4-checklist">
+                <strong>Está bien si...</strong>
+                <p>El análisis distingue entre datos, técnica, salida y riesgo, y no se queda solo en describir “qué hace la app”.</p>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <footer class="memory-strip">
+          <h2>Si solo recuerdas 3 cosas de esta clase...</h2>
+          <div class="memory-items class4-closing-grid">
+            <p><b>1</b> La IA se elige a partir del problema, no de la moda.</p>
+            <p><b>2</b> Cada área responde a un tipo diferente de datos y decisión.</p>
+            <p><b>3</b> Una buena solución combina problema, datos, técnica, salida y evaluación.</p>
+          </div>
+          <div class="importance-box">
+            <strong>Idea final</strong>
+            <span>La mejor IA no es la más llamativa, sino la que resuelve mejor un problema real.</span>
+          </div>
+          <div class="class4-close-actions">
+            <button class="btn btn-secondary btn-small" data-home-link="index.html">Volver al inicio del curso</button>
+            <button class="btn btn-primary btn-small" data-switch-lesson="clase-3">Ir a Clase 3</button>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+  <script src="clase4.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redes Neuronales y Machine Learning · Herramientas de Inteligencia Artificial (IA)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="tool" data-active-lesson="clase-4">
+  <div id="progress-bar"></div>
+  <div class="nav-controls"><button class="nav-btn" id="btn-prev" title="Sección anterior" disabled>&#8592;</button><button class="nav-btn" id="btn-next" title="Siguiente sección">&#8594;</button></div>
+  <div class="section-indicator" id="section-indicator">1 / 1</div>
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Mostrar/ocultar menú">☰</button>
+
+  <aside class="course-sidebar" id="course-sidebar" aria-label="Navegación del curso">
+    <p class="course-kicker">Curso</p>
+    <h2 class="course-title"><a href="index.html">Inteligencia Artificial</a></h2>
+    <div class="progress-panel"><p><span>Clases disponibles</span><strong>4 / 30 aprox.</strong></p><p><span>Semana actual</span><strong>Semana 1</strong></p><p><span>Estado</span><strong>Curso en desarrollo</strong></p></div>
+    <p class="week-label">Semana 1</p>
+    <a class="lesson-tab" href="clase1.html" data-lesson="clase-1"><strong>Clase 1</strong>Introducción a la Inteligencia Artificial</a>
+    <a class="lesson-tab" href="clase2.html" data-lesson="clase-2"><strong>Clase 2</strong>Agentes inteligentes y toma de decisiones</a>
+    <a class="lesson-tab" href="clase3.html" data-lesson="clase-3"><strong>Clase 3</strong>Espacios de estado y técnicas de búsqueda</a>
+    <a class="lesson-tab active" href="clase4.html" data-lesson="clase-4"><strong>Clase 4</strong>Áreas de aplicación de la IA</a>
+    <div class="tool-sidebar-block">
+      <strong>Herramientas de Inteligencia Artificial</strong>
+      <a class="active" href="herramienta-redes-neuronales.html">Redes neuronales / Machine Learning (ML)</a>
+      <a href="herramienta-robotica.html">Robótica</a>
+      <a href="herramienta-vision-artificial.html">Visión artificial</a>
+      <a href="herramienta-logica-difusa.html">Lógica difusa</a>
+      <a href="herramienta-pln.html">Procesamiento de Lenguaje Natural (PLN)</a>
+      <a href="herramienta-sistemas-expertos.html">Sistemas expertos</a>
+    </div>
+  </aside>
+
+  <main class="lesson-page tool-page">
+    <section class="tool-sheet visible" data-section="1">
+      <div class="container tool-sheet-inner">
+        <nav class="tool-breadcrumb"><a href="index.html">Inicio</a><span>/</span><a href="clase4.html">Clase 4</a><span>/</span><strong>Redes neuronales y Machine Learning (ML)</strong></nav>
+        <nav class="tool-page-menu" aria-label="Menú de herramientas de Inteligencia Artificial"><span>Menú de herramientas</span><a href="clase4.html">Clase 4</a><a href="herramienta-redes-neuronales.html">Redes neuronales / Machine Learning (ML)</a><a href="herramienta-robotica.html">Robótica</a><a href="herramienta-vision-artificial.html">Visión artificial</a><a href="herramienta-logica-difusa.html">Lógica difusa</a><a href="herramienta-pln.html">Procesamiento de Lenguaje Natural (PLN)</a><a href="herramienta-sistemas-expertos.html">Sistemas expertos</a></nav>
+        <header class="tool-hero">
+          <div>
+            <span class="tool-kicker">Herramienta de Inteligencia Artificial (IA)</span>
+            <h1>Redes Neuronales y Machine Learning</h1>
+            <p>Cómo una Inteligencia Artificial (IA) aprende patrones a partir de datos para clasificar, predecir o recomendar.</p>
+            <div class="tool-chips"><span>Datos históricos</span><span>Predicción</span><span>Clasificación</span><span>Patrones</span></div>
+            
+          </div>
+          <figure class="tool-hero-media">
+            <img class="tool-image" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=80" alt="Código y datos usados para aprendizaje automático" loading="lazy" onerror="this.style.display='none'">
+            <figcaption>El modelo aprende de ejemplos y luego aplica ese aprendizaje a casos nuevos.</figcaption>
+          </figure>
+        </header>
+
+        <div class="tool-grid-2">
+          <article class="tool-panel"><h2>Definición sencilla</h2><p>Machine Learning (ML), o aprendizaje automático, es una forma de Inteligencia Artificial (IA) donde el sistema aprende patrones desde ejemplos. Una red neuronal es un modelo de Machine Learning (ML) inspirado de manera simplificada en conexiones entre neuronas: recibe datos, ajusta pesos internos y produce una salida.</p></article>
+          <article class="tool-panel"><h2>Jerarquía</h2><div class="tool-flow"><div class="tool-flow-step"><strong>IA</strong><p>Campo general: sistemas que realizan tareas inteligentes.</p></div><div class="tool-flow-step"><strong>Machine Learning</strong><p>Subárea donde el sistema aprende con datos.</p></div><div class="tool-flow-step"><strong>Red neuronal</strong><p>Tipo de modelo de Machine Learning (ML) útil para patrones complejos.</p></div></div></article>
+        </div>
+
+        <article class="tool-panel"><h2>Explicación técnica entendible</h2><p>En programación tradicional una persona escribe reglas: “si pasa esto, haz aquello”. En Machine Learning (ML) se entregan ejemplos con entradas y resultados esperados; el modelo ajusta parámetros para aproximarse al resultado correcto. Después, cuando llega un caso nuevo, calcula una predicción usando lo aprendido.</p></article>
+
+        <div class="tool-grid-2">
+          <article class="tool-panel"><h2>Diferencia con otros conceptos</h2><div class="tool-table-wrapper"><table class="tool-table"><thead><tr><th>Concepto</th><th>Qué es</th></tr></thead><tbody><tr><td>IA</td><td>Área completa de sistemas inteligentes.</td></tr><tr><td>Machine Learning (ML)</td><td>Método que aprende desde datos.</td></tr><tr><td>Red neuronal</td><td>Modelo que combina capas de cálculos para detectar patrones.</td></tr></tbody></table></div></article>
+          <article class="tool-panel"><h2>Programa tradicional vs Machine Learning (ML)</h2><div class="tool-flow"><div class="tool-flow-step"><strong>Tradicional</strong><p>Reglas + datos → resultado.</p></div><div class="tool-flow-step"><strong>Machine Learning</strong><p>Datos + resultados conocidos → modelo.</p></div><div class="tool-flow-step"><strong>Uso del modelo</strong><p>Nuevo caso → predicción.</p></div></div></article>
+        </div>
+
+        <article class="tool-panel"><h2>Ejemplo desarrollado: alumnos en riesgo académico</h2><div class="tool-grid-2"><div><p><strong>Datos:</strong> asistencia, promedio, tareas entregadas, retardos y participación.</p><p><strong>Salida:</strong> riesgo bajo, medio o alto.</p><p><strong>Acción:</strong> tutoría, seguimiento o alerta temprana.</p></div><div class="tool-flow"><div class="tool-flow-step">1. Reunir historial de alumnos.</div><div class="tool-flow-step">2. Etiquetar casos anteriores según resultado académico.</div><div class="tool-flow-step">3. Entrenar el modelo con esos ejemplos.</div><div class="tool-flow-step">4. Evaluar si acierta en datos no vistos.</div><div class="tool-flow-step">5. Usar la predicción como apoyo, no como sentencia.</div></div></div></article>
+
+        <div class="tool-grid-3">
+          <article class="tool-card"><h3>Componentes</h3><p>Variables de entrada, etiquetas, modelo, entrenamiento, evaluación y predicción.</p></article>
+          <article class="tool-card"><h3>Casos de uso</h3><p>Riesgo académico, recomendadores, detección de fraude, demanda de ventas y clasificación de correos.</p></article>
+          <article class="tool-card"><h3>Cuándo conviene</h3><p>Cuando hay datos históricos, se busca predecir o clasificar y las reglas manuales serían difíciles.</p></article>
+        </div>
+
+        <article class="tool-panel"><h2>Riesgos y limitaciones</h2><div class="tool-use-list"><span>Datos incompletos</span><span>Sesgo histórico</span><span>Privacidad</span><span>Interpretar predicción como sentencia</span><span>Resultados difíciles de explicar</span></div></article>
+
+        <article class="tool-panel">
+          <h2>Video de apoyo: red neuronal sencilla con código</h2>
+          <p>Este video muestra cómo construir una red neuronal sencilla paso a paso con código. Úsalo como referencia práctica después de revisar la idea general de entradas, entrenamiento, modelo y salida.</p>
+          <div class="tool-video-frame">
+            <iframe src="https://www.youtube.com/embed/UNFFLJPW7KQ" title="Cómo hacer una red neuronal sencilla paso a paso con código" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <p><a class="tool-resource-link" href="https://www.youtube.com/watch?v=UNFFLJPW7KQ" target="_blank" rel="noopener">Abrir el video en YouTube: red neuronal sencilla paso a paso con código</a></p>
+        </article>
+
+        <article class="tool-panel" data-tool-activity>
+          <h2>Mini actividad</h2>
+          <p>Resuelve 3 casos. En cada uno elige si conviene usar Machine Learning (ML) o si otra herramienta sería más adecuada.</p>
+          <div class="tool-activity-case">
+            <h3>Caso 1: riesgo académico</h3>
+            <p>Una escuela tiene historiales de asistencia, tareas, retardos y calificaciones, y quiere predecir riesgo bajo, medio o alto.</p>
+            <div class="tool-choice-grid">
+              <button class="tool-choice-card" type="button" aria-pressed="false" data-correct="true" data-feedback="Correcto: hay datos históricos y se busca predecir un nivel de riesgo."><strong>Sí conviene Machine Learning (ML)</strong> Aprende patrones desde registros anteriores.</button>
+              <button class="tool-choice-card" type="button" aria-pressed="false" data-correct="false" data-feedback="No es la mejor elección: el caso pide aprender patrones históricos, no solo aplicar reglas fijas."><strong>Mejor sistema experto</strong> Usar solo reglas SI/ENTONCES.</button>
+            </div>
+            <p class="tool-activity-feedback" data-default="Elige una opción para este caso.">Elige una opción para este caso.</p>
+          </div>
+          <div class="tool-activity-case">
+            <h3>Caso 2: multa de biblioteca</h3>
+            <p>La regla es clara: si el libro está vencido más de 3 días, se aplica una multa definida.</p>
+            <div class="tool-choice-grid">
+              <button class="tool-choice-card" type="button" aria-pressed="false" data-correct="false" data-feedback="No hace falta Machine Learning (ML): la regla ya está definida y es fácil de explicar."><strong>Sí conviene Machine Learning (ML)</strong> Entrenar con historiales de préstamo.</button>
+              <button class="tool-choice-card" type="button" aria-pressed="false" data-correct="true" data-feedback="Correcto: un sistema de reglas o sistema experto basta porque la condición es clara."><strong>No conviene Machine Learning (ML)</strong> Basta una regla explícita.</button>
+            </div>
+            <p class="tool-activity-feedback" data-default="Elige una opción para este caso.">Elige una opción para este caso.</p>
+          </div>
+          <div class="tool-activity-case">
+            <h3>Caso 3: recomendación de cursos</h3>
+            <p>La plataforma tiene historial de cursos tomados, calificaciones e intereses, y quiere recomendar el siguiente curso.</p>
+            <div class="tool-choice-grid">
+              <button class="tool-choice-card" type="button" aria-pressed="false" data-correct="true" data-feedback="Correcto: es un buen caso para aprender patrones de recomendación con datos históricos."><strong>Sí conviene Machine Learning (ML)</strong> Puede detectar similitudes entre estudiantes y cursos.</button>
+              <button class="tool-choice-card" type="button" aria-pressed="false" data-correct="false" data-feedback="No principalmente: visión artificial se usaría si el dato central fueran imágenes o video."><strong>Mejor visión artificial</strong> Analizar imágenes de los cursos.</button>
+            </div>
+            <p class="tool-activity-feedback" data-default="Elige una opción para este caso.">Elige una opción para este caso.</p>
+          </div>
+          <button class="btn btn-secondary btn-small" type="button" data-tool-reset>Reiniciar actividad</button>
+        </article>
+
+        <footer class="tool-closing"><h2>3 ideas para recordar</h2><div class="tool-ideas"><p><b>1</b> Machine Learning (ML) aprende desde datos, no desde reglas escritas una por una.</p><p><b>2</b> Una red neuronal es un tipo de modelo dentro de Machine Learning (ML).</p><p><b>3</b> La predicción orienta decisiones, pero debe revisarse con criterio humano.</p></div></footer>
+      </div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+  <script src="herramientas-ia.js"></script>
+</body>
+</html>

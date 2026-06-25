@@ -1,5 +1,17 @@
 (() => {
-  const routes = { 'clase-1': 'clase1.html', 'clase-2': 'clase2.html', 'clase-3': 'clase3.html', home: 'index.html' };
+  const routes = {
+    home: 'index.html',
+    'clase-1': 'clase1.html',
+    'clase-2': 'clase2.html',
+    'clase-3': 'clase3.html',
+    'clase-4': 'clase4.html',
+    'herramienta-redes-neuronales': 'herramienta-redes-neuronales.html',
+    'herramienta-robotica': 'herramienta-robotica.html',
+    'herramienta-vision-artificial': 'herramienta-vision-artificial.html',
+    'herramienta-logica-difusa': 'herramienta-logica-difusa.html',
+    'herramienta-pln': 'herramienta-pln.html',
+    'herramienta-sistemas-expertos': 'herramienta-sistemas-expertos.html'
+  };
   let sections = [];
   let currentSection = 0;
   function refreshActiveSections() { sections = Array.from(document.querySelectorAll('section[data-section]')); currentSection = Math.min(currentSection, Math.max(sections.length - 1, 0)); }
