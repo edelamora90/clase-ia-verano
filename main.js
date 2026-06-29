@@ -5,6 +5,7 @@
     'clase-2': 'clase2.html',
     'clase-3': 'clase3.html',
     'clase-4': 'clase4.html',
+    'clase-5': 'clase5.html',
     'herramienta-redes-neuronales': 'herramienta-redes-neuronales.html',
     'herramienta-robotica': 'herramienta-robotica.html',
     'herramienta-vision-artificial': 'herramienta-vision-artificial.html',
@@ -28,3 +29,45 @@
   window.Course = { goToSection, switchLesson, refreshActiveSections, updateProgressBar, trackCurrentSection, updateSectionIndicator, initAgendaAccordions };
   document.addEventListener('DOMContentLoaded', init);
 })();
+
+
+/* ========================================================= */
+/* SECCIÓN 10 — EVALUACIÓN FINAL CON IA */
+/* ========================================================= */
+
+function copiarPromptEvaluacionIA() {
+  const prompt = document.getElementById("prompt-evaluacion-ia");
+
+  if (!prompt) {
+    alert("No se encontró el prompt de evaluación.");
+    return;
+  }
+
+  prompt.select();
+  prompt.setSelectionRange(0, 99999);
+
+  navigator.clipboard
+    .writeText(prompt.value)
+    .then(() => {
+      alert("Prompt copiado correctamente.");
+    })
+    .catch(() => {
+      alert("No se pudo copiar automáticamente. Selecciona el texto y cópialo manualmente.");
+    });
+}
+
+function generarPDFReporteFinal() {
+  const botonPDF = document.querySelector(".pdf-final-section");
+
+  if (botonPDF) {
+    botonPDF.style.display = "none";
+  }
+
+  window.print();
+
+  setTimeout(() => {
+    if (botonPDF) {
+      botonPDF.style.display = "";
+    }
+  }, 500);
+}

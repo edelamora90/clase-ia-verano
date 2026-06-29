@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clase 5 · IA Business Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="clase5" data-active-lesson="clase-5">
+  <div id="progress-bar"></div>
+
+  <div class="nav-controls">
+    <button class="nav-btn" id="btn-prev" title="Sección anterior" disabled>&#8592;</button>
+    <button class="nav-btn" id="btn-next" title="Siguiente sección">&#8594;</button>
+  </div>
+
+  <div class="section-indicator" id="section-indicator">1 / 1</div>
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Mostrar/ocultar menú">☰</button>
+
+  <aside class="course-sidebar" id="course-sidebar" aria-label="Navegación del curso">
+    <p class="course-kicker">Curso</p>
+    <h2 class="course-title"><a href="index.html">Inteligencia Artificial</a></h2>
+
+    <div class="progress-panel">
+      <p><span>Clases disponibles</span><strong>5 / 30 aprox.</strong></p>
+      <p><span>Semana actual</span><strong>Semana 2</strong></p>
+      <p><span>Estado</span><strong>Laboratorio práctico</strong></p>
+    </div>
+
+    <p class="week-label">Semana 1</p>
+
+    <a class="lesson-tab" href="clase1.html" data-lesson="clase-1">
+      <strong>Clase 1</strong>
+      Introducción a la Inteligencia Artificial
+    </a>
+
+    <a class="lesson-tab" href="clase2.html" data-lesson="clase-2">
+      <strong>Clase 2</strong>
+      Agentes inteligentes y toma de decisiones
+    </a>
+
+    <a class="lesson-tab" href="clase3.html" data-lesson="clase-3">
+      <strong>Clase 3</strong>
+      Espacios de estado y técnicas de búsqueda
+    </a>
+
+    <a class="lesson-tab" href="clase4.html" data-lesson="clase-4">
+      <strong>Clase 4</strong>
+      Áreas de aplicación de la IA
+    </a>
+
+    <p class="week-label">Semana 2</p>
+
+    <a class="lesson-tab active" href="clase5.html" data-lesson="clase-5">
+      <strong>Clase 5</strong>
+      IA Business Lab
+    </a>
+  </aside>
+
+  <main class="lesson-page class5-page" id="clase-5">
+
+    <section class="class5-section visible" data-section="1">
+      <div class="container">
+        <div class="class5-hero">
+          <div>
+            <span class="class5-badge">Laboratorio gamificado</span>
+            <h1>Clase 5: IA Business Lab</h1>
+            <p>
+              Hoy tomarás el rol de consultor IA junior. Tu misión será ayudar a una cafetería,
+              restaurante o refaccionaria a resolver un problema real usando inteligencia artificial.
+            </p>
+
+            <div class="class5-meta">
+              <span>Semana 2</span>
+              <span>Duración: 2 horas</span>
+              <span>XP total: 100</span>
+              <span>Insignia: Consultor IA Junior</span>
+            </div>
+
+            <div class="class5-actions">
+              <button class="btn btn-primary btn-small" type="button" data-c5-start>Iniciar misión</button>
+              <button class="btn btn-secondary btn-small" type="button" data-c5-reset>Reiniciar progreso</button>
+            </div>
+          </div>
+
+          <aside class="class5-xp-card">
+            <p class="class5-xp-label">Progreso de misión</p>
+            <strong id="c5-xp-value">0 XP</strong>
+            <div class="class5-progress-track">
+              <div class="class5-progress-fill" id="c5-progress-fill"></div>
+            </div>
+            <p id="c5-progress-text">Completa retos para desbloquear la insignia.</p>
+          </aside>
+        </div>
+
+        <div id="class5-start"></div>
+
+        <article class="class5-panel">
+          <h2>Objetivo de la misión</h2>
+          <p>
+            Diseñar una solución de IA que tenga valor real para un negocio. No se trata solo de usar IA,
+            sino de identificar un problema, definir al usuario, crear un asistente, probarlo y explicar
+            cómo ayuda al negocio.
+          </p>
+
+          <div class="class5-flow">
+            <span>Negocio</span>
+            <i>→</i>
+            <span>Problema</span>
+            <i>→</i>
+            <span>Usuario</span>
+            <i>→</i>
+            <span>Asistente IA</span>
+            <i>→</i>
+            <span>Prueba</span>
+            <i>→</i>
+            <span>Valor</span>
+          </div>
+        </article>
+
+        <article class="class5-panel">
+          <h2>Tablero de misiones</h2>
+          <p>Marca cada reto conforme lo completes. Cada reto suma XP.</p>
+
+          <div class="class5-mission-grid" id="c5-mission-grid">
+            <label class="class5-mission-card">
+              <input type="checkbox" data-xp="10" data-mission="business">
+              <span class="class5-mission-icon">🏪</span>
+              <strong>Elegir negocio</strong>
+              <small>10 XP</small>
+              <p>Cafetería, restaurante o refaccionaria.</p>
+            </label>
+
+            <label class="class5-mission-card">
+              <input type="checkbox" data-xp="15" data-mission="problem">
+              <span class="class5-mission-icon">🎯</span>
+              <strong>Identificar problema real</strong>
+              <small>15 XP</small>
+              <p>Define qué dolor del negocio vas a resolver.</p>
+            </label>
+
+            <label class="class5-mission-card">
+              <input type="checkbox" data-xp="10" data-mission="user">
+              <span class="class5-mission-icon">👤</span>
+              <strong>Definir usuario</strong>
+              <small>10 XP</small>
+              <p>Cliente, empleado, vendedor, dueño o encargado.</p>
+            </label>
+
+            <label class="class5-mission-card">
+              <input type="checkbox" data-xp="25" data-mission="assistant">
+              <span class="class5-mission-icon">🤖</span>
+              <strong>Crear asistente IA</strong>
+              <small>25 XP</small>
+              <p>Construye el prompt con rol, reglas y formato.</p>
+            </label>
+
+            <label class="class5-mission-card">
+              <input type="checkbox" data-xp="15" data-mission="test">
+              <span class="class5-mission-icon">🧪</span>
+              <strong>Probar con caso real</strong>
+              <small>15 XP</small>
+              <p>Simula una pregunta real de un cliente.</p>
+            </label>
+
+            <label class="class5-mission-card">
+              <input type="checkbox" data-xp="10" data-mission="fix">
+              <span class="class5-mission-icon">🛠️</span>
+              <strong>Mejorar solución</strong>
+              <small>10 XP</small>
+              <p>Detecta una falla y mejora el prompt.</p>
+            </label>
+
+            <label class="class5-mission-card">
+              <input type="checkbox" data-xp="5" data-mission="value">
+              <span class="class5-mission-icon">💰</span>
+              <strong>Explicar valor</strong>
+              <small>5 XP</small>
+              <p>Cómo ayuda a vender, ahorrar tiempo o atender mejor.</p>
+            </label>
+          </div>
+
+          <div class="class5-unlock" id="c5-unlock" hidden>
+            <strong>🎖 Insignia desbloqueada: Consultor IA Junior</strong>
+            <p>Completaste la misión. Ya sabes plantear una solución de IA con valor real para un negocio.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="class5-section" data-section="2">
+      <div class="container">
+        <span class="section-label">Nivel 1</span>
+        <h2 class="section-title">Elige el negocio</h2>
+        <p class="section-subtitle">
+          Selecciona un caso. Cada negocio tiene problemas reales donde una IA puede aportar valor.
+        </p>
+
+        <div class="class5-business-grid" id="c5-business-grid">
+          <button class="class5-business-card" type="button" data-business="cafeteria">
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=900&q=80" alt="Cafetería con barra de café" loading="lazy" onerror="this.style.display='none'">
+            <span>☕</span>
+            <strong>Cafetería</strong>
+            <p>Recomendaciones de bebidas, combos, promociones y atención de dudas frecuentes.</p>
+          </button>
+
+          <button class="class5-business-card" type="button" data-business="restaurante">
+            <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=80" alt="Restaurante con mesas y platillos" loading="lazy" onerror="this.style.display='none'">
+            <span>🍽️</span>
+            <strong>Restaurante</strong>
+            <p>Asistente de menú, recomendaciones por presupuesto, preferencias y restricciones.</p>
+          </button>
+
+          <button class="class5-business-card" type="button" data-business="refaccionaria">
+            <img src="https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=900&q=80" alt="Taller mecánico y servicio automotriz" loading="lazy" onerror="this.style.display='none'">
+            <span>🔧</span>
+            <strong>Refaccionaria</strong>
+            <p>Orientación inicial, búsqueda de refacciones, compatibilidad y ventas complementarias.</p>
+          </button>
+
+          <button class="class5-business-card class5-business-card-own" type="button" data-business="propia">
+            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80" alt="Equipo trabajando en una propuesta de negocio" loading="lazy" onerror="this.style.display='none'">
+            <span>💡</span>
+            <strong>Propuesta propia</strong>
+            <p>Elige cualquier negocio, identifica un problema real y diseña una solución de IA con valor práctico.</p>
+          </button>
+        </div>
+
+        <div class="class5-selection-panel" id="c5-business-panel">
+          Elige un negocio para desbloquear su caso.
+        </div>
+
+        <div class="class5-own-business-panel" id="c5-own-business-panel" hidden>
+          <h3>Diseña tu caso propio</h3>
+          <p>Usa esta opción si quieres trabajar con un negocio diferente: papelería, taller, tienda de ropa, gimnasio, estética, veterinaria, escuela, abarrotes, emprendimiento familiar u otro.</p>
+
+          <div class="class5-own-grid">
+            <label class="class5-field">
+              Nombre o tipo de negocio:
+              <input id="c5-own-business-name" type="text" placeholder="Ej. Papelería, estética, gimnasio, tienda de abarrotes">
+            </label>
+
+            <label class="class5-field">
+              ¿Qué vende o qué servicio ofrece?
+              <textarea id="c5-own-business-context" rows="4" placeholder="Describe brevemente el negocio, sus clientes y lo que ofrece."></textarea>
+            </label>
+
+            <label class="class5-field">
+              Problema real que identificas:
+              <textarea id="c5-own-business-problem" rows="4" placeholder="Ej. Pierde tiempo respondiendo preguntas repetidas, no sabe qué productos recomendar o no controla bien pedidos."></textarea>
+            </label>
+
+            <label class="class5-field">
+              ¿Qué tipo de solución IA imaginas?
+              <select id="c5-own-solution-type">
+                <option value="">Selecciona una opción</option>
+                <option>Asistente de atención al cliente</option>
+                <option>Recomendador de productos o servicios</option>
+                <option>Generador de promociones o contenido</option>
+                <option>Organizador de pedidos o citas</option>
+                <option>Clasificador de mensajes, quejas o solicitudes</option>
+                <option>Asistente de diagnóstico inicial</option>
+                <option>Otro</option>
+              </select>
+            </label>
+          </div>
+
+          <button class="btn btn-primary btn-small" type="button" id="c5-apply-own-business">
+            Usar mi propuesta
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="class5-section" data-section="3">
+      <div class="container">
+        <span class="section-label">Nivel 2</span>
+        <h2 class="section-title">Detecta el problema real</h2>
+        <p class="section-subtitle">
+          Un buen proyecto de IA empieza con un dolor concreto del negocio.
+        </p>
+
+        <div class="class5-problem-lab">
+          <article class="class5-panel">
+            <h2>Caso seleccionado</h2>
+            <div id="c5-case-summary" class="class5-case-summary">
+              Selecciona primero un negocio en el nivel anterior.
+            </div>
+          </article>
+
+          <article class="class5-panel">
+            <h2>Problema que resolverás</h2>
+            <label class="class5-field">
+              Elige un problema:
+              <select id="c5-problem-select">
+                <option value="">Selecciona una opción</option>
+              </select>
+            </label>
+
+            <label class="class5-field">
+              Describe el problema con tus palabras:
+              <textarea id="c5-problem-text" rows="5" placeholder="Ej. La cafetería pierde tiempo respondiendo las mismas preguntas sobre bebidas, precios y recomendaciones."></textarea>
+            </label>
+
+            <label class="class5-field">
+              Usuario principal:
+              <select id="c5-user-select">
+                <option value="">Selecciona usuario</option>
+                <option>Cliente</option>
+                <option>Empleado</option>
+                <option>Vendedor</option>
+                <option>Dueño o encargado</option>
+                <option>Community manager</option>
+              </select>
+            </label>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="class5-section" data-section="4">
+      <div class="container">
+        <span class="section-label">Nivel 3</span>
+        <h2 class="section-title">Diseña el asistente IA</h2>
+        <p class="section-subtitle">
+          La IA necesita instrucciones claras. Aquí construirás el prompt principal.
+        </p>
+
+        <div class="class5-builder">
+          <div class="class5-form">
+            <label>Nombre del asistente
+              <input id="c5-name" type="text" placeholder="Ej. CaféBot, MenuBot, RefaccioBot">
+            </label>
+
+            <label>Rol del asistente
+              <input id="c5-role" type="text" placeholder="Ej. Actúa como asistente de atención para una cafetería">
+            </label>
+
+            <label>Tarea principal
+              <input id="c5-task" type="text" placeholder="Ej. Recomendar productos según gustos y presupuesto">
+            </label>
+
+            <label>Contexto del negocio
+              <textarea id="c5-context" rows="5" placeholder="Describe el negocio, productos, tipo de clientes y situación."></textarea>
+            </label>
+
+            <label>Reglas del asistente
+              <textarea id="c5-rules" rows="6" placeholder="Ej. No inventes precios. Pregunta presupuesto. Da máximo 3 opciones."></textarea>
+            </label>
+
+            <label>Formato de respuesta
+              <textarea id="c5-format" rows="5" placeholder="Ej. 1. Recomendación principal 2. Alternativa 3. Pregunta de seguimiento"></textarea>
+            </label>
+
+            <label>Criterios de calidad
+              <textarea id="c5-criteria" rows="5" placeholder="Ej. Respuesta clara, útil, breve, sin inventar datos, orientada a vender mejor."></textarea>
+            </label>
+
+            <button class="btn btn-primary btn-small" type="button" id="c5-generate">Generar prompt</button>
+          </div>
+
+          <div class="class5-output">
+            <div class="class5-output-head">
+              <strong>Prompt generado</strong>
+              <button class="btn btn-secondary btn-small" type="button" id="c5-copy">Copiar prompt</button>
+            </div>
+            <pre id="c5-prompt-output">Selecciona un negocio y completa los campos para generar el prompt.</pre>
+            <p class="class5-copy-status" id="c5-copy-status"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="class5-section" data-section="5">
+      <div class="container">
+        <span class="section-label">Nivel 4</span>
+        <h2 class="section-title">Prueba A/B: ¿mejoró la solución?</h2>
+        <p class="section-subtitle">
+          No basta con probar una vez. Un consultor IA compara una primera versión contra una versión mejorada para demostrar que la solución realmente funciona mejor.
+        </p>
+
+        <div class="class5-ab-intro">
+          <div>
+            <strong>Versión A</strong>
+            <span>Prompt inicial</span>
+          </div>
+          <i>→</i>
+          <div>
+            <strong>Detectar falla</strong>
+            <span>Qué salió mal o qué faltó</span>
+          </div>
+          <i>→</i>
+          <div>
+            <strong>Versión B</strong>
+            <span>Prompt mejorado</span>
+          </div>
+          <i>→</i>
+          <div>
+            <strong>Comparar</strong>
+            <span>Demostrar mejora</span>
+          </div>
+        </div>
+
+        <div class="class5-client-simulator class5-ab-grid">
+          <article class="class5-panel">
+            <h2>1. Situación del cliente</h2>
+            <p>Selecciona una situación sugerida o escribe una propia.</p>
+
+            <div class="class5-scenario-list" id="c5-scenario-list">
+              Selecciona un negocio para ver situaciones sugeridas.
+            </div>
+
+            <label class="class5-field">
+              Pregunta o situación del cliente:
+              <textarea id="c5-test-input" rows="6" placeholder="Ej. Quiero algo frío, dulce y barato. ¿Qué me recomiendas?"></textarea>
+            </label>
+          </article>
+
+          <article class="class5-panel">
+            <h2>2. Versión A: primera respuesta</h2>
+            <p>Copia el prompt generado, pruébalo en la IA y pega aquí la primera respuesta.</p>
+
+            <label class="class5-field">
+              Respuesta generada por la IA con el prompt inicial:
+              <textarea id="c5-test-output" rows="10" placeholder="Pega aquí la primera respuesta obtenida."></textarea>
+            </label>
+
+            <div class="class5-eval-box">
+              <strong>Evalúa la versión A</strong>
+              <label><input type="checkbox" data-ab-a> Es clara</label>
+              <label><input type="checkbox" data-ab-a> Es útil para el negocio</label>
+              <label><input type="checkbox" data-ab-a> No inventa datos</label>
+              <label><input type="checkbox" data-ab-a> Hace preguntas si falta contexto</label>
+              <label><input type="checkbox" data-ab-a> Ayuda a vender, ahorrar tiempo o atender mejor</label>
+              <p>Puntaje versión A: <b id="c5-score-a">0 / 5</b></p>
+            </div>
+          </article>
+
+          <article class="class5-panel">
+            <h2>3. Detecta la falla</h2>
+            <p>Una falla puede ser: inventar precios, dar demasiadas opciones, no preguntar datos importantes, responder muy genérico o no ayudar al negocio.</p>
+
+            <label class="class5-field">
+              ¿Qué falló o qué faltó en la versión A?
+              <textarea id="c5-bad" rows="6" placeholder="Ej. Inventó precios, no preguntó presupuesto o no explicó por qué conviene la recomendación."></textarea>
+            </label>
+
+            <label class="class5-field">
+              Mejora aplicada al prompt:
+              <textarea id="c5-fix" rows="6" placeholder="Ej. Agregué la regla: no inventes precios; si falta presupuesto, pregunta antes de recomendar."></textarea>
+            </label>
+
+            <button class="btn btn-primary btn-small" type="button" id="c5-build-improved-prompt">
+              Crear prompt mejorado
+            </button>
+          </article>
+
+          <article class="class5-panel">
+            <h2>4. Versión B: respuesta mejorada</h2>
+            <p>Copia el prompt mejorado, pruébalo en la IA y pega la nueva respuesta.</p>
+
+            <label class="class5-field">
+              Prompt mejorado:
+              <textarea id="c5-improved-prompt" rows="8" placeholder="Aquí aparecerá el prompt mejorado."></textarea>
+            </label>
+
+            <label class="class5-field">
+              Respuesta generada con el prompt mejorado:
+              <textarea id="c5-test-output-v2" rows="10" placeholder="Pega aquí la segunda respuesta obtenida."></textarea>
+            </label>
+
+            <div class="class5-eval-box">
+              <strong>Evalúa la versión B</strong>
+              <label><input type="checkbox" data-ab-b> Es clara</label>
+              <label><input type="checkbox" data-ab-b> Es útil para el negocio</label>
+              <label><input type="checkbox" data-ab-b> No inventa datos</label>
+              <label><input type="checkbox" data-ab-b> Hace preguntas si falta contexto</label>
+              <label><input type="checkbox" data-ab-b> Ayuda a vender, ahorrar tiempo o atender mejor</label>
+              <p>Puntaje versión B: <b id="c5-score-b">0 / 5</b></p>
+            </div>
+          </article>
+        </div>
+
+        <article class="class5-panel class5-comparison-panel">
+          <h2>5. Comparación final</h2>
+          <p>Explica con evidencia cuál versión funcionó mejor.</p>
+
+          <div class="class5-comparison-result">
+            <div>
+              <span>Versión A</span>
+              <strong id="c5-final-score-a">0 / 5</strong>
+            </div>
+            <div>
+              <span>Versión B</span>
+              <strong id="c5-final-score-b">0 / 5</strong>
+            </div>
+            <div>
+              <span>Mejora</span>
+              <strong id="c5-final-delta">0 puntos</strong>
+            </div>
+          </div>
+
+          <label class="class5-field">
+            ¿Por qué la versión B es mejor?
+            <textarea id="c5-good" rows="6" placeholder="Ej. La versión B ya no inventa precios, pregunta presupuesto y recomienda menos opciones pero más útiles."></textarea>
+          </label>
+        </article>
+      </div>
+    </section>
+
+    <section class="class5-section" data-section="6">
+      <div class="container">
+        <span class="section-label">Nivel 5</span>
+        <h2 class="section-title">Mejora y explica el valor</h2>
+        <p class="section-subtitle">
+          Un consultor no solo crea una IA: demuestra que resuelve un problema y mejora el negocio.
+        </p>
+
+        <div class="class5-final-grid">
+          <article class="class5-panel">
+            <h2>Diagnóstico de la prueba</h2>
+
+            <label class="class5-field">
+              ¿Qué salió bien?
+              <textarea id="c5-good" rows="5" placeholder="Ej. La IA recomendó productos acordes al presupuesto."></textarea>
+            </label>
+
+            <label class="class5-field">
+              ¿Qué falló o qué faltó?
+              <textarea id="c5-bad" rows="5" placeholder="Ej. Inventó precios o recomendó demasiadas opciones."></textarea>
+            </label>
+
+            <label class="class5-field">
+              Mejora aplicada al prompt:
+              <textarea id="c5-fix" rows="5" placeholder="Ej. Agregamos la regla: no inventar precios y pedir presupuesto si no está claro."></textarea>
+            </label>
+          </article>
+
+          <article class="class5-panel">
+            <h2>Valor para el negocio</h2>
+
+            <label class="class5-field">
+              ¿Cómo ayuda esta IA al negocio?
+              <textarea id="c5-value" rows="7" placeholder="Ej. Reduce tiempo de atención, mejora recomendaciones y ayuda a vender combos."></textarea>
+            </label>
+
+            <div class="class5-value-options">
+              <span>Puede ayudar a:</span>
+              <button type="button" data-value-chip="Ahorrar tiempo en atención al cliente.">Ahorrar tiempo</button>
+              <button type="button" data-value-chip="Vender más mediante recomendaciones y combos.">Vender más</button>
+              <button type="button" data-value-chip="Reducir errores al responder preguntas frecuentes.">Reducir errores</button>
+              <button type="button" data-value-chip="Mejorar la experiencia del cliente con respuestas rápidas.">Mejor atención</button>
+            </div>
+          </article>
+        </div>
+
+        <article class="class5-panel class5-rubric">
+          <h2>Rúbrica de evaluación</h2>
+          <table class="class5-table">
+            <thead>
+              <tr>
+                <th>Criterio</th>
+                <th>Puntos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Eligió un negocio y problema real</td><td>2</td></tr>
+              <tr><td>Definió usuario objetivo y contexto</td><td>2</td></tr>
+              <tr><td>Diseñó un prompt con rol, tarea, reglas y formato</td><td>2</td></tr>
+              <tr><td>Probó el asistente con un caso real</td><td>2</td></tr>
+              <tr><td>Explicó mejora y valor para el negocio</td><td>2</td></tr>
+              <tr><th>Total</th><th>10</th></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <section class="class5-section" data-section="7">
+      <div class="container">
+        <span class="section-label">Jefe final</span>
+        <h2 class="section-title">Evidencia final</h2>
+        <p class="section-subtitle">
+          Copia este resumen y entrégalo como evidencia de la práctica.
+        </p>
+
+        <article class="class5-panel">
+          <div class="class5-output-head">
+            <strong>Resumen de entrega</strong>
+            <button class="btn btn-primary btn-small" type="button" id="c5-generate-evidence">Generar evidencia</button>
+            <button class="btn btn-secondary btn-small" type="button" id="c5-copy-evidence">Copiar evidencia</button>
+          </div>
+
+          <pre id="c5-evidence-output">Presiona “Generar evidencia” al terminar la misión.</pre>
+          <p class="class5-copy-status" id="c5-evidence-status"></p>
+        </article>
+      </div>
+    </section>
+  
+<!-- ========================================================= -->
+<!-- SECCIÓN 10 — EVALUACIÓN FINAL DEL REPORTE CON IA -->
+<!-- ========================================================= -->
+
+<!-- ========================================================= -->
+<!-- BOTÓN FINAL PARA GENERAR PDF -->
+<!-- ========================================================= -->
+
+
+    <!-- ========================================================= -->
+    <!-- SECCIÓN 8 — EVALUACIÓN FINAL DEL REPORTE CON IA -->
+    <!-- ========================================================= -->
+
+    <section class="class5-section c5-final-evaluation-section" data-section="8" id="evaluacion-final-reporte-ia">
+      <div class="container">
+
+        <span class="section-label">Sección 8</span>
+        <h2 class="section-title">Evaluación final del reporte con IA</h2>
+        <p class="section-subtitle">
+          En esta sección usarás IA para revisar tu evidencia, recibir retroalimentación
+          y mejorar tu prompt final antes de entregar el reporte.
+        </p>
+
+        <article class="class5-panel c5-final-card">
+          <h3>Instrucción</h3>
+          <p>
+            Copia y pega tu reporte completo en una IA generativa usando el siguiente prompt.
+            La finalidad es recibir retroalimentación sobre tu trabajo, identificar áreas de mejora
+            y obtener una versión mejorada del prompt final.
+          </p>
+        </article>
+
+        <article class="class5-panel c5-final-card">
+          <div class="c5-final-card-header">
+            <h3>Prompt para evaluar el reporte de evidencia</h3>
+
+            <button class="btn btn-primary btn-small" type="button" onclick="copiarPromptEvaluacionIA()">
+              Copiar prompt
+            </button>
+          </div>
+
+          <textarea class="c5-final-prompt-box" id="prompt-evaluacion-ia" readonly>Actúa como profesor evaluador de una actividad llamada “IA Business Lab”.
+
+Voy a compartirte un reporte de evidencia elaborado por alumnos. Tu tarea es evaluarlo de manera clara, justa y constructiva.
+
+Debes revisar si los alumnos hicieron bien la actividad, qué partes están correctas, qué partes necesitan mejorar y qué tan útil es la solución para el negocio elegido.
+
+Evalúa el reporte con base en estos criterios:
+
+1. Claridad del negocio elegido.
+2. Definición del problema real.
+3. Identificación del usuario principal.
+4. Calidad del prompt inicial.
+5. Coherencia entre el problema y la tarea del asistente.
+6. Calidad de la prueba realizada.
+7. Comparación entre versión A y versión B.
+8. Identificación de fallas después de la prueba.
+9. Calidad de la mejora aplicada al prompt.
+10. Valor real para el negocio.
+11. Claridad, orden y redacción del reporte.
+12. Conclusión final.
+
+Tu respuesta debe incluir:
+
+1. Evaluación general del reporte.
+2. Calificación del 1 al 10.
+3. Tabla con los criterios evaluados y una breve justificación.
+4. Qué hicieron bien los alumnos.
+5. Qué faltó o qué mejorarías.
+6. Comentarios sobre la versión A y la versión B.
+7. Sugerencias concretas para mejorar el reporte.
+8. Un prompt mejor estructurado basado en el reporte de los alumnos para obtener mejores respuestas del asistente.
+9. Retroalimentación final escrita de forma clara y respetuosa para los alumnos.
+
+Reglas importantes:
+
+- No seas demasiado duro, pero sí honesto.
+- No inventes información que no aparezca en el reporte.
+- Si falta información, menciónalo como área de mejora.
+- La retroalimentación debe ayudar a los alumnos a mejorar.
+- Usa lenguaje claro, como si explicaras a estudiantes.
+- El prompt mejorado debe estar completo y listo para copiar y pegar.
+
+Aquí está el reporte de evidencia que debes evaluar:
+
+[PEGA AQUÍ EL REPORTE COMPLETO DEL EQUIPO]</textarea>
+        </article>
+
+        <article class="class5-panel c5-final-card">
+          <h3>Versión más guiada para los alumnos</h3>
+
+          <p>
+            Pega tu reporte completo en una IA y pídele que lo evalúe usando el prompt anterior.
+          </p>
+
+          <p>Después de recibir la evaluación, responde:</p>
+
+          <ol class="c5-final-list">
+            <li>¿Qué calificación obtuvieron?</li>
+            <li>¿Qué fue lo mejor de su trabajo?</li>
+            <li>¿Qué deben mejorar?</li>
+            <li>¿Qué cambiarían de su prompt final?</li>
+            <li>Copien el prompt mejorado que les sugirió la IA.</li>
+          </ol>
+        </article>
+
+        <article class="class5-panel c5-final-card">
+          <h3>Cómo quedaría integrada en la evidencia</h3>
+
+          <h4>Sección 8 — Evaluación final con IA</h4>
+
+          <p>
+            En esta sección, los alumnos deberán usar IA para evaluar su propio reporte.
+          </p>
+
+          <h4>Objetivo</h4>
+
+          <p>
+            Validar si el reporte está bien construido, si el prompt resuelve el problema del negocio
+            y si la mejora aplicada después de la prueba A/B realmente aumenta la calidad de la respuesta.
+          </p>
+
+          <h4>Actividad</h4>
+
+          <ol class="c5-final-list">
+            <li>Copia tu reporte completo.</li>
+            <li>Pégalo en una IA generativa.</li>
+            <li>Usa el prompt de evaluación.</li>
+            <li>Lee la retroalimentación.</li>
+            <li>
+              Agrega al final de tu evidencia:
+              <ul>
+                <li>Calificación obtenida.</li>
+                <li>Criterios evaluados.</li>
+                <li>Principales fortalezas.</li>
+                <li>Principales mejoras.</li>
+                <li>Prompt mejorado sugerido por la IA.</li>
+              </ul>
+            </li>
+          </ol>
+        </article>
+
+        <article class="class5-panel c5-final-card">
+          <h3>Recomendación para tu clase</h3>
+
+          <p>
+            Esta sección está muy bien porque convierte la evidencia en un ciclo completo:
+          </p>
+
+          <div class="c5-final-flow">
+            Problema real → Prompt inicial → Prueba → Falla detectada → Prompt mejorado → Evaluación final → Nueva mejora
+          </div>
+
+          <p>
+            Eso hace que los alumnos no solo usen IA, sino que aprendan a probar, corregir
+            y justificar sus decisiones.
+          </p>
+        </article>
+
+        
+        <article class="class5-panel c5-final-card">
+          <h3>Análisis final recibido de la IA</h3>
+
+          <p>
+            Pega aquí solamente la evaluación o análisis que te entregó la IA.
+            Este será el único contenido que se usará para generar el PDF.
+          </p>
+
+          <textarea
+            class="c5-final-prompt-box"
+            id="c5-analisis-final-ia"
+            placeholder="Pega aquí el análisis final de la IA..."
+            style="background:#ffffff; color:#111827;"
+          ></textarea>
+        </article>
+
+<article class="class5-panel c5-final-card c5-pdf-card">
+          <h3>Descargar reporte final</h3>
+
+          <p>
+            Cuando pegues el análisis final de la IA, da clic en el botón para generar un PDF simple solo con ese texto.
+          </p>
+
+          <button class="btn btn-primary" type="button" onclick="generarPDFReporteFinal()">
+            Descargar análisis en PDF
+          </button>
+
+          <p class="c5-pdf-note">
+            El PDF solo incluirá el texto del análisis final, sin diseño ni elementos de la página.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="main.js"></script>
+  <script src="clase5.js"></script>
+</body>
+</html>

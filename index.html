@@ -5,6 +5,193 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inteligencia Artificial · Curso</title>
   <link rel="stylesheet" href="styles.css">
+
+<style>
+/* ========================================================= */
+/* SECCIÓN FINAL — EVALUACIÓN FINAL CON IA */
+/* ========================================================= */
+
+.evaluacion-final-section {
+  margin-top: 48px;
+  padding: 32px;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+}
+
+.section-header {
+  margin-bottom: 24px;
+}
+
+.section-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.section-header h2 {
+  margin: 0 0 10px;
+  font-size: 28px;
+  color: #111827;
+}
+
+.section-header p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.info-card,
+.steps-card,
+.prompt-card,
+.student-response-card {
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 18px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+.info-card h3,
+.steps-card h3,
+.prompt-card h3,
+.student-response-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+.info-card p,
+.steps-card li,
+.student-response-card p {
+  color: #374151;
+  line-height: 1.6;
+}
+
+.steps-card ol {
+  padding-left: 22px;
+}
+
+.steps-card ul {
+  margin-top: 8px;
+  padding-left: 20px;
+}
+
+.prompt-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+#prompt-evaluacion {
+  width: 100%;
+  min-height: 520px;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid #d1d5db;
+  background: #111827;
+  color: #f9fafb;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.btn-copy {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-copy:hover {
+  background: #1d4ed8;
+}
+
+.student-response-card label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.student-response-card input,
+.student-response-card textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.student-response-card textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+/* ========================================================= */
+/* BOTÓN PDF */
+/* ========================================================= */
+
+.pdf-section {
+  margin-top: 40px;
+  padding: 28px;
+  border-radius: 20px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.pdf-section h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.pdf-section p {
+  margin-bottom: 20px;
+  color: #4b5563;
+}
+
+.btn-pdf {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-pdf:hover {
+  background: #374151;
+}
+
+@media print {
+  .pdf-section {
+    display: none;
+  }
+}
+</style>
+
 </head>
 <body data-page="home">
   <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Mostrar/ocultar menú">☰</button>
@@ -12,8 +199,8 @@
     <p class="course-kicker">Curso</p>
     <h2 class="course-title"><a href="index.html">Inteligencia Artificial</a></h2>
     <div class="progress-panel">
-      <p><span>Clases disponibles</span><strong>4 / 30 aprox.</strong></p>
-      <p><span>Semana actual</span><strong>Semana 1</strong></p>
+      <p><span>Clases disponibles</span><strong>5 / 30 aprox.</strong></p>
+      <p><span>Semana actual</span><strong>Semana 2</strong></p>
       <p><span>Estado</span><strong>Curso en desarrollo</strong></p>
     </div>
     <p class="week-label">Semana 1</p>
@@ -33,6 +220,11 @@
       <strong>Clase 4</strong>
       Áreas de aplicación de la IA
     </a>
+    <p class="week-label">Semana 2</p>
+    <a class="lesson-tab " href="clase5.html" data-lesson="clase-5">
+      <strong>Clase 5</strong>
+      IA Business Lab
+    </a>
   </aside>
   <main class="course-home">
     <section class="home-hero visible">
@@ -41,7 +233,7 @@
         <h1 class="hero-title">Inteligencia Artificial</h1>
         <p class="hero-subtitle">Plataforma progresiva del curso: teoría, práctica, actividades y tareas por clase.</p>
         <div class="hero-meta">
-          <div class="meta-item"><strong>Clases disponibles</strong>4 / 30 aprox.</div>
+          <div class="meta-item"><strong>Clases disponibles</strong>5 / 30 aprox.</div>
           <div class="meta-item"><strong>Semana actual</strong>Semana 1</div>
           <div class="meta-item"><strong>Estado</strong>Curso en desarrollo</div>
         </div>
@@ -55,5 +247,222 @@
     </section>
   </main>
   <script src="main.js"></script>
+
+<!-- ========================================================= -->
+<!-- SECCIÓN FINAL — EVALUACIÓN FINAL DEL REPORTE CON IA -->
+<!-- ========================================================= -->
+
+<section class="evaluacion-final-section" id="evaluacion-final">
+  <div class="section-header">
+    <span class="section-badge">Sección final</span>
+    <h2>Evaluación final del reporte con IA</h2>
+    <p>
+      En esta última sección usarás IA para revisar tu evidencia, recibir retroalimentación
+      y mejorar tu prompt final antes de entregar el reporte.
+    </p>
+  </div>
+
+  <div class="info-card">
+    <h3>Objetivo de esta sección</h3>
+    <p>
+      Validar si tu reporte está bien construido, si el asistente resuelve un problema real
+      del negocio y si la mejora aplicada después de la prueba A/B realmente aumenta la
+      calidad de la respuesta.
+    </p>
+  </div>
+
+  <div class="steps-card">
+    <h3>Instrucciones</h3>
+
+    <ol>
+      <li>Copia todo tu reporte de evidencia.</li>
+      <li>Pégalo en una IA generativa como ChatGPT, Gemini, Claude o Copilot.</li>
+      <li>Usa el prompt de evaluación que aparece abajo.</li>
+      <li>Lee la retroalimentación que te entregue la IA.</li>
+      <li>
+        Agrega a tu evidencia final:
+        <ul>
+          <li>Calificación obtenida.</li>
+          <li>Criterios evaluados.</li>
+          <li>Principales fortalezas.</li>
+          <li>Principales áreas de mejora.</li>
+          <li>Prompt mejorado sugerido por la IA.</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <div class="prompt-card">
+    <div class="prompt-card-header">
+      <h3>Prompt para evaluar tu reporte de evidencia</h3>
+      <button class="btn-copy" type="button" onclick="copiarPromptEvaluacion()">
+        Copiar prompt
+      </button>
+    </div>
+
+    <textarea id="prompt-evaluacion" readonly>
+Actúa como profesor evaluador de una actividad llamada “IA Business Lab”.
+
+Voy a compartirte un reporte de evidencia elaborado por alumnos. Tu tarea es evaluarlo de manera clara, justa y constructiva.
+
+Debes revisar si los alumnos hicieron bien la actividad, qué partes están correctas, qué partes necesitan mejorar y qué tan útil es la solución para el negocio elegido.
+
+Evalúa el reporte con base en estos criterios:
+
+1. Claridad del negocio elegido.
+2. Definición del problema real.
+3. Identificación del usuario principal.
+4. Calidad del prompt inicial.
+5. Coherencia entre el problema y la tarea del asistente.
+6. Calidad de la prueba realizada.
+7. Comparación entre versión A y versión B.
+8. Identificación de fallas después de la prueba.
+9. Calidad de la mejora aplicada al prompt.
+10. Valor real para el negocio.
+11. Claridad, orden y redacción del reporte.
+12. Conclusión final.
+
+Tu respuesta debe incluir:
+
+1. Evaluación general del reporte.
+2. Calificación del 1 al 10.
+3. Tabla con los criterios evaluados y una breve justificación.
+4. Qué hicieron bien los alumnos.
+5. Qué faltó o qué mejorarías.
+6. Comentarios sobre la versión A y la versión B.
+7. Sugerencias concretas para mejorar el reporte.
+8. Un prompt mejor estructurado basado en el reporte de los alumnos para obtener mejores respuestas del asistente.
+9. Retroalimentación final escrita de forma clara y respetuosa para los alumnos.
+
+Reglas importantes:
+
+- No seas demasiado duro, pero sí honesto.
+- No inventes información que no aparezca en el reporte.
+- Si falta información, menciónalo como área de mejora.
+- La retroalimentación debe ayudar a los alumnos a mejorar.
+- Usa lenguaje claro, como si explicaras a estudiantes.
+- El prompt mejorado debe estar completo y listo para copiar y pegar.
+
+Aquí está el reporte de evidencia que debes evaluar:
+
+[PEGA AQUÍ EL REPORTE COMPLETO DEL EQUIPO]
+    </textarea>
+  </div>
+
+  <div class="student-response-card">
+    <h3>Resultado de la evaluación</h3>
+    <p>
+      Después de usar el prompt anterior, completa esta parte con la respuesta que te dio la IA.
+    </p>
+
+    <label for="calificacion-final">Calificación obtenida</label>
+    <input
+      id="calificacion-final"
+      type="text"
+      placeholder="Ejemplo: 8 / 10"
+    />
+
+    <label for="fortalezas-finales">Principales fortalezas</label>
+    <textarea
+      id="fortalezas-finales"
+      placeholder="Escribe aquí qué partes del reporte estuvieron bien..."
+    ></textarea>
+
+    <label for="mejoras-finales">Principales áreas de mejora</label>
+    <textarea
+      id="mejoras-finales"
+      placeholder="Escribe aquí qué partes se pueden mejorar..."
+    ></textarea>
+
+    <label for="prompt-mejorado-final">Prompt mejorado sugerido por la IA</label>
+    <textarea
+      id="prompt-mejorado-final"
+      placeholder="Pega aquí el prompt mejorado que te sugirió la IA..."
+    ></textarea>
+  </div>
+</section>
+
+<!-- ========================================================= -->
+<!-- BOTÓN FINAL PARA GENERAR PDF -->
+<!-- ========================================================= -->
+
+<section class="pdf-section">
+  <h2>Descargar reporte final</h2>
+
+  <p>
+    Cuando termines tu evidencia, da clic en el botón para generar un PDF con tu reporte final.
+  </p>
+
+  <button class="btn-pdf" type="button" onclick="generarPDF()">
+    Descargar reporte en PDF
+  </button>
+</section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+  function copiarPromptEvaluacion() {
+    const prompt = document.getElementById("prompt-evaluacion");
+
+    if (!prompt) {
+      alert("No se encontró el prompt de evaluación.");
+      return;
+    }
+
+    prompt.select();
+    prompt.setSelectionRange(0, 99999);
+
+    navigator.clipboard
+      .writeText(prompt.value)
+      .then(() => {
+        alert("Prompt copiado correctamente.");
+      })
+      .catch(() => {
+        alert("No se pudo copiar automáticamente. Selecciona el texto y cópialo manualmente.");
+      });
+  }
+
+  function generarPDF() {
+    let reporte = document.getElementById("reporte-final");
+
+    if (!reporte) {
+      const main = document.querySelector("main");
+
+      if (main) {
+        main.id = "reporte-final";
+        reporte = main;
+      }
+    }
+
+    if (!reporte) {
+      reporte = document.body;
+    }
+
+    const opciones = {
+      margin: 10,
+      filename: "evidencia-clase-5-ia-business-lab.pdf",
+      image: {
+        type: "jpeg",
+        quality: 0.98
+      },
+      html2canvas: {
+        scale: 2,
+        useCORS: true
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait"
+      }
+    };
+
+    html2pdf()
+      .set(opciones)
+      .from(reporte)
+      .save();
+  }
+</script>
+
 </body>
 </html>

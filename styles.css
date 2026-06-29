@@ -6334,3 +6334,1188 @@ CLASE 3 · VERSION INFOGRAFIA
   min-width: 0;
   max-width: 100%;
 }
+
+/* =============================================
+   CLASE 5 · IA BUSINESS LAB
+   ============================================= */
+.class5-page {
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 28%),
+    radial-gradient(circle at 80% 10%, rgba(139, 92, 246, 0.15), transparent 30%),
+    var(--bg-primary);
+}
+
+.class5-section {
+  padding: 80px 0;
+}
+
+.class5-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 24px;
+  align-items: stretch;
+  background: linear-gradient(135deg, rgba(59,130,246,0.13), rgba(139,92,246,0.13), rgba(6,182,212,0.08));
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 34px;
+  box-shadow: var(--shadow);
+}
+
+.class5-badge {
+  display: inline-flex;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(6, 182, 212, 0.12);
+  color: var(--cyan);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.class5-hero h1 {
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  margin-bottom: 18px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.class5-hero p {
+  color: var(--text-secondary);
+  font-size: 1.14rem;
+  max-width: 720px;
+}
+
+.class5-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.class5-meta span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+}
+
+.class5-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.class5-xp-card {
+  background: rgba(10, 14, 26, 0.72);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.class5-xp-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.class5-xp-card strong {
+  font-size: 3rem;
+  line-height: 1;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.class5-progress-track {
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+  margin: 18px 0 12px;
+  border: 1px solid var(--border);
+}
+
+.class5-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--gradient);
+  transition: width 0.35s ease;
+}
+
+.class5-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-top: 24px;
+}
+
+.class5-panel h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.class5-panel p {
+  color: var(--text-secondary);
+}
+
+.class5-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  align-items: center;
+}
+
+.class5-flow span {
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(59,130,246,0.12);
+  color: var(--text-primary);
+  border: 1px solid rgba(59,130,246,0.25);
+  font-weight: 700;
+}
+
+.class5-flow i {
+  color: var(--cyan);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.class5-mission-grid,
+.class5-business-grid,
+.class5-problem-lab,
+.class5-client-simulator,
+.class5-final-grid {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.class5-mission-grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.class5-mission-card {
+  position: relative;
+  display: block;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.035);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.class5-mission-card:hover,
+.class5-mission-card.completed {
+  transform: translateY(-3px);
+  border-color: rgba(6,182,212,0.4);
+  background: rgba(6,182,212,0.08);
+}
+
+.class5-mission-card input {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--cyan);
+}
+
+.class5-mission-icon {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.class5-mission-card strong {
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.class5-mission-card small {
+  color: var(--cyan);
+  font-weight: 800;
+}
+
+.class5-mission-card p {
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.class5-unlock {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(16,185,129,0.35);
+  background: rgba(16,185,129,0.10);
+}
+
+.class5-unlock strong {
+  display: block;
+  color: var(--success);
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+
+.class5-business-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.class5-business-card {
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+  min-height: 360px;
+  padding: 24px;
+  border-radius: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.class5-business-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,14,26,0.96), rgba(10,14,26,0.55), rgba(10,14,26,0.12));
+  z-index: 1;
+}
+
+.class5-business-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.class5-business-card span,
+.class5-business-card strong,
+.class5-business-card p {
+  position: relative;
+  z-index: 2;
+}
+
+.class5-business-card span {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+
+.class5-business-card strong {
+  display: block;
+  font-size: 1.35rem;
+  margin-bottom: 8px;
+}
+
+.class5-business-card p {
+  color: var(--text-secondary);
+}
+
+.class5-business-card:hover,
+.class5-business-card.active {
+  transform: translateY(-5px);
+  border-color: rgba(6,182,212,0.55);
+  box-shadow: var(--shadow);
+}
+
+.class5-selection-panel,
+.class5-case-summary {
+  margin-top: 22px;
+  padding: 20px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.class5-selection-panel strong {
+  display: block;
+  color: var(--cyan);
+  margin-bottom: 8px;
+}
+
+.class5-problem-lab,
+.class5-client-simulator,
+.class5-final-grid {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.class5-case-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.class5-case-card span {
+  font-size: 2.2rem;
+}
+
+.class5-case-card strong {
+  display: block;
+  color: var(--cyan);
+  margin-bottom: 8px;
+}
+
+.class5-field {
+  display: block;
+  color: var(--text-secondary);
+  font-weight: 700;
+  margin-top: 16px;
+}
+
+.class5-field input,
+.class5-field textarea,
+.class5-field select,
+.class5-form input,
+.class5-form textarea {
+  width: 100%;
+  margin-top: 7px;
+  background: rgba(10,14,26,0.7);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-primary);
+  padding: 12px 14px;
+  resize: vertical;
+  font: inherit;
+}
+
+.class5-field select {
+  appearance: none;
+}
+
+.class5-field input:focus,
+.class5-field textarea:focus,
+.class5-field select:focus,
+.class5-form input:focus,
+.class5-form textarea:focus {
+  outline: none;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(6,182,212,0.12);
+}
+
+.class5-builder {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 22px;
+}
+
+.class5-form,
+.class5-output {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.class5-form label {
+  display: block;
+  color: var(--text-secondary);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.class5-output-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.class5-output pre,
+#c5-evidence-output {
+  min-height: 420px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: rgba(10,14,26,0.88);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  color: #dbeafe;
+  font-size: 0.92rem;
+  overflow-x: auto;
+}
+
+#c5-evidence-output {
+  min-height: 520px;
+}
+
+.class5-copy-status {
+  margin-top: 10px;
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+.class5-scenario-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.class5-scenario-btn {
+  text-align: left;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.class5-scenario-btn:hover {
+  border-color: var(--cyan);
+  background: rgba(6,182,212,0.08);
+}
+
+.class5-value-options {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.class5-value-options span {
+  width: 100%;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.class5-value-options button {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: var(--text-primary);
+  border-radius: 999px;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.class5-value-options button:hover {
+  border-color: var(--cyan);
+  background: rgba(6,182,212,0.08);
+}
+
+.class5-rubric {
+  margin-top: 24px;
+}
+
+.class5-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.class5-table th,
+.class5-table td {
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.class5-table th {
+  color: var(--cyan);
+  background: rgba(6,182,212,0.08);
+}
+
+.class5-table td:last-child,
+.class5-table th:last-child {
+  text-align: center;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .class5-hero,
+  .class5-builder {
+    grid-template-columns: 1fr;
+  }
+
+  .class5-output pre,
+  #c5-evidence-output {
+    min-height: 320px;
+  }
+
+  .class5-business-card {
+    min-height: 300px;
+  }
+}
+
+
+/* Clase 5 · Propuesta propia */
+.class5-own-business-panel {
+  margin-top: 22px;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(6,182,212,0.28);
+  background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(139,92,246,0.08));
+}
+
+.class5-own-business-panel h3 {
+  margin-bottom: 8px;
+  color: var(--cyan);
+  font-size: 1.35rem;
+}
+
+.class5-own-business-panel p {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.class5-own-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.class5-business-card-own {
+  border-color: rgba(16,185,129,0.35);
+}
+
+.class5-business-card-own:hover,
+.class5-business-card-own.active {
+  border-color: rgba(16,185,129,0.75);
+}
+
+
+/* Clase 5 · Prueba A/B */
+.class5-ab-intro {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 12px;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.class5-ab-intro div {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+}
+
+.class5-ab-intro strong {
+  display: block;
+  color: var(--cyan);
+  margin-bottom: 4px;
+}
+
+.class5-ab-intro span {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.class5-ab-intro i {
+  color: var(--cyan);
+  font-style: normal;
+  font-weight: 900;
+  text-align: center;
+}
+
+.class5-ab-grid {
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+}
+
+.class5-eval-box {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(6,182,212,0.06);
+  border: 1px solid rgba(6,182,212,0.22);
+}
+
+.class5-eval-box strong {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--cyan);
+}
+
+.class5-eval-box label {
+  display: block;
+  color: var(--text-secondary);
+  margin: 8px 0;
+  cursor: pointer;
+}
+
+.class5-eval-box input {
+  margin-right: 8px;
+  accent-color: var(--cyan);
+}
+
+.class5-eval-box p {
+  margin-top: 12px;
+  font-weight: 800;
+}
+
+.class5-comparison-panel {
+  border-color: rgba(16,185,129,0.28);
+}
+
+.class5-comparison-result {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.class5-comparison-result div {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.class5-comparison-result span {
+  display: block;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.class5-comparison-result strong {
+  display: block;
+  font-size: 1.6rem;
+  color: var(--text-primary);
+}
+
+.class5-comparison-result strong.is-positive {
+  color: var(--success);
+}
+
+.class5-comparison-result strong.is-negative {
+  color: var(--error);
+}
+
+@media (max-width: 900px) {
+  .class5-ab-intro,
+  .class5-comparison-result {
+    grid-template-columns: 1fr;
+  }
+
+  .class5-ab-intro i {
+    display: none;
+  }
+}
+
+/* FIX Clase 5 · Alineación horizontal Prueba A/B */
+.class5-ab-intro {
+  display: grid !important;
+  grid-template-columns: minmax(180px, 1fr) 40px minmax(180px, 1fr) 40px minmax(180px, 1fr) 40px minmax(180px, 1fr) !important;
+  gap: 18px !important;
+  align-items: stretch !important;
+  margin: 28px 0 !important;
+}
+
+.class5-ab-intro div {
+  min-height: 140px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 28px;
+}
+
+.class5-ab-intro i {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  height: 100%;
+  min-height: 140px;
+  color: var(--cyan);
+}
+
+/* En pantallas medianas se mantiene legible en 2 filas */
+@media (max-width: 1200px) {
+  .class5-ab-intro {
+    grid-template-columns: minmax(220px, 1fr) 40px minmax(220px, 1fr) !important;
+  }
+}
+
+/* En celular se apila verticalmente */
+@media (max-width: 760px) {
+  .class5-ab-intro {
+    grid-template-columns: 1fr !important;
+  }
+
+  .class5-ab-intro i {
+    min-height: auto;
+    height: auto;
+    transform: rotate(90deg);
+    padding: 4px 0;
+  }
+
+  .class5-ab-intro div {
+    min-height: auto;
+  }
+}
+
+
+/* ========================================================= */
+/* SECCIÓN 10 — EVALUACIÓN FINAL CON IA */
+/* ========================================================= */
+
+.evaluacion-final-ia {
+  margin-top: 48px;
+}
+
+.evaluacion-final-ia .section-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.evaluacion-final-ia h2 {
+  margin-bottom: 20px;
+}
+
+.prompt-evaluacion-textarea {
+  width: 100%;
+  min-height: 560px;
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid #d1d5db;
+  background: #111827;
+  color: #f9fafb;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.flow-box {
+  margin: 16px 0;
+  padding: 18px;
+  border-radius: 14px;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.pdf-final-section {
+  margin-top: 32px;
+}
+
+.pdf-card {
+  text-align: center;
+}
+
+.pdf-card h2 {
+  margin-top: 0;
+}
+
+.pdf-card p {
+  margin-bottom: 20px;
+}
+
+@media print {
+  .pdf-final-section,
+  .sidebar-toggle,
+  .course-sidebar {
+    display: none !important;
+  }
+}
+
+
+/* ========================================================= */
+/* CLASE 5 · EVALUACIÓN FINAL DEL REPORTE CON IA */
+/* ========================================================= */
+
+.c5-final-evaluation-section .container {
+  max-width: 1100px;
+}
+
+.c5-final-card {
+  margin-top: 22px;
+}
+
+.c5-final-card h3 {
+  margin-top: 0;
+}
+
+.c5-final-card h4 {
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.c5-final-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.c5-final-prompt-box {
+  width: 100%;
+  min-height: 560px;
+  margin-top: 12px;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #0f172a;
+  color: #f8fafc;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.c5-final-list {
+  margin-top: 14px;
+  padding-left: 24px;
+  line-height: 1.8;
+}
+
+.c5-final-list ul {
+  margin-top: 8px;
+  padding-left: 22px;
+}
+
+.c5-final-flow {
+  margin: 18px 0;
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  color: var(--text);
+  font-weight: 800;
+  line-height: 1.7;
+}
+
+.c5-pdf-card {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.10), rgba(16, 185, 129, 0.08));
+}
+
+.c5-pdf-note {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media print {
+  body {
+    background: #ffffff !important;
+  }
+
+  .course-sidebar,
+  .sidebar-toggle,
+  .nav-controls,
+  .section-indicator,
+  #progress-bar,
+  .c5-pdf-card {
+    display: none !important;
+  }
+
+  .lesson-page {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  .class5-section {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    page-break-inside: avoid;
+  }
+
+  .class5-section:not(.visible) {
+    display: block !important;
+  }
+
+  .class5-panel,
+  .activity-card,
+  .card {
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  textarea {
+    border: 1px solid #999 !important;
+    color: #000 !important;
+    background: #fff !important;
+  }
+}
+
+
+/* FIX Clase 5 · Nivel 1 en una sola fila */
+#c5-business-grid.class5-business-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  align-items: stretch;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+#c5-business-grid.class5-business-grid .class5-business-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#c5-business-grid.class5-business-grid .class5-business-card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+#c5-business-grid.class5-business-grid .class5-business-card span {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 980px) {
+  #c5-business-grid.class5-business-grid {
+    overflow-x: auto;
+  }
+
+  #c5-business-grid.class5-business-grid .class5-business-card {
+    min-width: 260px;
+  }
+}
+
+/* ========================================================= */
+/* FIX Clase 5 · Nivel 1 tarjetas con texto fuera de imagen */
+/* ========================================================= */
+
+#c5-business-grid.class5-business-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+  align-items: stretch !important;
+}
+
+#c5-business-grid .class5-business-card {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 460px !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  border-radius: 24px !important;
+}
+
+#c5-business-grid .class5-business-card::before,
+#c5-business-grid .class5-business-card::after {
+  display: none !important;
+  content: none !important;
+}
+
+#c5-business-grid .class5-business-card img {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: 185px !important;
+  min-height: 185px !important;
+  max-height: 185px !important;
+  object-fit: cover !important;
+  border-radius: 22px 22px 0 0 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  margin: 0 !important;
+  display: block !important;
+}
+
+#c5-business-grid .class5-business-card span,
+#c5-business-grid .class5-business-card strong,
+#c5-business-grid .class5-business-card p {
+  position: relative !important;
+  z-index: 2 !important;
+  margin-left: 24px !important;
+  margin-right: 24px !important;
+}
+
+#c5-business-grid .class5-business-card span {
+  margin-top: 24px !important;
+  margin-bottom: 12px !important;
+  font-size: 38px !important;
+  line-height: 1 !important;
+}
+
+#c5-business-grid .class5-business-card strong {
+  display: block !important;
+  margin-bottom: 12px !important;
+  color: #ffffff !important;
+  font-size: 30px !important;
+  line-height: 1.1 !important;
+}
+
+#c5-business-grid .class5-business-card p {
+  color: rgba(226, 232, 240, 0.88) !important;
+  font-size: 18px !important;
+  line-height: 1.35 !important;
+  margin-bottom: 24px !important;
+}
+
+@media (max-width: 1200px) {
+  #c5-business-grid.class5-business-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  #c5-business-grid.class5-business-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #c5-business-grid .class5-business-card {
+    min-height: auto !important;
+  }
+}
+
+
+/* ========================================================= */
+/* FIX Clase 5 · Nivel 4 en 4 filas */
+/* ========================================================= */
+
+/* Nivel 4: normalmente corresponde a la sección de crear/mejorar el asistente */
+.class5-section[data-section="5"] .card-grid,
+.class5-section[data-section="5"] .class5-grid,
+.class5-section[data-section="5"] .class5-level-grid,
+.class5-section[data-section="5"] .class5-prompt-grid,
+.class5-section[data-section="5"] .class5-options-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 18px !important;
+}
+
+/* Tarjetas internas del Nivel 4 */
+.class5-section[data-section="5"] .card,
+.class5-section[data-section="5"] .class5-panel,
+.class5-section[data-section="5"] .activity-card,
+.class5-section[data-section="5"] .class5-option-card,
+.class5-section[data-section="5"] .class5-prompt-card {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Si hay tarjetas tipo botón, también las vuelve fila completa */
+.class5-section[data-section="5"] button,
+.class5-section[data-section="5"] .btn-card {
+  max-width: 100% !important;
+}
+
+/* Mejora lectura de textos largos en Nivel 4 */
+.class5-section[data-section="5"] textarea,
+.class5-section[data-section="5"] input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+
+/* ========================================================= */
+/* FIX Clase 5 · Prueba A/B en filas responsivas */
+/* ========================================================= */
+
+.class5-client-simulator.class5-ab-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 24px !important;
+  align-items: stretch !important;
+}
+
+/* Cada bloque ocupa todo el ancho */
+.class5-client-simulator.class5-ab-grid .class5-panel {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Acomodar mejor el contenido interno */
+.class5-client-simulator.class5-ab-grid .class5-panel h2 {
+  margin-top: 0 !important;
+}
+
+/* Textareas más cómodos */
+.class5-client-simulator.class5-ab-grid textarea {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  resize: vertical !important;
+}
+
+/* Caja de evaluación más compacta y legible */
+.class5-client-simulator.class5-ab-grid .class5-eval-box {
+  margin-top: 20px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Checkboxes en filas limpias */
+.class5-client-simulator.class5-ab-grid .class5-eval-box label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+/* Evita que los inputs checkbox se vayan al centro o se deformen */
+.class5-client-simulator.class5-ab-grid .class5-eval-box input[type="checkbox"] {
+  width: auto !important;
+  min-width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+}
+
+/* En pantallas grandes se mantiene en una sola columna para lectura cómoda */
+@media (min-width: 900px) {
+  .class5-client-simulator.class5-ab-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* En móvil conserva buen espaciado */
+@media (max-width: 700px) {
+  .class5-client-simulator.class5-ab-grid {
+    gap: 18px !important;
+  }
+
+  .class5-client-simulator.class5-ab-grid .class5-panel {
+    padding: 22px !important;
+  }
+}
+
