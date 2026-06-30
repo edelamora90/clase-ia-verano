@@ -8573,3 +8573,25 @@ CLASE 3 · VERSION INFOGRAFIA
 .class6v2-risk-table-wrap {
   overflow-x: auto;
 }
+
+/* Clase 6 · Variables detectadas desde contexto libre */
+.class6v2-small-note {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.class6v2-variable-item span {
+  line-height: 1.35;
+}
+
+/* Clase 6 · Variables detectadas desde contexto libre */
+.class6v2-small-note {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.class6v2-variable-item span {
+  line-height: 1.35;
+}
