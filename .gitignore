@@ -1,1 +1,6 @@
 .DS_Store
+
+# Backups locales de edición
+backup_clase*/
+backups_clase*/
+*.backup.*

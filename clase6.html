@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clase 6 · IA Data Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="clase6" data-active-lesson="clase-6">
+  <div id="progress-bar"></div>
+
+  <div class="nav-controls">
+    <button class="nav-btn" id="btn-prev" title="Sección anterior" disabled>&#8592;</button>
+    <button class="nav-btn" id="btn-next" title="Siguiente sección">&#8594;</button>
+  </div>
+
+  <div class="section-indicator" id="section-indicator">1 / 1</div>
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Mostrar/ocultar menú">☰</button>
+
+  <aside class="course-sidebar" id="course-sidebar" aria-label="Navegación del curso">
+    <p class="course-kicker">Curso</p>
+    <h2 class="course-title"><a href="index.html">Inteligencia Artificial</a></h2>
+
+    <div class="progress-panel">
+      <p><span>Clases disponibles</span><strong>6 / 30 aprox.</strong></p>
+      <p><span>Semana actual</span><strong>Semana 2</strong></p>
+      <p><span>Estado</span><strong>Laboratorio de datos</strong></p>
+    </div>
+
+    <p class="week-label">Semana 1</p>
+
+    <a class="lesson-tab" href="clase1.html" data-lesson="clase-1">
+      <strong>Clase 1</strong>
+      Introducción a la Inteligencia Artificial
+    </a>
+
+    <a class="lesson-tab" href="clase2.html" data-lesson="clase-2">
+      <strong>Clase 2</strong>
+      Agentes inteligentes y toma de decisiones
+    </a>
+
+    <a class="lesson-tab" href="clase3.html" data-lesson="clase-3">
+      <strong>Clase 3</strong>
+      Espacios de estado y técnicas de búsqueda
+    </a>
+
+    <a class="lesson-tab" href="clase4.html" data-lesson="clase-4">
+      <strong>Clase 4</strong>
+      Áreas de aplicación de la IA
+    </a>
+
+    <p class="week-label">Semana 2</p>
+
+    <a class="lesson-tab" href="clase5.html" data-lesson="clase-5">
+      <strong>Clase 5</strong>
+      IA Business Lab
+    </a>
+
+    <a class="lesson-tab active" href="clase6.html" data-lesson="clase-6">
+      <strong>Clase 6</strong>
+      IA Data Lab
+    </a>
+  </aside>
+
+  <main class="lesson-page class6-page" id="clase-6">
+
+    <section class="class6-section visible" data-section="1">
+      <div class="container">
+        <div class="class6-hero class6v2-hero">
+          <div>
+            <span class="class6-badge">Laboratorio guiado de datos</span>
+            <h1>Clase 6: IA Data Lab</h1>
+            <p>
+              Hoy aprenderás a responder una pregunta clave: <strong>¿qué datos necesita realmente una IA?</strong>
+              La meta no es pedir muchos datos, sino elegir los datos correctos.
+            </p>
+
+            <div class="class6-meta">
+              <span>Semana 2</span>
+              <span>Duración: 2 horas</span>
+              <span>XP total: 100</span>
+              <span>Insignia: Arquitecto de Datos IA</span>
+            </div>
+
+            <div class="class6-actions">
+              <button class="btn btn-primary btn-small" type="button" data-c6-start>Iniciar laboratorio</button>
+              <button class="btn btn-secondary btn-small" type="button" data-c6-reset>Reiniciar progreso</button>
+            </div>
+          </div>
+
+          <aside class="class6-xp-card">
+            <p class="class6-xp-label">Progreso de misión</p>
+            <strong id="c6-xp-value">0 XP</strong>
+            <div class="class6-progress-track">
+              <div class="class6-progress-fill" id="c6-progress-fill"></div>
+            </div>
+            <p id="c6-progress-text">Completa los retos para desbloquear la insignia.</p>
+          </aside>
+        </div>
+
+        <div id="class6-start"></div>
+
+        <article class="class6-panel class6v2-key-panel">
+          <h2>Idea central de la clase</h2>
+          <p>
+            Una IA no adivina. Una IA usa datos para tomar decisiones.
+            Si los datos son útiles, la solución puede funcionar mejor.
+            Si los datos son basura, sensibles o incompletos, la IA puede responder mal.
+          </p>
+
+          <div class="class6v2-rule">
+            <strong>Regla de oro</strong>
+            <p>Un dato sirve si ayuda directamente a tomar la decisión que queremos que tome la IA.</p>
+          </div>
+
+          <div class="class6-flow">
+            <span>Problema real</span>
+            <i>→</i>
+            <span>Decisión IA</span>
+            <i>→</i>
+            <span>Datos útiles</span>
+            <i>→</i>
+            <span>Dataset</span>
+            <i>→</i>
+            <span>Modelo</span>
+            <i>→</i>
+            <span>Resultado</span>
+          </div>
+        </article>
+
+        <article class="class6-panel">
+          <h2>Tablero de misiones</h2>
+          <p>Cada reto representa una habilidad que necesitas antes de construir un modelo de IA.</p>
+
+          <div class="class6-mission-grid" id="c6-mission-grid">
+            <label class="class6-mission-card">
+              <input type="checkbox" data-xp="10" data-mission="concepts">
+              <span class="class6-mission-icon">🧠</span>
+              <strong>Entender tipos de datos</strong>
+              <small>10 XP</small>
+              <p>Útil, basura, sensible y faltante.</p>
+            </label>
+
+            <label class="class6-mission-card">
+              <input type="checkbox" data-xp="15" data-mission="business">
+              <span class="class6-mission-icon">🏪</span>
+              <strong>Elegir negocio</strong>
+              <small>15 XP</small>
+              <p>Trabaja con un caso real.</p>
+            </label>
+
+            <label class="class6-mission-card">
+              <input type="checkbox" data-xp="15" data-mission="decision">
+              <span class="class6-mission-icon">🎯</span>
+              <strong>Definir decisión IA</strong>
+              <small>15 XP</small>
+              <p>Qué debe recomendar, clasificar o predecir.</p>
+            </label>
+
+            <label class="class6-mission-card">
+              <input type="checkbox" data-xp="15" data-mission="inputTarget">
+              <span class="class6-mission-icon">📥</span>
+              <strong>Entrada vs objetivo</strong>
+              <small>15 XP</small>
+              <p>Distingue lo que entra y lo que sale.</p>
+            </label>
+
+            <label class="class6-mission-card">
+              <input type="checkbox" data-xp="20" data-mission="filter">
+              <span class="class6-mission-icon">🧹</span>
+              <strong>Filtrar datos</strong>
+              <small>20 XP</small>
+              <p>Conserva lo útil y elimina lo que estorba.</p>
+            </label>
+
+            <label class="class6-mission-card">
+              <input type="checkbox" data-xp="15" data-mission="dataset">
+              <span class="class6-mission-icon">📊</span>
+              <strong>Crear dataset</strong>
+              <small>15 XP</small>
+              <p>Convierte variables en columnas.</p>
+            </label>
+
+            <label class="class6-mission-card">
+              <input type="checkbox" data-xp="10" data-mission="quality">
+              <span class="class6-mission-icon">⚠️</span>
+              <strong>Auditar calidad</strong>
+              <small>10 XP</small>
+              <p>Detecta sesgo, errores y faltantes.</p>
+            </label>
+          </div>
+
+          <div class="class6-unlock" id="c6-unlock" hidden>
+            <strong>🎖 Insignia desbloqueada: Arquitecto de Datos IA</strong>
+            <p>Completaste la misión. Ya sabes identificar datos útiles para construir un dataset de IA.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="class6-section" data-section="2">
+      <div class="container">
+        <span class="section-label">Nivel 1</span>
+        <h2 class="section-title">Primero entiende los tipos de datos</h2>
+        <p class="section-subtitle">
+          Antes de construir un dataset, debes aprender a reconocer qué tipo de información tienes enfrente.
+        </p>
+
+        <div class="class6v2-learning-grid">
+          <article class="class6v2-learning-card useful">
+            <span>✅</span>
+            <h3>Dato útil</h3>
+            <p>Ayuda directamente a tomar la decisión que queremos que tome la IA.</p>
+            <div class="class6v2-example">
+              <strong>Ejemplo:</strong> Para recomendar café, el presupuesto sí sirve.
+            </div>
+          </article>
+
+          <article class="class6v2-learning-card trash">
+            <span>🗑️</span>
+            <h3>Dato basura</h3>
+            <p>No aporta valor para la decisión. Puede confundir, estorbar o meter ruido.</p>
+            <div class="class6v2-example">
+              <strong>Ejemplo:</strong> El color de mochila no sirve para recomendar una bebida.
+            </div>
+          </article>
+
+          <article class="class6v2-learning-card sensitive">
+            <span>🔒</span>
+            <h3>Dato sensible</h3>
+            <p>Puede invadir privacidad o ser innecesario. Solo debe pedirse si está justificado.</p>
+            <div class="class6v2-example">
+              <strong>Ejemplo:</strong> CURP o dirección no hacen falta para recomendar un platillo.
+            </div>
+          </article>
+
+          <article class="class6v2-learning-card missing">
+            <span>❓</span>
+            <h3>Dato faltante</h3>
+            <p>Es información necesaria que no fue capturada. La IA debería pedirla antes de decidir.</p>
+            <div class="class6v2-example">
+              <strong>Ejemplo:</strong> Si falta presupuesto, conviene preguntar antes de recomendar.
+            </div>
+          </article>
+        </div>
+
+        <article class="class6-panel">
+          <h2>Mini reto: identifica el tipo de dato</h2>
+          <p>Lee cada caso y elige la categoría correcta. Observa la explicación.</p>
+          <div class="class6v2-mini-quiz" id="c6-concept-quiz"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="class6-section" data-section="3">
+      <div class="container">
+        <span class="section-label">Nivel 2</span>
+        <h2 class="section-title">Elige el negocio y define la decisión IA</h2>
+        <p class="section-subtitle">
+          La IA debe apoyar una decisión concreta. Si no sabes qué debe decidir, no puedes saber qué datos necesita.
+        </p>
+
+        <div class="class6-business-grid" id="c6-business-grid">
+          <button class="class6-business-card" type="button" data-business="cafeteria">
+            <span>☕</span>
+            <strong>Cafetería</strong>
+            <p>Recomendar bebida, snack o combo.</p>
+          </button>
+
+          <button class="class6-business-card" type="button" data-business="restaurante">
+            <span>🍽️</span>
+            <strong>Restaurante</strong>
+            <p>Recomendar platillo o responder dudas de menú.</p>
+          </button>
+
+          <button class="class6-business-card" type="button" data-business="refaccionaria">
+            <span>🔧</span>
+            <strong>Refaccionaria</strong>
+            <p>Orientar posibles refacciones o revisiones.</p>
+          </button>
+
+          <button class="class6-business-card" type="button" data-business="propia">
+            <span>💡</span>
+            <strong>Propuesta propia</strong>
+            <p>Elige cualquier negocio y define su problema.</p>
+          </button>
+        </div>
+
+        <div class="class6-own-panel" id="c6-own-panel" hidden>
+          <h3>Configura tu propuesta propia</h3>
+          <p>Usa esta opción si quieres trabajar con un negocio diferente.</p>
+
+          <div class="class6-own-grid">
+            <label class="class6-field">
+              Nombre o tipo de negocio:
+              <input id="c6-own-name" type="text" placeholder="Ej. Papelería, estética, gimnasio, veterinaria">
+            </label>
+
+            <label class="class6-field">
+              ¿Qué vende o qué servicio ofrece?
+              <textarea id="c6-own-context" rows="4" placeholder="Ej. Vende útiles escolares a estudiantes y padres de familia."></textarea>
+            </label>
+
+            <label class="class6-field">
+              Problema real:
+              <textarea id="c6-own-problem" rows="4" placeholder="Ej. Los clientes no saben qué materiales comprar según grado escolar y presupuesto."></textarea>
+            </label>
+          </div>
+
+          <button class="btn btn-primary btn-small" type="button" id="c6-apply-own">
+            Usar mi propuesta
+          </button>
+        </div>
+
+        <div class="class6-selection-panel" id="c6-business-panel">
+          Selecciona un negocio para ver un ejemplo guiado.
+        </div>
+
+        <article class="class6-panel">
+          <h2>Ahora define qué resultado debe producir la IA</h2>
+          <p>
+            Esta parte sirve para aclarar qué esperamos que responda la IA.
+            Si no sabemos qué debe producir, tampoco podremos saber qué datos necesita.
+          </p>
+
+          <div class="class6v2-purpose-box">
+            <strong>¿Para qué sirve esta decisión?</strong>
+            <p>
+              La decisión IA define la <b>salida esperada</b> del sistema.
+              Después usaremos esta frase para decidir qué columnas tendrá el dataset.
+            </p>
+            <p>
+              Ejemplo: si la IA debe recomendar una bebida, necesitamos datos como clima, gusto y presupuesto.
+              Pero si debe detectar un riesgo, necesitaremos señales, síntomas o indicadores.
+            </p>
+          </div>
+
+          <div class="class6v2-decision-options" id="c6-decision-options">
+            <button type="button" data-decision="recomendar">Recomendar algo</button>
+            <button type="button" data-decision="clasificar">Clasificar un caso</button>
+            <button type="button" data-decision="predecir">Predecir una cantidad</button>
+            <button type="button" data-decision="detectar">Detectar un riesgo</button>
+            <button type="button" data-decision="generar">Generar respuesta</button>
+          </div>
+
+          <div class="class6v2-decision-help" id="c6-decision-help">
+            Elige una opción para recibir explicación y una frase guía.
+          </div>
+
+          <label class="class6-field">
+            Objetivo de la IA:
+            <small class="class6v2-field-help">
+              Escribe qué debe producir la IA como resultado: una recomendación, una categoría, una alerta, una predicción o una respuesta.
+            </small>
+            <textarea id="c6-decision-text" rows="5" placeholder="Ej. Mi IA debe recomendar una bebida usando clima, presupuesto y gusto del cliente."></textarea>
+          </label>
+
+          <div class="class6v2-after-decision">
+            <strong>Esto se convertirá después en:</strong>
+            <ul>
+              <li><b>Variable objetivo:</b> lo que la IA debe responder.</li>
+              <li><b>Variables de entrada:</b> los datos que necesita para responder bien.</li>
+              <li><b>Datos basura:</b> información que no ayuda a esa decisión.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="class6-section" data-section="4">
+      <div class="container">
+        <span class="section-label">Nivel 3</span>
+        <h2 class="section-title">Aprende entrada vs objetivo</h2>
+        <p class="section-subtitle">
+          Este es el concepto más importante para construir datasets de IA.
+        </p>
+
+        <div class="class6v2-input-target">
+          <article class="class6v2-side-card input">
+            <span>📥</span>
+            <h3>Variables de entrada</h3>
+            <p>Son los datos que la IA recibe antes de decidir.</p>
+            <strong>Pregunta clave:</strong>
+            <p>¿Qué necesita saber la IA para responder?</p>
+          </article>
+
+          <article class="class6v2-side-card target">
+            <span>🏷️</span>
+            <h3>Variable objetivo</h3>
+            <p>Es lo que queremos que la IA produzca como salida.</p>
+            <strong>Pregunta clave:</strong>
+            <p>¿Qué debe recomendar, clasificar o predecir?</p>
+          </article>
+        </div>
+
+        <article class="class6-panel">
+          <h2>Ejemplos comparativos</h2>
+
+          <div class="class6v2-table-wrap">
+            <table class="class6-table">
+              <thead>
+                <tr>
+                  <th>Negocio</th>
+                  <th>Variables de entrada</th>
+                  <th>Variable objetivo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Cafetería</td>
+                  <td>clima, horario, presupuesto, gusto, hambre</td>
+                  <td>recomendacion</td>
+                </tr>
+                <tr>
+                  <td>Restaurante</td>
+                  <td>presupuesto, tiempo, restricción alimentaria, picante</td>
+                  <td>platillo_recomendado</td>
+                </tr>
+                <tr>
+                  <td>Refaccionaria</td>
+                  <td>marca, modelo, año, síntoma, ruido</td>
+                  <td>refaccion_posible</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="class6v2-guided-check">
+            <button class="btn btn-primary btn-small" type="button" id="c6-understand-input-target">
+              Aplicar a mi negocio
+            </button>
+          </div>
+
+          <div class="class6v2-application-result" id="c6-input-target-result" hidden></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="class6-section" data-section="5">
+      <div class="container">
+        <span class="section-label">Nivel 4</span>
+        <h2 class="section-title">Detector de datos</h2>
+        <p class="section-subtitle">
+          Clasifica cada dato. Antes de elegir, pregúntate: ¿este dato ayuda directamente a tomar la decisión?
+        </p>
+
+        <article class="class6-panel">
+          <div class="class6-filter-head">
+            <div>
+              <h2>Juego: útil, basura, sensible, faltante u objetivo</h2>
+              <p>Recibirás retroalimentación inmediata por cada dato.</p>
+            </div>
+
+            <div class="class6-score-box">
+              <span>Aciertos</span>
+              <strong id="c6-filter-score">0 / 0</strong>
+            </div>
+          </div>
+
+          <div class="class6v2-guiding-questions">
+            <span>¿Ayuda a decidir?</span>
+            <span>¿Es necesario?</span>
+            <span>¿Es privado o sensible?</span>
+            <span>¿Está faltando?</span>
+            <span>¿Es la salida esperada?</span>
+          </div>
+
+          <div class="class6-data-cards" id="c6-data-cards">
+            Selecciona un negocio para cargar las tarjetas.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="class6-section" data-section="6">
+      <div class="container">
+        <span class="section-label">Nivel 5</span>
+        <h2 class="section-title">Construye el dataset</h2>
+        <p class="section-subtitle">
+          Un dataset es una tabla. Cada columna es una variable y cada fila es un ejemplo.
+        </p>
+
+        <div class="class6-two-col">
+          <article class="class6-panel">
+            <h2>Columnas detectadas</h2>
+            <p>La página tomará tus datos útiles y tu variable objetivo para proponer columnas.</p>
+
+            <div id="c6-columns-suggestion" class="class6-columns-box">
+              Clasifica datos para generar columnas.
+            </div>
+
+            <div class="class6v2-dataset-explain">
+              <strong>Recuerda:</strong>
+              <p>Las primeras columnas suelen ser entradas. La última columna suele ser la salida esperada.</p>
+            </div>
+
+            <button class="btn btn-primary btn-small" type="button" id="c6-generate-columns">
+              Generar dataset inicial
+            </button>
+          </article>
+
+          <article class="class6-panel">
+            <h2>Dataset inicial</h2>
+            <p>Edita el CSV si lo necesitas. Debe tener mínimo 5 registros.</p>
+
+            <label class="class6-field">
+              Dataset en formato CSV:
+              <textarea id="c6-dataset-text" rows="14" placeholder="Aquí aparecerá tu dataset."></textarea>
+            </label>
+
+            <div class="class6-actions-row">
+              <button class="btn btn-secondary btn-small" type="button" id="c6-copy-csv">Copiar CSV</button>
+              <button class="btn btn-secondary btn-small" type="button" id="c6-download-csv">Descargar CSV</button>
+            </div>
+
+            <p class="class6-copy-status" id="c6-csv-status"></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="class6-section" data-section="7">
+      <div class="container">
+        <span class="section-label">Nivel 6</span>
+        <h2 class="section-title">Auditoría de calidad</h2>
+        <p class="section-subtitle">
+          Un dataset puede verse bonito y aun así estar mal. Aquí aprenderás a detectar problemas.
+        </p>
+
+        <div class="class6v2-quality-grid">
+          <article class="class6v2-quality-card">
+            <span>❓</span>
+            <h3>Dato faltante</h3>
+            <p>Falta una variable importante, como presupuesto o síntoma.</p>
+            <strong>Solución:</strong>
+            <p>Preguntar el dato o marcarlo como desconocido.</p>
+          </article>
+
+          <article class="class6v2-quality-card">
+            <span>🔁</span>
+            <h3>Dato inconsistente</h3>
+            <p>El mismo valor aparece escrito de formas distintas: frappe, frappé, frape.</p>
+            <strong>Solución:</strong>
+            <p>Normalizar categorías.</p>
+          </article>
+
+          <article class="class6v2-quality-card">
+            <span>⚖️</span>
+            <h3>Sesgo</h3>
+            <p>Los datos no representan toda la realidad, solo una parte.</p>
+            <strong>Solución:</strong>
+            <p>Recolectar ejemplos variados.</p>
+          </article>
+
+          <article class="class6v2-quality-card">
+            <span>🔒</span>
+            <h3>Privacidad</h3>
+            <p>Se piden datos personales que no son necesarios.</p>
+            <strong>Solución:</strong>
+            <p>Aplicar minimización de datos.</p>
+          </article>
+        </div>
+
+        <article class="class6-panel">
+          <h2>Mini auditoría</h2>
+          <p>Resuelve estos escenarios de calidad.</p>
+          <div class="class6v2-quality-quiz" id="c6-quality-quiz"></div>
+        </article>
+
+        <article class="class6-panel">
+          <h2>Riesgos de tu dataset</h2>
+          <p>
+            No basta con escribir riesgos. Cada riesgo debe convertirse en una acción para mejorar el dataset.
+          </p>
+
+          <label class="class6-field">
+            Escribe los riesgos que detectas:
+            <textarea id="c6-risks" rows="6" placeholder="Ej. Puede faltar presupuesto, puede haber respuestas ambiguas, puede haber sesgo porque solo tenemos datos de la mañana."></textarea>
+          </label>
+
+          <div class="class6v2-risk-help">
+            <strong>Después de escribirlos, genera un plan de mejora.</strong>
+            <p>La idea es convertir cada riesgo en una acción concreta para que el dataset sea más útil, limpio y seguro.</p>
+          </div>
+
+          <button class="btn btn-primary btn-small" type="button" id="c6-generate-risk-plan">
+            Generar plan de mejora
+          </button>
+
+          <div class="class6v2-risk-plan" id="c6-risk-plan" hidden></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="class6-section" data-section="8">
+      <div class="container">
+        <span class="section-label">Jefe final</span>
+        <h2 class="section-title">Evidencia final</h2>
+        <p class="section-subtitle">
+          Genera el resumen de tu práctica. Esta evidencia demuestra que sabes diseñar un dataset útil para IA.
+        </p>
+
+        <article class="class6-panel">
+          <div class="class6-output-head">
+            <strong>Resumen de entrega</strong>
+            <button class="btn btn-primary btn-small" type="button" id="c6-generate-evidence">Generar evidencia</button>
+            <button class="btn btn-secondary btn-small" type="button" id="c6-copy-evidence">Copiar evidencia</button>
+          </div>
+
+          <pre id="c6-evidence-output">Presiona “Generar evidencia” al terminar la misión.</pre>
+          <p class="class6-copy-status" id="c6-evidence-status"></p>
+        </article>
+
+        <article class="class6-panel class6-rubric">
+          <h2>Rúbrica de evaluación</h2>
+          <table class="class6-table">
+            <thead>
+              <tr>
+                <th>Criterio</th>
+                <th>Puntos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Define negocio, problema y decisión IA</td><td>2</td></tr>
+              <tr><td>Distingue variables de entrada y variable objetivo</td><td>2</td></tr>
+              <tr><td>Identifica datos útiles, basura, sensibles y faltantes</td><td>2</td></tr>
+              <tr><td>Construye dataset inicial coherente</td><td>2</td></tr>
+              <tr><td>Detecta riesgos de calidad de datos</td><td>2</td></tr>
+              <tr><th>Total</th><th>10</th></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="main.js"></script>
+  <script src="clase6.js"></script>
+</body>
+</html>

@@ -6,6 +6,7 @@
     'clase-3': 'clase3.html',
     'clase-4': 'clase4.html',
     'clase-5': 'clase5.html',
+    'clase-6': 'clase6.html',
     'herramienta-redes-neuronales': 'herramienta-redes-neuronales.html',
     'herramienta-robotica': 'herramienta-robotica.html',
     'herramienta-vision-artificial': 'herramienta-vision-artificial.html',
