@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="es" data-page="lesson" data-active-lesson="clase-7">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Clase 7 · Primer Notebook IA</title>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="course-sidebar">
+      <div class="brand-block">
+        <span class="brand-kicker">Curso IA</span>
+        <h1>Business Lab</h1>
+        <p>Aprende IA resolviendo problemas reales.</p>
+      </div>
+
+      <nav class="lesson-nav">
+        <a class="lesson-tab" href="index.html" data-lesson="home">
+          <strong>Inicio</strong>
+          Ruta del curso
+        </a>
+
+        <p class="week-label">Semana 1</p>
+
+        <a class="lesson-tab" href="clase1.html" data-lesson="clase-1">
+          <strong>Clase 1</strong>
+          ¿Qué es IA?
+        </a>
+
+        <a class="lesson-tab" href="clase2.html" data-lesson="clase-2">
+          <strong>Clase 2</strong>
+          Prompt Engineering
+        </a>
+
+        <a class="lesson-tab" href="clase3.html" data-lesson="clase-3">
+          <strong>Clase 3</strong>
+          IA para negocios
+        </a>
+
+        <a class="lesson-tab" href="clase4.html" data-lesson="clase-4">
+          <strong>Clase 4</strong>
+          Automatización IA
+        </a>
+
+        <p class="week-label">Semana 2</p>
+
+        <a class="lesson-tab" href="clase5.html" data-lesson="clase-5">
+          <strong>Clase 5</strong>
+          IA Business Lab
+        </a>
+
+        <a class="lesson-tab" href="clase6.html" data-lesson="clase-6">
+          <strong>Clase 6</strong>
+          IA Data Lab
+        </a>
+
+        <a class="lesson-tab active" href="clase7.html" data-lesson="clase-7">
+          <strong>Clase 7</strong>
+          Primer Notebook IA
+        </a>
+      </nav>
+    </aside>
+
+    <main class="course-main">
+      <div class="top-progress">
+        <div>
+          <span class="progress-label">Progreso Clase 7</span>
+          <strong id="c7-xp-label">0 / 100 XP</strong>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="c7-xp-bar"></div>
+        </div>
+      </div>
+
+      <section class="class7-hero" data-section="1">
+        <div class="container">
+          <span class="class7-badge">Clase 7 · Primer Notebook IA</span>
+          <h1>De un CSV a un análisis con Python</h1>
+          <p>
+            En la Clase 6 diseñaste un dataset. Hoy aprenderás a abrirlo, explorarlo
+            y diagnosticar si realmente sirve para una solución de inteligencia artificial.
+          </p>
+
+          <div class="class7-hero-grid">
+            <article>
+              <strong>Misión</strong>
+              <p>Cargar, explorar y diagnosticar un dataset usando Google Colab y pandas.</p>
+            </article>
+
+            <article>
+              <strong>Insignia</strong>
+              <p>Explorador de Datos IA</p>
+            </article>
+
+            <article>
+              <strong>Pregunta central</strong>
+              <p>¿Cómo reviso con Python si mi dataset sirve para IA?</p>
+            </article>
+          </div>
+
+          <div class="class7-actions">
+            <a class="btn btn-primary" href="https://colab.research.google.com/" target="_blank" rel="noopener">
+              Abrir Google Colab
+            </a>
+            <button class="btn btn-secondary" type="button" id="c7-start">
+              Iniciar misión
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="class7-section" data-section="2">
+        <div class="container">
+          <span class="section-label">Preparación</span>
+          <h2 class="section-title">Qué necesitas para la clase</h2>
+          <p class="section-subtitle">
+            No necesitas instalar Python. Usaremos Google Colab desde el navegador.
+          </p>
+
+          <div class="class7-checklist">
+            <label>
+              <input type="checkbox" data-c7-mission="setup">
+              Cuenta de Google activa
+            </label>
+            <label>
+              <input type="checkbox" data-c7-mission="setup">
+              Laptop cargada
+            </label>
+            <label>
+              <input type="checkbox" data-c7-mission="setup">
+              Navegador Chrome o similar
+            </label>
+            <label>
+              <input type="checkbox" data-c7-mission="setup">
+              Archivo CSV generado en la Clase 6
+            </label>
+          </div>
+
+          <div class="class7-note">
+            <strong>Idea clave</strong>
+            <p>
+              Antes de entrenar una IA, primero hay que mirar los datos. Un modelo no debe
+              entrenarse a ciegas.
+            </p>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="class7-section class7-colab-guide" data-section="2b" id="guia-google-colab">
+        <div class="container">
+          <span class="section-label">Guía práctica</span>
+          <h2 class="section-title">Guía práctica de Google Colab</h2>
+          <p class="section-subtitle">
+            Tutorial visual adaptado para que puedas crear tu primer notebook, conectar tu CSV
+            y llegar listo al sandbox de comandos de Python y pandas.
+          </p>
+
+          <div class="class7-colab-intro">
+            <article>
+              <strong>¿Qué es Colab?</strong>
+              <p>
+                Google Colab es un entorno en la nube para escribir y ejecutar Python desde el navegador.
+                Combina código, texto, resultados y visualizaciones dentro de un notebook.
+              </p>
+            </article>
+
+            <article>
+              <strong>¿Por qué lo usamos?</strong>
+              <p>
+                Resuelve un problema práctico: usar Python sin instalar nada. Solo necesitas tu cuenta
+                de Google, el CSV de la Clase 6 y una conexión estable.
+              </p>
+            </article>
+
+            <article>
+              <strong>Producto final</strong>
+              <p>
+                Al terminar tendrás un archivo <code>.ipynb</code> con análisis del CSV, comandos de
+                exploración y conclusiones listas para tu evidencia.
+              </p>
+            </article>
+          </div>
+
+          <article class="class7-colab-step">
+            <div>
+              <span>Paso 1</span>
+              <h3>Abrir o instalar Google Colab desde Drive</h3>
+              <p>
+                En Google Drive, haz clic derecho en un espacio vacío. Si Colab no aparece en
+                <strong>Más</strong>, elige <strong>Conectar más aplicaciones</strong>, busca
+                <strong>Colaboratory</strong> en Google Workspace Marketplace e instálalo.
+              </p>
+              <ul>
+                <li>Abre Drive con tu cuenta de Google.</li>
+                <li>Busca Colaboratory si no aparece en el menú.</li>
+                <li>Autoriza la aplicación para poder crear notebooks.</li>
+              </ul>
+            </div>
+            <div class="class7-colab-gallery">
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/01-instalar_google_colab.jpeg" alt="Menú de Google Drive para conectar más aplicaciones" loading="lazy">
+                <figcaption>Drive permite conectar Colab desde el menú Más.</figcaption>
+              </figure>
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/02-instalar_google_colab_workspace_markplace.jpeg" alt="Búsqueda de Colaboratory en Google Workspace Marketplace" loading="lazy">
+                <figcaption>Busca Colaboratory en Google Workspace Marketplace.</figcaption>
+              </figure>
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/03-instalar_google_colab_2-1.jpeg" alt="Pantalla de instalación de Google Colaboratory" loading="lazy">
+                <figcaption>Instala Colaboratory si es la primera vez que lo usas.</figcaption>
+              </figure>
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/04-instalar_google_colab_permisos.jpeg" alt="Permisos de instalación de Google Colaboratory" loading="lazy">
+                <figcaption>Confirma los permisos necesarios para terminar la conexión.</figcaption>
+              </figure>
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/05-google_colab_instalado.jpeg" alt="Google Colaboratory ya disponible desde Drive" loading="lazy">
+                <figcaption>Cuando queda instalado, aparece como opción para crear archivos.</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="class7-colab-step">
+            <div>
+              <span>Paso 2</span>
+              <h3>Crear un nuevo notebook</h3>
+              <p>
+                Desde Drive, elige <strong>Google Colaboratory</strong>. Se abrirá un notebook nuevo.
+                Su extensión es <code>.ipynb</code>, el formato usado por Jupyter y Colab.
+              </p>
+              <p>
+                Renómbralo con algo claro, por ejemplo <code>clase7-diagnostico-dataset.ipynb</code>.
+                Ese nombre te ayudará a encontrarlo y compartirlo como evidencia.
+              </p>
+            </div>
+            <figure class="class7-colab-image">
+              <img src="assets/clase7/omes-colab/06-cambiar_nombre_google_colab.jpeg" alt="Nombre de notebook con extensión ipynb en Google Colab" loading="lazy">
+              <figcaption>El nombre del archivo termina en <code>.ipynb</code> y se puede editar.</figcaption>
+            </figure>
+          </article>
+
+          <article class="class7-colab-step">
+            <div>
+              <span>Paso 3</span>
+              <h3>Ejecutar la primera celda Python</h3>
+              <p>
+                En una celda de código escribe tu primera instrucción. Ejecútala con el botón de
+                play o con <strong>Shift + Enter</strong>. La primera ejecución puede tardar porque
+                Colab asigna recursos en la nube.
+              </p>
+              <pre class="class7-code"><code>print("Mi primer Notebook en Colab")</code></pre>
+            </div>
+            <figure class="class7-colab-image">
+              <img src="assets/clase7/omes-colab/07-ejecutando_programa_google_colab.jpeg" alt="Ejecución de una celda Python en Google Colab" loading="lazy">
+              <figcaption>El resultado aparece debajo de la celda ejecutada.</figcaption>
+            </figure>
+          </article>
+
+          <article class="class7-colab-step">
+            <div>
+              <span>Paso 4</span>
+              <h3>Diferenciar +Código y +Texto</h3>
+              <p>
+                Usa <strong>+Código</strong> para instrucciones ejecutables en Python. Usa
+                <strong>+Texto</strong> para explicar lo que haces con Markdown: objetivos, hipótesis,
+                errores encontrados y conclusiones.
+              </p>
+              <div class="class7-colab-cells">
+                <div class="class7-cell text-cell">Voy a cargar mi dataset</div>
+                <pre class="class7-code"><code>import pandas as pd
+df = pd.read_csv("dataset-clase6.csv")</code></pre>
+              </div>
+            </div>
+            <div class="class7-colab-gallery">
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/08-xodigo_texto_google_colab.jpeg" alt="Botones para agregar código y texto en Google Colab" loading="lazy">
+                <figcaption>Los botones +Código y +Texto organizan el notebook.</figcaption>
+              </figure>
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/09-codigo_google_colab.jpeg" alt="Celda de código en Google Colab" loading="lazy">
+                <figcaption>Las celdas de código ejecutan Python.</figcaption>
+              </figure>
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/10-texto_google_colab.jpeg" alt="Celda de texto en Google Colab" loading="lazy">
+                <figcaption>Las celdas de texto documentan el razonamiento.</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="class7-colab-step">
+            <div>
+              <span>Paso 5</span>
+              <h3>Entorno de ejecución</h3>
+              <p>
+                Colab puede ejecutar en CPU, GPU o TPU. Para la Clase 7 recomendamos
+                <strong>CPU</strong>, porque solo vamos a cargar un CSV y explorarlo con pandas.
+              </p>
+              <p>
+                GPU y TPU serán útiles más adelante si entrenamos modelos más pesados, como redes
+                neuronales o procesamiento de grandes volúmenes de datos.
+              </p>
+            </div>
+            <div class="class7-colab-gallery">
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/11-entorno_ejecucion_google_colab.jpeg" alt="Selección de tipo de entorno de ejecución en Google Colab" loading="lazy">
+                <figcaption>El tipo de entorno define qué recursos usa el notebook.</figcaption>
+              </figure>
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/12-configuracion_google_colab.jpeg" alt="Configuración de Google Colab" loading="lazy">
+                <figcaption>La configuración permite ajustar editor, tema y preferencias.</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="class7-colab-step">
+            <div>
+              <span>Paso 6</span>
+              <h3>Conectar Google Drive</h3>
+              <p>
+                Conectar Drive sirve para leer archivos guardados en tu cuenta sin subirlos manualmente
+                cada vez. Es útil si tu CSV vive en una carpeta de clase.
+              </p>
+              <pre class="class7-code"><code>from google.colab import drive
+drive.mount('/content/drive')</code></pre>
+            </div>
+            <figure class="class7-colab-image">
+              <img src="assets/clase7/omes-colab/14-drive_google_colab.jpeg" alt="Conexión de Google Drive desde Google Colab" loading="lazy">
+              <figcaption>Al montar Drive, Colab puede leer archivos de tu unidad.</figcaption>
+            </figure>
+          </article>
+
+          <article class="class7-colab-step">
+            <div>
+              <span>Paso 7</span>
+              <h3>Guardar, descargar y compartir</h3>
+              <p>
+                Colab guarda automáticamente mientras trabajas. También puedes descargar el notebook
+                como <code>.ipynb</code> o exportarlo como <code>.py</code>.
+              </p>
+              <p>
+                Al compartir, revisa el permiso: lector para revisar, comentarista para sugerir y
+                editor solo cuando otra persona pueda modificar tu trabajo.
+              </p>
+            </div>
+            <div class="class7-colab-gallery">
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/15-exportar_notebook_google_colab.jpeg" alt="Menú para descargar notebook en Google Colab" loading="lazy">
+                <figcaption>Descarga tu evidencia como notebook o archivo Python.</figcaption>
+              </figure>
+              <figure class="class7-colab-image">
+                <img src="assets/clase7/omes-colab/16-compartir_google_colab.jpeg" alt="Opciones para compartir un notebook de Google Colab" loading="lazy">
+                <figcaption>Comparte con permisos adecuados para proteger tu trabajo.</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="class7-colab-step class7-colab-limitations">
+            <div>
+              <span>Paso 8</span>
+              <h3>Limitaciones importantes</h3>
+              <ul>
+                <li>Las sesiones son temporales y pueden desconectarse.</li>
+                <li>GPU y TPU no siempre están disponibles.</li>
+                <li>Si Colab se desconecta, ejecuta de nuevo las celdas desde arriba.</li>
+                <li>El orden de ejecución importa: una celda puede depender de variables anteriores.</li>
+                <li>Guarda siempre tu CSV y tu notebook en Drive.</li>
+              </ul>
+            </div>
+            <figure class="class7-colab-image">
+              <img src="assets/clase7/omes-colab/13-gatitos_google_colab.jpeg" alt="Resultado visual mostrado desde una celda de Google Colab" loading="lazy">
+              <figcaption>Los resultados se recalculan cuando vuelves a ejecutar el notebook.</figcaption>
+            </figure>
+          </article>
+
+          <article class="class7-panel class7-colab-video">
+            <h3>Video complementario</h3>
+            <p>
+              El artículo incluye este video como apoyo visual. Úsalo si quieres repasar el flujo completo
+              antes de trabajar con tu CSV.
+            </p>
+            <div class="class7-video-frame">
+              <iframe
+                src="https://www.youtube.com/embed/6i5XbHU7KKk"
+                title="Video complementario sobre Google Colab"
+                loading="lazy"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </article>
+
+          <article class="class7-panel class7-colab-checklist">
+            <h3>Checklist antes de pasar al sandbox de comandos</h3>
+            <p>Marca al menos 4 puntos para sumar esta misión a tu progreso.</p>
+
+            <div>
+              <label>
+                <input type="checkbox" data-c7-mission="colabGuide">
+                Ya puedo abrir Google Colab.
+              </label>
+              <label>
+                <input type="checkbox" data-c7-mission="colabGuide">
+                Sé crear un notebook.
+              </label>
+              <label>
+                <input type="checkbox" data-c7-mission="colabGuide">
+                Sé ejecutar una celda.
+              </label>
+              <label>
+                <input type="checkbox" data-c7-mission="colabGuide">
+                Sé diferenciar +Código y +Texto.
+              </label>
+              <label>
+                <input type="checkbox" data-c7-mission="colabGuide">
+                Sé subir o conectar mi CSV.
+              </label>
+              <label>
+                <input type="checkbox" data-c7-mission="colabGuide">
+                Sé que debo ejecutar celdas en orden.
+              </label>
+            </div>
+          </article>
+
+          <p class="class7-colab-credit">
+            Tutorial adaptado con fines educativos a partir del artículo de OMES:
+            <a href="https://omes-va.com/que-es-google-colab-y-como-usarlo-python-en-la-nube-facil-y-rapido/" target="_blank" rel="noopener">
+              ¿Qué es Google Colab y cómo usarlo? Python en la nube fácil y rápido
+            </a>.
+          </p>
+        </div>
+      </section>
+
+
+      <section class="class7-section" data-section="3">
+        <div class="container">
+          <span class="section-label">Nivel 1</span>
+          <h2 class="section-title">¿Qué es un notebook?</h2>
+          <p class="section-subtitle">
+            Un notebook es una libreta interactiva donde mezclas explicación, código y resultados.
+          </p>
+
+          <div class="class7-two-col">
+            <article class="class7-panel">
+              <h3>Celda de texto</h3>
+              <p>Sirve para explicar qué estás haciendo.</p>
+              <div class="class7-cell text-cell">
+                Voy a cargar mi dataset de cafetería para revisar si tiene columnas claras.
+              </div>
+            </article>
+
+            <article class="class7-panel">
+              <h3>Celda de código</h3>
+              <p>Sirve para ejecutar instrucciones.</p>
+              <pre class="class7-code"><code>print("Hola, datos")</code></pre>
+              <div class="class7-output">Hola, datos</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="class7-section" data-section="4">
+        <div class="container">
+          <span class="section-label">Nivel 2</span>
+          <h2 class="section-title">Python básico para datos</h2>
+          <p class="section-subtitle">
+            Python es el lenguaje que usaremos para darle instrucciones a la computadora.
+          </p>
+
+          <div class="class7-command-grid">
+            <article class="class7-panel">
+              <h3>Primer comando</h3>
+              <p><code>print()</code> muestra un mensaje como resultado.</p>
+
+              <pre class="class7-code"><code>print("Mi primer análisis de datos")</code></pre>
+              <button class="btn btn-secondary btn-small" type="button" data-run-basic="print">
+                Ejecutar ejemplo
+              </button>
+              <div class="class7-output" id="c7-basic-output">Resultado pendiente...</div>
+            </article>
+
+            <article class="class7-panel">
+              <h3>Operaciones simples</h3>
+              <p>Python también puede calcular.</p>
+
+              <pre class="class7-code"><code>2 + 3</code></pre>
+              <button class="btn btn-secondary btn-small" type="button" data-run-basic="math">
+                Ejecutar ejemplo
+              </button>
+              <div class="class7-output" id="c7-math-output">Resultado pendiente...</div>
+            </article>
+          </div>
+
+          <div class="class7-panel">
+            <h3>Completa tu primer print</h3>
+            <p>Escribe el tema de tu dataset y genera el comando.</p>
+
+            <label class="class7-field">
+              Mi dataset es de:
+              <input id="c7-dataset-topic" type="text" placeholder="Ej. cafetería, escuela de danza, veterinaria">
+            </label>
+
+            <button class="btn btn-primary btn-small" type="button" id="c7-build-print">
+              Generar comando
+            </button>
+
+            <pre class="class7-code"><code id="c7-print-code">print("Mi dataset es de ...")</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="class7-section" data-section="5">
+        <div class="container">
+          <span class="section-label">Nivel 3</span>
+          <h2 class="section-title">Pandas y DataFrame</h2>
+          <p class="section-subtitle">
+            Pandas es una librería de Python para trabajar con datos en forma de tabla.
+          </p>
+
+          <div class="class7-concept-breakdown">
+            <div>
+              <strong>import</strong>
+              <span>Trae una librería</span>
+            </div>
+            <div>
+              <strong>pandas</strong>
+              <span>Herramienta para datos</span>
+            </div>
+            <div>
+              <strong>as pd</strong>
+              <span>Apodo corto</span>
+            </div>
+          </div>
+
+          <pre class="class7-code"><code>import pandas as pd</code></pre>
+
+          <div class="class7-note">
+            <strong>Traducción</strong>
+            <p>
+              Estoy cargando la herramienta pandas y le pondré el apodo <code>pd</code>
+              para usarla más fácil.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="class7-section" data-section="6">
+        <div class="container">
+          <span class="section-label">Nivel 4</span>
+          <h2 class="section-title">¿Qué es un CSV?</h2>
+          <p class="section-subtitle">
+            Un CSV es una tabla guardada como texto. La primera fila contiene los nombres de las columnas
+            y cada fila siguiente representa un registro.
+          </p>
+
+          <div class="class7-note">
+            <strong>Regla estructural</strong>
+            <p>
+              Si el CSV está bien escrito, la computadora puede convertirlo en una tabla.
+              Si está mal separado, tiene columnas inconsistentes o filas incompletas, el análisis falla.
+            </p>
+          </div>
+
+          <div class="class7-csv-best-practices">
+            <div class="class7-csv-best-practices-head">
+              <span>Buenas prácticas</span>
+              <h3>Buenas prácticas para encabezados CSV</h3>
+              <p>
+                La primera fila del CSV debe ser el encabezado. Puede tener espacios o acentos,
+                pero eso vuelve el análisis más incómodo en pandas.
+              </p>
+            </div>
+
+            <div class="class7-csv-compare">
+              <article class="is-bad">
+                <strong>MAL</strong>
+                <pre class="class7-code"><code>Sabor,tipo de leche,tamaño,precio
+Vainilla,Entera,Grande,65</code></pre>
+                <h4>Problemas</h4>
+                <ul>
+                  <li>Tiene mayúsculas.</li>
+                  <li>Tiene espacios en <code>tipo de leche</code>.</li>
+                  <li>Tiene acento en <code>tamaño</code>.</li>
+                  <li><code>precio</code> no indica moneda.</li>
+                </ul>
+                <p>Puede funcionar, pero es incómodo en pandas:</p>
+                <pre class="class7-code"><code>df["tipo de leche"]</code></pre>
+              </article>
+
+              <article class="is-good">
+                <strong>BIEN</strong>
+                <pre class="class7-code"><code>sabor,tipo_leche,tamano,precio_mxn
+vainilla,entera,grande,65</code></pre>
+                <h4>Ventajas</h4>
+                <ul>
+                  <li>Es más fácil de usar en Python.</li>
+                  <li>Evita errores al seleccionar columnas.</li>
+                  <li>Es consistente.</li>
+                  <li>Es más claro para un futuro modelo de IA.</li>
+                </ul>
+                <p>Permite trabajar con nombres consistentes:</p>
+                <pre class="class7-code"><code>df["tipo_leche"]
+df["precio_mxn"]</code></pre>
+              </article>
+            </div>
+
+            <div class="class7-note class7-pandas-note">
+              <strong>Nota pandas</strong>
+              <p>
+                Pandas puede leer encabezados con espacios, pero después tendrás que seleccionarlos
+                con corchetes: <code>df['tipo de leche']</code>. Para evitar errores y escribir código
+                más limpio, en análisis de datos se recomienda usar snake_case: <code>tipo_leche</code>.
+              </p>
+            </div>
+
+            <div class="class7-header-rules">
+              <span>Reglas rápidas</span>
+              <ul>
+                <li>Usa minúsculas.</li>
+                <li>No uses espacios; usa guion bajo.</li>
+                <li>Evita acentos y caracteres especiales.</li>
+                <li>No repitas nombres de columnas.</li>
+                <li>No dejes encabezados vacíos.</li>
+                <li>Usa nombres descriptivos pero cortos.</li>
+                <li>Incluye unidades cuando aplique: <code>precio_mxn</code>, <code>peso_kg</code>, <code>tiempo_min</code>.</li>
+                <li>No mezcles idiomas o estilos: mejor <code>sabor,tipo_leche,tamano,precio_mxn</code>.</li>
+                <li>Cada fila debe tener el mismo número de columnas que el encabezado.</li>
+              </ul>
+            </div>
+
+            <p class="class7-header-final-rule">
+              Un buen encabezado CSV debe ser fácil de leer para humanos y fácil de usar en código.
+            </p>
+          </div>
+
+          <div class="class7-two-col">
+            <article class="class7-panel">
+              <h3>CSV crudo editable</h3>
+              <p>
+                Modifica el CSV o pega el tuyo. La tabla de la derecha se actualizará automáticamente.
+              </p>
+
+              <label class="class7-field">
+                CSV crudo:
+                <textarea id="c7-raw-csv" rows="12">sabor,tipo_leche,tamano,precio_mxn
+vainilla,entera,grande,65
+chocolate,deslactosada,mediano,58</textarea>
+              </label>
+
+              <div class="class7-csv-tools class7-csv-example-buttons">
+                <button class="btn btn-secondary btn-small" type="button" id="c7-load-good-csv">
+                  Ejemplo correcto
+                </button>
+                <button class="btn btn-secondary btn-small" type="button" data-c7-csv-example="spaces">
+                  Encabezados con espacios
+                </button>
+                <button class="btn btn-secondary btn-small" type="button" data-c7-csv-example="accents">
+                  Encabezados con acentos
+                </button>
+                <button class="btn btn-secondary btn-small" type="button" data-c7-csv-example="duplicates">
+                  Encabezados repetidos
+                </button>
+                <button class="btn btn-secondary btn-small" type="button" id="c7-load-bad-csv" data-c7-csv-example="incomplete">
+                  Fila incompleta
+                </button>
+                <button class="btn btn-primary btn-small" type="button" id="c7-parse-csv">
+                  Interpretar CSV
+                </button>
+              </div>
+
+              <div class="class7-error-box">
+                Observa qué pasa cuando una fila tiene más o menos columnas que el encabezado.
+              </div>
+            </article>
+
+            <article class="class7-panel">
+              <h3>Tabla interpretada</h3>
+              <p>
+                Esta tabla representa cómo pandas entendería tu CSV.
+              </p>
+
+              <div id="c7-csv-parse-feedback" class="class7-csv-feedback">
+                Escribe o modifica el CSV para validarlo.
+              </div>
+
+              <div id="c7-live-csv-table" class="class7-table-wrap"></div>
+            </article>
+          </div>
+
+          <article class="class7-panel class7-header-validator" id="c7-header-validator">
+            <div class="class7-header-validator-head">
+              <div>
+                <span>Validador automático</span>
+                <h3>Validador de encabezados</h3>
+              </div>
+              <strong id="c7-header-status">Pendiente</strong>
+            </div>
+
+            <div class="class7-header-validator-grid">
+              <div>
+                <h4>Encabezados detectados</h4>
+                <div id="c7-detected-headers" class="class7-header-suggestion">
+                  Escribe o carga un CSV para revisar sus columnas.
+                </div>
+              </div>
+
+              <div>
+                <h4>Versión recomendada</h4>
+                <div id="c7-recommended-headers" class="class7-header-suggestion">
+                  La sugerencia aparecerá aquí.
+                </div>
+              </div>
+            </div>
+
+            <div id="c7-header-issues" class="class7-header-issues">
+              Sin validación todavía.
+            </div>
+
+            <div>
+              <h4>CSV corregido sugerido</h4>
+              <pre class="class7-code"><code id="c7-recommended-csv">Carga un ejemplo para generar una versión sugerida.</code></pre>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="class7-section" data-section="7">
+        <div class="container">
+          <span class="section-label">Nivel 5</span>
+          <h2 class="section-title">Notebook Sandbox</h2>
+          <p class="section-subtitle">
+            Este sandbox simula comandos de Python para que entiendas qué hace cada uno antes de usarlos en Colab.
+          </p>
+
+          <div class="class7-sandbox">
+            <aside class="class7-sandbox-menu class7-sandbox-accordion">
+              <div class="class7-command-group is-open">
+                <button class="class7-command-group-toggle" type="button">
+                  <span>Inicio en Colab</span>
+                  <b>⌄</b>
+                </button>
+
+                <div class="class7-command-group-panel">
+                  <button type="button" data-command="upload" class="active">Subir archivo</button>
+                  <button type="button" data-command="listFiles">Ver archivos cargados</button>
+                  <button type="button" data-command="import">Importar pandas</button>
+                  <button type="button" data-command="read">Leer CSV</button>
+                </div>
+              </div>
+
+              <div class="class7-command-group">
+                <button class="class7-command-group-toggle" type="button">
+                  <span>Exploración básica</span>
+                  <b>⌄</b>
+                </button>
+
+                <div class="class7-command-group-panel">
+                  <button type="button" data-command="head">df.head()</button>
+                  <button type="button" data-command="sample">df.sample()</button>
+                  <button type="button" data-command="shape">df.shape</button>
+                  <button type="button" data-command="columns">df.columns</button>
+                  <button type="button" data-command="spaceColumn">Columna con espacio</button>
+                  <button type="button" data-command="cleanColumnAccess">Columna limpia</button>
+                  <button type="button" data-command="info">df.info()</button>
+                  <button type="button" data-command="dtypes">df.dtypes</button>
+                  <button type="button" data-command="describe">df.describe()</button>
+                </div>
+              </div>
+
+              <div class="class7-command-group">
+                <button class="class7-command-group-toggle" type="button">
+                  <span>Calidad de datos</span>
+                  <b>⌄</b>
+                </button>
+
+                <div class="class7-command-group-panel">
+                  <button type="button" data-command="nulls">Nulos por columna</button>
+                  <button type="button" data-command="missingPercent">Nulos en porcentaje</button>
+                  <button type="button" data-command="duplicates">Duplicados</button>
+                  <button type="button" data-command="counts">value_counts()</button>
+                  <button type="button" data-command="unique">Valores únicos</button>
+                </div>
+              </div>
+
+              <div class="class7-command-group">
+                <button class="class7-command-group-toggle" type="button">
+                  <span>Limpieza y análisis</span>
+                  <b>⌄</b>
+                </button>
+
+                <div class="class7-command-group-panel">
+                  <button type="button" data-command="cleanColumns">Limpiar columnas</button>
+                  <button type="button" data-command="renameColumns">Renombrar columnas</button>
+                  <button type="button" data-command="normalizeText">Normalizar texto</button>
+                  <button type="button" data-command="filterRows">Filtrar filas</button>
+                  <button type="button" data-command="groupby">Agrupar datos</button>
+                  <button type="button" data-command="crosstab">Tabla cruzada</button>
+                  <button type="button" data-command="corr">Correlación</button>
+                  <button type="button" data-command="selectXY">Separar X y y</button>
+                </div>
+              </div>
+            </aside>
+
+            <article class="class7-sandbox-main">
+              <div class="class7-sandbox-header">
+                <div>
+                  <span>Comando seleccionado</span>
+                  <h3 id="c7-command-title">Subir archivo</h3>
+                </div>
+                <button class="btn btn-primary btn-small" type="button" id="c7-run-command">
+                  Ejecutar comando
+                </button>
+              </div>
+
+              <pre class="class7-code"><code id="c7-command-code">from google.colab import files
+uploaded = files.upload()</code></pre>
+
+              <div class="class7-command-explanation" id="c7-command-explanation">
+                Este comando abre un botón en Colab para subir tu archivo CSV.
+              </div>
+
+              <div class="class7-output" id="c7-command-output">
+                Resultado pendiente...
+              </div>
+
+              <div class="class7-error-box" id="c7-command-error">
+                Error común: subir un archivo con un nombre diferente al que después escribes en read_csv.
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="class7-section" data-section="8">
+        <div class="container">
+          <span class="section-label">Nivel 6</span>
+          <h2 class="section-title">Comandos esenciales de exploración</h2>
+          <p class="section-subtitle">
+            Estos comandos son tu kit básico para revisar un dataset antes de usarlo en IA.
+          </p>
+
+          <div class="class7-command-cards">
+            <article>
+              <code>df.head()</code>
+              <p>Muestra las primeras filas. Sirve para revisar si el archivo cargó bien.</p>
+            </article>
+
+            <article>
+              <code>df.info()</code>
+              <p>Muestra columnas, tipos de datos y valores no vacíos.</p>
+            </article>
+
+            <article>
+              <code>df.describe()</code>
+              <p>Muestra estadísticas de columnas numéricas.</p>
+            </article>
+
+            <article>
+              <code>df.isnull().sum()</code>
+              <p>Cuenta datos faltantes por columna.</p>
+            </article>
+
+            <article>
+              <code>df["columna"].value_counts()</code>
+              <p>Cuenta categorías y ayuda a detectar desbalance o errores de escritura.</p>
+            </article>
+
+            <article>
+              <code>df.shape</code>
+              <p>Muestra filas y columnas del dataset.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="class7-section" data-section="9">
+        <div class="container">
+          <span class="section-label">Nivel 7</span>
+          <h2 class="section-title">Diagnóstico del dataset</h2>
+          <p class="section-subtitle">
+            Ahora convierte la exploración en conclusiones. No basta con ejecutar comandos:
+            debes interpretar qué significan.
+          </p>
+
+          <div class="class7-auto-diagnosis-card">
+            <div>
+              <strong>Diagnóstico automático desde tu CSV</strong>
+              <p>
+                Usa el CSV que escribiste en la sección anterior para llenar automáticamente
+                filas, columnas, variables, problemas detectados y una primera conclusión.
+              </p>
+            </div>
+
+            <button class="btn btn-primary btn-small" type="button" id="c7-autofill-diagnosis">
+              Usar CSV analizado para diagnóstico
+            </button>
+          </div>
+
+          <div class="class7-diagnosis-grid">
+            <article class="class7-panel">
+              <h3>Datos generales</h3>
+
+              <label class="class7-field">
+                Nombre del dataset:
+                <input id="c7-dataset-name" type="text" placeholder="Ej. dataset-cafeteria.csv">
+              </label>
+
+              <label class="class7-field">
+                Número de filas:
+                <input id="c7-rows" type="number" min="0" placeholder="Ej. 50">
+              </label>
+
+              <label class="class7-field">
+                Número de columnas:
+                <input id="c7-columns" type="number" min="0" placeholder="Ej. 6">
+              </label>
+            </article>
+
+            <article class="class7-panel">
+              <h3>Variables</h3>
+
+              <label class="class7-field">
+                Variables de entrada:
+                <textarea id="c7-input-vars" rows="5" placeholder="Ej. horario, clima, presupuesto, gusto, nivel_hambre"></textarea>
+              </label>
+
+              <label class="class7-field">
+                Variable objetivo:
+                <input id="c7-target-var" type="text" placeholder="Ej. recomendacion">
+              </label>
+            </article>
+
+            <article class="class7-panel">
+              <h3>Problemas encontrados</h3>
+
+              <label>
+                <input type="checkbox" class="c7-problem" value="Datos faltantes">
+                Datos faltantes
+              </label>
+
+              <label>
+                <input type="checkbox" class="c7-problem" value="Categorías inconsistentes">
+                Categorías inconsistentes
+              </label>
+
+              <label>
+                <input type="checkbox" class="c7-problem" value="Valores raros o fuera de rango">
+                Valores raros o fuera de rango
+              </label>
+
+              <label>
+                <input type="checkbox" class="c7-problem" value="Dataset desbalanceado">
+                Dataset desbalanceado
+              </label>
+
+              <label>
+                <input type="checkbox" class="c7-problem" value="Faltan registros">
+                Faltan registros
+              </label>
+            </article>
+
+            <article class="class7-panel">
+              <h3>Interpretación</h3>
+
+              <label class="class7-field">
+                Hallazgos principales:
+                <textarea id="c7-findings" rows="5" placeholder="Ej. El dataset tiene pocos registros y algunas columnas están incompletas."></textarea>
+              </label>
+
+              <label class="class7-field">
+                Acciones de mejora:
+                <textarea id="c7-actions" rows="5" placeholder="Ej. Capturar más ejemplos, corregir categorías y completar presupuestos faltantes."></textarea>
+              </label>
+            </article>
+          </div>
+
+          <div class="class7-panel">
+            <h3>Conclusión</h3>
+            <p>Decide si tu dataset está listo para IA.</p>
+
+            <div class="class7-ready-options">
+              <label>
+                <input type="radio" name="c7-ready" value="Sí está listo">
+                Sí está listo
+              </label>
+
+              <label>
+                <input type="radio" name="c7-ready" value="Todavía no está listo">
+                Todavía no está listo
+              </label>
+
+              <label>
+                <input type="radio" name="c7-ready" value="Está parcialmente listo">
+                Está parcialmente listo
+              </label>
+            </div>
+
+            <label class="class7-field">
+              Explica por qué:
+              <textarea id="c7-conclusion" rows="5" placeholder="Mi dataset está / no está listo porque..."></textarea>
+            </label>
+
+            <div class="class7-validation-actions">
+              <button class="btn btn-secondary" type="button" id="c7-validate-dataset">
+                Validar mi dataset
+              </button>
+            </div>
+
+            <div class="class7-validation-result" id="c7-validation-result" hidden></div>
+</div>
+        </div>
+      </section>
+
+      <section class="class7-section" data-section="10">
+        <div class="container">
+          <span class="section-label">Reto integrador</span>
+          <h2 class="section-title">Decisiones reales de análisis</h2>
+          <p class="section-subtitle">
+            Estos retos ya no son de memoria. Debes interpretar qué comando usar y qué significa el resultado.
+          </p>
+
+          <div class="class7-final-challenge">
+            <article class="class7-panel">
+              <h3>Caso 1 · Dataset con datos faltantes</h3>
+              <p>
+                Ejecutas <code>df.isnull().sum()</code> y descubres que la columna
+                <code>presupuesto</code> tiene muchos valores vacíos. Esa columna es importante
+                para recomendar productos.
+              </p>
+
+              <label class="class7-field">
+                ¿Qué decisión tomarías?
+                <select id="c7-challenge-1">
+                  <option value="">Selecciona una respuesta</option>
+                  <option value="bad">Eliminar todo el dataset</option>
+                  <option value="bad">Ignorar la columna porque pandas sí pudo cargarla</option>
+                  <option value="ok">Revisar cuántos faltan, decidir si se pregunta el dato o se usa una categoría como desconocido</option>
+                </select>
+              </label>
+            </article>
+
+            <article class="class7-panel">
+              <h3>Caso 2 · Categorías inconsistentes</h3>
+              <p>
+                Ejecutas <code>value_counts()</code> y aparece:
+                <code>frappé</code>, <code>frappe</code>, <code>Frappe</code> y <code>frape</code>.
+              </p>
+
+              <label class="class7-field">
+                ¿Qué comando o acción sería más útil?
+                <select id="c7-challenge-2">
+                  <option value="">Selecciona una respuesta</option>
+                  <option value="bad">Entrenar el modelo así porque son palabras parecidas</option>
+                  <option value="ok">Normalizar texto y unificar categorías antes de entrenar</option>
+                  <option value="bad">Convertir todo a números aleatorios</option>
+                </select>
+              </label>
+            </article>
+
+            <article class="class7-panel">
+              <h3>Caso 3 · Dataset desbalanceado</h3>
+              <p>
+                En la variable objetivo, el 90% de los registros pertenecen a una sola categoría.
+              </p>
+
+              <label class="class7-field">
+                ¿Cuál es el riesgo principal?
+                <select id="c7-challenge-3">
+                  <option value="">Selecciona una respuesta</option>
+                  <option value="bad">No hay riesgo, mientras existan datos</option>
+                  <option value="ok">El modelo puede aprender a responder casi siempre la clase dominante</option>
+                  <option value="bad">Pandas ya no puede leer el archivo</option>
+                </select>
+              </label>
+            </article>
+
+            <article class="class7-panel">
+              <h3>Caso 4 · Variable objetivo</h3>
+              <p>
+                Tu dataset tiene muchas columnas de entrada, pero no tiene una columna que represente
+                la respuesta esperada de la IA.
+              </p>
+
+              <label class="class7-field">
+                ¿Qué significa esto?
+                <select id="c7-challenge-4">
+                  <option value="">Selecciona una respuesta</option>
+                  <option value="ok">No está listo para entrenamiento supervisado porque falta la salida esperada</option>
+                  <option value="bad">Está perfecto porque mientras más entradas tenga, mejor</option>
+                  <option value="bad">Solo hace falta cambiar el nombre del archivo</option>
+                </select>
+              </label>
+            </article>
+          </div>
+
+          <div class="class7-panel">
+            <h3>Justificación técnica</h3>
+            <p>
+              Explica con tus palabras por qué revisar datos antes de entrenar una IA evita errores.
+            </p>
+
+            <label class="class7-field">
+              Mi explicación:
+              <textarea id="c7-challenge-explanation" rows="5" placeholder="Ej. Porque si los datos tienen faltantes, categorías mal escritas o una variable objetivo confusa, el modelo aprenderá patrones incorrectos."></textarea>
+            </label>
+
+            <button class="btn btn-primary" type="button" id="c7-check-final-challenge">
+              Validar reto integrador
+            </button>
+
+            <div class="class7-validation-result" id="c7-final-challenge-result" hidden></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="class7-section" data-section="11">
+        <div class="container">
+          <span class="section-label">Evidencia final</span>
+          <h2 class="section-title">Reporte de diagnóstico</h2>
+          <p class="section-subtitle">
+            Copia esta evidencia y entrégala junto con tu notebook de Google Colab.
+          </p>
+
+          <div class="class7-final-report-note">
+            <strong>Antes de generar evidencia</strong>
+            <p>
+              Completa el diagnóstico, valida tu dataset y responde el reto integrador.
+              La evidencia final debe ser el cierre de la clase, no un paso intermedio.
+            </p>
+          </div>
+
+          <textarea id="c7-final-report" class="class7-final-report" rows="18" placeholder="Aquí aparecerá tu evidencia final."></textarea>
+
+          <div class="class7-actions">
+            <button class="btn btn-primary" type="button" id="c7-generate-final-report">
+              Generar evidencia final
+            </button>
+
+            <button class="btn btn-secondary" type="button" id="c7-copy-report">
+              Copiar evidencia
+            </button>
+
+            <button class="btn btn-secondary" type="button" id="c7-reset">
+              Reiniciar clase
+            </button>
+          </div>
+
+          <div class="class7-rubric">
+            <h3>Rúbrica rápida</h3>
+            <ul>
+              <li>Identifica correctamente filas y columnas.</li>
+              <li>Distingue variables de entrada y variable objetivo.</li>
+              <li>Usa comandos básicos de exploración.</li>
+              <li>Detecta problemas de calidad de datos.</li>
+              <li>Propone acciones de mejora concretas.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="class7-section class7-credit-section">
+        <div class="container">
+          <span class="section-label">Créditos y fuentes</span>
+          <h2 class="section-title">Material de apoyo utilizado</h2>
+
+          <div class="class7-credit-card">
+            <p>
+              Parte de la explicación visual sobre Google Colab fue adaptada con fines educativos a partir del artículo:
+              <strong>“¿Qué es Google Colab y cómo usarlo? Python en la nube fácil y rápido”</strong>, publicado en el blog de OMES.
+            </p>
+
+            <p>
+              También se reconoce el canal de YouTube de OMES como fuente complementaria de aprendizaje.
+            </p>
+
+            <div class="class7-actions">
+              <a class="btn btn-secondary btn-small" href="https://omes-va.com/que-es-google-colab-y-como-usarlo-python-en-la-nube-facil-y-rapido/" target="_blank" rel="noopener">
+                Ver blog original
+              </a>
+
+              <a class="btn btn-secondary btn-small" href="https://www.youtube.com/@omes-va" target="_blank" rel="noopener">
+                Ver canal de YouTube
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="nav-controls">
+        <a class="btn btn-secondary" href="clase6.html">← Clase anterior</a>
+        <a class="btn btn-primary" href="index.html">Volver al inicio</a>
+      </div>
+    </main>
+  </div>
+
+
+  <div class="class7-image-lightbox" id="class7-image-lightbox" hidden>
+    <button class="class7-lightbox-close" type="button" id="class7-lightbox-close" aria-label="Cerrar imagen ampliada">
+      ×
+    </button>
+
+    <figure class="class7-lightbox-figure">
+      <img id="class7-lightbox-img" src="" alt="">
+      <figcaption id="class7-lightbox-caption"></figcaption>
+    </figure>
+  </div>
+
+
+  <script src="main.js"></script>
+  <script src="clase7.js"></script>
+</body>
+</html>

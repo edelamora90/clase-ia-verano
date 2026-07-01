@@ -7,6 +7,7 @@
     'clase-4': 'clase4.html',
     'clase-5': 'clase5.html',
     'clase-6': 'clase6.html',
+  'clase-7': 'clase7.html',
     'herramienta-redes-neuronales': 'herramienta-redes-neuronales.html',
     'herramienta-robotica': 'herramienta-robotica.html',
     'herramienta-vision-artificial': 'herramienta-vision-artificial.html',
@@ -72,3 +73,112 @@ function generarPDFReporteFinal() {
     }
   }, 500);
 }
+
+
+/* Hero parallax neuronal · compatible con index-hero-pro y h-root */
+document.addEventListener("DOMContentLoaded", () => {
+  const hero = document.querySelector(".index-hero-pro, .h-root");
+  if (!hero || hero.dataset.parallaxReady === "true") return;
+
+  hero.dataset.parallaxReady = "true";
+
+  let currentX = 0;
+  let currentY = 0;
+  let targetX = 0;
+  let targetY = 0;
+
+  function setParallaxVars(x, y) {
+    hero.style.setProperty("--mx", `${x}px`);
+    hero.style.setProperty("--my", `${y}px`);
+
+    const neuralBg = hero.querySelector(".hero-neural-bg");
+    if (neuralBg) {
+      neuralBg.style.setProperty("--mx", `${x}px`);
+      neuralBg.style.setProperty("--my", `${y}px`);
+    }
+  }
+
+  hero.addEventListener("mousemove", (event) => {
+    const rect = hero.getBoundingClientRect();
+
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const normalizedX = (x - rect.width / 2) / (rect.width / 2);
+    const normalizedY = (y - rect.height / 2) / (rect.height / 2);
+
+    targetX = normalizedX * 34;
+    targetY = normalizedY * 34;
+  });
+
+  hero.addEventListener("mouseleave", () => {
+    targetX = 0;
+    targetY = 0;
+  });
+
+  function animateParallax() {
+    currentX += (targetX - currentX) * 0.10;
+    currentY += (targetY - currentY) * 0.10;
+
+    setParallaxVars(currentX, currentY);
+
+    requestAnimationFrame(animateParallax);
+  }
+
+  animateParallax();
+});
+
+
+/* Hero parallax neuronal · compatible con index-hero-pro y h-root */
+document.addEventListener("DOMContentLoaded", () => {
+  const hero = document.querySelector(".index-hero-pro, .h-root");
+  if (!hero || hero.dataset.parallaxReady === "true") return;
+
+  hero.dataset.parallaxReady = "true";
+
+  let currentX = 0;
+  let currentY = 0;
+  let targetX = 0;
+  let targetY = 0;
+
+  function setParallaxVars(x, y) {
+    hero.style.setProperty("--mx", `${x}px`);
+    hero.style.setProperty("--my", `${y}px`);
+
+    const neuralBg = hero.querySelector(".hero-neural-bg");
+    if (neuralBg) {
+      neuralBg.style.setProperty("--mx", `${x}px`);
+      neuralBg.style.setProperty("--my", `${y}px`);
+    }
+  }
+
+  hero.addEventListener("mousemove", (event) => {
+    const rect = hero.getBoundingClientRect();
+
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const normalizedX = (x - rect.width / 2) / (rect.width / 2);
+    const normalizedY = (y - rect.height / 2) / (rect.height / 2);
+
+    targetX = normalizedX * 34;
+    targetY = normalizedY * 34;
+  });
+
+  hero.addEventListener("mouseleave", () => {
+    targetX = 0;
+    targetY = 0;
+  });
+
+  function animateParallax() {
+    currentX += (targetX - currentX) * 0.10;
+    currentY += (targetY - currentY) * 0.10;
+
+    setParallaxVars(currentX, currentY);
+
+    requestAnimationFrame(animateParallax);
+  }
+
+  animateParallax();
+});
+
