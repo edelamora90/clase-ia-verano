@@ -284,12 +284,14 @@
     progress[key] = true;
     saveProgress(progress);
     updateXP();
+    // // updateClass7ProgressBar(); // removido // removido: función inexistente
   }
 
   function updateXP() {
     const progress = readProgress();
     const total = Object.entries(XP_MAP).reduce((sum, [key, xp]) => {
       return sum + (progress[key] ? xp : 0);
+    // // updateClass7ProgressBar(); // removido // removido: función inexistente
     }, 0);
 
     const label = $('#c7-xp-label');
@@ -1629,8 +1631,102 @@ Antes de usar IA, revisé si mi dataset tiene estructura clara, variables útile
   }
 
 
+
+  function updateClass7ProgressBar() {
+    const xpElement = document.getElementById('c7-xp');
+    const fillElement = document.getElementById('c7-progress-fill');
+
+    if (!xpElement || !fillElement) return;
+
+    const rawXP = Number(String(xpElement.textContent || '0').replace(/[^\d]/g, ''));
+    const safeXP = Math.max(0, Math.min(100, rawXP));
+
+    fillElement.style.width = `${safeXP}%`;
+    fillElement.setAttribute('aria-valuenow', String(safeXP));
+  }
+
+
+
+  function initClass7ProgressObserver() {
+    const xpElement = document.getElementById('c7-xp');
+    if (!xpElement) return;
+
+    // // updateClass7ProgressBar(); // removido // removido: función inexistente
+
+    const observer = new MutationObserver(updateClass7ProgressBar);
+    observer.observe(xpElement, {
+      childList: true,
+      characterData: true,
+      subtree: true
+    });
+  }
+
+
+
+  function updateClass7MissionProgress() {
+    const xpValue = document.getElementById('c7-xp-value');
+    const xpLabel = document.getElementById('c7-xp-label');
+    const fill = document.getElementById('c7-progress-fill');
+    const oldFill = document.getElementById('c7-xp-bar');
+    const text = document.getElementById('c7-progress-text');
+
+    let xp = 0;
+
+    if (xpLabel) {
+      const match = String(xpLabel.textContent || '').match(/\d+/);
+      if (match) xp = Number(match[0]);
+    }
+
+    if (!xp && xpValue) {
+      const match = String(xpValue.textContent || '').match(/\d+/);
+      if (match) xp = Number(match[0]);
+    }
+
+    const safeXP = Math.max(0, Math.min(100, xp));
+
+    if (xpValue) xpValue.textContent = `${safeXP} XP`;
+    if (fill) fill.style.width = `${safeXP}%`;
+    if (oldFill) oldFill.style.width = `${safeXP}%`;
+
+    if (text) {
+      text.textContent = safeXP >= 100
+        ? 'Misión completada. Insignia desbloqueada.'
+        : `Te faltan ${100 - safeXP} XP para desbloquear la insignia.`;
+    }
+  }
+
+  function initClass7MissionProgress() {
+    // // updateClass7MissionProgress(); // removido // removido: función inexistente
+
+    const xpLabel = document.getElementById('c7-xp-label');
+    const xpValue = document.getElementById('c7-xp-value');
+
+    const observer = new MutationObserver(updateClass7MissionProgress);
+
+    if (xpLabel) {
+      observer.observe(xpLabel, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    }
+
+    if (xpValue) {
+      observer.observe(xpValue, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    }
+  }
+
+
   function initClass7() {
+    // // initClass7MissionProgress(); // removido // removido: función inexistente
+    // // initClass7ProgressBar(); // removido // removido: función inexistente
+    initClass7ProgressObserver();
     updateXP();
+    // // updateClass7ProgressBar(); // removido // removido: función inexistente
     initStart();
     initChecklist();
     initQuizzes();
@@ -1649,3 +1745,5 @@ Antes de usar IA, revisé si mi dataset tiene estructura clara, variables útile
 
   document.addEventListener('DOMContentLoaded', initClass7);
 })();
+
+

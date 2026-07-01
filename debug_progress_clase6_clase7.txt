@@ -1,0 +1,3395 @@
+===== CLASE 6 HTML: PROGRESO / HERO / SIDEBAR =====
+1-<!DOCTYPE html>
+2-<html lang="es">
+3-<head>
+4-  <meta charset="UTF-8">
+5-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+6-  <title>Clase 6 · IA Data Lab</title>
+7-  <link rel="stylesheet" href="styles.css">
+8-</head>
+9:<body data-page="clase6" data-active-lesson="clase-6">
+10:  <div id="progress-bar"></div>
+11-
+12-  <div class="nav-controls">
+13-    <button class="nav-btn" id="btn-prev" title="Sección anterior" disabled>&#8592;</button>
+14-    <button class="nav-btn" id="btn-next" title="Siguiente sección">&#8594;</button>
+15-  </div>
+16-
+17-  <div class="section-indicator" id="section-indicator">1 / 1</div>
+18:  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Mostrar/ocultar menú">☰</button>
+19-
+20:  <aside class="course-sidebar" id="course-sidebar" aria-label="Navegación del curso">
+21-    <p class="course-kicker">Curso</p>
+22-    <h2 class="course-title"><a href="index.html">Inteligencia Artificial</a></h2>
+23-
+24:    <div class="progress-panel">
+25-      <p><span>Clases disponibles</span><strong>6 / 30 aprox.</strong></p>
+26-      <p><span>Semana actual</span><strong>Semana 2</strong></p>
+27-      <p><span>Estado</span><strong>Laboratorio de datos</strong></p>
+28-    </div>
+29-
+30-    <p class="week-label">Semana 1</p>
+31-
+32-    <a class="lesson-tab" href="clase1.html" data-lesson="clase-1">
+33-      <strong>Clase 1</strong>
+34-      Introducción a la Inteligencia Artificial
+35-    </a>
+36-
+37-    <a class="lesson-tab" href="clase2.html" data-lesson="clase-2">
+38-      <strong>Clase 2</strong>
+39-      Agentes inteligentes y toma de decisiones
+40-    </a>
+41-
+42-    <a class="lesson-tab" href="clase3.html" data-lesson="clase-3">
+43-      <strong>Clase 3</strong>
+44-      Espacios de estado y técnicas de búsqueda
+45-    </a>
+46-
+47-    <a class="lesson-tab" href="clase4.html" data-lesson="clase-4">
+48-      <strong>Clase 4</strong>
+49-      Áreas de aplicación de la IA
+--
+66-
+67-    <section class="class6-section visible" data-section="1">
+68-      <div class="container">
+69-        <div class="class6-hero class6v2-hero">
+70-          <div>
+71-            <span class="class6-badge">Laboratorio guiado de datos</span>
+72-            <h1>Clase 6: IA Data Lab</h1>
+73-            <p>
+74-              Hoy aprenderás a responder una pregunta clave: <strong>¿qué datos necesita realmente una IA?</strong>
+75-              La meta no es pedir muchos datos, sino elegir los datos correctos.
+76-            </p>
+77-
+78-            <div class="class6-meta">
+79-              <span>Semana 2</span>
+80-              <span>Duración: 2 horas</span>
+81:              <span>XP total: 100</span>
+82-              <span>Insignia: Arquitecto de Datos IA</span>
+83-            </div>
+84-
+85-            <div class="class6-actions">
+86-              <button class="btn btn-primary btn-small" type="button" data-c6-start>Iniciar laboratorio</button>
+87-              <button class="btn btn-secondary btn-small" type="button" data-c6-reset>Reiniciar progreso</button>
+88-            </div>
+89-          </div>
+90-
+91:          <aside class="class6-xp-card">
+92:            <p class="class6-xp-label">Progreso de misión</p>
+93:            <strong id="c6-xp-value">0 XP</strong>
+94:            <div class="class6-progress-track">
+95:              <div class="class6-progress-fill" id="c6-progress-fill"></div>
+96-            </div>
+97:            <p id="c6-progress-text">Completa los retos para desbloquear la insignia.</p>
+98-          </aside>
+99-        </div>
+100-
+101-        <div id="class6-start"></div>
+102-
+103-        <article class="class6-panel class6v2-key-panel">
+104-          <h2>Idea central de la clase</h2>
+105-          <p>
+106-            Una IA no adivina. Una IA usa datos para tomar decisiones.
+107-            Si los datos son útiles, la solución puede funcionar mejor.
+108-            Si los datos son basura, sensibles o incompletos, la IA puede responder mal.
+109-          </p>
+110-
+111-          <div class="class6v2-rule">
+112-            <strong>Regla de oro</strong>
+113-            <p>Un dato sirve si ayuda directamente a tomar la decisión que queremos que tome la IA.</p>
+114-          </div>
+115-
+116-          <div class="class6-flow">
+117-            <span>Problema real</span>
+118-            <i>→</i>
+119-            <span>Decisión IA</span>
+120-            <i>→</i>
+121-            <span>Datos útiles</span>
+122-            <i>→</i>
+123-            <span>Dataset</span>
+124-            <i>→</i>
+125-            <span>Modelo</span>
+126-            <i>→</i>
+127-            <span>Resultado</span>
+128-          </div>
+129-        </article>
+130-
+131-        <article class="class6-panel">
+132-          <h2>Tablero de misiones</h2>
+133-          <p>Cada reto representa una habilidad que necesitas antes de construir un modelo de IA.</p>
+134-
+135-          <div class="class6-mission-grid" id="c6-mission-grid">
+136-            <label class="class6-mission-card">
+137:              <input type="checkbox" data-xp="10" data-mission="concepts">
+138-              <span class="class6-mission-icon">🧠</span>
+139-              <strong>Entender tipos de datos</strong>
+140:              <small>10 XP</small>
+141-              <p>Útil, basura, sensible y faltante.</p>
+142-            </label>
+143-
+144-            <label class="class6-mission-card">
+145:              <input type="checkbox" data-xp="15" data-mission="business">
+146-              <span class="class6-mission-icon">🏪</span>
+147-              <strong>Elegir negocio</strong>
+148:              <small>15 XP</small>
+149-              <p>Trabaja con un caso real.</p>
+150-            </label>
+151-
+152-            <label class="class6-mission-card">
+153:              <input type="checkbox" data-xp="15" data-mission="decision">
+154-              <span class="class6-mission-icon">🎯</span>
+155-              <strong>Definir decisión IA</strong>
+156:              <small>15 XP</small>
+157-              <p>Qué debe recomendar, clasificar o predecir.</p>
+158-            </label>
+159-
+160-            <label class="class6-mission-card">
+161:              <input type="checkbox" data-xp="15" data-mission="inputTarget">
+162-              <span class="class6-mission-icon">📥</span>
+163-              <strong>Entrada vs objetivo</strong>
+164:              <small>15 XP</small>
+165-              <p>Distingue lo que entra y lo que sale.</p>
+166-            </label>
+167-
+168-            <label class="class6-mission-card">
+169:              <input type="checkbox" data-xp="20" data-mission="filter">
+170-              <span class="class6-mission-icon">🧹</span>
+171-              <strong>Filtrar datos</strong>
+172:              <small>20 XP</small>
+173-              <p>Conserva lo útil y elimina lo que estorba.</p>
+174-            </label>
+175-
+176-            <label class="class6-mission-card">
+177:              <input type="checkbox" data-xp="15" data-mission="dataset">
+178-              <span class="class6-mission-icon">📊</span>
+179-              <strong>Crear dataset</strong>
+180:              <small>15 XP</small>
+181-              <p>Convierte variables en columnas.</p>
+182-            </label>
+183-
+184-            <label class="class6-mission-card">
+185:              <input type="checkbox" data-xp="10" data-mission="quality">
+186-              <span class="class6-mission-icon">⚠️</span>
+187-              <strong>Auditar calidad</strong>
+188:              <small>10 XP</small>
+189-              <p>Detecta sesgo, errores y faltantes.</p>
+190-            </label>
+191-          </div>
+192-
+193-          <div class="class6-unlock" id="c6-unlock" hidden>
+194-            <strong>🎖 Insignia desbloqueada: Arquitecto de Datos IA</strong>
+195-            <p>Completaste la misión. Ya sabes identificar datos útiles para construir un dataset de IA.</p>
+196-          </div>
+197-        </article>
+198-      </div>
+199-    </section>
+200-
+201-    <section class="class6-section" data-section="2">
+202-      <div class="container">
+203-        <span class="section-label">Nivel 1</span>
+204-        <h2 class="section-title">Primero entiende los tipos de datos</h2>
+205-        <p class="section-subtitle">
+206-          Antes de construir un dataset, debes aprender a reconocer qué tipo de información tienes enfrente.
+207-        </p>
+208-
+209-        <div class="class6v2-learning-grid">
+210-          <article class="class6v2-learning-card useful">
+211-            <span>✅</span>
+212-            <h3>Dato útil</h3>
+213-            <p>Ayuda directamente a tomar la decisión que queremos que tome la IA.</p>
+--
+234-            </div>
+235-          </article>
+236-
+237-          <article class="class6v2-learning-card missing">
+238-            <span>❓</span>
+239-            <h3>Dato faltante</h3>
+240-            <p>Es información necesaria que no fue capturada. La IA debería pedirla antes de decidir.</p>
+241-            <div class="class6v2-example">
+242-              <strong>Ejemplo:</strong> Si falta presupuesto, conviene preguntar antes de recomendar.
+243-            </div>
+244-          </article>
+245-        </div>
+246-
+247-        <article class="class6-panel">
+248-          <h2>Mini reto: identifica el tipo de dato</h2>
+249:          <p>Lee cada caso y elige la categoría correcta. Observa la explicación.</p>
+250-          <div class="class6v2-mini-quiz" id="c6-concept-quiz"></div>
+251-        </article>
+252-      </div>
+253-    </section>
+254-
+255-    <section class="class6-section" data-section="3">
+256-      <div class="container">
+257-        <span class="section-label">Nivel 2</span>
+258-        <h2 class="section-title">Elige el negocio y define la decisión IA</h2>
+259-        <p class="section-subtitle">
+260-          La IA debe apoyar una decisión concreta. Si no sabes qué debe decidir, no puedes saber qué datos necesita.
+261-        </p>
+262-
+263-        <div class="class6-business-grid" id="c6-business-grid">
+264-          <button class="class6-business-card" type="button" data-business="cafeteria">
+265-            <span>☕</span>
+266-            <strong>Cafetería</strong>
+267-            <p>Recomendar bebida, snack o combo.</p>
+268-          </button>
+269-
+270-          <button class="class6-business-card" type="button" data-business="restaurante">
+271-            <span>🍽️</span>
+272-            <strong>Restaurante</strong>
+273-            <p>Recomendar platillo o responder dudas de menú.</p>
+274-          </button>
+--
+332-            <p>
+333-              Ejemplo: si la IA debe recomendar una bebida, necesitamos datos como clima, gusto y presupuesto.
+334-              Pero si debe detectar un riesgo, necesitaremos señales, síntomas o indicadores.
+335-            </p>
+336-          </div>
+337-
+338-          <div class="class6v2-decision-options" id="c6-decision-options">
+339-            <button type="button" data-decision="recomendar">Recomendar algo</button>
+340-            <button type="button" data-decision="clasificar">Clasificar un caso</button>
+341-            <button type="button" data-decision="predecir">Predecir una cantidad</button>
+342-            <button type="button" data-decision="detectar">Detectar un riesgo</button>
+343-            <button type="button" data-decision="generar">Generar respuesta</button>
+344-          </div>
+345-
+346-          <div class="class6v2-decision-help" id="c6-decision-help">
+347:            Elige una opción para recibir explicación y una frase guía.
+348-          </div>
+349-
+350-          <label class="class6-field">
+351-            Objetivo de la IA:
+352-            <small class="class6v2-field-help">
+353-              Escribe qué debe producir la IA como resultado: una recomendación, una categoría, una alerta, una predicción o una respuesta.
+354-            </small>
+355-            <textarea id="c6-decision-text" rows="5" placeholder="Ej. Mi IA debe recomendar una bebida usando clima, presupuesto y gusto del cliente."></textarea>
+356-          </label>
+357-
+358-          <div class="class6v2-after-decision">
+359-            <strong>Esto se convertirá después en:</strong>
+360-            <ul>
+361-              <li><b>Variable objetivo:</b> lo que la IA debe responder.</li>
+362-              <li><b>Variables de entrada:</b> los datos que necesita para responder bien.</li>
+363-              <li><b>Datos basura:</b> información que no ayuda a esa decisión.</li>
+364-            </ul>
+365-          </div>
+366-        </article>
+367-      </div>
+368-    </section>
+369-
+370-    <section class="class6-section" data-section="4">
+371-      <div class="container">
+372-        <span class="section-label">Nivel 3</span>
+--
+477-        <span class="section-label">Nivel 5</span>
+478-        <h2 class="section-title">Construye el dataset</h2>
+479-        <p class="section-subtitle">
+480-          Un dataset es una tabla. Cada columna es una variable y cada fila es un ejemplo.
+481-        </p>
+482-
+483-        <div class="class6-two-col">
+484-          <article class="class6-panel">
+485-            <h2>Columnas detectadas</h2>
+486-            <p>La página tomará tus datos útiles y tu variable objetivo para proponer columnas.</p>
+487-
+488-            <div id="c6-columns-suggestion" class="class6-columns-box">
+489-              Clasifica datos para generar columnas.
+490-            </div>
+491-
+492:            <div class="class6v2-dataset-explain">
+493-              <strong>Recuerda:</strong>
+494-              <p>Las primeras columnas suelen ser entradas. La última columna suele ser la salida esperada.</p>
+495-            </div>
+496-
+497-            <button class="btn btn-primary btn-small" type="button" id="c6-generate-columns">
+498-              Generar dataset inicial
+499-            </button>
+500-          </article>
+501-
+502-          <article class="class6-panel">
+503-            <h2>Dataset inicial</h2>
+504-            <p>Edita el CSV si lo necesitas. Debe tener mínimo 5 registros.</p>
+505-
+506-            <label class="class6-field">
+507-              Dataset en formato CSV:
+508-              <textarea id="c6-dataset-text" rows="14" placeholder="Aquí aparecerá tu dataset."></textarea>
+509-            </label>
+510-
+511-            <div class="class6-actions-row">
+512-              <button class="btn btn-secondary btn-small" type="button" id="c6-copy-csv">Copiar CSV</button>
+513-              <button class="btn btn-secondary btn-small" type="button" id="c6-download-csv">Descargar CSV</button>
+514-            </div>
+515-
+516-            <p class="class6-copy-status" id="c6-csv-status"></p>
+517-          </article>
+
+===== CLASE 6 JS: PROGRESO / XP =====
+1-(() => {
+2:  const STORAGE_KEY = 'clase6DataLabV2Progress';
+3-
+4-  const CONCEPT_QUIZ = [
+5-    {
+6-      text: 'Para recomendar una bebida en cafetería, el cliente dice su presupuesto.',
+7-      answer: 'useful',
+8:      explanation: 'El presupuesto ayuda a recomendar algo que el cliente sí puede comprar.'
+9-    },
+10-    {
+11-      text: 'Para recomendar una bebida, se registra el color de la mochila del cliente.',
+12-      answer: 'trash',
+13:      explanation: 'El color de mochila no ayuda a decidir qué bebida recomendar.'
+14-    },
+15-    {
+16-      text: 'Para recomendar un platillo, el sistema pide la CURP del cliente.',
+17-      answer: 'sensitive',
+18:      explanation: 'La CURP es un dato personal sensible e innecesario para recomendar comida.'
+19-    },
+20-    {
+21-      text: 'El cliente pide una recomendación, pero no dice si quiere algo frío o caliente.',
+22-      answer: 'missing',
+23:      explanation: 'Falta un dato importante. La IA debería preguntar antes de recomendar.'
+24-    },
+25-    {
+26-      text: 'Para recomendar un platillo, el cliente indica que es alérgico al camarón.',
+27-      answer: 'useful',
+28:      explanation: 'Puede parecer sensible porque habla de salud, pero en este caso es un dato útil y necesario para evitar una recomendación peligrosa. La regla es pedir solo lo indispensable.'
+29-    },
+30-    {
+31-      text: 'Para recomendar una refacción compatible, el sistema pide el número de placas del vehículo.',
+32-      answer: 'sensitive',
+33:      explanation: 'Puede parecer útil para identificar el vehículo, pero para compatibilidad normalmente bastan marca, modelo, año y motor. Las placas son un dato sensible e innecesario para esta decisión.'
+34-    }
+35-  ];
+36-
+37-  const QUALITY_QUIZ = [
+38-    {
+39-      text: 'En el dataset aparecen las categorías: frappe, frappé, frape y Frappe.',
+40-      answer: 'inconsistent',
+41:      explanation: 'Es un problema de inconsistencia. Conviene normalizar a una sola categoría.'
+42-    },
+43-    {
+44-      text: 'Solo se capturaron ventas de la mañana, pero la IA recomendará todo el día.',
+45-      answer: 'bias',
+46:      explanation: 'Hay sesgo porque los datos no representan tarde, noche u otros contextos.'
+47-    },
+48-    {
+49-      text: 'El cliente no indicó presupuesto, pero el asistente debe recomendar un producto.',
+50-      answer: 'missing',
+51:      explanation: 'Falta un dato importante. La IA debería preguntar presupuesto.'
+52-    },
+53-    {
+54-      text: 'El dataset pide dirección exacta para recomendar una bebida.',
+55-      answer: 'privacy',
+56:      explanation: 'Es un problema de privacidad. Ese dato no es necesario para la decisión.'
+57-    }
+58-  ];
+59-
+60-  const DECISION_HELP = {
+61-    recomendar: {
+62-      title: 'Recomendar algo',
+63:      explanation: 'La IA debe sugerir la mejor opción para una persona según sus necesidades, preferencias o contexto.',
+64-      target: 'recomendacion',
+65-      dataNeeded: 'preferencias, presupuesto, contexto, restricciones y opciones disponibles'
+66-    },
+67-    clasificar: {
+68-      title: 'Clasificar un caso',
+69:      explanation: 'La IA debe asignar una categoría a un caso. Por ejemplo: bajo, medio, alto; urgente, no urgente; queja, duda o venta.',
+70-      target: 'categoria',
+71-      dataNeeded: 'características del caso, señales observables y criterios de clasificación'
+72-    },
+73-    predecir: {
+74-      title: 'Predecir una cantidad',
+75:      explanation: 'La IA debe estimar un número o valor. Por ejemplo: ventas esperadas, demanda, tiempo de atención o probabilidad.',
+76-      target: 'valor_estimado',
+77-      dataNeeded: 'datos históricos, fechas, cantidades anteriores y factores que influyen en el resultado'
+78-    },
+79-    detectar: {
+80-      title: 'Detectar un riesgo',
+81:      explanation: 'La IA debe identificar si existe una alerta, falla, anomalía o situación que requiere atención.',
+82-      target: 'riesgo_detectado',
+83-      dataNeeded: 'síntomas, señales, condiciones, indicadores y contexto del caso'
+84-    },
+85-    generar: {
+86-      title: 'Generar respuesta',
+87:      explanation: 'La IA debe redactar una respuesta, resumen, promoción o mensaje usando contexto y reglas.',
+88-      target: 'respuesta_generada',
+89-      dataNeeded: 'mensaje del usuario, contexto del negocio, reglas, tono y formato esperado'
+90-    }
+91-  };
+92-
+93-  const BUSINESS_DATA = {
+94-    cafeteria: {
+95-      label: 'Cafetería',
+96-      icon: '☕',
+97-      problem: 'Muchos clientes no saben qué bebida, snack o combo elegir.',
+98-      suggestedDecision: 'Mi IA debe recomendar una bebida, snack o combo usando datos como clima, horario, presupuesto, gusto y nivel de hambre.',
+99-      target: 'recomendacion',
+100-      modelType: 'Sistema recomendador / clasificación',
+101-      cards: [
+102-        { name: 'horario', example: 'mañana, tarde, noche', type: 'useful', role: 'entrada', reason: 'Ayuda a decidir si conviene algo para iniciar el día, merendar o cerrar la noche.' },
+103-        { name: 'clima', example: 'calor, frío, lluvia', type: 'useful', role: 'entrada', reason: 'Ayuda a decidir entre bebida fría o caliente.' },
+104-        { name: 'presupuesto', example: '50, 80, 100', type: 'useful', role: 'entrada', reason: 'Evita recomendar algo fuera del alcance del cliente.' },
+105-        { name: 'gusto', example: 'dulce, amargo, ligero', type: 'useful', role: 'entrada', reason: 'Ayuda a personalizar la recomendación.' },
+106-        { name: 'nivel_hambre', example: 'bajo, medio, alto', type: 'useful', role: 'entrada', reason: 'Ayuda a decidir si basta una bebida o conviene un combo.' },
+107-        { name: 'recomendacion', example: 'frappé + pan dulce', type: 'target', role: 'objetivo', reason: 'Es la salida que queremos que la IA aprenda a recomendar.' },
+108-        { name: 'color_de_mochila', example: 'azul', type: 'trash', role: 'eliminar', reason: 'No ayuda a recomendar una bebida.' },
+109-        { name: 'marca_de_celular', example: 'iPhone', type: 'trash', role: 'eliminar', reason: 'No aporta valor para decidir qué vender.' },
+110-        { name: 'nombre_completo', example: 'Juan Pérez', type: 'sensitive', role: 'evitar', reason: 'No es necesario para recomendar una bebida.' },
+111-        { name: 'presupuesto_no_indicado', example: 'dato faltante', type: 'missing', role: 'preguntar', reason: 'Si no se conoce el presupuesto, la IA debería preguntarlo.' }
+112-      ],
+113-      csvHeader: ['horario', 'clima', 'presupuesto', 'gusto', 'nivel_hambre', 'recomendacion'],
+114-      sampleRows: [
+115-        ['mañana', 'frío', '50', 'amargo', 'bajo', 'café americano'],
+116-        ['tarde', 'calor', '80', 'dulce', 'medio', 'frappé'],
+117-        ['tarde', 'calor', '100', 'dulce', 'alto', 'frappé + pan dulce'],
+118-        ['mañana', 'frío', '70', 'dulce', 'medio', 'capuchino + galleta'],
+119-        ['noche', 'frío', '60', 'ligero', 'bajo', 'café suave']
+120-      ]
+121-    },
+122-    restaurante: {
+--
+140-      csvHeader: ['presupuesto', 'tiempo_disponible', 'restriccion_alimentaria', 'picante', 'platillo_recomendado'],
+141-      sampleRows: [
+142-        ['80', '15', 'ninguna', 'no', 'tacos sencillos'],
+143-        ['120', '30', 'ninguna', 'poco', 'combo individual'],
+144-        ['100', '20', 'vegetariano', 'no', 'ensalada vegetariana'],
+145-        ['180', '45', 'ninguna', 'sí', 'platillo especial'],
+146-        ['90', '15', 'sin camarón', 'no', 'pollo a la plancha']
+147-      ]
+148-    },
+149-    refaccionaria: {
+150-      label: 'Refaccionaria',
+151-      icon: '🔧',
+152-      problem: 'Clientes describen fallas, pero no saben qué refacción necesitan.',
+153-      suggestedDecision: 'Mi IA debe orientar una posible refacción o sistema a revisar usando datos como marca, modelo, año, motor, síntoma y ruido.',
+154-      target: 'refaccion_posible',
+155:      modelType: 'Clasificación / sistema experto asistido',
+156-      cards: [
+157-        { name: 'marca', example: 'Nissan, Toyota, Ford', type: 'useful', role: 'entrada', reason: 'Ayuda a validar compatibilidad.' },
+158-        { name: 'modelo', example: 'Versa, Corolla', type: 'useful', role: 'entrada', reason: 'Es clave para buscar piezas correctas.' },
+159-        { name: 'año', example: '2015, 2020', type: 'useful', role: 'entrada', reason: 'Las piezas pueden cambiar según el año.' },
+160-        { name: 'motor', example: '1.6, 2.0', type: 'useful', role: 'entrada', reason: 'Ayuda a evitar errores de compatibilidad.' },
+161-        { name: 'sintoma', example: 'no enciende, se calienta', type: 'useful', role: 'entrada', reason: 'Permite orientar posibles sistemas afectados.' },
+162-        { name: 'refaccion_posible', example: 'batería, alternador, balatas', type: 'target', role: 'objetivo', reason: 'Es la salida que queremos sugerir como orientación inicial.' },
+163-        { name: 'color_del_auto', example: 'rojo', type: 'trash', role: 'eliminar', reason: 'Normalmente no ayuda a detectar la falla.' },
+164-        { name: 'nombre_del_dueño', example: 'persona', type: 'sensitive', role: 'evitar', reason: 'No es necesario para orientar la refacción.' },
+165-        { name: 'placas', example: 'dato vehicular', type: 'sensitive', role: 'evitar', reason: 'Puede ser sensible y no es necesario para orientación inicial.' },
+166-        { name: 'año_no_indicado', example: 'dato faltante', type: 'missing', role: 'preguntar', reason: 'Sin año puede haber errores de compatibilidad.' }
+167-      ],
+168-      csvHeader: ['marca', 'modelo', 'año', 'motor', 'sintoma', 'refaccion_posible'],
+169-      sampleRows: [
+170-        ['Nissan', 'Versa', '2018', '1.6', 'no enciende', 'batería o marcha'],
+171-        ['Toyota', 'Corolla', '2016', '1.8', 'se calienta', 'termostato o ventilador'],
+172-        ['Ford', 'Fiesta', '2014', '1.6', 'vibra al frenar', 'balatas o discos'],
+173-        ['Chevrolet', 'Aveo', '2017', '1.5', 'luces débiles', 'alternador o batería'],
+174-        ['Honda', 'Civic', '2019', '2.0', 'falla al acelerar', 'bujías o bobina']
+175-      ]
+176-    },
+177-    propia: {
+178-      label: 'Propuesta propia',
+179-      icon: '💡',
+180-      problem: 'Problema definido por el alumno.',
+181-      suggestedDecision: 'Mi IA debe apoyar una decisión real del negocio usando solo los datos necesarios.',
+182-      target: 'salida_esperada',
+183-      modelType: 'Depende del problema: recomendación, clasificación, predicción o generación.',
+184-      cards: [
+185-        { name: 'necesidad_del_cliente', example: 'lo que busca resolver', type: 'useful', role: 'entrada', reason: 'Ayuda a entender qué quiere el usuario.' },
+186-        { name: 'presupuesto', example: 'cantidad disponible', type: 'useful', role: 'entrada', reason: 'Puede ayudar a recomendar opciones viables.' },
+187-        { name: 'preferencia', example: 'gusto o prioridad', type: 'useful', role: 'entrada', reason: 'Permite personalizar la respuesta.' },
+188-        { name: 'urgencia', example: 'baja, media, alta', type: 'useful', role: 'entrada', reason: 'Ayuda a priorizar atención.' },
+189-        { name: 'salida_esperada', example: 'recomendación o categoría', type: 'target', role: 'objetivo', reason: 'Representa lo que la IA debe producir.' },
+190-        { name: 'color_favorito', example: 'azul', type: 'trash', role: 'eliminar', reason: 'Solo sirve si afecta directamente la decisión.' },
+--
+216-  function $all(selector) {
+217-    return Array.from(document.querySelectorAll(selector));
+218-  }
+219-
+220-  function getField(id) {
+221-    return document.getElementById(id)?.value.trim() || '';
+222-  }
+223-
+224-  function setField(id, value) {
+225-    const el = document.getElementById(id);
+226-    if (el) el.value = value || '';
+227-  }
+228-
+229-  function readProgress() {
+230-    try {
+231:      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+232-    } catch {
+233-      return {};
+234-    }
+235-  }
+236-
+237:  function saveProgress(progress) {
+238:    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+239-  }
+240-
+241:  function markMission(id) {
+242:    const progress = readProgress();
+243:    if (!progress[id]) {
+244:      progress[id] = true;
+245:      saveProgress(progress);
+246:      updateXP();
+247-    }
+248-  }
+249-
+250:  function updateXP() {
+251:    const progress = readProgress();
+252:    let xp = 0;
+253-
+254:    $all('[data-xp]').forEach(check => {
+255:      check.checked = Boolean(progress[check.dataset.mission]);
+256:      if (check.checked) xp += Number(check.dataset.xp || 0);
+257-      check.closest('.class6-mission-card')?.classList.toggle('completed', check.checked);
+258-    });
+259-
+260:    const value = $('#c6-xp-value');
+261:    const fill = $('#c6-progress-fill');
+262:    const text = $('#c6-progress-text');
+263-    const unlock = $('#c6-unlock');
+264-
+265:    if (value) value.textContent = `${xp} XP`;
+266:    if (fill) fill.style.width = `${Math.min(xp, 100)}%`;
+267-    if (text) {
+268:      text.textContent = xp >= 100
+269-        ? 'Misión completada. Insignia desbloqueada.'
+270:        : `Te faltan ${100 - xp} XP para desbloquear la insignia.`;
+271-    }
+272:    if (unlock) unlock.hidden = xp < 100;
+273-  }
+274-
+275-  function initMissionChecks() {
+276-    const grid = $('#c6-mission-grid');
+277-    if (!grid) return;
+278-
+279-    grid.addEventListener('change', event => {
+280:      const check = event.target.closest('[data-xp]');
+281-      if (!check) return;
+282-
+283:      const progress = readProgress();
+284:      progress[check.dataset.mission] = check.checked;
+285:      saveProgress(progress);
+286:      updateXP();
+287-    });
+288-
+289:    updateXP();
+290-  }
+291-
+292-  function getBusiness() {
+293-    return BUSINESS_DATA[selectedBusinessKey] || null;
+294-  }
+295-
+296-  function buildDecisionSentence(decisionType) {
+297-    const business = getBusiness();
+298-    const help = DECISION_HELP[decisionType];
+299-
+300-    if (!help) return '';
+301-
+302-    const businessName = business ? business.label.toLowerCase() : 'negocio';
+303-    const problem = business ? business.problem : 'un problema real del negocio';
+304-
+305-    const examples = {
+306-      cafeteria: {
+307-        recomendar: 'Mi IA debe recomendar una bebida, snack o combo usando datos como clima, horario, presupuesto, gusto y nivel de hambre.',
+308-        clasificar: 'Mi IA debe clasificar el tipo de pedido del cliente usando datos como gusto, presupuesto, horario y nivel de hambre.',
+309-        predecir: 'Mi IA debe predecir la demanda de productos usando datos como horario, clima, día de la semana y ventas anteriores.',
+310-        detectar: 'Mi IA debe detectar si falta información importante antes de recomendar, usando datos como presupuesto, gusto, clima y preferencia frío/caliente.',
+311-        generar: 'Mi IA debe generar una respuesta breve de atención usando la pregunta del cliente, el menú disponible y reglas para no inventar precios.'
+312-      },
+313-      restaurante: {
+314-        recomendar: 'Mi IA debe recomendar un platillo usando datos como presupuesto, tiempo disponible, nivel de hambre, picante y restricciones alimentarias.',
+315-        clasificar: 'Mi IA debe clasificar la solicitud del cliente como pedido, duda de menú, restricción alimentaria, queja o promoción.',
+316-        predecir: 'Mi IA debe predecir la demanda de platillos usando datos como día, horario, clima, historial de ventas y eventos especiales.',
+317-        detectar: 'Mi IA debe detectar riesgos en la recomendación, como alergias, restricciones alimentarias o falta de información importante.',
+318-        generar: 'Mi IA debe generar una respuesta de WhatsApp usando la pregunta del cliente, el menú, restricciones y reglas de atención.'
+319-      },
+320-      refaccionaria: {
+321-        recomendar: 'Mi IA debe orientar una posible refacción o sistema a revisar usando datos como marca, modelo, año, motor, síntoma y ruido.',
+322-        clasificar: 'Mi IA debe clasificar la falla reportada por sistema del vehículo: eléctrico, frenos, motor, suspensión o enfriamiento.',
+323-        predecir: 'Mi IA debe predecir qué refacciones podrían tener mayor demanda usando historial de ventas, temporada y modelos frecuentes.',
+324-        detectar: 'Mi IA debe detectar si faltan datos críticos de compatibilidad, como marca, modelo, año o motor, antes de sugerir una refacción.',
+--
+377-    root.addEventListener('click', event => {
+378-      const btn = event.target.closest('[data-concept-answer]');
+379-      if (!btn) return;
+380-
+381-      const card = btn.closest('[data-concept-index]');
+382-      const index = Number(card.dataset.conceptIndex);
+383-      const item = CONCEPT_QUIZ[index];
+384-      const correct = btn.dataset.conceptAnswer === item.answer;
+385-      const feedback = card.querySelector('.class6v2-feedback');
+386-
+387-      card.classList.toggle('is-correct', correct);
+388-      card.classList.toggle('is-wrong', !correct);
+389-      card.querySelectorAll('button').forEach(option => option.classList.toggle('active', option === btn));
+390-
+391-      feedback.hidden = false;
+392:      feedback.innerHTML = `<strong>${correct ? 'Correcto.' : 'Revisa.'}</strong> ${item.explanation}`;
+393-
+394-      if (correct) conceptCorrect[index] = true;
+395:      if (Object.keys(conceptCorrect).length >= CONCEPT_QUIZ.length) markMission('concepts');
+396-    });
+397-  }
+398-
+399-  function selectBusiness(key) {
+400-    selectedBusinessKey = key;
+401-    classified = {};
+402-    const business = getBusiness();
+403-    if (!business) return;
+404-
+405-    $all('.class6-business-card').forEach(card => {
+406-      card.classList.toggle('active', card.dataset.business === key);
+407-    });
+408-
+409-    const ownPanel = $('#c6-own-panel');
+410-    if (ownPanel) ownPanel.hidden = key !== 'propia';
+411-
+412-    const panel = $('#c6-business-panel');
+413-    if (panel) {
+414-      panel.innerHTML = `
+415-        <strong>${business.icon} ${business.label}</strong>
+416-        <p><b>Problema real:</b> ${business.problem}</p>
+417-        <p><b>Decisión sugerida:</b> ${business.suggestedDecision}</p>
+418-        <p><b>Tipo de IA probable:</b> ${business.modelType}</p>
+419-      `;
+420-    }
+421-
+422-    setField('c6-decision-text', business.suggestedDecision);
+423-
+424-    renderDataCards();
+425-    renderColumnsSuggestion();
+426:    markMission('business');
+427-  }
+428-
+429-  function initBusinessSelector() {
+430-    const grid = $('#c6-business-grid');
+431-    if (grid) {
+432-      grid.addEventListener('click', event => {
+433-        const btn = event.target.closest('[data-business]');
+434-        if (!btn) return;
+435-        selectBusiness(btn.dataset.business);
+436-      });
+437-    }
+438-
+439-    const applyOwn = $('#c6-apply-own');
+440-    if (applyOwn) {
+441-      applyOwn.addEventListener('click', () => {
+442-        const name = getField('c6-own-name') || 'Negocio propio';
+443-        const context = getField('c6-own-context') || 'Contexto definido por el alumno.';
+444-        const problem = getField('c6-own-problem') || 'Problema definido por el alumno.';
+445-
+446-        BUSINESS_DATA.propia.label = name;
+447-        BUSINESS_DATA.propia.problem = problem;
+448-        BUSINESS_DATA.propia.suggestedDecision = `Mi IA debe apoyar a ${name} resolviendo este problema: ${problem}. Debe usar solo datos necesarios del cliente, contexto y restricciones.`;
+449-
+450-        selectBusiness('propia');
+451-
+452-        const panel = $('#c6-business-panel');
+453-        if (panel) {
+454-          panel.innerHTML = `
+455-            <strong>💡 ${name}</strong>
+456-            <p><b>Contexto:</b> ${context}</p>
+457-            <p><b>Problema real:</b> ${problem}</p>
+458-            <p><b>Decisión sugerida:</b> ${BUSINESS_DATA.propia.suggestedDecision}</p>
+459-          `;
+460-        }
+461-
+--
+469-    const help = $('#c6-decision-help');
+470-    if (!root || !help) return;
+471-
+472-    root.addEventListener('click', event => {
+473-      const btn = event.target.closest('[data-decision]');
+474-      if (!btn) return;
+475-
+476-      selectedDecisionType = btn.dataset.decision;
+477-      const data = DECISION_HELP[selectedDecisionType];
+478-      const sentence = buildDecisionSentence(selectedDecisionType);
+479-
+480-      root.querySelectorAll('button').forEach(item => item.classList.toggle('active', item === btn));
+481-
+482-      help.innerHTML = `
+483-        <strong>${data.title}</strong>
+484:        <p>${data.explanation}</p>
+485-        <div class="class6v2-template">
+486-          <span>Qué significa para tu dataset:</span>
+487-          <p>
+488-            Si la IA debe <b>${data.title.toLowerCase()}</b>, entonces tu dataset necesita columnas con
+489-            <b>${data.dataNeeded}</b>.
+490-          </p>
+491-          <p>
+492-            La variable objetivo podría ser: <b>${data.target}</b>.
+493-          </p>
+494-        </div>
+495-      `;
+496-
+497-      setField('c6-decision-text', sentence);
+498:      markMission('decision');
+499-    });
+500-
+501-    const text = $('#c6-decision-text');
+502-    if (text) {
+503-      text.addEventListener('input', () => {
+504:        if (text.value.trim().length > 20) markMission('decision');
+505-      });
+506-    }
+507-  }
+508-
+509-    function initInputTarget() {
+510-    const btn = $('#c6-understand-input-target');
+511-    const result = $('#c6-input-target-result');
+512-
+513-    if (!btn) return;
+514-
+515-    btn.addEventListener('click', () => {
+516-      const business = getBusiness();
+517-
+518-      if (!business) {
+519-        if (result) {
+520-          result.hidden = false;
+521-          result.innerHTML = `
+522-            <strong>Primero selecciona un negocio</strong>
+523-            <p>
+524-              Para aplicar este concepto necesitas elegir cafetería, restaurante,
+525-              refaccionaria o propuesta propia en el nivel anterior.
+526-            </p>
+527-          `;
+528-        }
+529-        return;
+530-      }
+531-
+532-      const inputColumns = business.cards
+533-        .filter(card => card.type === 'useful')
+534-        .map(card => card.name);
+535-
+536-      const targetColumn = business.cards.find(card => card.type === 'target');
+537-
+538-      if (result) {
+539-        result.hidden = false;
+--
+553-              <span>🏷️ Variable objetivo</span>
+554-              <p>Es lo que queremos que la IA produzca como resultado.</p>
+555-              <ul>
+556-                <li>${targetColumn ? targetColumn.name : business.target}</li>
+557-              </ul>
+558-            </div>
+559-          </div>
+560-
+561-          <p class="class6v2-application-note">
+562-            En tu dataset, las variables de entrada serán columnas que describen cada caso.
+563-            La variable objetivo será la columna que representa la respuesta esperada.
+564-          </p>
+565-        `;
+566-      }
+567-
+568:      markMission('inputTarget');
+569-    });
+570-  }
+571-
+572-  function labelType(type) {
+573-    return {
+574-      useful: 'Dato útil',
+575-      target: 'Variable objetivo',
+576-      trash: 'Dato basura',
+577-      sensitive: 'Dato sensible',
+578-      missing: 'Dato faltante'
+579-    }[type] || type;
+580-  }
+581-
+582-  function renderDataCards() {
+583-    const root = $('#c6-data-cards');
+584-    const business = getBusiness();
+585-
+586-    if (!root || !business) return;
+587-
+588-    root.innerHTML = business.cards.map((card, index) => `
+589-      <article class="class6-data-card class6v2-data-card" data-card-index="${index}">
+590-        <div class="class6-data-card-head">
+591-          <strong>${card.name}</strong>
+592-          <span>${card.example}</span>
+593-        </div>
+594-
+595-        <div class="class6v2-card-question">
+596-          ¿Este dato ayuda directamente a resolver la decisión IA?
+597-        </div>
+598-
+599-        <div class="class6-data-actions class6v2-data-actions">
+600-          <button type="button" data-classify="useful">Dato útil</button>
+601-          <button type="button" data-classify="target">Objetivo</button>
+602-          <button type="button" data-classify="trash">Basura</button>
+603-          <button type="button" data-classify="sensitive">Sensible</button>
+--
+648-    });
+649-  }
+650-
+651-  function updateFilterScore() {
+652-    const business = getBusiness();
+653-    if (!business) return;
+654-
+655-    let correct = 0;
+656-    business.cards.forEach((card, index) => {
+657-      if (classified[index] === card.type) correct += 1;
+658-    });
+659-
+660-    const score = $('#c6-filter-score');
+661-    if (score) score.textContent = `${correct} / ${business.cards.length}`;
+662-
+663:    if (correct >= Math.ceil(business.cards.length * 0.7)) markMission('filter');
+664-  }
+665-
+666-  function getCorrectUsefulCards() {
+667-    const business = getBusiness();
+668-    if (!business) return [];
+669-    return business.cards.filter((card, index) => classified[index] === 'useful' && card.type === 'useful');
+670-  }
+671-
+672-  function getCorrectTargetCard() {
+673-    const business = getBusiness();
+674-    if (!business) return null;
+675-    return business.cards.find((card, index) => classified[index] === 'target' && card.type === 'target')
+676-      || business.cards.find(card => card.type === 'target');
+677-  }
+678-
+679-  function getRemovedCards() {
+680-    const business = getBusiness();
+681-    if (!business) return [];
+682-    return business.cards.filter((card, index) => {
+683-      return ['trash', 'sensitive'].includes(card.type) || ['trash', 'sensitive'].includes(classified[index]);
+684-    });
+685-  }
+686-
+687-  function renderColumnsSuggestion() {
+688-    const root = $('#c6-columns-suggestion');
+689-    const business = getBusiness();
+690-    if (!root || !business) return;
+691-
+692-    const useful = getCorrectUsefulCards();
+693-    const target = getCorrectTargetCard();
+694-
+695-    if (!useful.length) {
+696-      root.innerHTML = `
+697-        <p>Aún no hay columnas. Primero clasifica datos útiles en el detector.</p>
+698-        <p><strong>Meta:</strong> mínimo 3 variables de entrada y 1 variable objetivo.</p>
+--
+702-
+703-    root.innerHTML = `
+704-      <h3>Variables de entrada</h3>
+705-      <p>Estos son los datos que la IA necesita antes de decidir:</p>
+706-      <div class="class6-column-tags">
+707-        ${useful.map(card => `<span>${card.name}</span>`).join('')}
+708-      </div>
+709-
+710-      <h3>Variable objetivo</h3>
+711-      <p>Esta es la salida que queremos obtener:</p>
+712-      <div class="class6-column-tags target">
+713-        <span>${target ? target.name : business.target}</span>
+714-      </div>
+715-    `;
+716-
+717:    if (useful.length >= 3 && target) markMission('inputTarget');
+718-  }
+719-
+720-  function generateCSV() {
+721-    const business = getBusiness();
+722-    if (!business) return '';
+723-
+724-    const useful = getCorrectUsefulCards();
+725-    const target = getCorrectTargetCard();
+726-
+727-    const header = useful.length >= 3 && target
+728-      ? [...useful.map(card => card.name), target.name]
+729-      : business.csvHeader;
+730-
+731-    const rows = business.sampleRows.map(row => {
+732-      if (header.length === business.csvHeader.length) return row;
+733-      const targetValue = row[row.length - 1];
+734-      const inputs = row.slice(0, header.length - 1);
+735-      return [...inputs, targetValue];
+736-    });
+737-
+738-    const csv = [header, ...rows].map(row => row.join(',')).join('\n');
+739-    setField('c6-dataset-text', csv);
+740:    markMission('dataset');
+741-    return csv;
+742-  }
+743-
+744-  function initDatasetBuilder() {
+745-    const generate = $('#c6-generate-columns');
+746-    const copy = $('#c6-copy-csv');
+747-    const download = $('#c6-download-csv');
+748-    const status = $('#c6-csv-status');
+749-    const textarea = $('#c6-dataset-text');
+750-
+751-    if (generate) generate.addEventListener('click', generateCSV);
+752-
+753-    if (textarea) {
+754-      textarea.addEventListener('input', () => {
+755:        if (textarea.value.trim().split('\n').filter(Boolean).length >= 6) markMission('dataset');
+756-      });
+757-    }
+758-
+759-    if (copy) {
+760-      copy.addEventListener('click', async () => {
+761-        const csv = getField('c6-dataset-text') || generateCSV();
+762-        try {
+763-          await navigator.clipboard.writeText(csv);
+764-          if (status) status.textContent = 'CSV copiado.';
+765-        } catch {
+766-          if (status) status.textContent = 'No se pudo copiar automáticamente. Cópialo manualmente.';
+767-        }
+768-      });
+769-    }
+770-
+771-    if (download) {
+772-      download.addEventListener('click', () => {
+773-        const csv = getField('c6-dataset-text') || generateCSV();
+774-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+775-        const url = URL.createObjectURL(blob);
+776-        const a = document.createElement('a');
+777-        a.href = url;
+778-        a.download = 'dataset-clase6.csv';
+779-        a.click();
+780-        URL.revokeObjectURL(url);
+781-      });
+782-    }
+783-  }
+784-
+785-  function initQualityQuiz() {
+786-    const root = $('#c6-quality-quiz');
+787-    if (!root) return;
+788-
+789-    root.innerHTML = QUALITY_QUIZ.map((item, index) => `
+790-      <article class="class6v2-quiz-card" data-quality-index="${index}">
+--
+803-    root.addEventListener('click', event => {
+804-      const btn = event.target.closest('[data-quality-answer]');
+805-      if (!btn) return;
+806-
+807-      const card = btn.closest('[data-quality-index]');
+808-      const index = Number(card.dataset.qualityIndex);
+809-      const item = QUALITY_QUIZ[index];
+810-      const correct = btn.dataset.qualityAnswer === item.answer;
+811-      const feedback = card.querySelector('.class6v2-feedback');
+812-
+813-      card.classList.toggle('is-correct', correct);
+814-      card.classList.toggle('is-wrong', !correct);
+815-      card.querySelectorAll('button').forEach(option => option.classList.toggle('active', option === btn));
+816-
+817-      feedback.hidden = false;
+818:      feedback.innerHTML = `<strong>${correct ? 'Correcto.' : 'Revisa.'}</strong> ${item.explanation}`;
+819-
+820-      if (correct) qualityCorrect[index] = true;
+821:      if (Object.keys(qualityCorrect).length >= QUALITY_QUIZ.length) markMission('quality');
+822-    });
+823-
+824-    const risks = $('#c6-risks');
+825-    if (risks) {
+826-      risks.addEventListener('input', () => {
+827:        if (risks.value.trim().length > 20) markMission('quality');
+828-      });
+829-    }
+830-  }
+831-
+832-
+833-  function analyzeRiskText(text) {
+834-    const lower = text.toLowerCase();
+835-    const risks = [];
+836-
+837-    if (lower.includes('presupuesto')) {
+838-      risks.push({
+839-        risk: 'Puede faltar el presupuesto del cliente.',
+840-        impact: 'La IA podría recomendar productos fuera del alcance económico del cliente.',
+841-        action: 'Agregar la columna presupuesto y pedir ese dato antes de recomendar.'
+842-      });
+843-    }
+844-
+845-    if (lower.includes('ambigu') || lower.includes('no dice') || lower.includes('no especifica')) {
+846-      risks.push({
+847-        risk: 'Puede haber respuestas ambiguas del cliente.',
+848-        impact: 'La IA podría interpretar mal la necesidad y generar una recomendación poco útil.',
+849-        action: 'Agregar preguntas aclaratorias antes de decidir, por ejemplo: ¿dulce o salado?, ¿frío o caliente?, ¿presupuesto aproximado?'
+850-      });
+851-    }
+852-
+853-    if (lower.includes('sesgo') || lower.includes('mañana') || lower.includes('tarde') || lower.includes('noche')) {
+854-      risks.push({
+855-        risk: 'Puede existir sesgo por capturar datos de un solo horario o tipo de cliente.',
+856-        impact: 'La IA podría recomendar siempre lo mismo y fallar en otros contextos.',
+857-        action: 'Recolectar datos de diferentes horarios, días, tipos de cliente y situaciones.'
+858-      });
+859-    }
+860-
+861-    if (lower.includes('disponibilidad') || lower.includes('inventario') || lower.includes('producto no')) {
+862-      risks.push({
+--
+925-            </tr>
+926-          </thead>
+927-          <tbody>
+928-            ${risks.map(item => `
+929-              <tr>
+930-                <td>${item.risk}</td>
+931-                <td>${item.impact}</td>
+932-                <td>${item.action}</td>
+933-              </tr>
+934-            `).join('')}
+935-          </tbody>
+936-        </table>
+937-      </div>
+938-    `;
+939-
+940:    markMission('quality');
+941-  }
+942-
+943-  function initRiskPlan() {
+944-    const btn = $('#c6-generate-risk-plan');
+945-    if (btn) {
+946-      btn.addEventListener('click', generateRiskPlan);
+947-    }
+948-  }
+949-
+950-
+951-  function generateEvidence() {
+952-    const business = getBusiness();
+953-    const useful = getCorrectUsefulCards();
+954-    const target = getCorrectTargetCard();
+955-    const removed = getRemovedCards();
+956-
+957-    const evidence = `EVIDENCIA CLASE 6 — IA DATA LAB
+958-
+959-Integrantes:
+960-[Escribe los nombres del equipo]
+961-
+962-Negocio:
+963-${business ? business.label : '[No seleccionado]'}
+964-
+965-Problema real:
+966-${business ? business.problem : '[No seleccionado]'}
+967-
+968-Decisión que apoyará la IA:
+969-${getField('c6-decision-text') || '[No registrada]'}
+970-
+971-Tipo de IA recomendado:
+972-${business ? business.modelType : '[No registrado]'}
+973-
+974-Variables de entrada:
+975-${useful.length ? useful.map(card => '- ' + card.name + ': ' + card.reason).join('\n') : '[No registradas]'}
+--
+1021-  function initStartAndReset() {
+1022-    const start = document.querySelector('[data-c6-start]');
+1023-    const reset = document.querySelector('[data-c6-reset]');
+1024-    const target = $('#class6-start');
+1025-
+1026-    if (start && target) {
+1027-      start.addEventListener('click', () => {
+1028-        const top = target.getBoundingClientRect().top + window.scrollY - 84;
+1029-        window.scrollTo({ top, behavior: 'smooth' });
+1030-      });
+1031-    }
+1032-
+1033-    if (reset) {
+1034-      reset.addEventListener('click', () => {
+1035-        if (!confirm('¿Reiniciar progreso de la Clase 6?')) return;
+1036:        localStorage.removeItem(STORAGE_KEY);
+1037-        selectedBusinessKey = '';
+1038-        selectedDecisionType = '';
+1039-        classified = {};
+1040-        conceptCorrect = {};
+1041-        qualityCorrect = {};
+1042:        updateXP();
+1043-        location.reload();
+1044-      });
+1045-    }
+1046-  }
+1047-
+1048-  function initClass6() {
+1049-    initStartAndReset();
+1050-    initMissionChecks();
+1051-    initConceptQuiz();
+1052-    initBusinessSelector();
+1053-    initDecisionOptions();
+1054-    initInputTarget();
+1055-    initDataClassifier();
+1056-    initDatasetBuilder();
+1057-    initQualityQuiz();
+1058-    initRiskPlan();
+1059-    initEvidence();
+1060-  }
+1061-
+1062-  document.addEventListener('DOMContentLoaded', initClass6);
+1063-})();
+
+===== CLASE 7 HTML: PROGRESO / HERO / SIDEBAR ACTUAL =====
+1-<!DOCTYPE html>
+2:<html lang="es" data-page="lesson" data-active-lesson="clase-7">
+3-<head>
+4-  <meta charset="UTF-8" />
+5-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+6-
+7-  <title>Clase 7 · Primer Notebook IA</title>
+8-
+9-  <link rel="stylesheet" href="styles.css" />
+10-</head>
+11-<body>
+12:  <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Mostrar u ocultar menú">
+13-    ☰
+14-  </button>
+15-
+16-  <div class="app-shell">
+17:    <aside class="course-sidebar">
+18-      <div class="brand-block">
+19-        <span class="brand-kicker">Curso IA</span>
+20-        <h1>Business Lab</h1>
+21-        <p>Aprende IA resolviendo problemas reales.</p>
+22-      </div>
+23-
+24-      <nav class="lesson-nav">
+25-        <a class="lesson-tab" href="index.html" data-lesson="home">
+26-          <strong>Inicio</strong>
+27-          Ruta del curso
+28-        </a>
+29-
+30-        <p class="week-label">Semana 1</p>
+31-
+32-        <a class="lesson-tab" href="clase1.html" data-lesson="clase-1">
+33-          <strong>Clase 1</strong>
+34-          ¿Qué es IA?
+35-        </a>
+36-
+37-        <a class="lesson-tab" href="clase2.html" data-lesson="clase-2">
+38-          <strong>Clase 2</strong>
+39-          Prompt Engineering
+40-        </a>
+41-
+42-        <a class="lesson-tab" href="clase3.html" data-lesson="clase-3">
+--
+58-
+59-        <a class="lesson-tab" href="clase6.html" data-lesson="clase-6">
+60-          <strong>Clase 6</strong>
+61-          IA Data Lab
+62-        </a>
+63-
+64-        <a class="lesson-tab active" href="clase7.html" data-lesson="clase-7">
+65-          <strong>Clase 7</strong>
+66-          Primer Notebook IA
+67-        </a>
+68-      </nav>
+69-    </aside>
+70-
+71-    <main class="course-main">
+72-
+73:    <div class="lesson-progress-card class7-progress-card">
+74:      <div class="lesson-progress-info">
+75-        <span>Progreso Clase 7</span>
+76:        <strong><span id="c7-xp">0</span> / 100 XP</strong>
+77-      </div>
+78-
+79:      <div class="lesson-progress-track" aria-label="Progreso de Clase 7">
+80:        <div class="lesson-progress-fill" id="c7-progress-fill" style="width: 0%;"></div>
+81-      </div>
+82-    </div>
+83-
+84-
+85-
+86-
+87:      <div class="top-progress">
+88-        <div>
+89:          <span class="progress-label">Progreso Clase 7</span>
+90:          <strong id="c7-xp-label">0 / 100 XP</strong>
+91-        </div>
+92:        <div class="progress-track">
+93:          <div class="progress-fill" id="c7-xp-bar"></div>
+94-        </div>
+95-      </div>
+96-
+97-      <section class="class7-hero" data-section="1">
+98-        <div class="container">
+99-          <span class="class7-badge">Clase 7 · Primer Notebook IA</span>
+100-          <h1>De un CSV a un análisis con Python</h1>
+101-          <p>
+102:            En la Clase 6 diseñaste un dataset. Hoy aprenderás a abrirlo, explorarlo
+103-            y diagnosticar si realmente sirve para una solución de inteligencia artificial.
+104-          </p>
+105-
+106-          <div class="class7-hero-grid">
+107-            <article>
+108-              <strong>Misión</strong>
+109:              <p>Cargar, explorar y diagnosticar un dataset usando Google Colab y pandas.</p>
+110-            </article>
+111-
+112-            <article>
+113-              <strong>Insignia</strong>
+114:              <p>Explorador de Datos IA</p>
+115-            </article>
+116-
+117-            <article>
+118-              <strong>Pregunta central</strong>
+119-              <p>¿Cómo reviso con Python si mi dataset sirve para IA?</p>
+120-            </article>
+121-          </div>
+122-
+123-          <div class="class7-actions">
+124-            <a class="btn btn-primary" href="https://colab.research.google.com/" target="_blank" rel="noopener">
+125-              Abrir Google Colab
+126-            </a>
+127-            <button class="btn btn-secondary" type="button" id="c7-start">
+128-              Iniciar misión
+129-            </button>
+130-          </div>
+131-        </div>
+132-      </section>
+133-
+134-      <section class="class7-section" data-section="2">
+135-        <div class="container">
+136-          <span class="section-label">Preparación</span>
+137-          <h2 class="section-title">Qué necesitas para la clase</h2>
+138-          <p class="section-subtitle">
+139-            No necesitas instalar Python. Usaremos Google Colab desde el navegador.
+--
+187-              </p>
+188-            </article>
+189-
+190-            <article>
+191-              <strong>¿Por qué lo usamos?</strong>
+192-              <p>
+193-                Resuelve un problema práctico: usar Python sin instalar nada. Solo necesitas tu cuenta
+194-                de Google, el CSV de la Clase 6 y una conexión estable.
+195-              </p>
+196-            </article>
+197-
+198-            <article>
+199-              <strong>Producto final</strong>
+200-              <p>
+201-                Al terminar tendrás un archivo <code>.ipynb</code> con análisis del CSV, comandos de
+202:                exploración y conclusiones listas para tu evidencia.
+203-              </p>
+204-            </article>
+205-          </div>
+206-
+207-          <article class="class7-colab-step">
+208-            <div>
+209-              <span>Paso 1</span>
+210-              <h3>Abrir o instalar Google Colab desde Drive</h3>
+211-              <p>
+212-                En Google Drive, haz clic derecho en un espacio vacío. Si Colab no aparece en
+213-                <strong>Más</strong>, elige <strong>Conectar más aplicaciones</strong>, busca
+214-                <strong>Colaboratory</strong> en Google Workspace Marketplace e instálalo.
+215-              </p>
+216-              <ul>
+217-                <li>Abre Drive con tu cuenta de Google.</li>
+218-                <li>Busca Colaboratory si no aparece en el menú.</li>
+219-                <li>Autoriza la aplicación para poder crear notebooks.</li>
+220-              </ul>
+221-            </div>
+222-            <div class="class7-colab-gallery">
+223-              <figure class="class7-colab-image">
+224-                <img src="assets/clase7/omes-colab/01-instalar_google_colab.jpeg" alt="Menú de Google Drive para conectar más aplicaciones" loading="lazy">
+225-                <figcaption>Drive permite conectar Colab desde el menú Más.</figcaption>
+226-              </figure>
+227-              <figure class="class7-colab-image">
+--
+273-              </p>
+274-              <pre class="class7-code"><code>print("Mi primer Notebook en Colab")</code></pre>
+275-            </div>
+276-            <figure class="class7-colab-image">
+277-              <img src="assets/clase7/omes-colab/07-ejecutando_programa_google_colab.jpeg" alt="Ejecución de una celda Python en Google Colab" loading="lazy">
+278-              <figcaption>El resultado aparece debajo de la celda ejecutada.</figcaption>
+279-            </figure>
+280-          </article>
+281-
+282-          <article class="class7-colab-step">
+283-            <div>
+284-              <span>Paso 4</span>
+285-              <h3>Diferenciar +Código y +Texto</h3>
+286-              <p>
+287-                Usa <strong>+Código</strong> para instrucciones ejecutables en Python. Usa
+288:                <strong>+Texto</strong> para explicar lo que haces con Markdown: objetivos, hipótesis,
+289-                errores encontrados y conclusiones.
+290-              </p>
+291-              <div class="class7-colab-cells">
+292-                <div class="class7-cell text-cell">Voy a cargar mi dataset</div>
+293-                <pre class="class7-code"><code>import pandas as pd
+294-df = pd.read_csv("dataset-clase6.csv")</code></pre>
+295-              </div>
+296-            </div>
+297-            <div class="class7-colab-gallery">
+298-              <figure class="class7-colab-image">
+299-                <img src="assets/clase7/omes-colab/08-xodigo_texto_google_colab.jpeg" alt="Botones para agregar código y texto en Google Colab" loading="lazy">
+300-                <figcaption>Los botones +Código y +Texto organizan el notebook.</figcaption>
+301-              </figure>
+302-              <figure class="class7-colab-image">
+303-                <img src="assets/clase7/omes-colab/09-codigo_google_colab.jpeg" alt="Celda de código en Google Colab" loading="lazy">
+304-                <figcaption>Las celdas de código ejecutan Python.</figcaption>
+305-              </figure>
+306-              <figure class="class7-colab-image">
+307-                <img src="assets/clase7/omes-colab/10-texto_google_colab.jpeg" alt="Celda de texto en Google Colab" loading="lazy">
+308-                <figcaption>Las celdas de texto documentan el razonamiento.</figcaption>
+309-              </figure>
+310-            </div>
+311-          </article>
+312-
+313-          <article class="class7-colab-step">
+314-            <div>
+315-              <span>Paso 5</span>
+316-              <h3>Entorno de ejecución</h3>
+317-              <p>
+318-                Colab puede ejecutar en CPU, GPU o TPU. Para la Clase 7 recomendamos
+319:                <strong>CPU</strong>, porque solo vamos a cargar un CSV y explorarlo con pandas.
+320-              </p>
+321-              <p>
+322-                GPU y TPU serán útiles más adelante si entrenamos modelos más pesados, como redes
+323-                neuronales o procesamiento de grandes volúmenes de datos.
+324-              </p>
+325-            </div>
+326-            <div class="class7-colab-gallery">
+327-              <figure class="class7-colab-image">
+328-                <img src="assets/clase7/omes-colab/11-entorno_ejecucion_google_colab.jpeg" alt="Selección de tipo de entorno de ejecución en Google Colab" loading="lazy">
+329-                <figcaption>El tipo de entorno define qué recursos usa el notebook.</figcaption>
+330-              </figure>
+331-              <figure class="class7-colab-image">
+332-                <img src="assets/clase7/omes-colab/12-configuracion_google_colab.jpeg" alt="Configuración de Google Colab" loading="lazy">
+333-                <figcaption>La configuración permite ajustar editor, tema y preferencias.</figcaption>
+334-              </figure>
+335-            </div>
+336-          </article>
+337-
+338-          <article class="class7-colab-step">
+339-            <div>
+340-              <span>Paso 6</span>
+341-              <h3>Conectar Google Drive</h3>
+342-              <p>
+343-                Conectar Drive sirve para leer archivos guardados en tu cuenta sin subirlos manualmente
+344-                cada vez. Es útil si tu CSV vive en una carpeta de clase.
+--
+346-              <pre class="class7-code"><code>from google.colab import drive
+347-drive.mount('/content/drive')</code></pre>
+348-            </div>
+349-            <figure class="class7-colab-image">
+350-              <img src="assets/clase7/omes-colab/14-drive_google_colab.jpeg" alt="Conexión de Google Drive desde Google Colab" loading="lazy">
+351-              <figcaption>Al montar Drive, Colab puede leer archivos de tu unidad.</figcaption>
+352-            </figure>
+353-          </article>
+354-
+355-          <article class="class7-colab-step">
+356-            <div>
+357-              <span>Paso 7</span>
+358-              <h3>Guardar, descargar y compartir</h3>
+359-              <p>
+360-                Colab guarda automáticamente mientras trabajas. También puedes descargar el notebook
+361:                como <code>.ipynb</code> o exportarlo como <code>.py</code>.
+362-              </p>
+363-              <p>
+364-                Al compartir, revisa el permiso: lector para revisar, comentarista para sugerir y
+365-                editor solo cuando otra persona pueda modificar tu trabajo.
+366-              </p>
+367-            </div>
+368-            <div class="class7-colab-gallery">
+369-              <figure class="class7-colab-image">
+370:                <img src="assets/clase7/omes-colab/15-exportar_notebook_google_colab.jpeg" alt="Menú para descargar notebook en Google Colab" loading="lazy">
+371-                <figcaption>Descarga tu evidencia como notebook o archivo Python.</figcaption>
+372-              </figure>
+373-              <figure class="class7-colab-image">
+374-                <img src="assets/clase7/omes-colab/16-compartir_google_colab.jpeg" alt="Opciones para compartir un notebook de Google Colab" loading="lazy">
+375-                <figcaption>Comparte con permisos adecuados para proteger tu trabajo.</figcaption>
+376-              </figure>
+377-            </div>
+378-          </article>
+379-
+380-          <article class="class7-colab-step class7-colab-limitations">
+381-            <div>
+382-              <span>Paso 8</span>
+383-              <h3>Limitaciones importantes</h3>
+384-              <ul>
+385-                <li>Las sesiones son temporales y pueden desconectarse.</li>
+386-                <li>GPU y TPU no siempre están disponibles.</li>
+387-                <li>Si Colab se desconecta, ejecuta de nuevo las celdas desde arriba.</li>
+388-                <li>El orden de ejecución importa: una celda puede depender de variables anteriores.</li>
+389-                <li>Guarda siempre tu CSV y tu notebook en Drive.</li>
+390-              </ul>
+391-            </div>
+392-            <figure class="class7-colab-image">
+393-              <img src="assets/clase7/omes-colab/13-gatitos_google_colab.jpeg" alt="Resultado visual mostrado desde una celda de Google Colab" loading="lazy">
+394-              <figcaption>Los resultados se recalculan cuando vuelves a ejecutar el notebook.</figcaption>
+395-            </figure>
+--
+446-          <p class="class7-colab-credit">
+447-            Tutorial adaptado con fines educativos a partir del artículo de OMES:
+448-            <a href="https://omes-va.com/que-es-google-colab-y-como-usarlo-python-en-la-nube-facil-y-rapido/" target="_blank" rel="noopener">
+449-              ¿Qué es Google Colab y cómo usarlo? Python en la nube fácil y rápido
+450-            </a>.
+451-          </p>
+452-        </div>
+453-      </section>
+454-
+455-
+456-      <section class="class7-section" data-section="3">
+457-        <div class="container">
+458-          <span class="section-label">Nivel 1</span>
+459-          <h2 class="section-title">¿Qué es un notebook?</h2>
+460-          <p class="section-subtitle">
+461:            Un notebook es una libreta interactiva donde mezclas explicación, código y resultados.
+462-          </p>
+463-
+464-          <div class="class7-two-col">
+465-            <article class="class7-panel">
+466-              <h3>Celda de texto</h3>
+467:              <p>Sirve para explicar qué estás haciendo.</p>
+468-              <div class="class7-cell text-cell">
+469-                Voy a cargar mi dataset de cafetería para revisar si tiene columnas claras.
+470-              </div>
+471-            </article>
+472-
+473-            <article class="class7-panel">
+474-              <h3>Celda de código</h3>
+475-              <p>Sirve para ejecutar instrucciones.</p>
+476-              <pre class="class7-code"><code>print("Hola, datos")</code></pre>
+477-              <div class="class7-output">Hola, datos</div>
+478-            </article>
+479-          </div>
+480-        </div>
+481-      </section>
+482-
+483-      <section class="class7-section" data-section="4">
+484-        <div class="container">
+485-          <span class="section-label">Nivel 2</span>
+486-          <h2 class="section-title">Python básico para datos</h2>
+487-          <p class="section-subtitle">
+488-            Python es el lenguaje que usaremos para darle instrucciones a la computadora.
+489-          </p>
+490-
+491-          <div class="class7-command-grid">
+492-            <article class="class7-panel">
+--
+759-                <button class="class7-command-group-toggle" type="button">
+760-                  <span>Inicio en Colab</span>
+761-                  <b>⌄</b>
+762-                </button>
+763-
+764-                <div class="class7-command-group-panel">
+765-                  <button type="button" data-command="upload" class="active">Subir archivo</button>
+766-                  <button type="button" data-command="listFiles">Ver archivos cargados</button>
+767-                  <button type="button" data-command="import">Importar pandas</button>
+768-                  <button type="button" data-command="read">Leer CSV</button>
+769-                </div>
+770-              </div>
+771-
+772-              <div class="class7-command-group">
+773-                <button class="class7-command-group-toggle" type="button">
+774:                  <span>Exploración básica</span>
+775-                  <b>⌄</b>
+776-                </button>
+777-
+778-                <div class="class7-command-group-panel">
+779-                  <button type="button" data-command="head">df.head()</button>
+780-                  <button type="button" data-command="sample">df.sample()</button>
+781-                  <button type="button" data-command="shape">df.shape</button>
+782-                  <button type="button" data-command="columns">df.columns</button>
+783-                  <button type="button" data-command="spaceColumn">Columna con espacio</button>
+784-                  <button type="button" data-command="cleanColumnAccess">Columna limpia</button>
+785-                  <button type="button" data-command="info">df.info()</button>
+786-                  <button type="button" data-command="dtypes">df.dtypes</button>
+787-                  <button type="button" data-command="describe">df.describe()</button>
+788-                </div>
+789-              </div>
+790-
+791-              <div class="class7-command-group">
+792-                <button class="class7-command-group-toggle" type="button">
+793-                  <span>Calidad de datos</span>
+794-                  <b>⌄</b>
+795-                </button>
+796-
+797-                <div class="class7-command-group-panel">
+798-                  <button type="button" data-command="nulls">Nulos por columna</button>
+799-                  <button type="button" data-command="missingPercent">Nulos en porcentaje</button>
+--
+824-
+825-            <article class="class7-sandbox-main">
+826-              <div class="class7-sandbox-header">
+827-                <div>
+828-                  <span>Comando seleccionado</span>
+829-                  <h3 id="c7-command-title">Subir archivo</h3>
+830-                </div>
+831-                <button class="btn btn-primary btn-small" type="button" id="c7-run-command">
+832-                  Ejecutar comando
+833-                </button>
+834-              </div>
+835-
+836-              <pre class="class7-code"><code id="c7-command-code">from google.colab import files
+837-uploaded = files.upload()</code></pre>
+838-
+839:              <div class="class7-command-explanation" id="c7-command-explanation">
+840-                Este comando abre un botón en Colab para subir tu archivo CSV.
+841-              </div>
+842-
+843-              <div class="class7-output" id="c7-command-output">
+844-                Resultado pendiente...
+845-              </div>
+846-
+847-              <div class="class7-error-box" id="c7-command-error">
+848-                Error común: subir un archivo con un nombre diferente al que después escribes en read_csv.
+849-              </div>
+850-            </article>
+851-          </div>
+852-        </div>
+853-      </section>
+854-
+855-      <section class="class7-section" data-section="8">
+856-        <div class="container">
+857-          <span class="section-label">Nivel 6</span>
+858:          <h2 class="section-title">Comandos esenciales de exploración</h2>
+859-          <p class="section-subtitle">
+860-            Estos comandos son tu kit básico para revisar un dataset antes de usarlo en IA.
+861-          </p>
+862-
+863-          <div class="class7-command-cards">
+864-            <article>
+865-              <code>df.head()</code>
+866-              <p>Muestra las primeras filas. Sirve para revisar si el archivo cargó bien.</p>
+867-            </article>
+868-
+869-            <article>
+870-              <code>df.info()</code>
+871-              <p>Muestra columnas, tipos de datos y valores no vacíos.</p>
+872-            </article>
+873-
+874-            <article>
+875-              <code>df.describe()</code>
+876-              <p>Muestra estadísticas de columnas numéricas.</p>
+877-            </article>
+878-
+879-            <article>
+880-              <code>df.isnull().sum()</code>
+881-              <p>Cuenta datos faltantes por columna.</p>
+882-            </article>
+883-
+--
+887-            </article>
+888-
+889-            <article>
+890-              <code>df.shape</code>
+891-              <p>Muestra filas y columnas del dataset.</p>
+892-            </article>
+893-          </div>
+894-        </div>
+895-      </section>
+896-
+897-      <section class="class7-section" data-section="9">
+898-        <div class="container">
+899-          <span class="section-label">Nivel 7</span>
+900-          <h2 class="section-title">Diagnóstico del dataset</h2>
+901-          <p class="section-subtitle">
+902:            Ahora convierte la exploración en conclusiones. No basta con ejecutar comandos:
+903-            debes interpretar qué significan.
+904-          </p>
+905-
+906-          <div class="class7-auto-diagnosis-card">
+907-            <div>
+908-              <strong>Diagnóstico automático desde tu CSV</strong>
+909-              <p>
+910-                Usa el CSV que escribiste en la sección anterior para llenar automáticamente
+911-                filas, columnas, variables, problemas detectados y una primera conclusión.
+912-              </p>
+913-            </div>
+914-
+915-            <button class="btn btn-primary btn-small" type="button" id="c7-autofill-diagnosis">
+916-              Usar CSV analizado para diagnóstico
+917-            </button>
+918-          </div>
+919-
+920-          <div class="class7-diagnosis-grid">
+921-            <article class="class7-panel">
+922-              <h3>Datos generales</h3>
+923-
+924-              <label class="class7-field">
+925-                Nombre del dataset:
+926-                <input id="c7-dataset-name" type="text" placeholder="Ej. dataset-cafeteria.csv">
+927-              </label>
+--
+1005-                Sí está listo
+1006-              </label>
+1007-
+1008-              <label>
+1009-                <input type="radio" name="c7-ready" value="Todavía no está listo">
+1010-                Todavía no está listo
+1011-              </label>
+1012-
+1013-              <label>
+1014-                <input type="radio" name="c7-ready" value="Está parcialmente listo">
+1015-                Está parcialmente listo
+1016-              </label>
+1017-            </div>
+1018-
+1019-            <label class="class7-field">
+1020:              Explica por qué:
+1021-              <textarea id="c7-conclusion" rows="5" placeholder="Mi dataset está / no está listo porque..."></textarea>
+1022-            </label>
+1023-
+1024-            <div class="class7-validation-actions">
+1025-              <button class="btn btn-secondary" type="button" id="c7-validate-dataset">
+1026-                Validar mi dataset
+1027-              </button>
+1028-            </div>
+1029-
+1030-            <div class="class7-validation-result" id="c7-validation-result" hidden></div>
+1031-</div>
+1032-        </div>
+1033-      </section>
+1034-
+1035-      <section class="class7-section" data-section="10">
+1036-        <div class="container">
+1037-          <span class="section-label">Reto integrador</span>
+1038-          <h2 class="section-title">Decisiones reales de análisis</h2>
+1039-          <p class="section-subtitle">
+1040-            Estos retos ya no son de memoria. Debes interpretar qué comando usar y qué significa el resultado.
+1041-          </p>
+1042-
+1043-          <div class="class7-final-challenge">
+1044-            <article class="class7-panel">
+1045-              <h3>Caso 1 · Dataset con datos faltantes</h3>
+--
+1105-              <label class="class7-field">
+1106-                ¿Qué significa esto?
+1107-                <select id="c7-challenge-4">
+1108-                  <option value="">Selecciona una respuesta</option>
+1109-                  <option value="ok">No está listo para entrenamiento supervisado porque falta la salida esperada</option>
+1110-                  <option value="bad">Está perfecto porque mientras más entradas tenga, mejor</option>
+1111-                  <option value="bad">Solo hace falta cambiar el nombre del archivo</option>
+1112-                </select>
+1113-              </label>
+1114-            </article>
+1115-          </div>
+1116-
+1117-          <div class="class7-panel">
+1118-            <h3>Justificación técnica</h3>
+1119-            <p>
+1120:              Explica con tus palabras por qué revisar datos antes de entrenar una IA evita errores.
+1121-            </p>
+1122-
+1123-            <label class="class7-field">
+1124:              Mi explicación:
+1125:              <textarea id="c7-challenge-explanation" rows="5" placeholder="Ej. Porque si los datos tienen faltantes, categorías mal escritas o una variable objetivo confusa, el modelo aprenderá patrones incorrectos."></textarea>
+1126-            </label>
+1127-
+1128-            <button class="btn btn-primary" type="button" id="c7-check-final-challenge">
+1129-              Validar reto integrador
+1130-            </button>
+1131-
+1132-            <div class="class7-validation-result" id="c7-final-challenge-result" hidden></div>
+1133-          </div>
+1134-        </div>
+1135-      </section>
+1136-
+1137-      <section class="class7-section" data-section="11">
+1138-        <div class="container">
+1139-          <span class="section-label">Evidencia final</span>
+1140-          <h2 class="section-title">Reporte de diagnóstico</h2>
+1141-          <p class="section-subtitle">
+1142-            Copia esta evidencia y entrégala junto con tu notebook de Google Colab.
+1143-          </p>
+1144-
+1145-          <div class="class7-final-report-note">
+1146-            <strong>Antes de generar evidencia</strong>
+1147-            <p>
+1148-              Completa el diagnóstico, valida tu dataset y responde el reto integrador.
+1149-              La evidencia final debe ser el cierre de la clase, no un paso intermedio.
+1150-            </p>
+--
+1159-
+1160-            <button class="btn btn-secondary" type="button" id="c7-copy-report">
+1161-              Copiar evidencia
+1162-            </button>
+1163-
+1164-            <button class="btn btn-secondary" type="button" id="c7-reset">
+1165-              Reiniciar clase
+1166-            </button>
+1167-          </div>
+1168-
+1169-          <div class="class7-rubric">
+1170-            <h3>Rúbrica rápida</h3>
+1171-            <ul>
+1172-              <li>Identifica correctamente filas y columnas.</li>
+1173-              <li>Distingue variables de entrada y variable objetivo.</li>
+1174:              <li>Usa comandos básicos de exploración.</li>
+1175-              <li>Detecta problemas de calidad de datos.</li>
+1176-              <li>Propone acciones de mejora concretas.</li>
+1177-            </ul>
+1178-          </div>
+1179-        </div>
+1180-      </section>
+1181-
+1182-
+1183-      <section class="class7-section class7-credit-section">
+1184-        <div class="container">
+1185-          <span class="section-label">Créditos y fuentes</span>
+1186-          <h2 class="section-title">Material de apoyo utilizado</h2>
+1187-
+1188-          <div class="class7-credit-card">
+1189-            <p>
+1190:              Parte de la explicación visual sobre Google Colab fue adaptada con fines educativos a partir del artículo:
+1191-              <strong>“¿Qué es Google Colab y cómo usarlo? Python en la nube fácil y rápido”</strong>, publicado en el blog de OMES.
+1192-            </p>
+1193-
+1194-            <p>
+1195-              También se reconoce el canal de YouTube de OMES como fuente complementaria de aprendizaje.
+1196-            </p>
+1197-
+1198-            <div class="class7-actions">
+1199-              <a class="btn btn-secondary btn-small" href="https://omes-va.com/que-es-google-colab-y-como-usarlo-python-en-la-nube-facil-y-rapido/" target="_blank" rel="noopener">
+1200-                Ver blog original
+1201-              </a>
+1202-
+1203-              <a class="btn btn-secondary btn-small" href="https://www.youtube.com/@omes-va" target="_blank" rel="noopener">
+1204-                Ver canal de YouTube
+1205-              </a>
+1206-            </div>
+1207-          </div>
+1208-        </div>
+1209-      </section>
+1210-
+1211-      <div class="nav-controls">
+1212-        <a class="btn btn-secondary" href="clase6.html">← Clase anterior</a>
+1213-        <a class="btn btn-primary" href="index.html">Volver al inicio</a>
+1214-      </div>
+1215-    </main>
+
+===== CLASE 7 JS: PROGRESO / XP ACTUAL =====
+1-(() => {
+2:  const STORAGE_KEY = 'clase7NotebookLabProgress';
+3:  const TOTAL_XP = 100;
+4-
+5:  const XP_MAP = {
+6-    setup: 8,
+7-    colabGuide: 10,
+8-    notebook: 8,
+9-    python: 8,
+10-    pandas: 8,
+11-    csv: 8,
+12-    sandbox: 12,
+13-    validation: 10,
+14-    challenge: 10,
+15-    diagnosis: 10,
+16-    evidence: 8
+17-  };
+18-
+19-  const COMMANDS = {
+20-    upload: {
+21-      title: 'Subir archivo',
+22-      code: 'from google.colab import files\nuploaded = files.upload()',
+23:      explanation: 'Este comando no abre el CSV para verlo. En Google Colab muestra un botón para elegir un archivo desde tu computadora y subir una copia temporal al notebook.',
+24-      output: 'En Colab pasaría esto:\n\n1. Aparece un botón para seleccionar archivo.\n2. Eliges tu CSV desde tu computadora.\n3. Colab sube una copia temporal del archivo.\n4. El archivo queda disponible en la sesión actual.\n5. Después puedes leerlo con pd.read_csv("dataset-clase6.csv").\n\nNo tienes que cerrar nada. Solo asegúrate de usar el mismo nombre del archivo.',
+25-      error: 'Error común: subir dataset-clase6.csv, pero después escribir otro nombre en read_csv(), por ejemplo pd.read_csv("dataset.csv"). El nombre debe coincidir exactamente.'
+26-    },
+27-    import: {
+28-      title: 'Importar pandas',
+29-      code: 'import pandas as pd',
+30:      explanation: 'Carga pandas, la librería que permite trabajar con tablas de datos.',
+31-      output: 'Pandas cargado correctamente como pd.',
+32-      error: 'Error común: escribir panda en lugar de pandas.'
+33-    },
+34-    read: {
+35-      title: 'Leer CSV',
+36-      code: 'df = pd.read_csv("dataset-clase6.csv")',
+37:      explanation: 'Abre el archivo CSV y lo guarda en una variable llamada df.',
+38-      output: 'Dataset cargado correctamente.\nFilas: 5\nColumnas: 6',
+39-      error: 'Error común: olvidar las comillas del nombre del archivo o escribir un nombre distinto.'
+40-    },
+41-    head: {
+42-      title: 'Ver primeras filas',
+43-      code: 'df.head()',
+44:      explanation: 'Muestra las primeras filas del dataset para revisar si cargó bien.',
+45-      output: tableOutput([
+46-        ['horario', 'clima', 'presupuesto', 'gusto', 'nivel_hambre', 'recomendacion'],
+47-        ['mañana', 'frío', '50', 'amargo', 'bajo', 'café americano'],
+48-        ['tarde', 'calor', '80', 'dulce', 'medio', 'frappé'],
+49-        ['noche', 'lluvia', '60', 'ligero', 'bajo', 'té caliente'],
+50-        ['mañana', 'calor', '70', 'dulce', 'alto', 'combo escolar']
+51-      ]),
+52-      error: 'Al revisar head(), busca columnas mal nombradas, valores vacíos o datos que no tengan sentido.',
+53-      html: true
+54-    },
+55-    shape: {
+56-      title: 'Filas y columnas',
+57-      code: 'df.shape',
+58:      explanation: 'Muestra el tamaño del dataset: primero filas, después columnas.',
+59-      output: '(5, 6)\nSignifica: 5 filas y 6 columnas.',
+60-      error: 'Error común: confundir el orden. En pandas es filas primero, columnas después.'
+61-    },
+62-    columns: {
+63-      title: 'Nombres de columnas',
+64-      code: 'df.columns',
+65:      explanation: 'Muestra los nombres de las columnas del dataset.',
+66-      output: "Index(['Sabor', 'tipo de leche', 'tamaño', 'precio'], dtype='object')",
+67-      error: 'Revisa mayúsculas, espacios, acentos, nombres repetidos y columnas sin unidad.'
+68-    },
+69-    info: {
+70-      title: 'Estructura del dataset',
+71-      code: 'df.info()',
+72:      explanation: 'Muestra columnas, valores no vacíos y tipos de datos.',
+73-      output: 'Columnas:\nhorario          5 valores no vacíos    texto\nclima            5 valores no vacíos    texto\npresupuesto      5 valores no vacíos    número\ngusto            4 valores no vacíos    texto\nnivel_hambre     5 valores no vacíos    texto\nrecomendacion    5 valores no vacíos    texto',
+74-      error: 'Si una columna tiene menos valores no vacíos, significa que hay datos faltantes.'
+75-    },
+76-    describe: {
+77-      title: 'Estadísticas numéricas',
+78-      code: 'df.describe()',
+79:      explanation: 'Muestra estadísticas de columnas numéricas, como promedio, mínimo y máximo.',
+80-      output: tableOutput([
+81-        ['', 'presupuesto'],
+82-        ['count', '5'],
+83-        ['mean', '72'],
+84-        ['min', '50'],
+85-        ['max', '100']
+86-      ]),
+87-      error: 'Si ves valores negativos o demasiado altos, puede haber errores de captura.',
+88-      html: true
+89-    },
+90-    nulls: {
+91-      title: 'Datos faltantes',
+92-      code: 'df.isnull().sum()',
+93:      explanation: 'Cuenta cuántos valores vacíos hay por columna.',
+94-      output: 'horario          0\nclima            0\npresupuesto      0\ngusto            1\nnivel_hambre     0\nrecomendacion    0',
+95-      error: 'Un dato faltante en una variable importante puede afectar la decisión de la IA.'
+96-    },
+97-    counts: {
+98-      title: 'Contar categorías',
+99-      code: 'df["recomendacion"].value_counts()',
+100:      explanation: 'Cuenta cuántas veces aparece cada valor en una columna.',
+101-      output: 'frappé              2\ncafé americano      1\nté caliente         1\ncombo escolar       1',
+102-      error: 'Si una categoría aparece demasiado o está escrita de muchas formas, puede haber desbalance o inconsistencia.'
+103-    },
+104-    sample: {
+105-      title: 'Muestra aleatoria',
+106-      code: 'df.sample(5)',
+107:      explanation: 'Muestra filas aleatorias. Es útil para revisar ejemplos distintos, no solo los primeros.',
+108-      output: tableOutput([
+109-        ['horario', 'clima', 'presupuesto', 'gusto', 'recomendacion'],
+110-        ['noche', 'lluvia', '60', 'ligero', 'té caliente'],
+111-        ['tarde', 'calor', '80', 'dulce', 'frappé'],
+112-        ['mañana', 'frío', '50', 'amargo', 'café americano']
+113-      ]),
+114-      error: 'Si solo usas head(), podrías no ver errores que aparecen más abajo en el dataset.',
+115-      html: true
+116-    },
+117-    dtypes: {
+118-      title: 'Tipos de dato',
+119-      code: 'df.dtypes',
+120:      explanation: 'Muestra el tipo de dato de cada columna. Ayuda a detectar números cargados como texto.',
+121-      output: 'horario           object\nclima             object\npresupuesto        int64\ngusto             object\nrecomendacion     object',
+122-      error: 'Si presupuesto aparece como object, puede tener símbolos, espacios o textos mezclados.'
+123-    },
+124-    missingPercent: {
+125-      title: 'Porcentaje de datos faltantes',
+126-      code: '(df.isnull().mean() * 100).round(2)',
+127:      explanation: 'Calcula qué porcentaje de cada columna está vacío. Es más informativo que solo contar nulos.',
+128-      output: 'horario           0.00\nclima             0.00\npresupuesto       0.00\ngusto            20.00\nrecomendacion     0.00',
+129-      error: 'Una columna crítica con muchos faltantes puede debilitar el dataset.'
+130-    },
+131-    duplicates: {
+132-      title: 'Registros duplicados',
+133-      code: 'df.duplicated().sum()',
+134:      explanation: 'Cuenta filas repetidas. Los duplicados pueden sesgar el análisis.',
+135-      output: '2\nSignifica que hay 2 filas exactamente repetidas.',
+136-      error: 'No todos los duplicados son errores, pero siempre deben revisarse.'
+137-    },
+138-    unique: {
+139-      title: 'Valores únicos por columna',
+140-      code: 'df.nunique()',
+141:      explanation: 'Cuenta cuántos valores diferentes tiene cada columna.',
+142-      output: 'horario          3\nclima            3\npresupuesto      5\ngusto            4\nrecomendacion    4',
+143-      error: 'Si una columna tiene demasiados valores únicos sin necesidad, quizá no es buena como categoría.'
+144-    },
+145-    cleanColumns: {
+146-      title: 'Limpiar nombres de columnas',
+147-      code: `df.columns = (
+148-    df.columns
+149-      .str.strip()
+150-      .str.lower()
+151-      .str.normalize('NFKD')
+152-      .str.encode('ascii', errors='ignore')
+153-      .str.decode('utf-8')
+154-      .str.replace(' ', '_')
+155-)`,
+156:      explanation: 'Normaliza nombres de columnas: recorta espacios, usa minúsculas, quita acentos y reemplaza espacios por guiones bajos.',
+157-      output: "Columnas limpias:\n['sabor', 'tipo_leche', 'tamano', 'precio']",
+158-      error: 'Después de limpiar, revisa si conviene renombrar columnas para agregar unidades como precio_mxn.'
+159-    },
+160-    renameColumns: {
+161-      title: 'Renombrar columnas manualmente',
+162-      code: `df = df.rename(columns={
+163-    "tipo de leche": "tipo_leche",
+164-    "tamaño": "tamano",
+165-    "precio": "precio_mxn"
+166-})`,
+167:      explanation: 'Cambia nombres específicos cuando ya sabes cómo quieres que se llamen las columnas.',
+168-      output: "Columnas renombradas:\n['sabor', 'tipo_leche', 'tamano', 'precio_mxn']",
+169-      error: 'Error común: escribir el nombre original distinto a como aparece en df.columns.'
+170-    },
+171-    selectDirtyColumn: {
+172-      title: 'Seleccionar columna con espacio',
+173-      code: 'df["tipo de leche"]',
+174:      explanation: 'Pandas puede seleccionar columnas con espacios usando corchetes y el nombre exacto.',
+175-      output: '0          Entera\n1    Deslactosada\nName: tipo de leche, dtype: object',
+176-      error: 'Si escribes tipo_leche pero la columna real es "tipo de leche", pandas marcará KeyError.'
+177-    },
+178-    selectCleanColumn: {
+179-      title: 'Seleccionar columna limpia',
+180-      code: 'df["tipo_leche"]',
+181:      explanation: 'Con snake_case el código queda más limpio, consistente y fácil de reutilizar.',
+182-      output: '0          entera\n1    deslactosada\nName: tipo_leche, dtype: object',
+183-      error: 'Los nombres limpios reducen errores, pero deben coincidir exactamente con df.columns.'
+184-    },
+185-    normalizeText: {
+186-      title: 'Normalizar una columna de texto',
+187-      code: 'df["recomendacion"] = df["recomendacion"].str.strip().str.lower()',
+188:      explanation: 'Limpia espacios y convierte categorías a minúsculas para evitar duplicados falsos.',
+189-      output: 'Antes: Frappé, frappe, FRAPPE\nDespués: frappé, frappe, frappe',
+190-      error: 'Normalizar no siempre corrige acentos o errores de escritura. A veces hay que reemplazar manualmente.'
+191-    },
+192-    filterRows: {
+193-      title: 'Filtrar filas',
+194-      code: 'df[df["presupuesto"] >= 80]',
+195:      explanation: 'Filtra registros que cumplen una condición. Sirve para analizar subconjuntos.',
+196-      output: tableOutput([
+197-        ['horario', 'clima', 'presupuesto', 'recomendacion'],
+198-        ['tarde', 'calor', '80', 'frappé'],
+199-        ['mañana', 'calor', '100', 'combo escolar']
+200-      ]),
+201-      error: 'Si presupuesto está como texto, el filtro numérico puede fallar o dar resultados incorrectos.',
+202-      html: true
+203-    },
+204-    groupby: {
+205-      title: 'Agrupar datos',
+206-      code: 'df.groupby("clima")["presupuesto"].mean()',
+207:      explanation: 'Agrupa por una categoría y calcula una métrica. Aquí calcula presupuesto promedio por clima.',
+208-      output: 'clima\ncalor     85\nfrío      50\nlluvia    60',
+209-      error: 'groupby ayuda a encontrar patrones, pero no prueba causalidad.'
+210-    },
+211-    crosstab: {
+212-      title: 'Tabla cruzada',
+213-      code: 'pd.crosstab(df["clima"], df["recomendacion"])',
+214:      explanation: 'Cruza dos variables categóricas para ver relaciones entre ellas.',
+215-      output: tableOutput([
+216-        ['clima', 'café americano', 'frappé', 'té caliente'],
+217-        ['calor', '0', '2', '0'],
+218-        ['frío', '1', '0', '0'],
+219-        ['lluvia', '0', '0', '1']
+220-      ]),
+221-      error: 'Una tabla cruzada con pocos datos puede mostrar patrones engañosos.',
+222-      html: true
+223-    },
+224-    corr: {
+225-      title: 'Correlación numérica',
+226-      code: 'df[["presupuesto", "nivel_hambre_num"]].corr()',
+227:      explanation: 'Mide relación entre columnas numéricas. Solo aplica a variables numéricas.',
+228-      output: tableOutput([
+229-        ['', 'presupuesto', 'nivel_hambre_num'],
+230-        ['presupuesto', '1.00', '0.62'],
+231-        ['nivel_hambre_num', '0.62', '1.00']
+232-      ]),
+233-      error: 'Correlación no significa causalidad. Además, no sirve directamente con texto sin convertirlo.',
+234-      html: true
+235-    },
+236-    selectXY: {
+237-      title: 'Separar entradas y objetivo',
+238-      code: 'X = df[["horario", "clima", "presupuesto", "gusto"]]\ny = df["recomendacion"]',
+239:      explanation: 'Separa variables de entrada X y variable objetivo y. Este paso prepara el dataset para entrenamiento supervisado.',
+240-      output: 'X contiene las columnas de entrada.\ny contiene la respuesta esperada que el modelo intentará aprender.',
+241-      error: 'Si eliges mal la variable objetivo, el modelo aprenderá una tarea incorrecta.'
+242-    }
+243-  };
+244-
+245-  function tableOutput(rows) {
+246-    const [header, ...body] = rows;
+247-
+248-    return `
+249-      <div class="class7-table-wrap">
+250-        <table class="class7-table compact">
+251-          <thead>
+252-            <tr>${header.map(cell => `<th>${cell}</th>`).join('')}</tr>
+253-          </thead>
+254-          <tbody>
+255-            ${body.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}
+256-          </tbody>
+257-        </table>
+258-      </div>
+259-    `;
+260-  }
+261-
+262-  function $(selector) {
+263-    return document.querySelector(selector);
+264-  }
+265-
+266-  function $all(selector) {
+267-    return Array.from(document.querySelectorAll(selector));
+268-  }
+269-
+270-  function readProgress() {
+271-    try {
+272:      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+273-    } catch {
+274-      return {};
+275-    }
+276-  }
+277-
+278:  function saveProgress(progress) {
+279:    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+280-  }
+281-
+282:  function markMission(key) {
+283:    const progress = readProgress();
+284:    progress[key] = true;
+285:    saveProgress(progress);
+286:    updateXP();
+287-    updateClass7ProgressBar();
+288-  }
+289-
+290:  function updateXP() {
+291:    const progress = readProgress();
+292:    const total = Object.entries(XP_MAP).reduce((sum, [key, xp]) => {
+293:      return sum + (progress[key] ? xp : 0);
+294-    updateClass7ProgressBar();
+295-    }, 0);
+296-
+297:    const label = $('#c7-xp-label');
+298:    const bar = $('#c7-xp-bar');
+299-
+300:    if (label) label.textContent = `${total} / ${TOTAL_XP} XP`;
+301:    if (bar) bar.style.width = `${Math.min(total, TOTAL_XP)}%`;
+302-  }
+303-
+304-  function getField(id) {
+305-    const el = document.getElementById(id);
+306-    return el ? el.value.trim() : '';
+307-  }
+308-
+309-  function setField(id, value) {
+310-    const el = document.getElementById(id);
+311-    if (el) el.value = value;
+312-  }
+313-
+314-  function initStart() {
+315-    const btn = $('#c7-start');
+316-    if (!btn) return;
+317-
+318-    btn.addEventListener('click', () => {
+319-      document.querySelector('[data-section="2"]')?.scrollIntoView({ behavior: 'smooth' });
+320-    });
+321-  }
+322-
+323-  function initChecklist() {
+324-    const setupChecks = $all('[data-c7-mission="setup"]');
+325-    setupChecks.forEach(check => {
+326-      check.addEventListener('change', () => {
+327-        const completed = setupChecks.filter(item => item.checked).length;
+328-
+329-        if (completed >= 3) {
+330:          markMission('setup');
+331-        }
+332-      });
+333-    });
+334-
+335-    const colabGuideChecks = $all('[data-c7-mission="colabGuide"]');
+336-    colabGuideChecks.forEach(check => {
+337-      check.addEventListener('change', () => {
+338-        const completed = colabGuideChecks.filter(item => item.checked).length;
+339-
+340-        if (completed >= 4) {
+341:          markMission('colabGuide');
+342-        }
+343-      });
+344-    });
+345-  }
+346-
+347-  function initQuizzes() {
+348-    $all('.class7-quiz').forEach(quiz => {
+349-      const feedback = quiz.querySelector('.class7-feedback');
+350-      const quizType = quiz.dataset.quiz;
+351-
+352-      quiz.querySelectorAll('button').forEach(btn => {
+353-        btn.addEventListener('click', () => {
+354-          const ok = btn.dataset.answer === 'ok';
+355-
+356-          quiz.querySelectorAll('button').forEach(item => {
+357-            item.classList.remove('is-correct', 'is-wrong');
+358-          });
+359-
+360-          btn.classList.add(ok ? 'is-correct' : 'is-wrong');
+361-
+362-          if (feedback) {
+363-            feedback.textContent = ok
+364-              ? 'Correcto. Entendiste el concepto.'
+365:              : 'Revisa la explicación e inténtalo otra vez.';
+366-          }
+367-
+368-          if (ok) {
+369:            if (quizType === 'notebook') markMission('notebook');
+370:            if (quizType === 'pandas') markMission('pandas');
+371:            if (quizType === 'csv') markMission('csv');
+372-          }
+373-        });
+374-      });
+375-    });
+376-  }
+377-
+378-  function initBasicPython() {
+379-    const printBtn = $('[data-run-basic="print"]');
+380-    const mathBtn = $('[data-run-basic="math"]');
+381-
+382-    if (printBtn) {
+383-      printBtn.addEventListener('click', () => {
+384-        const output = $('#c7-basic-output');
+385-        if (output) output.textContent = 'Mi primer análisis de datos';
+386:        markMission('python');
+387-      });
+388-    }
+389-
+390-    if (mathBtn) {
+391-      mathBtn.addEventListener('click', () => {
+392-        const output = $('#c7-math-output');
+393-        if (output) output.textContent = '5';
+394:        markMission('python');
+395-      });
+396-    }
+397-
+398-    const buildBtn = $('#c7-build-print');
+399-    if (buildBtn) {
+400-      buildBtn.addEventListener('click', () => {
+401-        const topic = getField('c7-dataset-topic') || 'mi proyecto';
+402-        const code = $('#c7-print-code');
+403-
+404-        if (code) {
+405-          code.textContent = `print("Mi dataset es de ${topic}")`;
+406-        }
+407-
+408:        markMission('python');
+409-      });
+410-    }
+411-  }
+412-
+413-  function renderCommand(commandKey) {
+414-    const command = COMMANDS[commandKey] || COMMANDS.upload;
+415-
+416-    const title = $('#c7-command-title');
+417-    const code = $('#c7-command-code');
+418:    const explanation = $('#c7-command-explanation');
+419-    const output = $('#c7-command-output');
+420-    const error = $('#c7-command-error');
+421-
+422-    if (title) title.textContent = command.title;
+423-    if (code) code.textContent = command.code;
+424:    if (explanation) explanation.textContent = command.explanation;
+425-    if (output) output.textContent = 'Resultado pendiente...';
+426-    if (error) error.textContent = command.error;
+427-  }
+428-
+429-  function runCommand(commandKey) {
+430-    const command = COMMANDS[commandKey] || COMMANDS.upload;
+431-    const output = $('#c7-command-output');
+432-
+433-    if (!output) return;
+434-
+435-    if (command.html) {
+436-      output.innerHTML = command.output;
+437-    } else {
+438-      output.textContent = command.output;
+439-    }
+440-
+441:    markMission('sandbox');
+442-  }
+443-
+444-
+445-  function initSandboxAccordion() {
+446-    const groups = $all('.class7-command-group');
+447-
+448-    groups.forEach(group => {
+449-      const toggle = group.querySelector('.class7-command-group-toggle');
+450-
+451-      if (!toggle) return;
+452-
+453-      toggle.addEventListener('click', () => {
+454-        const isOpen = group.classList.contains('is-open');
+455-
+456-        groups.forEach(item => {
+457-          item.classList.remove('is-open');
+458-        });
+459-
+460-        if (!isOpen) {
+461-          group.classList.add('is-open');
+462-        }
+463-      });
+464-    });
+465-
+466-    $all('.class7-command-group-panel [data-command]').forEach(commandBtn => {
+467-      commandBtn.addEventListener('click', () => {
+468-        const parentGroup = commandBtn.closest('.class7-command-group');
+469-
+470-        groups.forEach(item => {
+471-          item.classList.remove('is-open');
+472-        });
+473-
+474-        if (parentGroup) {
+475-          parentGroup.classList.add('is-open');
+476-        }
+--
+713-        </ul>
+714-      `;
+715-    } else {
+716-      issues.innerHTML = `
+717-        <strong>Sin problemas detectados</strong>
+718-        <p>Los encabezados están en snake_case, son consistentes y se pueden usar cómodamente en pandas.</p>
+719-      `;
+720-    }
+721-
+722-    recommendedCsv.textContent = [
+723-      validation.suggestedHeaders.join(','),
+724-      ...rawLines.slice(1)
+725-    ].join('\n');
+726-
+727-    if (!validation.structural.length) {
+728:      markMission('csv');
+729-    }
+730-  }
+731-
+732-  function parseRawCSV() {
+733-    const raw = getField('c7-raw-csv');
+734-    const tableRoot = $('#c7-live-csv-table');
+735-    const feedback = $('#c7-csv-parse-feedback');
+736-
+737-    if (!tableRoot || !feedback) return;
+738-
+739-    if (!raw) {
+740-      tableRoot.innerHTML = '';
+741-      feedback.innerHTML = '<strong>CSV vacío.</strong><p>Escribe encabezados y al menos una fila.</p>';
+742-      feedback.className = 'class7-csv-feedback is-warning';
+743-      renderHeaderValidator([], [], { cleanup: [], structural: ['CSV vacío.'], suggestedHeaders: [] }, []);
+744-      return;
+745-    }
+746-
+747-    const lines = raw.split(/\r?\n/).filter(line => line.trim());
+748-    const rows = lines.map(line => parseCSVLine(line, { trim: false }));
+749-    const header = rows[0] || [];
+750-    const body = rows.slice(1);
+751-    const validation = validateHeaders(header, body);
+752-
+753-    tableRoot.innerHTML = `
+754-      <table class="class7-table compact">
+755-        <thead>
+756-          <tr>${header.map(cell => `<th>${escapeHTML(cell.trim() || '(sin nombre)')}</th>`).join('')}</tr>
+757-        </thead>
+758-        <tbody>
+759-          ${body.map(row => `
+760-            <tr>
+761-              ${header.map((_, index) => `<td>${escapeHTML((row[index] || '').trim())}</td>`).join('')}
+762-            </tr>
+763-          `).join('')}
+--
+858-    const rows = Number(getField('c7-rows') || 0);
+859-    const columns = Number(getField('c7-columns') || 0);
+860-    const inputs = splitList(getField('c7-input-vars'));
+861-    const target = getField('c7-target-var');
+862-    const problems = getSelectedProblems();
+863-    const findings = getField('c7-findings');
+864-    const actions = getField('c7-actions');
+865-
+866-    let score = 0;
+867-    const ok = [];
+868-    const warnings = [];
+869-    const critical = [];
+870-
+871-    if (rows >= 30) {
+872-      score += 20;
+873:      ok.push('Tiene una cantidad aceptable de registros para una primera exploración.');
+874-    } else if (rows >= 10) {
+875-      score += 10;
+876-      warnings.push('Tiene pocos registros. Puede servir para practicar, pero no para un modelo confiable.');
+877-    } else {
+878-      critical.push('Tiene muy pocos registros. Necesita más ejemplos antes de pensar en IA.');
+879-    }
+880-
+881-    if (columns >= 4) {
+882-      score += 10;
+883-      ok.push('Tiene suficientes columnas para describir los casos.');
+884-    } else {
+885-      warnings.push('Tiene pocas columnas. Revisa si faltan variables importantes de entrada.');
+886-    }
+887-
+888-    if (inputs.length >= 3) {
+889-      score += 20;
+890-      ok.push('Tiene al menos 3 variables de entrada.');
+891-    } else {
+892-      critical.push('Faltan variables de entrada. La IA necesita datos para tomar una decisión.');
+893-    }
+894-
+895-    if (target) {
+896-      score += 20;
+897-      ok.push('Tiene variable objetivo definida.');
+898-    } else {
+899-      critical.push('No tiene variable objetivo. No está listo para entrenamiento supervisado.');
+900-    }
+901-
+902-    if (!problems.includes('Datos faltantes')) {
+903-      score += 10;
+904-    } else {
+905-      warnings.push('Hay datos faltantes. Debes decidir si se completan, se preguntan o se eliminan.');
+906-    }
+907-
+908-    if (!problems.includes('Categorías inconsistentes')) {
+909-      score += 5;
+910-    } else {
+911-      warnings.push('Hay categorías inconsistentes. Debes normalizar texto antes de usar IA.');
+912-    }
+913-
+914-    if (!problems.includes('Dataset desbalanceado')) {
+915-      score += 5;
+916-    } else {
+917-      warnings.push('El dataset puede estar desbalanceado. El modelo podría aprender a responder siempre la categoría dominante.');
+918-    }
+919-
+920-    if (findings && actions) {
+921-      score += 10;
+922-      ok.push('Incluye interpretación y acciones de mejora.');
+923-    } else {
+924:      warnings.push('Falta interpretación o acciones de mejora. Ejecutar comandos no basta; debes explicar qué significan.');
+925-    }
+926-
+927-    let status = 'Dataset débil';
+928-    let statusClass = 'is-bad';
+929-
+930-    if (score >= 80 && critical.length === 0) {
+931-      status = 'Listo para una primera prueba controlada';
+932-      statusClass = 'is-ok';
+933-    } else if (score >= 55) {
+934-      status = 'Parcialmente listo';
+935-      statusClass = 'is-warning';
+936-    }
+937-
+938-    root.hidden = false;
+939-    root.className = `class7-validation-result ${statusClass}`;
+940-    root.innerHTML = `
+941-      <strong>${status}</strong>
+942-      <p>Puntaje de preparación: <b>${score}/100</b></p>
+943-
+944-      ${critical.length ? `<h4>Problemas críticos</h4><ul>${critical.map(item => `<li>${item}</li>`).join('')}</ul>` : ''}
+945-      ${warnings.length ? `<h4>Advertencias</h4><ul>${warnings.map(item => `<li>${item}</li>`).join('')}</ul>` : ''}
+946-      ${ok.length ? `<h4>Fortalezas</h4><ul>${ok.map(item => `<li>${item}</li>`).join('')}</ul>` : ''}
+947-
+948-      <p><b>Recomendación:</b> ${score >= 80 && critical.length === 0
+949-        ? 'Puedes usarlo para una primera prueba educativa, pero sigue documentando supuestos y limitaciones.'
+950-        : 'Mejora el dataset antes de usarlo para IA. Prioriza variable objetivo, variables de entrada, más registros y limpieza de categorías.'}</p>
+951-    `;
+952-
+953:    markMission('validation');
+954-  }
+955-
+956-  function initDatasetValidation() {
+957-    const btn = $('#c7-validate-dataset');
+958-    if (btn) btn.addEventListener('click', validateDataset);
+959-  }
+960-
+961-  function validateFinalChallenge() {
+962-    const root = $('#c7-final-challenge-result');
+963-    if (!root) return;
+964-
+965-    const answers = [
+966-      getField('c7-challenge-1'),
+967-      getField('c7-challenge-2'),
+968-      getField('c7-challenge-3'),
+969-      getField('c7-challenge-4')
+970-    ];
+971-
+972:    const explanation = getField('c7-challenge-explanation');
+973-    const correct = answers.filter(answer => answer === 'ok').length;
+974-
+975:    const explanationOk = explanation.length >= 80;
+976:    const passed = correct >= 3 && explanationOk;
+977-
+978-    root.hidden = false;
+979-    root.className = `class7-validation-result ${passed ? 'is-ok' : 'is-warning'}`;
+980-    root.innerHTML = `
+981-      <strong>${passed ? 'Reto integrador aprobado' : 'Reto integrador incompleto'}</strong>
+982-      <p>Respuestas correctas: <b>${correct}/4</b></p>
+983:      <p>Justificación: <b>${explanationOk ? 'suficiente' : 'demasiado breve'}</b></p>
+984-      <p>${passed
+985-        ? 'Tu interpretación ya conecta comandos, calidad de datos y preparación para IA.'
+986-        : 'Revisa los casos. No se trata de memorizar comandos, sino de decidir qué acción tomar según el problema del dataset.'}</p>
+987-    `;
+988-
+989:    if (passed) markMission('challenge');
+990-  }
+991-
+992-  function initFinalChallenge() {
+993-    const btn = $('#c7-check-final-challenge');
+994-    if (btn) btn.addEventListener('click', validateFinalChallenge);
+995-  }
+996-
+997-
+998-
+999-  function normalizeHeaderNameForDiagnosis(value) {
+1000-    return String(value || '')
+1001-      .trim()
+1002-      .toLowerCase()
+1003-      .normalize('NFD')
+1004-      .replace(/[\u0300-\u036f]/g, '')
+1005-      .replace(/[^a-z0-9\s_]/g, '')
+1006-      .replace(/\s+/g, '_')
+1007-      .replace(/_+/g, '_')
+1008-      .replace(/^_|_$/g, '');
+1009-  }
+1010-
+1011-  function parseCSVForDiagnosis(raw) {
+1012-    const lines = String(raw || '')
+1013-      .split(/\r?\n/)
+1014-      .filter(line => line.trim());
+1015-
+1016-    if (!lines.length) {
+1017-      return {
+1018-        headers: [],
+1019-        rows: [],
+1020-        structuralProblems: ['El CSV está vacío.']
+1021-      };
+1022-    }
+1023-
+1024-    const parsedRows = lines.map(parseCSVLine);
+--
+1290-    }
+1291-
+1292-    if (duplicates > 0) {
+1293-      actions.push('Revisar filas duplicadas y eliminar las que sean errores de captura.');
+1294-    }
+1295-
+1296-    if (rows.length < 30) {
+1297-      actions.push('Recolectar más registros antes de usar el dataset para una prueba de IA más seria.');
+1298-    }
+1299-
+1300-    if (!target.name) {
+1301-      actions.push('Definir una variable objetivo clara: recomendacion, categoria, riesgo_detectado, salida_esperada, etc.');
+1302-    }
+1303-
+1304-    if (!actions.length) {
+1305:      actions.push('El dataset tiene una estructura inicial aceptable. El siguiente paso es explorarlo en Colab con pandas.');
+1306-    }
+1307-
+1308-    setField('c7-findings', findings.join('\n'));
+1309-    setField('c7-actions', actions.map(item => `- ${item}`).join('\n'));
+1310-
+1311-    let readyStatus = 'Está parcialmente listo';
+1312-    let conclusion = 'El dataset está parcialmente listo porque tiene una estructura inicial útil, pero todavía debe revisarse en Colab con pandas antes de usarlo para IA.';
+1313-
+1314-    if (parsed.structuralProblems.length || !target.name || inputs.length < 2) {
+1315-      readyStatus = 'Todavía no está listo';
+1316-      conclusion = 'El dataset todavía no está listo porque tiene problemas estructurales o no define claramente suficientes variables de entrada y una variable objetivo.';
+1317-    } else if (!headerProblems.length && !missingValues.length && rows.length >= 30 && inputs.length >= 3 && target.name) {
+1318-      readyStatus = 'Sí está listo';
+1319-      conclusion = 'El dataset está listo para una primera prueba controlada porque tiene encabezados limpios, suficientes registros, variables de entrada y una variable objetivo clara.';
+1320-    }
+1321-
+1322-    const radio = document.querySelector(`input[name="c7-ready"][value="${readyStatus}"]`);
+1323-    if (radio) radio.checked = true;
+1324-
+1325-    setField('c7-conclusion', conclusion);
+1326-
+1327-    validateDataset();
+1328:    markMission('diagnosis');
+1329-  }
+1330-
+1331-  function initAutoDiagnosis() {
+1332-    const btn = $('#c7-autofill-diagnosis');
+1333-    if (btn) {
+1334-      btn.addEventListener('click', autofillDiagnosisFromCSV);
+1335-    }
+1336-  }
+1337-
+1338-
+1339-  function getSelectedProblems() {
+1340-    return $all('.c7-problem')
+1341-      .filter(check => check.checked)
+1342-      .map(check => check.value);
+1343-  }
+1344-
+1345-  function getReadyStatus() {
+1346-    const selected = document.querySelector('input[name="c7-ready"]:checked');
+1347-    return selected ? selected.value : '[No seleccionado]';
+1348-  }
+1349-
+1350-
+1351-  function getValidationScoreFromText() {
+1352-    const validationText = $('#c7-validation-result')?.innerText || '';
+1353-    const match = validationText.match(/Puntaje de preparación:\s*(\d+)\/100/i);
+1354-
+1355-    if (match) {
+1356-      return Number(match[1]);
+1357-    }
+1358-
+1359-    return 0;
+1360-  }
+1361-
+1362-  function getFinalChallengeScore() {
+1363-    const answers = [
+1364-      getField('c7-challenge-1'),
+1365-      getField('c7-challenge-2'),
+1366-      getField('c7-challenge-3'),
+1367-      getField('c7-challenge-4')
+1368-    ];
+1369-
+1370-    const correct = answers.filter(answer => answer === 'ok').length;
+1371:    const explanation = getField('c7-challenge-explanation');
+1372:    const explanationScore = explanation.length >= 120 ? 20 : explanation.length >= 80 ? 15 : explanation.length >= 40 ? 8 : 0;
+1373-
+1374:    return Math.round((correct / 4) * 80 + explanationScore);
+1375-  }
+1376-
+1377-  function calculateSuggestedGrade() {
+1378-    const validationScore = getValidationScoreFromText();
+1379-    const challengeScore = getFinalChallengeScore();
+1380-
+1381-    const hasDatasetName = Boolean(getField('c7-dataset-name'));
+1382-    const hasRows = Boolean(getField('c7-rows'));
+1383-    const hasColumns = Boolean(getField('c7-columns'));
+1384-    const hasInputs = Boolean(getField('c7-input-vars'));
+1385-    const hasTarget = Boolean(getField('c7-target-var'));
+1386-    const hasFindings = getField('c7-findings').length >= 40;
+1387-    const hasActions = getField('c7-actions').length >= 40;
+1388-    const hasConclusion = getField('c7-conclusion').length >= 60;
+1389-
+1390-    let completionScore = 0;
+1391-    if (hasDatasetName) completionScore += 8;
+1392-    if (hasRows) completionScore += 8;
+1393-    if (hasColumns) completionScore += 8;
+1394-    if (hasInputs) completionScore += 12;
+1395-    if (hasTarget) completionScore += 12;
+1396-    if (hasFindings) completionScore += 18;
+1397-    if (hasActions) completionScore += 18;
+1398-    if (hasConclusion) completionScore += 16;
+1399-
+1400-    const finalGrade = Math.round(
+1401-      (validationScore * 0.40) +
+1402-      (challengeScore * 0.35) +
+1403-      (completionScore * 0.25)
+1404-    );
+1405-
+1406-    let level = 'Insuficiente';
+1407-    let recommendation = 'Requiere rehacer o completar la evidencia. Debe corregir estructura, interpretación y justificación.';
+1408-
+1409-    if (finalGrade >= 90) {
+--
+1432-
+1433-  function buildSuggestedGradeText() {
+1434-    const grade = calculateSuggestedGrade();
+1435-
+1436-    return `CALIFICACIÓN SUGERIDA
+1437-
+1438-Calificación sugerida: ${grade.finalGrade}/100
+1439-Nivel: ${grade.level}
+1440-
+1441-Desglose:
+1442-- Validación del dataset: ${grade.validationScore}/100
+1443-- Reto integrador: ${grade.challengeScore}/100
+1444-- Evidencia completada: ${grade.completionScore}/100
+1445-
+1446-Criterio:
+1447:Esta calificación es una sugerencia automática para apoyar la revisión docente. La calificación final debe considerar la explicación oral, el notebook de Colab y la calidad real del CSV entregado.
+1448-
+1449-Recomendación docente:
+1450-${grade.recommendation}`;
+1451-  }
+1452-
+1453-
+1454-  function generateReport() {
+1455-    const datasetName = getField('c7-dataset-name') || '[No registrado]';
+1456-    const rows = getField('c7-rows') || '[No registrado]';
+1457-    const columns = getField('c7-columns') || '[No registrado]';
+1458-    const inputVars = getField('c7-input-vars') || '[No registradas]';
+1459-    const targetVar = getField('c7-target-var') || '[No registrada]';
+1460-    const problems = getSelectedProblems();
+1461-    const findings = getField('c7-findings') || '[No registrados]';
+1462-    const actions = getField('c7-actions') || '[No registradas]';
+1463-    const ready = getReadyStatus();
+1464-    const conclusion = getField('c7-conclusion') || '[No registrada]';
+1465-
+1466-    const report = `EVIDENCIA CLASE 7 — PRIMER NOTEBOOK IA
+1467-
+1468-Dataset analizado:
+1469-${datasetName}
+1470-
+1471-Tamaño del dataset:
+1472-- Filas: ${rows}
+1473-- Columnas: ${columns}
+1474-
+1475-Variables de entrada:
+1476-${inputVars}
+1477-
+1478-Variable objetivo:
+1479-${targetVar}
+1480-
+1481-Comandos usados o practicados:
+1482-- import pandas as pd
+--
+1499-${actions}
+1500-
+1501-Validación automática:
+1502-${$('#c7-validation-result')?.innerText || '[No generada]'}
+1503-
+1504-Conclusión:
+1505-Estado del dataset: ${ready}
+1506-
+1507-${conclusion}
+1508-
+1509-Reflexión:
+1510-Antes de usar IA, revisé si mi dataset tiene estructura clara, variables útiles, valores faltantes y problemas que puedan afectar la calidad de la solución.`;
+1511-
+1512-    validateDataset();
+1513-    setField('c7-final-report', report);
+1514:    markMission('diagnosis');
+1515:    markMission('evidence');
+1516-  }
+1517-
+1518-  function initDiagnosis() {
+1519-    const fields = [
+1520-      'c7-dataset-name',
+1521-      'c7-rows',
+1522-      'c7-columns',
+1523-      'c7-input-vars',
+1524-      'c7-target-var',
+1525-      'c7-findings',
+1526-      'c7-actions',
+1527-      'c7-conclusion'
+1528-    ];
+1529-
+1530-    fields.forEach(id => {
+1531-      const el = document.getElementById(id);
+1532-      if (el) {
+1533-        el.addEventListener('input', () => {
+1534-          const filled = fields.filter(fieldId => getField(fieldId)).length;
+1535:          if (filled >= 5) markMission('diagnosis');
+1536-        });
+1537-      }
+1538-    });
+1539-
+1540-    const btn = $('#c7-generate-report');
+1541-    if (btn) btn.addEventListener('click', generateReport);
+1542-
+1543-    const finalBtn = $('#c7-generate-final-report');
+1544-    if (finalBtn) finalBtn.addEventListener('click', generateReport);
+1545-  }
+1546-
+1547-  function initCopyReport() {
+1548-    const btn = $('#c7-copy-report');
+1549-    if (!btn) return;
+1550-
+1551-    btn.addEventListener('click', async () => {
+1552-      const report = getField('c7-final-report');
+1553-
+1554-      if (!report) {
+1555-        generateReport();
+1556-      }
+1557-
+1558-      try {
+1559-        await navigator.clipboard.writeText(getField('c7-final-report'));
+1560-        btn.textContent = 'Evidencia copiada';
+1561-        setTimeout(() => {
+1562-          btn.textContent = 'Copiar evidencia';
+1563-        }, 1600);
+1564-      } catch {
+1565-        alert('No se pudo copiar automáticamente. Copia el texto manualmente.');
+1566-      }
+1567-    });
+1568-  }
+1569-
+1570-  function initReset() {
+1571-    const btn = $('#c7-reset');
+1572-    if (!btn) return;
+1573-
+1574-    btn.addEventListener('click', () => {
+1575-      if (!confirm('¿Reiniciar el progreso de la Clase 7?')) return;
+1576-
+1577:      localStorage.removeItem(STORAGE_KEY);
+1578-      location.reload();
+1579-    });
+1580-  }
+1581-
+1582-
+1583-  function initImageLightbox() {
+1584-    const lightbox = $('#class7-image-lightbox');
+1585-    const lightboxImg = $('#class7-lightbox-img');
+1586-    const lightboxCaption = $('#class7-lightbox-caption');
+1587-    const closeBtn = $('#class7-lightbox-close');
+1588-
+1589-    if (!lightbox || !lightboxImg || !lightboxCaption) return;
+1590-
+1591-    function openLightbox(img) {
+1592-      const figure = img.closest('figure');
+1593-      const caption = figure?.querySelector('figcaption')?.textContent || img.alt || 'Imagen ampliada';
+1594-
+1595-      lightboxImg.src = img.src;
+1596-      lightboxImg.alt = img.alt || caption;
+1597-      lightboxCaption.textContent = caption;
+1598-      lightbox.hidden = false;
+1599-      document.body.classList.add('class7-lightbox-open');
+1600-    }
+1601-
+1602-    function closeLightbox() {
+1603-      lightbox.hidden = true;
+1604-      lightboxImg.src = '';
+1605-      lightboxCaption.textContent = '';
+1606-      document.body.classList.remove('class7-lightbox-open');
+1607-    }
+1608-
+1609-    document.addEventListener('click', event => {
+1610-      const img = event.target.closest('.class7-omes-gallery img, .class7-colab-guide img, .class7-colab-image img, .class7-omes-figure img');
+1611-
+1612-      if (img) {
+--
+1621-
+1622-    if (closeBtn) {
+1623-      closeBtn.addEventListener('click', closeLightbox);
+1624-    }
+1625-
+1626-    document.addEventListener('keydown', event => {
+1627-      if (event.key === 'Escape' && !lightbox.hidden) {
+1628-        closeLightbox();
+1629-      }
+1630-    });
+1631-  }
+1632-
+1633-
+1634-
+1635-  function updateClass7ProgressBar() {
+1636:    const xpElement = document.getElementById('c7-xp');
+1637:    const fillElement = document.getElementById('c7-progress-fill');
+1638-
+1639:    if (!xpElement || !fillElement) return;
+1640-
+1641:    const rawXP = Number(String(xpElement.textContent || '0').replace(/[^\d]/g, ''));
+1642:    const safeXP = Math.max(0, Math.min(100, rawXP));
+1643-
+1644:    fillElement.style.width = `${safeXP}%`;
+1645:    fillElement.setAttribute('aria-valuenow', String(safeXP));
+1646-  }
+1647-
+1648-
+1649-
+1650-  function initClass7ProgressObserver() {
+1651:    const xpElement = document.getElementById('c7-xp');
+1652:    if (!xpElement) return;
+1653-
+1654-    updateClass7ProgressBar();
+1655-
+1656-    const observer = new MutationObserver(updateClass7ProgressBar);
+1657:    observer.observe(xpElement, {
+1658-      childList: true,
+1659-      characterData: true,
+1660-      subtree: true
+1661-    });
+1662-  }
+1663-
+1664-
+1665-  function initClass7() {
+1666-    initClass7ProgressBar();
+1667-    initClass7ProgressObserver();
+1668:    updateXP();
+1669-    updateClass7ProgressBar();
+1670-    initStart();
+1671-    initChecklist();
+1672-    initQuizzes();
+1673-    initBasicPython();
+1674-    initSandboxAccordion();
+1675-    initSandbox();
+1676-    initLiveCSV();
+1677-    initDatasetValidation();
+1678-    initAutoDiagnosis();
+1679-    initFinalChallenge();
+1680-    initDiagnosis();
+1681-    initCopyReport();
+1682-    initImageLightbox();
+1683-    initReset();
+1684-  }
+1685-
+1686-  document.addEventListener('DOMContentLoaded', initClass7);
+1687-})();
+
+===== STYLES: PROGRESO / SIDEBAR =====
+1065-    }
+1066-
+1067-    /* =============================================
+1068-       ESTILOS COMPARTIDOS
+1069-       ============================================= */
+1070-    body {
+1071-      padding-left: 280px;
+1072-      transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+1073-    }
+1074-
+1075:    .course-sidebar {
+1076-      position: fixed;
+1077-      inset: 0 auto 0 0;
+1078-      width: 280px;
+1079-      padding: 22px;
+1080-      background: rgba(8, 13, 28, 0.96);
+1081-      border-right: 1px solid var(--border);
+1082-      backdrop-filter: blur(18px);
+1083-      z-index: 900;
+1084-      overflow-y: auto;
+1085-    }
+1086-
+1087-    .course-kicker {
+1088-      color: var(--cyan);
+1089-      font-size: 0.72rem;
+1090-      letter-spacing: 0.14em;
+1091-      text-transform: uppercase;
+1092-      font-weight: 800;
+1093-      margin-bottom: 8px;
+1094-    }
+1095-
+1096-    .course-title {
+1097-      font-size: 1.35rem;
+1098-      line-height: 1.15;
+1099-      margin-bottom: 20px;
+1100-    }
+1101-
+1102-    .progress-panel {
+1103-      display: grid;
+1104-      gap: 10px;
+1105-      margin-bottom: 26px;
+--
+1601-      margin-top: 10px;
+1602-      color: var(--text-secondary);
+1603-      font-size: 0.9rem;
+1604-    }
+1605-
+1606-    /* =============================================
+1607-       RESPONSIVE
+1608-       ============================================= */
+1609-    @media (max-width: 768px) {
+1610-      body { padding-left: 0; }
+1611:      .course-sidebar {
+1612-        position: relative;
+1613-        width: 100%;
+1614-        border-right: none;
+1615-        border-bottom: 1px solid var(--border);
+1616-      }
+1617-      .hero-visual,
+1618-      .evolution-stairs,
+1619-      .ordering-area,
+1620-      .lab-grid,
+1621-      .gallery-grid,
+1622-      .milestone-card,
+1623-      .match-row,
+1624-      .simulator-layout {
+1625-        grid-template-columns: 1fr;
+1626-      }
+1627-      .evolution-stairs { min-height: auto; }
+1628-      .stair-step { min-height: 120px; }
+1629-      section { padding: 60px 0; }
+1630-      .agenda-body p { padding-left: 0; }
+1631-      .history-item { grid-template-columns: 70px 20px 1fr; gap: 12px; }
+1632-      .nav-controls { bottom: 16px; right: 16px; }
+1633-      .section-indicator { bottom: 20px; font-size: 0.7rem; }
+1634-      .homework-card { padding: 24px; }
+1635-    }
+1636-
+1637-    @media (max-width: 480px) {
+1638-      .hero-meta { flex-direction: column; align-items: center; }
+1639-      .agenda-time { min-width: auto; font-size: 0.8rem; }
+1640-      .agenda-header { flex-wrap: wrap; }
+1641-    }
+1642-
+1643-/* =============================================
+1644-   REFACTOR: SIDEBAR, LANDING Y CORRECCIONES UI
+1645-   ============================================= */
+1646-body.sidebar-collapsed { padding-left: 0; }
+1647-html, body { max-width: 100%; overflow-x: hidden; }
+1648:.course-sidebar { transform: translateX(0); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+1649:.course-sidebar { padding-top: 70px; }
+1650:.course-sidebar.collapsed { transform: translateX(-100%); }
+1651-.course-title a { color: inherit; text-decoration: none; }
+1652:.sidebar-toggle { position: fixed; top: 16px; left: 16px; z-index: 950; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); background: rgba(17, 24, 39, 0.92); backdrop-filter: blur(12px); color: var(--text-primary); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+1653:.sidebar-toggle:hover { background: var(--gradient); border-color: transparent; }
+1654-.lesson-tab { display: block; text-decoration: none; }
+1655-.container { width: 85%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+1656-#portada .hero-content, #c2-portada .hero-content, .home-hero .hero-content { display: flex; flex-direction: column; align-items: center; }
+1657-#btn-iniciar, #btn-iniciar-c2 { align-self: center; margin: 0 auto; }
+1658-.next-class-link { text-align: center; margin-top: 24px; }
+1659-.btn-next-class { display: block; margin: 24px auto 0; text-align: center; }
+1660-.objective-card { display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 20px; row-gap: 6px; align-items: flex-start; overflow: hidden; }
+1661-.objective-card h3 { grid-column: 2; min-width: 0; font-size: 1rem; font-weight: 600; line-height: 1.5; overflow-wrap: break-word; }
+1662-.objective-card p { grid-column: 2; min-width: 0; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; overflow-wrap: break-word; }
+1663-.objective-number { grid-column: 1; grid-row: 1 / span 2; flex-shrink: 0; width: 48px; height: 48px; }
+1664-.definition-card { background: var(--gradient-subtle); border: 1px solid rgba(139, 92, 246, 0.3); border-left: 4px solid var(--purple); border-radius: var(--radius); padding: 32px 36px; margin-top: 32px; position: relative; }
+1665-.definition-card::before { content: none; }
+1666-.definition-card .quote-mark { display: block; font-size: 3.5rem; line-height: 1; color: var(--purple); opacity: 0.4; font-family: Georgia, serif; margin-bottom: 8px; }
+1667-.definition-card p { font-size: 1.15rem; font-style: italic; color: var(--text-primary); line-height: 1.75; padding-left: 0; }
+1668-.definition-card .quote-source { display: block; margin-top: 16px; font-size: 0.85rem; color: var(--text-muted); font-style: normal; }
+1669-#que-es-ia,
+1670-#que-es-ia p,
+1671-#que-es-ia h3,
+1672-#que-es-ia .example-chip,
+1673-#que-es-ia .definition-card p { color: var(--text-primary); }
+1674-.flip-card-front .flip-text { font-size: 1.05rem; font-weight: 500; line-height: 1.5; }
+1675-.flip-card-front .flip-text::before { content: '\201C'; color: var(--error); opacity: 0.5; font-size: 1.2em; }
+1676-.flip-card-front .flip-text::after { content: '\201D'; color: var(--error); opacity: 0.5; font-size: 1.2em; }
+1677-.area-card { text-align: center; padding: 28px 24px; display: flex; flex-direction: column; align-items: center; }
+1678-.area-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; width: 100%; }
+1679-.area-card-header .area-emoji { font-size: 2rem; flex-shrink: 0; margin-bottom: 0; line-height: 1; }
+1680-.area-card-header h3 { font-size: 1rem; font-weight: 700; text-align: left; margin: 0; line-height: 1.3; }
+1681-.agent-case-card { color: var(--text-primary); font: inherit; }
+1682-.agent-case-card h3 { color: var(--text-primary); }
+1683-.agent-case-card .area-example { color: var(--text-secondary); }
+--
+1700-.closing-spaced { margin-top: 56px; }
+1701-.team-activity { margin-top: 24px; }
+1702-.course-home { min-height: 100vh; }
+1703-.home-hero { display: flex; align-items: center; min-height: 100vh; }
+1704-.course-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; width: 100%; margin-top: 48px; }
+1705-.course-card { color: inherit; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px; transition: var(--transition); }
+1706-.course-card:hover { transform: translateY(-4px); border-color: rgba(6, 182, 212, 0.45); background: var(--bg-card-hover); }
+1707-.course-card-kicker { display: inline-block; color: var(--cyan); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 800; margin-bottom: 12px; }
+1708-.course-card h2 { margin-bottom: 12px; font-size: 1.35rem; }
+1709-.course-card p { color: var(--text-secondary); margin-bottom: 24px; }
+1710:@media (max-width: 768px) { body { padding-left: 0; } body.sidebar-collapsed { padding-left: 0; } .course-sidebar { position: fixed; width: 260px; transform: translateX(-100%); border-bottom: none; border-right: 1px solid var(--border); } .course-sidebar.collapsed { transform: translateX(-110%); } .course-sidebar:not(.collapsed) { transform: translateX(0); box-shadow: 4px 0 32px rgba(0, 0, 0, 0.6); } .container { width: 95%; padding: 0 16px; } .course-card-grid { grid-template-columns: 1fr; } }
+1711-@media (max-width: 900px) { .simulator-layout { grid-template-columns: minmax(220px, 300px) minmax(280px, 1fr); gap: 24px; } }
+1712-@media (max-width: 640px) { .simulator-layout { grid-template-columns: 1fr; } .agent-grid { max-width: 100%; width: 100%; } }
+1713-
+1714-/* Compact reactive simulator layout */
+1715-#c2-laboratorio .reactive-simulator {
+1716-  grid-template-columns: clamp(280px, 32vw, 360px) minmax(240px, 420px) !important;
+1717-  gap: 18px !important;
+1718-  align-items: start;
+1719-  justify-content: start;
+1720-}
+1721-
+1722-/* =============================================
+1723-   CLASE 4: AREAS DE APLICACION DE IA
+1724-   ============================================= */
+1725-.class4-page section {
+1726-  padding: 76px 0;
+1727-}
+1728-
+1729-.class4-page .section-header {
+1730-  max-width: 960px;
+1731-  margin-bottom: 28px;
+1732-}
+1733-
+1734-.class4-page .section-header h2,
+1735-.class4-page h1,
+1736-.class4-page h2 {
+1737-  color: var(--text-primary);
+1738-}
+1739-
+1740-.class4-page .section-header p,
+--
+6430-}
+6431-
+6432-.class5-xp-card strong {
+6433-  font-size: 3rem;
+6434-  line-height: 1;
+6435-  background: var(--gradient);
+6436-  -webkit-background-clip: text;
+6437-  -webkit-text-fill-color: transparent;
+6438-}
+6439-
+6440:.class5-progress-track {
+6441-  height: 12px;
+6442-  border-radius: 999px;
+6443-  background: rgba(255,255,255,0.08);
+6444-  overflow: hidden;
+6445-  margin: 18px 0 12px;
+6446-  border: 1px solid var(--border);
+6447-}
+6448-
+6449:.class5-progress-fill {
+6450-  height: 100%;
+6451-  width: 0%;
+6452-  background: var(--gradient);
+6453-  transition: width 0.35s ease;
+6454-}
+6455-
+6456-.class5-panel {
+6457-  background: var(--bg-card);
+6458-  border: 1px solid var(--border);
+6459-  border-radius: var(--radius);
+6460-  padding: 28px;
+6461-  margin-top: 24px;
+6462-}
+6463-
+6464-.class5-panel h2 {
+6465-  margin-bottom: 10px;
+6466-  font-size: 1.5rem;
+6467-}
+6468-
+6469-.class5-panel p {
+6470-  color: var(--text-secondary);
+6471-}
+6472-
+6473-.class5-flow {
+6474-  display: flex;
+6475-  flex-wrap: wrap;
+6476-  gap: 10px;
+6477-  margin-top: 22px;
+6478-  align-items: center;
+6479-}
+--
+7134-.pdf-card h2 {
+7135-  margin-top: 0;
+7136-}
+7137-
+7138-.pdf-card p {
+7139-  margin-bottom: 20px;
+7140-}
+7141-
+7142-@media print {
+7143-  .pdf-final-section,
+7144:  .sidebar-toggle,
+7145:  .course-sidebar {
+7146-    display: none !important;
+7147-  }
+7148-}
+7149-
+7150-
+7151-/* ========================================================= */
+7152-/* CLASE 5 · EVALUACIÓN FINAL DEL REPORTE CON IA */
+7153-/* ========================================================= */
+7154-
+7155-.c5-final-evaluation-section .container {
+7156-  max-width: 1100px;
+7157-}
+7158-
+7159-.c5-final-card {
+7160-  margin-top: 22px;
+7161-}
+7162-
+7163-.c5-final-card h3 {
+7164-  margin-top: 0;
+7165-}
+7166-
+7167-.c5-final-card h4 {
+7168-  margin-top: 20px;
+7169-  margin-bottom: 8px;
+7170-  color: var(--text);
+7171-}
+7172-
+7173-.c5-final-card-header {
+7174-  display: flex;
+7175-  justify-content: space-between;
+--
+7226-  margin-top: 14px;
+7227-  font-size: 14px;
+7228-  color: var(--muted);
+7229-}
+7230-
+7231-@media print {
+7232-  body {
+7233-    background: #ffffff !important;
+7234-  }
+7235-
+7236:  .course-sidebar,
+7237:  .sidebar-toggle,
+7238-  .nav-controls,
+7239-  .section-indicator,
+7240-  #progress-bar,
+7241-  .c5-pdf-card {
+7242-    display: none !important;
+7243-  }
+7244-
+7245-  .lesson-page {
+7246-    margin-left: 0 !important;
+7247-    width: 100% !important;
+7248-  }
+7249-
+7250-  .class5-section {
+7251-    display: block !important;
+7252-    opacity: 1 !important;
+7253-    visibility: visible !important;
+7254-    transform: none !important;
+7255-    page-break-inside: avoid;
+7256-  }
+7257-
+7258-  .class5-section:not(.visible) {
+7259-    display: block !important;
+7260-  }
+7261-
+7262-  .class5-panel,
+7263-  .activity-card,
+7264-  .card {
+7265-    box-shadow: none !important;
+7266-    page-break-inside: avoid;
+7267-  }
+--
+7611-}
+7612-
+7613-.class6-xp-card strong {
+7614-  font-size: 3rem;
+7615-  line-height: 1;
+7616-  background: linear-gradient(135deg, var(--success), var(--cyan));
+7617-  -webkit-background-clip: text;
+7618-  -webkit-text-fill-color: transparent;
+7619-}
+7620-
+7621:.class6-progress-track {
+7622-  height: 12px;
+7623-  border-radius: 999px;
+7624-  background: rgba(255,255,255,0.08);
+7625-  overflow: hidden;
+7626-  margin: 18px 0 12px;
+7627-  border: 1px solid var(--border);
+7628-}
+7629-
+7630:.class6-progress-fill {
+7631-  height: 100%;
+7632-  width: 0%;
+7633-  background: linear-gradient(135deg, var(--success), var(--cyan));
+7634-  transition: width 0.35s ease;
+7635-}
+7636-
+7637-.class6-panel {
+7638-  background: var(--bg-card);
+7639-  border: 1px solid var(--border);
+7640-  border-radius: var(--radius);
+7641-  padding: 28px;
+7642-  margin-top: 24px;
+7643-}
+7644-
+7645-.class6-panel h2 {
+7646-  margin-bottom: 10px;
+7647-  font-size: 1.5rem;
+7648-}
+7649-
+7650-.class6-panel p {
+7651-  color: var(--text-secondary);
+7652-}
+7653-
+7654-.class6-flow {
+7655-  display: flex;
+7656-  flex-wrap: wrap;
+7657-  gap: 10px;
+7658-  margin-top: 22px;
+7659-  align-items: center;
+7660-}
+--
+11970-  .course-image-cover {
+11971-    height: 220px !important;
+11972-    min-height: 220px !important;
+11973-  }
+11974-}
+11975-
+11976-/* ========================================================= */
+11977-/* Clase 7 · Sidebar ocultable y barra de progreso */
+11978-/* ========================================================= */
+11979-
+11980:.class7-progress-panel {
+11981-  width: min(1120px, calc(100% - 48px));
+11982-  margin: 18px auto 0;
+11983-  padding: 14px 16px;
+11984-  border-radius: 18px;
+11985-  border: 1px solid rgba(255,255,255,0.12);
+11986-  background: rgba(10,14,26,0.76);
+11987-  box-shadow: var(--shadow-soft);
+11988-}
+11989-
+11990:.class7-progress-header {
+11991-  display: flex;
+11992-  justify-content: space-between;
+11993-  align-items: center;
+11994-  gap: 12px;
+11995-  margin-bottom: 10px;
+11996-}
+11997-
+11998:.class7-progress-header span {
+11999-  color: var(--cyan);
+12000-  font-weight: 900;
+12001-  letter-spacing: 0.08em;
+12002-  text-transform: uppercase;
+12003-  font-size: 0.78rem;
+12004-}
+12005-
+12006:.class7-progress-header strong {
+12007-  color: var(--text-primary);
+12008-  font-weight: 900;
+12009-}
+12010-
+12011:.class7-progress-track {
+12012-  width: 100%;
+12013-  height: 10px;
+12014-  overflow: hidden;
+12015-  border-radius: 999px;
+12016-  background: rgba(255,255,255,0.08);
+12017-  border: 1px solid rgba(255,255,255,0.08);
+12018-}
+12019-
+12020:.class7-progress-fill {
+12021-  height: 100%;
+12022-  width: 0%;
+12023-  border-radius: inherit;
+12024-  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+12025-  box-shadow: 0 0 22px rgba(6,182,212,0.35);
+12026-  transition: width 0.35s ease;
+12027-}
+12028-
+12029-/* Ocultar texto de progreso viejo si quedó duplicado */
+12030-body[data-page="clase-7"] > p:first-child,
+12031:body[data-page="clase-7"] > div:first-child:not(.sidebar-toggle):not(.course-sidebar) {
+12032-  max-width: none;
+12033-}
+12034-
+12035-/* Sidebar ocultable */
+12036:body.sidebar-collapsed .course-sidebar,
+12037:.course-sidebar.is-hidden {
+12038-  transform: translateX(-110%) !important;
+12039-  opacity: 0 !important;
+12040-  pointer-events: none !important;
+12041-}
+12042-
+12043-body.sidebar-collapsed .lesson-main,
+12044-body.sidebar-collapsed .course-main,
+12045-body.sidebar-collapsed main,
+12046-body.sidebar-collapsed .class7-main {
+12047-  margin-left: 0 !important;
+12048-  width: 100% !important;
+12049-}
+12050-
+12051:.sidebar-toggle {
+12052-  z-index: 10000 !important;
+12053-}
+12054-
+12055-/* En pantallas grandes, que el contenido respire al ocultar sidebar */
+12056-@media (min-width: 980px) {
+12057-  body.sidebar-collapsed .course-home,
+12058-  body.sidebar-collapsed .lesson-shell,
+12059-  body.sidebar-collapsed .class7-page,
+12060-  body.sidebar-collapsed main {
+12061-    padding-left: 0 !important;
+12062-  }
+12063-}
+12064-
+12065-@media (max-width: 760px) {
+12066:  .class7-progress-panel {
+12067-    width: min(100% - 28px, 1120px);
+12068-  }
+12069-
+12070:  .class7-progress-header {
+12071-    flex-direction: column;
+12072-    align-items: flex-start;
+12073-  }
+12074-}
+12075-
+12076-/* ========================================================= */
+12077-/* Clase 7 · Progreso estilo Clase 6 + Sidebar ocultable */
+12078-/* ========================================================= */
+12079-
+12080-/* Botón hamburguesa siempre visible */
+12081:.sidebar-toggle {
+12082-  position: fixed !important;
+12083-  top: 18px !important;
+12084-  left: 18px !important;
+12085-  z-index: 99999 !important;
+12086-  width: 44px !important;
+12087-  height: 44px !important;
+12088-  display: inline-flex !important;
+12089-  align-items: center !important;
+12090-  justify-content: center !important;
+12091-  border-radius: 12px !important;
+12092-  border: 1px solid rgba(255,255,255,0.14) !important;
+12093-  background: rgba(10,14,26,0.92) !important;
+12094-  color: #f8fafc !important;
+12095-  font-size: 1.2rem !important;
+12096-  cursor: pointer !important;
+12097-  box-shadow: 0 12px 30px rgba(0,0,0,0.35) !important;
+12098-}
+12099-
+12100-/* Botón interno de la sidebar */
+12101:.course-sidebar-header-actions {
+12102-  display: flex;
+12103-  justify-content: flex-end;
+12104-  margin-bottom: 14px;
+12105-}
+12106-
+12107-.sidebar-close-btn {
+12108-  width: 38px;
+12109-  height: 38px;
+12110-  border-radius: 10px;
+12111-  border: 1px solid rgba(255,255,255,0.14);
+12112-  background: rgba(255,255,255,0.06);
+12113-  color: #f8fafc;
+12114-  cursor: pointer;
+12115-  font-size: 1rem;
+12116-}
+12117-
+12118-/* Ocultar sidebar */
+12119:body.sidebar-collapsed .course-sidebar,
+12120:.course-sidebar.is-hidden {
+12121-  transform: translateX(-110%) !important;
+12122-  opacity: 0 !important;
+12123-  pointer-events: none !important;
+12124-}
+12125-
+12126-/* Expandir contenido al ocultar sidebar */
+12127-body.sidebar-collapsed main,
+12128-body.sidebar-collapsed .lesson-main,
+12129-body.sidebar-collapsed .course-main,
+12130-body.sidebar-collapsed .class7-main {
+12131-  margin-left: 0 !important;
+12132-  width: 100% !important;
+12133-}
+12134-
+12135-/* Barra de progreso estilo lecciones anteriores */
+12136:.lesson-progress-card.class7-progress-card {
+12137-  width: min(1120px, calc(100% - 48px));
+12138-  margin: 22px auto 0;
+12139-  padding: 16px 18px;
+12140-  border-radius: 20px;
+12141-  border: 1px solid rgba(255,255,255,0.12);
+12142-  background: rgba(10,14,26,0.72);
+12143-  box-shadow: var(--shadow-soft);
+12144-}
+12145-
+12146:.lesson-progress-info {
+12147-  display: flex;
+12148-  justify-content: space-between;
+12149-  align-items: center;
+12150-  gap: 12px;
+12151-  margin-bottom: 10px;
+12152-}
+12153-
+12154:.lesson-progress-info span {
+12155-  color: var(--cyan);
+12156-  font-size: 0.8rem;
+12157-  font-weight: 900;
+12158-  letter-spacing: 0.08em;
+12159-  text-transform: uppercase;
+12160-}
+12161-
+12162:.lesson-progress-info strong {
+12163-  color: var(--text-primary);
+12164-  font-weight: 900;
+12165-}
+12166-
+12167:.lesson-progress-track {
+12168-  width: 100%;
+12169-  height: 10px;
+12170-  border-radius: 999px;
+12171-  overflow: hidden;
+12172-  background: rgba(255,255,255,0.08);
+12173-  border: 1px solid rgba(255,255,255,0.08);
+12174-}
+12175-
+12176:.lesson-progress-fill {
+12177-  height: 100%;
+12178-  width: 0%;
+12179-  border-radius: inherit;
+12180-  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+12181-  box-shadow: 0 0 22px rgba(6,182,212,0.35);
+12182-  transition: width 0.35s ease;
+12183-}
+12184-
+12185-/* Evitar texto viejo suelto arriba */
+12186-body[data-page="clase-7"] {
+12187-  overflow-x: hidden;
+12188-}
+12189-
+12190-@media (max-width: 760px) {
+12191:  .lesson-progress-card.class7-progress-card {
+12192-    width: min(100% - 28px, 1120px);
+12193-  }
+12194-
+12195:  .lesson-progress-info {
+12196-    flex-direction: column;
+12197-    align-items: flex-start;
+12198-  }
+12199-}

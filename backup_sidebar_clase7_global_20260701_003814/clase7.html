@@ -8,77 +8,67 @@
 
   <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body data-page="clase7" data-active-lesson="clase-7">
-
-  <div class="class7-xp-compat" hidden aria-hidden="true">
-    <strong id="c7-xp-label">0 / 100 XP</strong>
-    <div id="c7-xp-bar"></div>
-  </div>
-
-  <div id="progress-bar"></div>
-
   <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Ocultar menú">×</button>
 
+  <div class="app-shell">
 
-  <aside class="course-sidebar" id="course-sidebar" aria-label="Navegación del curso">
-    <p class="course-kicker">Curso</p>
-    <h2 class="course-title"><a href="index.html">Inteligencia Artificial</a></h2>
+    <aside class="course-sidebar" id="course-sidebar" aria-label="Navegación del curso">
+      <p class="course-kicker">Curso</p>
+      <h2 class="course-title"><a href="index.html">Inteligencia Artificial</a></h2>
 
-    <div class="progress-panel">
-      <p><span>Clases disponibles</span><strong>7 / 30 aprox.</strong></p>
-      <p><span>Semana actual</span><strong>Semana 2</strong></p>
-      <p><span>Estado</span><strong>Notebook IA</strong></p>
-    </div>
+      <div class="progress-panel">
+        <p><span>Clases disponibles</span><strong>7 / 30 aprox.</strong></p>
+        <p><span>Semana actual</span><strong>Semana 2</strong></p>
+        <p><span>Estado</span><strong>Notebook IA</strong></p>
+      </div>
 
-    <a class="lesson-tab" href="index.html" data-lesson="home">
-      <strong>Inicio</strong>
-      Ruta del curso
-    </a>
+      <p class="week-label">Semana 1</p>
 
-    <p class="week-label">Semana 1</p>
+      <a class="lesson-tab" href="clase1.html" data-lesson="clase-1">
+        <strong>Clase 1</strong>
+        Introducción a la Inteligencia Artificial
+      </a>
 
-    <a class="lesson-tab" href="clase1.html" data-lesson="clase-1">
-      <strong>Clase 1</strong>
-      Introducción a la Inteligencia Artificial
-    </a>
+      <a class="lesson-tab" href="clase2.html" data-lesson="clase-2">
+        <strong>Clase 2</strong>
+        Agentes inteligentes y toma de decisiones
+      </a>
 
-    <a class="lesson-tab" href="clase2.html" data-lesson="clase-2">
-      <strong>Clase 2</strong>
-      Agentes inteligentes y toma de decisiones
-    </a>
+      <a class="lesson-tab" href="clase3.html" data-lesson="clase-3">
+        <strong>Clase 3</strong>
+        Espacios de estado y técnicas de búsqueda
+      </a>
 
-    <a class="lesson-tab" href="clase3.html" data-lesson="clase-3">
-      <strong>Clase 3</strong>
-      Espacios de estado y técnicas de búsqueda
-    </a>
+      <a class="lesson-tab" href="clase4.html" data-lesson="clase-4">
+        <strong>Clase 4</strong>
+        Áreas de aplicación de la IA
+      </a>
 
-    <a class="lesson-tab" href="clase4.html" data-lesson="clase-4">
-      <strong>Clase 4</strong>
-      Áreas de aplicación de la IA
-    </a>
+      <p class="week-label">Semana 2</p>
 
-    <p class="week-label">Semana 2</p>
+      <a class="lesson-tab" href="clase5.html" data-lesson="clase-5">
+        <strong>Clase 5</strong>
+        IA Business Lab
+      </a>
 
-    <a class="lesson-tab" href="clase5.html" data-lesson="clase-5">
-      <strong>Clase 5</strong>
-      IA Business Lab
-    </a>
+      <a class="lesson-tab" href="clase6.html" data-lesson="clase-6">
+        <strong>Clase 6</strong>
+        IA Data Lab
+      </a>
 
-    <a class="lesson-tab" href="clase6.html" data-lesson="clase-6">
-      <strong>Clase 6</strong>
-      IA Data Lab
-    </a>
-
-    <a class="lesson-tab active" href="clase7.html" data-lesson="clase-7">
-      <strong>Clase 7</strong>
-      Primer Notebook IA
-    </a>
-  </aside>
+      <a class="lesson-tab active" href="clase7.html" data-lesson="clase-7">
+        <strong>Clase 7</strong>
+        Primer Notebook IA
+      </a>
+    </aside>
 
 
-  <main class="course-main">
-<section class="class7-hero" data-section="1">
+    <main class="course-main">
+</div>
+</div>
+
+      <section class="class7-hero" data-section="1">
         <div class="container">
           <span class="class7-badge">Clase 7 · Primer Notebook IA</span>
           <h1>De un CSV a un análisis con Python</h1>
@@ -123,93 +113,11 @@
 
             <p id="c7-progress-text">Completa los retos para desbloquear la insignia.</p>
           </aside>
-</section>
 
-
-      <section class="class7-section class7-mission-board-section" id="c7-mission-board">
-        <div class="container">
-          <article class="class7-panel class7-mission-panel">
-            <h2>Tablero de misiones</h2>
-            <p>
-              Cada reto representa una habilidad que necesitas para explorar, diagnosticar
-              y documentar un dataset con Python.
-            </p>
-
-            <div class="class7-mission-grid">
-              <label class="class7-mission-card">
-                <input type="checkbox" data-c7-mission="preparation" data-xp="10">
-                <span class="class7-mission-icon">🧰</span>
-                <strong>Preparar entorno</strong>
-                <small>10 XP</small>
-                <p>Comprender qué necesitas antes de usar Colab.</p>
-              </label>
-
-              <label class="class7-mission-card">
-                <input type="checkbox" data-c7-mission="colab" data-xp="15">
-                <span class="class7-mission-icon">☁️</span>
-                <strong>Usar Google Colab</strong>
-                <small>15 XP</small>
-                <p>Abrir un notebook y reconocer celdas de código y texto.</p>
-              </label>
-
-              <label class="class7-mission-card">
-                <input type="checkbox" data-c7-mission="python" data-xp="10">
-                <span class="class7-mission-icon">🐍</span>
-                <strong>Primeros comandos Python</strong>
-                <small>10 XP</small>
-                <p>Ejecutar instrucciones básicas y entender su salida.</p>
-              </label>
-
-              <label class="class7-mission-card">
-                <input type="checkbox" data-c7-mission="pandas" data-xp="10">
-                <span class="class7-mission-icon">🐼</span>
-                <strong>Pandas y DataFrame</strong>
-                <small>10 XP</small>
-                <p>Identificar qué es una tabla de datos en pandas.</p>
-              </label>
-
-              <label class="class7-mission-card">
-                <input type="checkbox" data-c7-mission="csv" data-xp="15">
-                <span class="class7-mission-icon">🧾</span>
-                <strong>Leer y revisar CSV</strong>
-                <small>15 XP</small>
-                <p>Validar encabezados, columnas y estructura del archivo.</p>
-              </label>
-
-              <label class="class7-mission-card">
-                <input type="checkbox" data-c7-mission="sandbox" data-xp="15">
-                <span class="class7-mission-icon">💻</span>
-                <strong>Ejecutar comandos del sandbox</strong>
-                <small>15 XP</small>
-                <p>Practicar comandos de exploración antes de usarlos en Colab.</p>
-              </label>
-
-              <label class="class7-mission-card">
-                <input type="checkbox" data-c7-mission="diagnosis" data-xp="15">
-                <span class="class7-mission-icon">🔎</span>
-                <strong>Diagnosticar dataset</strong>
-                <small>15 XP</small>
-                <p>Detectar faltantes, duplicados, variables y problemas de calidad.</p>
-              </label>
-
-              <label class="class7-mission-card">
-                <input type="checkbox" data-c7-mission="evidence" data-xp="10">
-                <span class="class7-mission-icon">📄</span>
-                <strong>Generar evidencia final</strong>
-                <small>10 XP</small>
-                <p>Construir una conclusión técnica del análisis realizado.</p>
-              </label>
-            </div>
-
-            <div class="class7-unlock" id="c7-unlock" hidden>
-              <strong>🎖 Insignia desbloqueada: Explorador de Datos IA</strong>
-              <p>Completaste la misión. Ya sabes abrir, explorar y diagnosticar un dataset con Python.</p>
-            </div>
-          </article>
         </div>
       </section>
 
-<section class="class7-section" data-section="2">
+      <section class="class7-section" data-section="2">
         <div class="container">
           <span class="section-label">Preparación</span>
           <h2 class="section-title">Qué necesitas para la clase</h2>
@@ -245,7 +153,9 @@
           </div>
         </div>
       </section>
-<section class="class7-section class7-colab-guide" data-section="2b" id="guia-google-colab">
+
+
+      <section class="class7-section class7-colab-guide" data-section="2b" id="guia-google-colab">
         <div class="container">
           <span class="section-label">Guía práctica</span>
           <h2 class="section-title">Guía práctica de Google Colab</h2>
@@ -527,7 +437,9 @@ drive.mount('/content/drive')</code></pre>
           </p>
         </div>
       </section>
-<section class="class7-section" data-section="3">
+
+
+      <section class="class7-section" data-section="3">
         <div class="container">
           <span class="section-label">Nivel 1</span>
           <h2 class="section-title">¿Qué es un notebook?</h2>
@@ -553,7 +465,8 @@ drive.mount('/content/drive')</code></pre>
           </div>
         </div>
       </section>
-<section class="class7-section" data-section="4">
+
+      <section class="class7-section" data-section="4">
         <div class="container">
           <span class="section-label">Nivel 2</span>
           <h2 class="section-title">Python básico para datos</h2>
@@ -602,7 +515,8 @@ drive.mount('/content/drive')</code></pre>
           </div>
         </div>
       </section>
-<section class="class7-section" data-section="5">
+
+      <section class="class7-section" data-section="5">
         <div class="container">
           <span class="section-label">Nivel 3</span>
           <h2 class="section-title">Pandas y DataFrame</h2>
@@ -636,7 +550,8 @@ drive.mount('/content/drive')</code></pre>
           </div>
         </div>
       </section>
-<section class="class7-section" data-section="6">
+
+      <section class="class7-section" data-section="6">
         <div class="container">
           <span class="section-label">Nivel 4</span>
           <h2 class="section-title">¿Qué es un CSV?</h2>
@@ -815,7 +730,8 @@ chocolate,deslactosada,mediano,58</textarea>
           </article>
         </div>
       </section>
-<section class="class7-section" data-section="7">
+
+      <section class="class7-section" data-section="7">
         <div class="container">
           <span class="section-label">Nivel 5</span>
           <h2 class="section-title">Notebook Sandbox</h2>
@@ -921,7 +837,8 @@ uploaded = files.upload()</code></pre>
           </div>
         </div>
       </section>
-<section class="class7-section" data-section="8">
+
+      <section class="class7-section" data-section="8">
         <div class="container">
           <span class="section-label">Nivel 6</span>
           <h2 class="section-title">Comandos esenciales de exploración</h2>
@@ -962,7 +879,8 @@ uploaded = files.upload()</code></pre>
           </div>
         </div>
       </section>
-<section class="class7-section" data-section="9">
+
+      <section class="class7-section" data-section="9">
         <div class="container">
           <span class="section-label">Nivel 7</span>
           <h2 class="section-title">Diagnóstico del dataset</h2>
@@ -1099,7 +1017,8 @@ uploaded = files.upload()</code></pre>
 </div>
         </div>
       </section>
-<section class="class7-section" data-section="10">
+
+      <section class="class7-section" data-section="10">
         <div class="container">
           <span class="section-label">Reto integrador</span>
           <h2 class="section-title">Decisiones reales de análisis</h2>
@@ -1200,7 +1119,8 @@ uploaded = files.upload()</code></pre>
           </div>
         </div>
       </section>
-<section class="class7-section" data-section="11">
+
+      <section class="class7-section" data-section="11">
         <div class="container">
           <span class="section-label">Evidencia final</span>
           <h2 class="section-title">Reporte de diagnóstico</h2>
@@ -1244,7 +1164,9 @@ uploaded = files.upload()</code></pre>
           </div>
         </div>
       </section>
-<section class="class7-section class7-credit-section">
+
+
+      <section class="class7-section class7-credit-section">
         <div class="container">
           <span class="section-label">Créditos y fuentes</span>
           <h2 class="section-title">Material de apoyo utilizado</h2>
@@ -1271,21 +1193,19 @@ uploaded = files.upload()</code></pre>
           </div>
         </div>
       </section>
-  </main>
 
-  <div class="nav-controls class7-section-nav class7-arrow-nav" id="class7-section-nav" aria-label="Navegación de secciones">
-    <button class="class7-arrow-btn" type="button" id="c7-section-prev" aria-label="Sección anterior">
-      ←
-    </button>
-
-    <button class="class7-arrow-btn" type="button" id="c7-section-next" aria-label="Siguiente sección">
-      →
-    </button>
+      <div class="nav-controls">
+        <a class="btn btn-secondary" href="clase6.html">← Clase anterior</a>
+        <a class="btn btn-primary" href="index.html">Volver al inicio</a>
+      </div>
+    </main>
   </div>
 
 
   <div class="class7-image-lightbox" id="class7-image-lightbox" hidden>
-    <button class="class7-lightbox-close" type="button" id="class7-lightbox-close" aria-label="Cerrar imagen ampliada">×</button>
+    <button class="class7-lightbox-close" type="button" id="class7-lightbox-close" aria-label="Cerrar imagen ampliada">
+      ×
+    </button>
 
     <figure class="class7-lightbox-figure">
       <img id="class7-lightbox-img" src="" alt="">
@@ -1296,9 +1216,5 @@ uploaded = files.upload()</code></pre>
 
   <script src="main.js"></script>
   <script src="clase7.js"></script>
-  <script src="clase7-runtime-fix.js"></script>
-  <script src="clase7-mission-board.js"></script>
-
-  <script src="clase7-nav-fix.js"></script>
 </body>
 </html>
