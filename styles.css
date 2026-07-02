@@ -16886,3 +16886,231 @@ body[data-page="clase8"] .sidebar-toggle {
     width: 100% !important;
   }
 }
+
+/* ========================================================= */
+/* CLASE 8 · ESTILOS PARA ESTRUCTURA COURSE SIDEBAR */
+/* Fix cuando el sidebar usa aside.course-sidebar + nav.lesson-nav */
+/* ========================================================= */
+
+body[data-page="clase8"] {
+  --c8-sidebar-width: 270px;
+  --c8-bg: #020617;
+  --c8-panel: rgba(15, 23, 42, 0.78);
+  --c8-border: rgba(255, 255, 255, 0.10);
+  --c8-text: #f8fafc;
+  --c8-muted: #94a3b8;
+  --c8-cyan: #22d3ee;
+  --c8-green: #22c55e;
+
+  margin: 0;
+  min-height: 100vh;
+  color: var(--c8-text);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(34, 211, 238, 0.14), transparent 34%),
+    radial-gradient(circle at 92% 12%, rgba(34, 197, 94, 0.09), transparent 36%),
+    var(--c8-bg);
+  overflow-x: hidden;
+}
+
+/* Sidebar global de clases */
+body[data-page="clase8"] .course-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--c8-sidebar-width);
+  height: 100vh;
+  padding: 24px 18px;
+  border-right: 1px solid var(--c8-border);
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.96));
+  backdrop-filter: blur(18px);
+  z-index: 80;
+  overflow-y: auto;
+}
+
+/* Por si el sidebar tiene encabezado o marca */
+body[data-page="clase8"] .course-sidebar h1,
+body[data-page="clase8"] .course-sidebar h2,
+body[data-page="clase8"] .course-sidebar h3,
+body[data-page="clase8"] .course-sidebar strong {
+  color: var(--c8-text);
+}
+
+body[data-page="clase8"] .course-sidebar p,
+body[data-page="clase8"] .course-sidebar span {
+  color: var(--c8-muted);
+}
+
+/* Navegación de clases */
+body[data-page="clase8"] .lesson-nav {
+  display: grid;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+body[data-page="clase8"] .lesson-tab {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 11px 13px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  color: var(--c8-muted);
+  background: rgba(255, 255, 255, 0.035);
+  text-decoration: none;
+  font-weight: 800;
+  line-height: 1.25;
+  transition:
+    background 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease;
+}
+
+body[data-page="clase8"] .lesson-tab:hover {
+  transform: translateY(-1px);
+  border-color: rgba(34, 211, 238, 0.20);
+  color: var(--c8-text);
+  background: rgba(6, 182, 212, 0.08);
+}
+
+body[data-page="clase8"] .lesson-tab.active,
+body[data-page="clase8"] .lesson-tab[aria-current="page"] {
+  border-color: rgba(34, 211, 238, 0.36);
+  color: #cffafe;
+  background:
+    radial-gradient(circle at top right, rgba(34, 211, 238, 0.18), transparent 46%),
+    rgba(6, 182, 212, 0.12);
+  box-shadow: 0 12px 34px rgba(6, 182, 212, 0.10);
+}
+
+/* Main de Clase 8: compatible con varias estructuras */
+body[data-page="clase8"] main,
+body[data-page="clase8"] .c8edu-main,
+body[data-page="clase8"] .course-main,
+body[data-page="clase8"] .lesson-main {
+  margin-left: var(--c8-sidebar-width);
+  width: calc(100% - var(--c8-sidebar-width));
+  min-height: 100vh;
+}
+
+/* Contenedores */
+body[data-page="clase8"] .container {
+  width: min(calc(100% - 48px), 1120px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Botones superiores del hero */
+body[data-page="clase8"] .btn,
+body[data-page="clase8"] a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+body[data-page="clase8"] .btn-primary {
+  border: 1px solid rgba(34, 211, 238, 0.34);
+  color: #031522;
+  background: linear-gradient(135deg, #22d3ee, #67e8f9);
+}
+
+body[data-page="clase8"] .btn-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Secciones base */
+body[data-page="clase8"] .c8edu-section,
+body[data-page="clase8"] .c8edu-hero {
+  padding-top: 46px;
+  padding-bottom: 46px;
+}
+
+body[data-page="clase8"] .c8edu-heading {
+  margin-bottom: 22px;
+}
+
+body[data-page="clase8"] .c8edu-heading h2,
+body[data-page="clase8"] .c8edu-hero h1 {
+  color: var(--c8-text);
+}
+
+body[data-page="clase8"] .c8edu-heading p,
+body[data-page="clase8"] .c8edu-hero p {
+  color: var(--c8-muted);
+}
+
+/* Menú móvil si existe botón */
+body[data-page="clase8"] .mobile-menu-toggle,
+body[data-page="clase8"] .menu-toggle,
+body[data-page="clase8"] .sidebar-toggle,
+body[data-page="clase8"] .course-menu-toggle {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  body[data-page="clase8"] .course-sidebar {
+    position: fixed;
+    width: min(84vw, 310px);
+    transform: translateX(-105%);
+    transition: transform 0.22s ease;
+    z-index: 100;
+  }
+
+  body[data-page="clase8"].menu-open .course-sidebar,
+  body[data-page="clase8"].sidebar-open .course-sidebar,
+  body[data-page="clase8"].nav-open .course-sidebar,
+  body[data-page="clase8"].is-menu-open .course-sidebar {
+    transform: translateX(0);
+  }
+
+  body[data-page="clase8"] main,
+  body[data-page="clase8"] .c8edu-main,
+  body[data-page="clase8"] .course-main,
+  body[data-page="clase8"] .lesson-main {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  body[data-page="clase8"] .container {
+    width: min(calc(100% - 24px), 1120px);
+  }
+
+  body[data-page="clase8"] .mobile-menu-toggle,
+  body[data-page="clase8"] .menu-toggle,
+  body[data-page="clase8"] .sidebar-toggle,
+  body[data-page="clase8"] .course-menu-toggle {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 130;
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 14px;
+    color: #f8fafc;
+    background: rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(14px);
+    font-size: 1.2rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 640px) {
+  body[data-page="clase8"] .c8edu-section,
+  body[data-page="clase8"] .c8edu-hero {
+    padding-top: 34px;
+    padding-bottom: 34px;
+  }
+}
