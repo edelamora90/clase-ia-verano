@@ -117,18 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-}
-
-  if (home && home.dataset.ready !== "true") {
-    home.dataset.ready = "true";
-    home.addEventListener("click", (event) => {
-      event.preventDefault();
-      window.location.href = "index.html";
-    });
-  }
-});
-
-
 /* Clase 7 · navegación inferior por secciones */
 document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.getElementById("c7-section-prev");

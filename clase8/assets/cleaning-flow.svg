@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520">
+  <rect width="1200" height="520" fill="#020617"/>
+  <text x="70" y="70" fill="#f8fafc" font-family="Inter,Arial" font-size="40" font-weight="900">Flujo de limpieza en pandas</text>
+  <g font-family="Inter,Arial">
+    <g transform="translate(80 145)">
+      <rect width="190" height="160" rx="28" fill="#111827" stroke="#334155"/>
+      <text x="95" y="62" text-anchor="middle" fill="#38bdf8" font-size="24" font-weight="900">1</text>
+      <text x="95" y="100" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="900">Diagnosticar</text>
+      <text x="95" y="132" text-anchor="middle" fill="#94a3b8" font-size="16">info / nulos</text>
+    </g>
+    <g transform="translate(305 145)">
+      <rect width="190" height="160" rx="28" fill="#111827" stroke="#334155"/>
+      <text x="95" y="62" text-anchor="middle" fill="#38bdf8" font-size="24" font-weight="900">2</text>
+      <text x="95" y="100" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="900">Columnas</text>
+      <text x="95" y="132" text-anchor="middle" fill="#94a3b8" font-size="16">snake_case</text>
+    </g>
+    <g transform="translate(530 145)">
+      <rect width="190" height="160" rx="28" fill="#111827" stroke="#334155"/>
+      <text x="95" y="62" text-anchor="middle" fill="#38bdf8" font-size="24" font-weight="900">3</text>
+      <text x="95" y="100" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="900">Texto</text>
+      <text x="95" y="132" text-anchor="middle" fill="#94a3b8" font-size="16">minúsculas</text>
+    </g>
+    <g transform="translate(755 145)">
+      <rect width="190" height="160" rx="28" fill="#111827" stroke="#334155"/>
+      <text x="95" y="62" text-anchor="middle" fill="#38bdf8" font-size="24" font-weight="900">4</text>
+      <text x="95" y="100" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="900">Números</text>
+      <text x="95" y="132" text-anchor="middle" fill="#94a3b8" font-size="16">$65 → 65</text>
+    </g>
+    <g transform="translate(980 145)">
+      <rect width="160" height="160" rx="28" fill="#052e2b" stroke="#22d3ee"/>
+      <text x="80" y="62" text-anchor="middle" fill="#22c55e" font-size="24" font-weight="900">5</text>
+      <text x="80" y="100" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="900">Exportar</text>
+      <text x="80" y="132" text-anchor="middle" fill="#67e8f9" font-size="16">CSV limpio</text>
+    </g>
+  </g>
+  <g stroke="#38bdf8" stroke-width="8" stroke-linecap="round">
+    <path d="M278 225 H298"/>
+    <path d="M503 225 H523"/>
+    <path d="M728 225 H748"/>
+    <path d="M953 225 H973"/>
+  </g>
+</svg>

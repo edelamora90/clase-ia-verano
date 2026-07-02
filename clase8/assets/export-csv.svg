@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600">
+  <rect width="1100" height="600" fill="#020617"/>
+  <text x="70" y="75" fill="#f8fafc" font-family="Inter,Arial" font-size="38" font-weight="900">Exportar dataset limpio</text>
+  <rect x="130" y="140" width="350" height="360" rx="34" fill="#111827" stroke="#334155"/>
+  <path d="M225 235 h160 v170 H225z" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+  <path d="M255 285 h100M255 325h100M255 365h70" stroke="#94a3b8" stroke-width="12" stroke-linecap="round"/>
+  <text x="240" y="455" fill="#67e8f9" font-family="Inter,Arial" font-size="32" font-weight="900">CSV limpio</text>
+  <path d="M540 320 H675" stroke="#22d3ee" stroke-width="16" stroke-linecap="round"/>
+  <path d="M675 320 l-36 -34 M675 320 l-36 34" stroke="#22d3ee" stroke-width="16" stroke-linecap="round"/>
+  <rect x="725" y="185" width="270" height="270" rx="42" fill="#052e2b" stroke="#22c55e"/>
+  <path d="M860 250 v115" stroke="#bbf7d0" stroke-width="18" stroke-linecap="round"/>
+  <path d="M810 318 l50 50 l50 -50" stroke="#bbf7d0" stroke-width="18" stroke-linecap="round" fill="none"/>
+  <text x="775" y="505" fill="#bbf7d0" font-family="Inter,Arial" font-size="30" font-weight="900">Descargar</text>
+</svg>

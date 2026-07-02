@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
+  <rect width="900" height="520" rx="32" fill="#020617"/>
+  <rect x="70" y="70" width="760" height="380" rx="28" fill="#0f172a" stroke="#334155"/>
+  <rect x="110" y="115" width="680" height="54" rx="27" fill="#111827" stroke="#38bdf8"/>
+  <text x="140" y="151" fill="#94a3b8" font-family="Inter,Arial" font-size="24" font-weight="700">Buscar dataset real: retail sales, student performance...</text>
+  <g transform="translate(110 210)" font-family="Inter,Arial">
+    <rect width="190" height="150" rx="22" fill="#111827" stroke="#334155"/>
+    <text x="28" y="58" fill="#f8fafc" font-size="24" font-weight="900">+1,000</text>
+    <text x="28" y="96" fill="#94a3b8" font-size="18" font-weight="700">filas</text>
+  </g>
+  <g transform="translate(355 210)" font-family="Inter,Arial">
+    <rect width="190" height="150" rx="22" fill="#111827" stroke="#334155"/>
+    <text x="28" y="58" fill="#f8fafc" font-size="24" font-weight="900">CSV</text>
+    <text x="28" y="96" fill="#94a3b8" font-size="18" font-weight="700">preferente</text>
+  </g>
+  <g transform="translate(600 210)" font-family="Inter,Arial">
+    <rect width="190" height="150" rx="22" fill="#052e2b" stroke="#22d3ee"/>
+    <text x="28" y="58" fill="#f8fafc" font-size="24" font-weight="900">IA</text>
+    <text x="28" y="96" fill="#67e8f9" font-size="18" font-weight="700">variable objetivo</text>
+  </g>
+</svg>

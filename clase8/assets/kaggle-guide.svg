@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#020617"/>
+  <rect x="70" y="70" width="1060" height="500" rx="34" fill="#111827" stroke="#334155"/>
+  <text x="110" y="130" fill="#f8fafc" font-family="Inter,Arial" font-size="38" font-weight="900">Cómo elegir un dataset en Kaggle</text>
+  <rect x="110" y="175" width="960" height="58" rx="29" fill="#020617" stroke="#38bdf8"/>
+  <text x="145" y="213" fill="#94a3b8" font-family="Inter,Arial" font-size="22" font-weight="700">Buscar: retail sales, student performance, coffee shop sales...</text>
+  <g font-family="Inter,Arial">
+    <g transform="translate(110 285)">
+      <rect width="205" height="160" rx="24" fill="#0f172a" stroke="#334155"/>
+      <text x="30" y="62" fill="#22c55e" font-size="28" font-weight="900">CSV</text>
+      <text x="30" y="105" fill="#94a3b8" font-size="18">Formato fácil</text>
+    </g>
+    <g transform="translate(355 285)">
+      <rect width="205" height="160" rx="24" fill="#0f172a" stroke="#334155"/>
+      <text x="30" y="62" fill="#22c55e" font-size="28" font-weight="900">+1000</text>
+      <text x="30" y="105" fill="#94a3b8" font-size="18">Filas reales</text>
+    </g>
+    <g transform="translate(600 285)">
+      <rect width="205" height="160" rx="24" fill="#0f172a" stroke="#334155"/>
+      <text x="30" y="62" fill="#22c55e" font-size="28" font-weight="900">5+</text>
+      <text x="30" y="105" fill="#94a3b8" font-size="18">Columnas</text>
+    </g>
+    <g transform="translate(845 285)">
+      <rect width="225" height="160" rx="24" fill="#052e2b" stroke="#22d3ee"/>
+      <text x="30" y="62" fill="#67e8f9" font-size="28" font-weight="900">Objetivo</text>
+      <text x="30" y="105" fill="#94fdf2" font-size="18">Algo que predecir</text>
+    </g>
+  </g>
+</svg>

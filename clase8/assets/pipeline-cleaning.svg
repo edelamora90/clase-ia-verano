@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420">
+  <rect width="1200" height="420" rx="34" fill="#07111f"/>
+  <circle cx="80" cy="70" r="140" fill="#06b6d4" opacity=".11"/>
+  <circle cx="1120" cy="350" r="170" fill="#22c55e" opacity=".10"/>
+  <g font-family="Inter,Arial" font-weight="800">
+    <g transform="translate(80 120)">
+      <rect width="180" height="130" rx="26" fill="#111827" stroke="#334155"/>
+      <text x="90" y="58" text-anchor="middle" fill="#f8fafc" font-size="20">1. Cargar</text>
+      <text x="90" y="92" text-anchor="middle" fill="#94a3b8" font-size="16">CSV</text>
+    </g>
+    <g transform="translate(310 120)">
+      <rect width="180" height="130" rx="26" fill="#111827" stroke="#334155"/>
+      <text x="90" y="58" text-anchor="middle" fill="#f8fafc" font-size="20">2. Diagnosticar</text>
+      <text x="90" y="92" text-anchor="middle" fill="#94a3b8" font-size="16">nulos / duplicados</text>
+    </g>
+    <g transform="translate(540 120)">
+      <rect width="180" height="130" rx="26" fill="#111827" stroke="#334155"/>
+      <text x="90" y="58" text-anchor="middle" fill="#f8fafc" font-size="20">3. Limpiar</text>
+      <text x="90" y="92" text-anchor="middle" fill="#94a3b8" font-size="16">texto / números</text>
+    </g>
+    <g transform="translate(770 120)">
+      <rect width="180" height="130" rx="26" fill="#111827" stroke="#334155"/>
+      <text x="90" y="58" text-anchor="middle" fill="#f8fafc" font-size="20">4. Validar</text>
+      <text x="90" y="92" text-anchor="middle" fill="#94a3b8" font-size="16">calidad final</text>
+    </g>
+    <g transform="translate(1000 120)">
+      <rect width="140" height="130" rx="26" fill="#052e2b" stroke="#22d3ee"/>
+      <text x="70" y="58" text-anchor="middle" fill="#f8fafc" font-size="20">5. Exportar</text>
+      <text x="70" y="92" text-anchor="middle" fill="#67e8f9" font-size="16">CSV limpio</text>
+    </g>
+  </g>
+  <g stroke="#38bdf8" stroke-width="8" stroke-linecap="round" opacity=".9">
+    <path d="M270 185 H300"/>
+    <path d="M500 185 H530"/>
+    <path d="M730 185 H760"/>
+    <path d="M960 185 H990"/>
+  </g>
+</svg>

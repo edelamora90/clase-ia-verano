@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680">
+  <rect width="1200" height="680" fill="#020617"/>
+  <text x="70" y="70" fill="#f8fafc" font-family="Inter,Arial" font-size="40" font-weight="900">Dataset sucio: problemas visibles</text>
+  <rect x="70" y="120" width="1060" height="460" rx="28" fill="#111827" stroke="#334155"/>
+  <g font-family="Inter,Arial" font-size="22">
+    <rect x="100" y="160" width="1000" height="52" rx="14" fill="#1e293b"/>
+    <text x="125" y="195" fill="#e5e7eb" font-weight="900">Producto</text>
+    <text x="335" y="195" fill="#e5e7eb" font-weight="900">Precio</text>
+    <text x="520" y="195" fill="#e5e7eb" font-weight="900">Cliente</text>
+    <text x="710" y="195" fill="#e5e7eb" font-weight="900">Recomendación</text>
+    <text x="960" y="195" fill="#e5e7eb" font-weight="900">Error</text>
+
+    <text x="125" y="260" fill="#f8fafc">Frappe</text>
+    <text x="335" y="260" fill="#f97316">$65</text>
+    <text x="520" y="260" fill="#f8fafc">Estudiante</text>
+    <text x="710" y="260" fill="#f8fafc">Frappe</text>
+    <text x="960" y="260" fill="#f97316">símbolo</text>
+
+    <text x="125" y="320" fill="#f8fafc">frappé</text>
+    <text x="335" y="320" fill="#f97316">65 pesos</text>
+    <text x="520" y="320" fill="#f8fafc">estudiante</text>
+    <text x="710" y="320" fill="#f8fafc">Frappe</text>
+    <text x="960" y="320" fill="#f97316">texto</text>
+
+    <text x="125" y="380" fill="#ef4444">FRAPE</text>
+    <text x="335" y="380" fill="#ef4444">vacío</text>
+    <text x="520" y="380" fill="#f8fafc">Alumno</text>
+    <text x="710" y="380" fill="#f8fafc">Frappe</text>
+    <text x="960" y="380" fill="#ef4444">faltante</text>
+
+    <text x="125" y="440" fill="#f8fafc">Sandwich</text>
+    <text x="335" y="440" fill="#ef4444">-100</text>
+    <text x="520" y="440" fill="#f8fafc">Alumno</text>
+    <text x="710" y="440" fill="#f8fafc">Sandwich</text>
+    <text x="960" y="440" fill="#ef4444">inválido</text>
+
+    <text x="125" y="500" fill="#f8fafc">Cafe</text>
+    <text x="335" y="500" fill="#ef4444">vacío</text>
+    <text x="520" y="500" fill="#f8fafc">Estudiante</text>
+    <text x="710" y="500" fill="#ef4444">vacío</text>
+    <text x="960" y="500" fill="#ef4444">objetivo faltante</text>
+  </g>
+</svg>

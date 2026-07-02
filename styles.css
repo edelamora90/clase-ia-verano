@@ -13734,3 +13734,3169 @@ body[data-page="clase7"] .class7-arrow-btn.is-disabled {
     grid-template-columns: 1fr;
   }
 }
+
+/* ========================================================= */
+/* CLASE 8 · DATA CLEANING LAB */
+/* ========================================================= */
+
+body[data-page="clase8"] {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(6,182,212,0.16), transparent 32%),
+    radial-gradient(circle at 90% 20%, rgba(34,197,94,0.12), transparent 34%),
+    #020617;
+}
+
+body[data-page="clase8"] .lesson-link.active {
+  border-color: rgba(34,211,238,0.45);
+  background: rgba(6,182,212,0.12);
+  color: var(--text-primary);
+}
+
+.class8-main {
+  min-height: 100vh;
+}
+
+.class8-hero,
+.class8-section {
+  padding: 92px 0;
+}
+
+.class8-hero-grid,
+.class8-kaggle-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+  gap: 46px;
+  align-items: center;
+}
+
+.class8-hero-copy h1 {
+  margin: 14px 0 18px;
+  max-width: 760px;
+  color: var(--text-primary);
+  font-size: clamp(3rem, 7vw, 6.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.08em;
+}
+
+.class8-hero-copy p,
+.class8-section-heading p,
+.class8-kaggle-grid p {
+  color: var(--text-secondary);
+  font-size: 1.12rem;
+  line-height: 1.75;
+}
+
+.class8-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.class8-hero-media,
+.class8-wide-figure,
+.class8-kaggle-grid figure {
+  margin: 0;
+}
+
+.class8-hero-media img,
+.class8-wide-figure img,
+.class8-kaggle-grid img {
+  display: block;
+  width: 100%;
+  border-radius: 30px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: var(--shadow-soft);
+}
+
+.class8-xp-card {
+  max-width: 430px;
+  margin-top: 30px;
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  background: rgba(15,23,42,0.72);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(14px);
+}
+
+.class8-xp-label {
+  margin: 0 0 10px;
+  color: var(--cyan);
+  font-size: .78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.class8-xp-card strong {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--text-primary);
+  font-size: 2rem;
+}
+
+.class8-progress-track {
+  width: 100%;
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.class8-progress-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #3b82f6, #22d3ee, #22c55e);
+  box-shadow: 0 0 24px rgba(34,211,238,0.36);
+  transition: width .35s ease;
+}
+
+#c8-progress-text {
+  margin: 12px 0 0;
+  color: var(--text-secondary);
+}
+
+.class8-section-heading {
+  max-width: 850px;
+  margin-bottom: 34px;
+}
+
+.class8-section-heading h2,
+.class8-kaggle-grid h2 {
+  margin: 10px 0 14px;
+  color: var(--text-primary);
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.class8-objective-grid,
+.class8-question-grid,
+.class8-code-grid,
+.class8-video-grid,
+.class8-step-list {
+  display: grid;
+  gap: 22px;
+}
+
+.class8-objective-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 28px;
+}
+
+.class8-objective-grid article,
+.class8-question-grid article,
+.class8-warning-card,
+.class8-step-card,
+.class8-video-card,
+.class8-resource-panel {
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(15,23,42,0.68);
+}
+
+.class8-objective-grid strong,
+.class8-question-grid strong,
+.class8-warning-card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.class8-objective-grid p,
+.class8-question-grid p,
+.class8-warning-card p,
+.class8-video-card p,
+.class8-step-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.class8-video-grid,
+.class8-code-grid,
+.class8-step-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.class8-video-frame {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  background: #020617;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.class8-video-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.class8-video-card h3,
+.class8-code-panel h3,
+.class8-step-card h3,
+.class8-resource-panel h3 {
+  margin: 18px 0 10px;
+  color: var(--text-primary);
+}
+
+.class8-step-card {
+  position: relative;
+}
+
+.class8-step-number {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: rgba(6,182,212,0.14);
+  color: var(--cyan);
+  font-weight: 900;
+}
+
+.class8-code-panel,
+.class8-accordion details {
+  position: relative;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(2,6,23,0.76);
+  box-shadow: var(--shadow-soft);
+}
+
+.class8-code-panel pre,
+.class8-step-card pre,
+.class8-accordion pre {
+  overflow-x: auto;
+  margin: 16px 0 0;
+  padding: 18px;
+  border-radius: 18px;
+  background: #020617;
+  border: 1px solid rgba(148,163,184,0.18);
+  color: #dbeafe;
+  line-height: 1.6;
+}
+
+.class8-code-panel code,
+.class8-step-card code,
+.class8-accordion code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: .93rem;
+}
+
+.class8-copy-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 9px 13px;
+  border: 1px solid rgba(34,211,238,0.28);
+  border-radius: 999px;
+  background: rgba(6,182,212,0.10);
+  color: #cffafe;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.class8-copy-btn.copied {
+  border-color: rgba(34,197,94,0.45);
+  background: rgba(34,197,94,0.16);
+  color: #bbf7d0;
+}
+
+.class8-accordion {
+  display: grid;
+  gap: 18px;
+}
+
+.class8-accordion summary {
+  color: var(--text-primary);
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 1.08rem;
+}
+
+.class8-kaggle-section {
+  background:
+    radial-gradient(circle at 15% 25%, rgba(56,189,248,0.10), transparent 36%),
+    radial-gradient(circle at 85% 70%, rgba(34,197,94,0.10), transparent 36%);
+}
+
+.class8-checklist {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.class8-checklist label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(255,255,255,0.09);
+}
+
+.class8-checklist input {
+  width: 18px;
+  height: 18px;
+  accent-color: #22c55e;
+}
+
+.class8-resource-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.class8-resource-links a {
+  display: inline-flex;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(34,211,238,0.26);
+  background: rgba(6,182,212,0.10);
+  color: #cffafe;
+  text-decoration: none;
+  font-weight: 900;
+}
+
+.class8-mission-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.class8-mission-card {
+  position: relative;
+  min-height: 168px;
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(15,23,42,0.72);
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.class8-mission-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(34,211,238,0.38);
+}
+
+.class8-mission-card input {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+  accent-color: #22c55e;
+}
+
+.class8-mission-card span {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 2rem;
+}
+
+.class8-mission-card strong {
+  display: block;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.class8-mission-card small {
+  display: block;
+  margin-top: 10px;
+  color: var(--success);
+  font-weight: 900;
+}
+
+.class8-mission-card.completed {
+  border-color: rgba(34,197,94,0.52);
+  background:
+    radial-gradient(circle at top right, rgba(34,197,94,0.18), transparent 44%),
+    rgba(34,197,94,0.08);
+}
+
+.class8-unlock {
+  margin-top: 26px;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(34,197,94,0.45);
+  background: rgba(34,197,94,0.10);
+}
+
+.class8-unlock strong {
+  display: block;
+  color: var(--success);
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+.class8-unlock p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.class8-arrow-nav {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100000;
+  display: flex;
+  gap: 10px;
+}
+
+.class8-arrow-nav button {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(10,14,26,0.80);
+  color: #f8fafc;
+  cursor: pointer;
+  font-size: 1.35rem;
+  font-weight: 900;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.32);
+  backdrop-filter: blur(12px);
+}
+
+.class8-arrow-nav button:hover:not(:disabled) {
+  background: rgba(6,182,212,0.18);
+  border-color: rgba(6,182,212,0.36);
+}
+
+.class8-arrow-nav button:disabled {
+  opacity: .34;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1180px) {
+  .class8-hero-grid,
+  .class8-kaggle-grid,
+  .class8-video-grid,
+  .class8-code-grid,
+  .class8-step-list {
+    grid-template-columns: 1fr;
+  }
+
+  .class8-objective-grid,
+  .class8-mission-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .class8-hero,
+  .class8-section {
+    padding: 68px 0;
+  }
+
+  .class8-objective-grid,
+  .class8-question-grid,
+  .class8-mission-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .class8-copy-btn {
+    position: static;
+    margin-bottom: 10px;
+  }
+
+  .class8-arrow-nav {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .class8-arrow-nav button {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* Acceso a Clase 8 desde index */
+.class8-index-entry {
+  padding: 40px 0 80px;
+}
+
+.class8-index-card {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 26px;
+  align-items: center;
+  padding: 22px;
+  border-radius: 30px;
+  border: 1px solid rgba(34,211,238,0.24);
+  background:
+    radial-gradient(circle at top left, rgba(6,182,212,0.14), transparent 34%),
+    rgba(15,23,42,0.72);
+  text-decoration: none;
+  box-shadow: var(--shadow-soft);
+}
+
+.class8-index-card img {
+  width: 100%;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.class8-index-card span {
+  color: var(--cyan);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .10em;
+}
+
+.class8-index-card strong {
+  display: block;
+  margin: 8px 0 10px;
+  color: var(--text-primary);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.class8-index-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .class8-index-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================================= */
+/* CLASE 8 · VERSIÓN AUTOGUIADA */
+/* ========================================================= */
+
+body[data-page="clase8"] {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(34,211,238,0.16), transparent 34%),
+    radial-gradient(circle at 88% 12%, rgba(34,197,94,0.12), transparent 36%),
+    #020617;
+}
+
+body[data-page="clase8"] .lesson-link.active {
+  border-color: rgba(34,211,238,0.45);
+  background: rgba(6,182,212,0.12);
+  color: var(--text-primary);
+}
+
+.c8edu-main {
+  min-height: 100vh;
+}
+
+.c8edu-hero,
+.c8edu-section {
+  padding: 94px 0;
+}
+
+.c8edu-hero-grid,
+.c8edu-teach-grid,
+.c8edu-lab-step {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: 44px;
+  align-items: center;
+}
+
+.c8edu-hero h1 {
+  margin: 16px 0 20px;
+  color: var(--text-primary);
+  font-size: clamp(3rem, 7vw, 6.6rem);
+  line-height: 0.9;
+  letter-spacing: -0.08em;
+}
+
+.c8edu-hero p,
+.c8edu-heading p,
+.c8edu-explain p,
+.c8edu-instruction-card p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+
+.c8edu-path {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin: 28px 0;
+}
+
+.c8edu-path div {
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(15,23,42,0.72);
+}
+
+.c8edu-path strong {
+  display: block;
+  color: var(--cyan);
+  font-size: 1.3rem;
+}
+
+.c8edu-path span {
+  display: block;
+  color: var(--text-secondary);
+  font-size: .86rem;
+  line-height: 1.3;
+}
+
+.c8edu-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.c8edu-hero-image,
+.c8edu-wide-image,
+.c8edu-teach-grid figure {
+  margin: 0;
+}
+
+.c8edu-hero-image img,
+.c8edu-wide-image img,
+.c8edu-teach-grid img,
+.c8edu-video-card img {
+  display: block;
+  width: 100%;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: var(--shadow-soft);
+}
+
+.c8edu-xp-card {
+  max-width: 430px;
+  margin-top: 28px;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(15,23,42,0.74);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(14px);
+}
+
+.c8edu-xp-card p {
+  margin: 0 0 8px;
+  color: var(--cyan);
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.c8edu-xp-card strong {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--text-primary);
+  font-size: 2rem;
+}
+
+.c8edu-progress-track {
+  width: 100%;
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.08);
+}
+
+.c8edu-progress-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #3b82f6, #22d3ee, #22c55e);
+  transition: width .35s ease;
+}
+
+.c8edu-xp-card small {
+  display: block;
+  margin-top: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.c8edu-heading {
+  max-width: 900px;
+  margin-bottom: 36px;
+}
+
+.c8edu-heading h2 {
+  margin: 10px 0 14px;
+  color: var(--text-primary);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.c8edu-concept-grid,
+.c8edu-method-grid,
+.c8edu-code-grid,
+.c8edu-video-grid,
+.c8edu-explain-row,
+.c8edu-decision-grid,
+.c8edu-kaggle-rules,
+.c8edu-mission-grid {
+  display: grid;
+  gap: 22px;
+}
+
+.c8edu-concept-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.c8edu-method-grid,
+.c8edu-explain-row,
+.c8edu-decision-grid,
+.c8edu-kaggle-rules {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.c8edu-code-grid,
+.c8edu-video-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.c8edu-concept-grid article,
+.c8edu-method-grid article,
+.c8edu-instruction-card,
+.c8edu-observe-box,
+.c8edu-result-box,
+.c8edu-error-box,
+.c8edu-explain-row article,
+.c8edu-decision-grid article,
+.c8edu-kaggle-rules article,
+.c8edu-video-card,
+.c8edu-compare article {
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(15,23,42,0.70);
+}
+
+.c8edu-concept-grid span {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 2.4rem;
+}
+
+.c8edu-concept-grid h3,
+.c8edu-method-grid h3,
+.c8edu-instruction-card h3,
+.c8edu-observe-box h3,
+.c8edu-code-card h3,
+.c8edu-explain h3,
+.c8edu-video-card h3,
+.c8edu-explain-row h3,
+.c8edu-decision-grid h3,
+.c8edu-kaggle-rules h3 {
+  margin: 0 0 12px;
+  color: var(--text-primary);
+}
+
+.c8edu-concept-grid p,
+.c8edu-method-grid p,
+.c8edu-video-card p,
+.c8edu-video-card li,
+.c8edu-instruction-card li,
+.c8edu-observe-box li,
+.c8edu-kaggle-rules li,
+.c8edu-decision-grid p,
+.c8edu-explain-row p,
+.c8edu-compare p {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.c8edu-wide-image {
+  margin-top: 28px;
+}
+
+.c8edu-instruction-card ol,
+.c8edu-observe-box ul,
+.c8edu-kaggle-rules ul,
+.c8edu-video-card ul {
+  margin: 12px 0 0;
+  padding-left: 22px;
+}
+
+.c8edu-result-box {
+  margin-top: 20px;
+  border-color: rgba(34,197,94,0.38);
+  background: rgba(34,197,94,0.10);
+}
+
+.c8edu-error-box {
+  margin-top: 16px;
+  border-color: rgba(249,115,22,0.38);
+  background: rgba(249,115,22,0.10);
+}
+
+.c8edu-result-box strong,
+.c8edu-error-box strong,
+.c8edu-compare strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.c8edu-lab-step {
+  align-items: start;
+}
+
+.c8edu-code-stack {
+  display: grid;
+  gap: 20px;
+}
+
+.c8edu-code-card {
+  position: relative;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(2,6,23,0.78);
+  box-shadow: var(--shadow-soft);
+}
+
+.c8edu-full-code {
+  margin-top: 24px;
+}
+
+.c8edu-code-card pre {
+  overflow-x: auto;
+  margin: 16px 0 0;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(148,163,184,0.20);
+  background: #020617;
+  color: #dbeafe;
+  line-height: 1.6;
+}
+
+.c8edu-code-card code,
+.c8edu-before-after code,
+.c8edu-method-grid code,
+.c8edu-compare code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.c8edu-copy {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 9px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(34,211,238,0.30);
+  background: rgba(6,182,212,0.12);
+  color: #cffafe;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.c8edu-copy.copied {
+  border-color: rgba(34,197,94,0.45);
+  background: rgba(34,197,94,0.16);
+  color: #bbf7d0;
+}
+
+.c8edu-before-after {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin: 26px 0;
+}
+
+.c8edu-before-after article {
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(15,23,42,0.70);
+}
+
+.c8edu-before-after article:first-child {
+  border-color: rgba(239,68,68,0.35);
+  background: rgba(127,29,29,0.14);
+}
+
+.c8edu-before-after article:last-child {
+  border-color: rgba(34,197,94,0.35);
+  background: rgba(20,83,45,0.14);
+}
+
+.c8edu-before-after h3 {
+  margin: 0 0 12px;
+  color: var(--text-primary);
+}
+
+.c8edu-before-after p {
+  margin: 8px 0;
+  color: var(--text-secondary);
+}
+
+.c8edu-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 22px;
+}
+
+.c8edu-mission-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.c8edu-mission-card {
+  position: relative;
+  min-height: 170px;
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(15,23,42,0.72);
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.c8edu-mission-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(34,211,238,0.38);
+}
+
+.c8edu-mission-card input {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+  accent-color: #22c55e;
+}
+
+.c8edu-mission-card span {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 2rem;
+}
+
+.c8edu-mission-card strong {
+  display: block;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.c8edu-mission-card small {
+  display: block;
+  margin-top: 10px;
+  color: var(--success);
+  font-weight: 900;
+}
+
+.c8edu-mission-card.completed {
+  border-color: rgba(34,197,94,0.52);
+  background:
+    radial-gradient(circle at top right, rgba(34,197,94,0.18), transparent 44%),
+    rgba(34,197,94,0.08);
+}
+
+.c8edu-unlock {
+  margin-top: 26px;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(34,197,94,0.45);
+  background: rgba(34,197,94,0.10);
+}
+
+.c8edu-unlock strong {
+  display: block;
+  color: var(--success);
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+.c8edu-unlock p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.c8edu-arrow-nav {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100000;
+  display: flex;
+  gap: 10px;
+}
+
+.c8edu-arrow-nav button {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(10,14,26,0.80);
+  color: #f8fafc;
+  cursor: pointer;
+  font-size: 1.35rem;
+  font-weight: 900;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.32);
+  backdrop-filter: blur(12px);
+}
+
+.c8edu-arrow-nav button:hover:not(:disabled) {
+  background: rgba(6,182,212,0.18);
+  border-color: rgba(6,182,212,0.36);
+}
+
+.c8edu-arrow-nav button:disabled {
+  opacity: .34;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1180px) {
+  .c8edu-hero-grid,
+  .c8edu-teach-grid,
+  .c8edu-lab-step,
+  .c8edu-code-grid,
+  .c8edu-video-grid,
+  .c8edu-method-grid,
+  .c8edu-explain-row,
+  .c8edu-decision-grid,
+  .c8edu-kaggle-rules {
+    grid-template-columns: 1fr;
+  }
+
+  .c8edu-path,
+  .c8edu-concept-grid,
+  .c8edu-mission-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .c8edu-hero,
+  .c8edu-section {
+    padding: 68px 0;
+  }
+
+  .c8edu-path,
+  .c8edu-concept-grid,
+  .c8edu-before-after,
+  .c8edu-compare,
+  .c8edu-mission-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .c8edu-copy {
+    position: static;
+    margin-bottom: 12px;
+  }
+
+  .c8edu-arrow-nav {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .c8edu-arrow-nav button {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* ========================================================= */
+/* CLASE 8 · UX/UI COMPACT FIX */
+/* Ajuste visual seguro: escala, ritmo, legibilidad y responsive */
+/* ========================================================= */
+
+body[data-page="clase8"] {
+  --c8-page-max: 1060px;
+  --c8-card-radius: 20px;
+  --c8-card-pad: 20px;
+  --c8-section-gap: 58px;
+  --c8-section-gap-mobile: 44px;
+  --c8-border: rgba(255,255,255,0.105);
+  --c8-card-bg: rgba(15,23,42,0.68);
+  --c8-panel-bg: rgba(2,6,23,0.72);
+  overflow-x: hidden;
+}
+
+/* Contenedor más controlado para que la página no se sienta enorme */
+body[data-page="clase8"] .container {
+  max-width: var(--c8-page-max) !important;
+  width: min(100% - 40px, var(--c8-page-max)) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Ritmo vertical más compacto */
+body[data-page="clase8"] .c8edu-hero,
+body[data-page="clase8"] .c8edu-section {
+  padding-top: var(--c8-section-gap) !important;
+  padding-bottom: var(--c8-section-gap) !important;
+  scroll-margin-top: 28px !important;
+}
+
+/* Hero más contenido */
+body[data-page="clase8"] .c8edu-hero {
+  padding-top: 64px !important;
+  padding-bottom: 54px !important;
+}
+
+body[data-page="clase8"] .c8edu-hero-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.82fr) !important;
+  gap: 34px !important;
+  align-items: center !important;
+}
+
+body[data-page="clase8"] .c8edu-hero h1 {
+  font-size: clamp(2.8rem, 5.8vw, 4.85rem) !important;
+  line-height: 0.92 !important;
+  letter-spacing: -0.065em !important;
+  margin: 10px 0 16px !important;
+  max-width: 660px !important;
+}
+
+body[data-page="clase8"] .c8edu-hero p {
+  max-width: 620px !important;
+  font-size: 1rem !important;
+  line-height: 1.65 !important;
+}
+
+/* Imágenes más discretas y sin romper proporción */
+body[data-page="clase8"] .c8edu-hero-image img {
+  max-height: 300px !important;
+  object-fit: contain !important;
+  background: rgba(2,6,23,0.45) !important;
+}
+
+body[data-page="clase8"] .c8edu-wide-image img,
+body[data-page="clase8"] .c8edu-teach-grid img,
+body[data-page="clase8"] .c8edu-video-card img {
+  max-height: 380px !important;
+  object-fit: contain !important;
+  background: rgba(2,6,23,0.48) !important;
+}
+
+/* Encabezados menos agresivos */
+body[data-page="clase8"] .c8edu-heading {
+  max-width: 820px !important;
+  margin-bottom: 24px !important;
+}
+
+body[data-page="clase8"] .c8edu-heading h2 {
+  font-size: clamp(2rem, 4.1vw, 3rem) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.045em !important;
+  margin: 8px 0 12px !important;
+}
+
+body[data-page="clase8"] .c8edu-heading p,
+body[data-page="clase8"] .c8edu-explain p,
+body[data-page="clase8"] .c8edu-instruction-card p {
+  font-size: 0.98rem !important;
+  line-height: 1.68 !important;
+}
+
+/* Eyebrow más limpio */
+body[data-page="clase8"] .eyebrow {
+  font-size: 0.72rem !important;
+  letter-spacing: 0.12em !important;
+}
+
+/* Ruta del hero como chips, no tarjetas grandes */
+body[data-page="clase8"] .c8edu-path {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 9px !important;
+  margin: 22px 0 24px !important;
+}
+
+body[data-page="clase8"] .c8edu-path div {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  padding: 9px 12px !important;
+  border-radius: 999px !important;
+}
+
+body[data-page="clase8"] .c8edu-path strong {
+  font-size: 0.95rem !important;
+  line-height: 1 !important;
+}
+
+body[data-page="clase8"] .c8edu-path span {
+  font-size: 0.78rem !important;
+  white-space: nowrap !important;
+}
+
+/* Botones del hero más compactos */
+body[data-page="clase8"] .c8edu-actions {
+  gap: 10px !important;
+}
+
+body[data-page="clase8"] .c8edu-actions .btn {
+  min-height: 42px !important;
+  padding: 11px 18px !important;
+  font-size: 0.92rem !important;
+}
+
+/* Tarjeta XP más pequeña */
+body[data-page="clase8"] .c8edu-xp-card {
+  max-width: 360px !important;
+  margin-top: 22px !important;
+  padding: 18px !important;
+  border-radius: 18px !important;
+}
+
+body[data-page="clase8"] .c8edu-xp-card strong {
+  font-size: 1.6rem !important;
+  margin-bottom: 10px !important;
+}
+
+body[data-page="clase8"] .c8edu-progress-track {
+  height: 9px !important;
+}
+
+body[data-page="clase8"] .c8edu-xp-card small {
+  font-size: 0.78rem !important;
+}
+
+/* Tarjetas generales más compactas */
+body[data-page="clase8"] .c8edu-concept-grid,
+body[data-page="clase8"] .c8edu-method-grid,
+body[data-page="clase8"] .c8edu-code-grid,
+body[data-page="clase8"] .c8edu-video-grid,
+body[data-page="clase8"] .c8edu-explain-row,
+body[data-page="clase8"] .c8edu-decision-grid,
+body[data-page="clase8"] .c8edu-kaggle-rules,
+body[data-page="clase8"] .c8edu-mission-grid,
+body[data-page="clase8"] .c8edu-before-after,
+body[data-page="clase8"] .c8edu-compare {
+  gap: 16px !important;
+}
+
+body[data-page="clase8"] .c8edu-concept-grid article,
+body[data-page="clase8"] .c8edu-method-grid article,
+body[data-page="clase8"] .c8edu-instruction-card,
+body[data-page="clase8"] .c8edu-observe-box,
+body[data-page="clase8"] .c8edu-result-box,
+body[data-page="clase8"] .c8edu-error-box,
+body[data-page="clase8"] .c8edu-explain-row article,
+body[data-page="clase8"] .c8edu-decision-grid article,
+body[data-page="clase8"] .c8edu-kaggle-rules article,
+body[data-page="clase8"] .c8edu-video-card,
+body[data-page="clase8"] .c8edu-compare article,
+body[data-page="clase8"] .c8edu-before-after article {
+  padding: var(--c8-card-pad) !important;
+  border-radius: var(--c8-card-radius) !important;
+  background: var(--c8-card-bg) !important;
+  border-color: var(--c8-border) !important;
+}
+
+/* Íconos más moderados */
+body[data-page="clase8"] .c8edu-concept-grid span,
+body[data-page="clase8"] .c8edu-mission-card span {
+  font-size: 1.65rem !important;
+  margin-bottom: 12px !important;
+}
+
+body[data-page="clase8"] .c8edu-concept-grid h3,
+body[data-page="clase8"] .c8edu-method-grid h3,
+body[data-page="clase8"] .c8edu-instruction-card h3,
+body[data-page="clase8"] .c8edu-observe-box h3,
+body[data-page="clase8"] .c8edu-code-card h3,
+body[data-page="clase8"] .c8edu-explain h3,
+body[data-page="clase8"] .c8edu-video-card h3,
+body[data-page="clase8"] .c8edu-explain-row h3,
+body[data-page="clase8"] .c8edu-decision-grid h3,
+body[data-page="clase8"] .c8edu-kaggle-rules h3 {
+  font-size: 1rem !important;
+  margin-bottom: 9px !important;
+}
+
+body[data-page="clase8"] .c8edu-concept-grid p,
+body[data-page="clase8"] .c8edu-method-grid p,
+body[data-page="clase8"] .c8edu-video-card p,
+body[data-page="clase8"] .c8edu-video-card li,
+body[data-page="clase8"] .c8edu-instruction-card li,
+body[data-page="clase8"] .c8edu-observe-box li,
+body[data-page="clase8"] .c8edu-kaggle-rules li,
+body[data-page="clase8"] .c8edu-decision-grid p,
+body[data-page="clase8"] .c8edu-explain-row p,
+body[data-page="clase8"] .c8edu-compare p {
+  font-size: 0.9rem !important;
+  line-height: 1.58 !important;
+}
+
+/* Layout de pasos: más equilibrio entre explicación y código */
+body[data-page="clase8"] .c8edu-teach-grid,
+body[data-page="clase8"] .c8edu-lab-step {
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr) !important;
+  gap: 26px !important;
+  align-items: start !important;
+}
+
+/* Bloques de código más compactos y legibles */
+body[data-page="clase8"] .c8edu-code-card {
+  padding: 18px !important;
+  border-radius: 18px !important;
+  background: var(--c8-panel-bg) !important;
+}
+
+body[data-page="clase8"] .c8edu-code-card pre {
+  max-height: 420px !important;
+  overflow: auto !important;
+  margin-top: 12px !important;
+  padding: 14px !important;
+  border-radius: 14px !important;
+  line-height: 1.48 !important;
+}
+
+body[data-page="clase8"] .c8edu-code-card code {
+  font-size: 0.82rem !important;
+  tab-size: 2 !important;
+}
+
+/* Botón copiar menos invasivo */
+body[data-page="clase8"] .c8edu-copy {
+  top: 14px !important;
+  right: 14px !important;
+  padding: 7px 11px !important;
+  font-size: 0.76rem !important;
+  border-radius: 999px !important;
+}
+
+/* Comparativas antes/después más compactas */
+body[data-page="clase8"] .c8edu-before-after {
+  margin: 18px 0 !important;
+}
+
+body[data-page="clase8"] .c8edu-before-after p {
+  margin: 6px 0 !important;
+  font-size: 0.9rem !important;
+}
+
+/* Cajas de resultado/error con menos altura */
+body[data-page="clase8"] .c8edu-result-box,
+body[data-page="clase8"] .c8edu-error-box,
+body[data-page="clase8"] .c8edu-observe-box {
+  margin-top: 16px !important;
+}
+
+body[data-page="clase8"] .c8edu-result-box p,
+body[data-page="clase8"] .c8edu-error-box p {
+  margin: 0 !important;
+  font-size: 0.9rem !important;
+}
+
+/* Videos menos grandes */
+body[data-page="clase8"] .c8edu-video-card img {
+  max-height: 220px !important;
+}
+
+/* Reto Kaggle más controlado */
+body[data-page="clase8"] #c8-section-15 .c8edu-wide-image img {
+  max-height: 330px !important;
+}
+
+body[data-page="clase8"] .c8edu-kaggle-rules {
+  margin-top: 18px !important;
+}
+
+/* Tablero de misiones: menos grande y más ordenado */
+body[data-page="clase8"] .c8edu-mission-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+}
+
+body[data-page="clase8"] .c8edu-mission-card {
+  min-height: 128px !important;
+  padding: 16px !important;
+  border-radius: 18px !important;
+}
+
+body[data-page="clase8"] .c8edu-mission-card input {
+  top: 12px !important;
+  right: 12px !important;
+  width: 17px !important;
+  height: 17px !important;
+}
+
+body[data-page="clase8"] .c8edu-mission-card strong {
+  font-size: 0.9rem !important;
+  line-height: 1.25 !important;
+}
+
+body[data-page="clase8"] .c8edu-mission-card small {
+  margin-top: 8px !important;
+  font-size: 0.82rem !important;
+}
+
+/* Flechas inferiores discretas */
+body[data-page="clase8"] .c8edu-arrow-nav {
+  right: 18px !important;
+  bottom: 18px !important;
+  gap: 8px !important;
+}
+
+body[data-page="clase8"] .c8edu-arrow-nav button {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 1.1rem !important;
+}
+
+/* Evita que imágenes, pre y tarjetas rompan el ancho */
+body[data-page="clase8"] img,
+body[data-page="clase8"] pre,
+body[data-page="clase8"] code,
+body[data-page="clase8"] .c8edu-code-card,
+body[data-page="clase8"] .c8edu-wide-image,
+body[data-page="clase8"] .c8edu-hero-image {
+  max-width: 100% !important;
+}
+
+/* Responsive tablet */
+@media (max-width: 980px) {
+  body[data-page="clase8"] .container {
+    width: min(100% - 32px, var(--c8-page-max)) !important;
+  }
+
+  body[data-page="clase8"] .c8edu-hero-grid,
+  body[data-page="clase8"] .c8edu-teach-grid,
+  body[data-page="clase8"] .c8edu-lab-step,
+  body[data-page="clase8"] .c8edu-code-grid,
+  body[data-page="clase8"] .c8edu-video-grid,
+  body[data-page="clase8"] .c8edu-method-grid,
+  body[data-page="clase8"] .c8edu-explain-row,
+  body[data-page="clase8"] .c8edu-decision-grid,
+  body[data-page="clase8"] .c8edu-kaggle-rules {
+    grid-template-columns: 1fr !important;
+  }
+
+  body[data-page="clase8"] .c8edu-concept-grid,
+  body[data-page="clase8"] .c8edu-mission-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  body[data-page="clase8"] .c8edu-hero-image img,
+  body[data-page="clase8"] .c8edu-wide-image img {
+    max-height: 320px !important;
+  }
+}
+
+/* Responsive móvil */
+@media (max-width: 640px) {
+  body[data-page="clase8"] .container {
+    width: min(100% - 24px, var(--c8-page-max)) !important;
+  }
+
+  body[data-page="clase8"] .c8edu-hero,
+  body[data-page="clase8"] .c8edu-section {
+    padding-top: var(--c8-section-gap-mobile) !important;
+    padding-bottom: var(--c8-section-gap-mobile) !important;
+  }
+
+  body[data-page="clase8"] .c8edu-hero h1 {
+    font-size: clamp(2.4rem, 13vw, 3.4rem) !important;
+  }
+
+  body[data-page="clase8"] .c8edu-heading h2 {
+    font-size: clamp(1.85rem, 10vw, 2.4rem) !important;
+  }
+
+  body[data-page="clase8"] .c8edu-path,
+  body[data-page="clase8"] .c8edu-concept-grid,
+  body[data-page="clase8"] .c8edu-before-after,
+  body[data-page="clase8"] .c8edu-compare,
+  body[data-page="clase8"] .c8edu-mission-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body[data-page="clase8"] .c8edu-path {
+    display: grid !important;
+  }
+
+  body[data-page="clase8"] .c8edu-path div {
+    justify-content: flex-start !important;
+  }
+
+  body[data-page="clase8"] .c8edu-code-card pre {
+    max-height: 360px !important;
+  }
+
+  body[data-page="clase8"] .c8edu-arrow-nav {
+    right: 12px !important;
+    bottom: 12px !important;
+  }
+
+  body[data-page="clase8"] .c8edu-arrow-nav button {
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
+
+/* ========================================================= */
+/* CLASE 8 · FIX DEFINITIVO DE OVERFLOW HORIZONTAL */
+/* Evita que Paso 2 y bloques de código se salgan a la derecha */
+/* ========================================================= */
+
+body[data-page="clase8"],
+body[data-page="clase8"] .c8edu-main,
+body[data-page="clase8"] .c8edu-section,
+body[data-page="clase8"] .c8edu-hero {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+/* Regla clave para CSS Grid: permite que las columnas se encojan */
+body[data-page="clase8"] .c8edu-hero-grid,
+body[data-page="clase8"] .c8edu-teach-grid,
+body[data-page="clase8"] .c8edu-lab-step,
+body[data-page="clase8"] .c8edu-code-grid,
+body[data-page="clase8"] .c8edu-video-grid,
+body[data-page="clase8"] .c8edu-method-grid,
+body[data-page="clase8"] .c8edu-explain-row,
+body[data-page="clase8"] .c8edu-decision-grid,
+body[data-page="clase8"] .c8edu-kaggle-rules,
+body[data-page="clase8"] .c8edu-before-after,
+body[data-page="clase8"] .c8edu-compare {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Todos los hijos de grids pueden encogerse */
+body[data-page="clase8"] .c8edu-hero-grid > *,
+body[data-page="clase8"] .c8edu-teach-grid > *,
+body[data-page="clase8"] .c8edu-lab-step > *,
+body[data-page="clase8"] .c8edu-code-grid > *,
+body[data-page="clase8"] .c8edu-video-grid > *,
+body[data-page="clase8"] .c8edu-method-grid > *,
+body[data-page="clase8"] .c8edu-explain-row > *,
+body[data-page="clase8"] .c8edu-decision-grid > *,
+body[data-page="clase8"] .c8edu-kaggle-rules > *,
+body[data-page="clase8"] .c8edu-before-after > *,
+body[data-page="clase8"] .c8edu-compare > * {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Paso 2: layout más seguro y balanceado */
+body[data-page="clase8"] .c8edu-lab-step {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr) !important;
+  align-items: start !important;
+  overflow: hidden !important;
+}
+
+/* La columna de código no debe empujar el grid */
+body[data-page="clase8"] .c8edu-code-stack,
+body[data-page="clase8"] .c8edu-code-card,
+body[data-page="clase8"] .c8edu-full-code {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* El scroll horizontal debe quedarse dentro del bloque, no en la página */
+body[data-page="clase8"] .c8edu-code-card pre {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Código: no rompe la página aunque tenga líneas largas */
+body[data-page="clase8"] .c8edu-code-card code {
+  display: block !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Para celdas de texto largas tipo Markdown, permitir corte visual */
+body[data-page="clase8"] #c8-title {
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+/* En pantallas medianas, Paso 2 se vuelve una columna */
+@media (max-width: 1180px) {
+  body[data-page="clase8"] .c8edu-lab-step {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* En móvil, todo queda contenido */
+@media (max-width: 760px) {
+  body[data-page="clase8"] .c8edu-code-card pre {
+    max-height: 320px !important;
+  }
+
+  body[data-page="clase8"] .c8edu-code-card code {
+    font-size: 0.78rem !important;
+  }
+}
+
+/* ========================================================= */
+/* CLASE 8 · FIX DEFINITIVO DE OVERFLOW HORIZONTAL */
+/* Evita que Paso 2 y bloques de código se salgan a la derecha */
+/* ========================================================= */
+
+body[data-page="clase8"],
+body[data-page="clase8"] .c8edu-main,
+body[data-page="clase8"] .c8edu-section,
+body[data-page="clase8"] .c8edu-hero {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+/* Regla clave para CSS Grid: permite que las columnas se encojan */
+body[data-page="clase8"] .c8edu-hero-grid,
+body[data-page="clase8"] .c8edu-teach-grid,
+body[data-page="clase8"] .c8edu-lab-step,
+body[data-page="clase8"] .c8edu-code-grid,
+body[data-page="clase8"] .c8edu-video-grid,
+body[data-page="clase8"] .c8edu-method-grid,
+body[data-page="clase8"] .c8edu-explain-row,
+body[data-page="clase8"] .c8edu-decision-grid,
+body[data-page="clase8"] .c8edu-kaggle-rules,
+body[data-page="clase8"] .c8edu-before-after,
+body[data-page="clase8"] .c8edu-compare {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Todos los hijos de grids pueden encogerse */
+body[data-page="clase8"] .c8edu-hero-grid > *,
+body[data-page="clase8"] .c8edu-teach-grid > *,
+body[data-page="clase8"] .c8edu-lab-step > *,
+body[data-page="clase8"] .c8edu-code-grid > *,
+body[data-page="clase8"] .c8edu-video-grid > *,
+body[data-page="clase8"] .c8edu-method-grid > *,
+body[data-page="clase8"] .c8edu-explain-row > *,
+body[data-page="clase8"] .c8edu-decision-grid > *,
+body[data-page="clase8"] .c8edu-kaggle-rules > *,
+body[data-page="clase8"] .c8edu-before-after > *,
+body[data-page="clase8"] .c8edu-compare > * {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Paso 2: layout más seguro y balanceado */
+body[data-page="clase8"] .c8edu-lab-step {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr) !important;
+  align-items: start !important;
+  overflow: hidden !important;
+}
+
+/* La columna de código no debe empujar el grid */
+body[data-page="clase8"] .c8edu-code-stack,
+body[data-page="clase8"] .c8edu-code-card,
+body[data-page="clase8"] .c8edu-full-code {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* El scroll horizontal debe quedarse dentro del bloque, no en la página */
+body[data-page="clase8"] .c8edu-code-card pre {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Código: no rompe la página aunque tenga líneas largas */
+body[data-page="clase8"] .c8edu-code-card code {
+  display: block !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Para celdas de texto largas tipo Markdown, permitir corte visual */
+body[data-page="clase8"] #c8-title {
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+
+/* En pantallas medianas, Paso 2 se vuelve una columna */
+@media (max-width: 1180px) {
+  body[data-page="clase8"] .c8edu-lab-step {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* En móvil, todo queda contenido */
+@media (max-width: 760px) {
+  body[data-page="clase8"] .c8edu-code-card pre {
+    max-height: 320px !important;
+  }
+
+  body[data-page="clase8"] .c8edu-code-card code {
+    font-size: 0.78rem !important;
+  }
+}
+
+/* ========================================================= */
+/* CLASE 8 · LAYOUT POLISH FINAL */
+/* Sidebar consistente + contenido alineado + hero con mismo ancho */
+/* ========================================================= */
+
+body[data-page="clase8"] {
+  --c8-sidebar-width: 268px;
+  --c8-content-max: 1080px;
+  --c8-content-gutter: 28px;
+}
+
+/* Sidebar */
+body[data-page="clase8"] .course-sidebar {
+  width: var(--c8-sidebar-width) !important;
+  min-width: var(--c8-sidebar-width) !important;
+  max-width: var(--c8-sidebar-width) !important;
+  padding: 84px 18px 28px !important;
+  border-right: 1px solid rgba(255,255,255,0.08) !important;
+  background:
+    linear-gradient(180deg, rgba(2,6,23,0.96), rgba(2,6,23,0.92)) !important;
+  box-sizing: border-box !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+body[data-page="clase8"] .sidebar-brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 18px !important;
+  padding: 0 6px !important;
+}
+
+body[data-page="clase8"] .brand-mark {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(6,182,212,0.14) !important;
+  border: 1px solid rgba(34,211,238,0.22) !important;
+  color: #67e8f9 !important;
+  font-weight: 900 !important;
+  font-size: 0.92rem !important;
+}
+
+body[data-page="clase8"] .sidebar-brand strong {
+  display: block !important;
+  color: var(--text-primary) !important;
+  font-size: 1rem !important;
+  line-height: 1.1 !important;
+}
+
+body[data-page="clase8"] .sidebar-brand small {
+  display: block !important;
+  color: var(--text-secondary) !important;
+  font-size: 0.78rem !important;
+  margin-top: 3px !important;
+}
+
+body[data-page="clase8"] .lesson-nav {
+  display: grid !important;
+  gap: 8px !important;
+}
+
+body[data-page="clase8"] .lesson-link {
+  padding: 12px 14px !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  background: rgba(255,255,255,0.03) !important;
+  text-decoration: none !important;
+  transition: all 0.18s ease !important;
+}
+
+body[data-page="clase8"] .lesson-link:hover {
+  border-color: rgba(34,211,238,0.22) !important;
+  background: rgba(6,182,212,0.08) !important;
+  transform: translateY(-1px) !important;
+}
+
+body[data-page="clase8"] .lesson-link span {
+  display: block !important;
+  color: var(--text-primary) !important;
+  font-size: 0.92rem !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+
+body[data-page="clase8"] .lesson-link small {
+  display: block !important;
+  margin-top: 4px !important;
+  color: var(--text-secondary) !important;
+  font-size: 0.76rem !important;
+  line-height: 1.35 !important;
+}
+
+/* Contenido principal: alineación estable */
+body[data-page="clase8"] .c8edu-main {
+  margin-left: var(--c8-sidebar-width) !important;
+  width: calc(100% - var(--c8-sidebar-width)) !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+
+body[data-page="clase8"].sidebar-collapsed .c8edu-main {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+/* Container uniforme para TODAS las secciones */
+body[data-page="clase8"] .c8edu-main .container {
+  width: min(calc(100% - (var(--c8-content-gutter) * 2)), var(--c8-content-max)) !important;
+  max-width: var(--c8-content-max) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Primera sección con el MISMO ancho que las demás */
+body[data-page="clase8"] .c8edu-hero .container,
+body[data-page="clase8"] .c8edu-section .container {
+  max-width: var(--c8-content-max) !important;
+}
+
+/* Hero menos ancho visualmente y más equilibrado */
+body[data-page="clase8"] .c8edu-hero-grid {
+  grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr) !important;
+  gap: 30px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  align-items: center !important;
+}
+
+body[data-page="clase8"] .c8edu-hero-image {
+  justify-self: stretch !important;
+  align-self: center !important;
+}
+
+body[data-page="clase8"] .c8edu-hero-image img {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* Evita que algunas secciones se vean corridas */
+body[data-page="clase8"] .c8edu-heading,
+body[data-page="clase8"] .c8edu-concept-grid,
+body[data-page="clase8"] .c8edu-wide-image,
+body[data-page="clase8"] .c8edu-video-grid,
+body[data-page="clase8"] .c8edu-teach-grid,
+body[data-page="clase8"] .c8edu-lab-step,
+body[data-page="clase8"] .c8edu-method-grid,
+body[data-page="clase8"] .c8edu-code-grid,
+body[data-page="clase8"] .c8edu-before-after,
+body[data-page="clase8"] .c8edu-compare,
+body[data-page="clase8"] .c8edu-explain-row,
+body[data-page="clase8"] .c8edu-decision-grid,
+body[data-page="clase8"] .c8edu-kaggle-rules,
+body[data-page="clase8"] .c8edu-mission-grid,
+body[data-page="clase8"] .c8edu-unlock {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Botón hamburguesa mejor colocado */
+body[data-page="clase8"] .sidebar-toggle {
+  top: 16px !important;
+  left: 16px !important;
+  z-index: 100002 !important;
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+  body[data-page="clase8"] .course-sidebar {
+    transform: translateX(-110%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  body[data-page="clase8"] .course-sidebar.is-hidden {
+    transform: translateX(-110%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  body[data-page="clase8"]:not(.sidebar-collapsed) .course-sidebar {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  body[data-page="clase8"] .c8edu-main,
+  body[data-page="clase8"].sidebar-collapsed .c8edu-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  body[data-page="clase8"] .c8edu-hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Móvil */
+@media (max-width: 640px) {
+  body[data-page="clase8"] {
+    --c8-content-gutter: 12px;
+  }
+
+  body[data-page="clase8"] .course-sidebar {
+    width: min(88vw, 300px) !important;
+    min-width: min(88vw, 300px) !important;
+    max-width: min(88vw, 300px) !important;
+  }
+}
+
+/* ========================================================= */
+/* CLASE 8 · AJUSTE PASO 1 */
+/* imagen izquierda más grande + texto derecho más legible */
+/* ========================================================= */
+
+/* Sección: Abrir Google Colab y crear el notebook */
+body[data-page="clase8"] .c8edu-teach-grid {
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr) !important;
+  gap: 24px !important;
+  align-items: stretch !important;
+}
+
+/* La figura izquierda gana presencia */
+body[data-page="clase8"] .c8edu-teach-grid figure {
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+
+body[data-page="clase8"] .c8edu-teach-grid figure img {
+  width: 100% !important;
+  max-width: 100% !important;
+  max-height: 460px !important;
+  object-fit: contain !important;
+  border-radius: 24px !important;
+}
+
+/* Panel derecho más cómodo de leer */
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-instruction-card {
+  padding: 28px !important;
+  border-radius: 24px !important;
+}
+
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-instruction-card h3 {
+  font-size: 1.15rem !important;
+  margin-bottom: 14px !important;
+}
+
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-instruction-card ol,
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-instruction-card ul {
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
+}
+
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-instruction-card li {
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
+}
+
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-result-box,
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-error-box {
+  margin-top: 18px !important;
+  padding: 20px !important;
+}
+
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-result-box strong,
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-error-box strong {
+  font-size: 1.05rem !important;
+}
+
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-result-box p,
+body[data-page="clase8"] .c8edu-teach-grid .c8edu-error-box p {
+  font-size: 0.98rem !important;
+  line-height: 1.68 !important;
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+  body[data-page="clase8"] .c8edu-teach-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body[data-page="clase8"] .c8edu-teach-grid figure img {
+    max-height: 420px !important;
+  }
+}
+
+/* Móvil */
+@media (max-width: 640px) {
+  body[data-page="clase8"] .c8edu-teach-grid .c8edu-instruction-card {
+    padding: 22px !important;
+  }
+
+  body[data-page="clase8"] .c8edu-teach-grid .c8edu-instruction-card ol,
+  body[data-page="clase8"] .c8edu-teach-grid .c8edu-instruction-card ul,
+  body[data-page="clase8"] .c8edu-teach-grid .c8edu-instruction-card li {
+    font-size: 0.95rem !important;
+  }
+
+  body[data-page="clase8"] .c8edu-teach-grid figure img {
+    max-height: 320px !important;
+  }
+}
+
+
+/* ========================================================= */
+/* CLASE 8 · EXPLICACIÓN DETALLADA PASOS 6 Y 7 */
+/* ========================================================= */
+
+body[data-page="clase8"] .c8edu-lab-step-explained {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
+  align-items: start !important;
+}
+
+body[data-page="clase8"] .c8edu-line-guide {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+body[data-page="clase8"] .c8edu-line-guide article {
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(15,23,42,0.64);
+}
+
+body[data-page="clase8"] .c8edu-line-guide h3 {
+  margin: 0 0 8px;
+  color: var(--text-primary);
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+body[data-page="clase8"] .c8edu-line-guide p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  body[data-page="clase8"] .c8edu-lab-step-explained,
+  body[data-page="clase8"] .c8edu-line-guide {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ========================================================= */
+/* CLASE 8 · RESALTADO DE CÓDIGO TIPO COLAB */
+/* ========================================================= */
+
+body[data-page="clase8"] .c8edu-code-card pre {
+  background: #1e1e1e !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03) !important;
+}
+
+body[data-page="clase8"] .c8edu-code-card code.is-python {
+  color: #e8eaed !important;
+  font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace !important;
+  font-size: 0.84rem !important;
+  line-height: 1.58 !important;
+}
+
+body[data-page="clase8"] .c8edu-code-card .tok-keyword {
+  color: #c792ea !important; /* morado */
+  font-weight: 700 !important;
+}
+
+body[data-page="clase8"] .c8edu-code-card .tok-string {
+  color: #c3e88d !important; /* verde claro */
+}
+
+body[data-page="clase8"] .c8edu-code-card .tok-number {
+  color: #f78c6c !important; /* naranja */
+}
+
+body[data-page="clase8"] .c8edu-code-card .tok-comment {
+  color: #7f848e !important; /* gris comentario */
+  font-style: italic !important;
+}
+
+body[data-page="clase8"] .c8edu-code-card .tok-method {
+  color: #82aaff !important; /* azul métodos */
+}
+
+body[data-page="clase8"] .c8edu-code-card .tok-builtin {
+  color: #4fc1ff !important; /* cyan */
+  font-weight: 700 !important;
+}
+
+body[data-page="clase8"] .c8edu-code-card .tok-func {
+  color: #ffcb6b !important; /* amarillo */
+}
+
+/* Markdown / texto copiable */
+body[data-page="clase8"] #c8-title,
+body[data-page="clase8"] #c8-evidence {
+  color: #e8eaed !important;
+}
+
+/* Mejor contraste del botón copiar sobre fondo oscuro */
+body[data-page="clase8"] .c8edu-copy {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(255,255,255,0.14) !important;
+  color: #dbeafe !important;
+}
+
+body[data-page="clase8"] .c8edu-copy:hover {
+  background: rgba(79,193,255,0.12) !important;
+  border-color: rgba(79,193,255,0.24) !important;
+}
+
+
+/* ========================================================= */
+/* CLASE 8 · PASO 9 EXPLICADO */
+/* ========================================================= */
+
+body[data-page="clase8"] .c8edu-decision-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+body[data-page="clase8"] .c8edu-decision-grid-3 article {
+  min-height: 100% !important;
+}
+
+@media (max-width: 980px) {
+  body[data-page="clase8"] .c8edu-decision-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* ========================================================= */
+/* CLASE 8 · PASO 9 REDESIGN */
+/* ========================================================= */
+
+body[data-page="clase8"] .c8edu-heading-narrow {
+  max-width: 860px !important;
+}
+
+body[data-page="clase8"] .c8edu-step-intro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 22px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(15,23,42,0.55);
+}
+
+body[data-page="clase8"] .c8edu-step-intro strong {
+  color: var(--text-primary);
+  margin-right: 4px;
+}
+
+body[data-page="clase8"] .c8edu-step-intro span {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(6,182,212,0.10);
+  border: 1px solid rgba(34,211,238,0.16);
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+}
+
+body[data-page="clase8"] .c8edu-code-hero {
+  margin-top: 0 !important;
+}
+
+body[data-page="clase8"] .c8edu-flow-explain {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+body[data-page="clase8"] .c8edu-flow-item {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(15,23,42,0.54);
+}
+
+body[data-page="clase8"] .c8edu-flow-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(6,182,212,0.12);
+  color: var(--cyan);
+  font-weight: 900;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-page="clase8"] .c8edu-flow-body h3 {
+  margin: 0 0 8px;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+body[data-page="clase8"] .c8edu-flow-body p {
+  margin: 0 0 10px;
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+body[data-page="clase8"] .c8edu-flow-body p:last-child {
+  margin-bottom: 0;
+}
+
+body[data-page="clase8"] .c8edu-decision-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.08);
+}
+
+body[data-page="clase8"] .c8edu-decision-strip > div {
+  padding: 18px;
+  background: rgba(15,23,42,0.82);
+}
+
+body[data-page="clase8"] .c8edu-decision-strip strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+body[data-page="clase8"] .c8edu-decision-strip p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+body[data-page="clase8"] .c8edu-dual-note {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+body[data-page="clase8"] .c8edu-dual-note article {
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(15,23,42,0.50);
+}
+
+body[data-page="clase8"] .c8edu-dual-note strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+body[data-page="clase8"] .c8edu-dual-note p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  body[data-page="clase8"] .c8edu-flow-item {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-page="clase8"] .c8edu-decision-strip,
+  body[data-page="clase8"] .c8edu-dual-note {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+/* ========================================================= */
+/* CLASE 8 · PASO 6 EMBEBIDO AISLADO */
+/* ========================================================= */
+
+body[data-page="clase8"] .c8edu-section-paso6-embed {
+  padding-top: 48px !important;
+  padding-bottom: 48px !important;
+}
+
+body[data-page="clase8"] .c8edu-section-paso6-embed .container {
+  max-width: 1180px !important;
+}
+
+body[data-page="clase8"] .c8-paso6-frame {
+  display: block;
+  width: 100%;
+  height: 1520px;
+  border: 0;
+  border-radius: 28px;
+  background: #020617;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+@media (max-width: 900px) {
+  body[data-page="clase8"] .c8-paso6-frame {
+    height: 1780px;
+  }
+}
+
+@media (max-width: 680px) {
+  body[data-page="clase8"] .c8-paso6-frame {
+    height: 2050px;
+    border-radius: 20px;
+  }
+}
+
+/* ========================================================= */
+/* CLASE 8 · PASO 7 RESTAURADO REDISEÑADO */
+/* ========================================================= */
+
+body[data-page="clase8"] .c8edu-step7-redesign {
+  --step7-panel: rgba(15, 23, 42, 0.62);
+  --step7-border: rgba(255, 255, 255, 0.10);
+}
+
+body[data-page="clase8"] .c8-step7-compare {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  margin: 28px 0 22px;
+}
+
+body[data-page="clase8"] .c8-step7-compare article {
+  padding: 20px;
+  border-radius: 22px;
+  border: 1px solid var(--step7-border);
+  background: var(--step7-panel);
+}
+
+body[data-page="clase8"] .c8-step7-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cyan);
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+body[data-page="clase8"] .c8-step7-label {
+  display: inline-flex;
+  margin-bottom: 14px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+body[data-page="clase8"] .c8-step7-label.danger {
+  color: #fed7aa;
+}
+
+body[data-page="clase8"] .c8-step7-label.success {
+  color: #bbf7d0;
+}
+
+body[data-page="clase8"] .c8-step7-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+body[data-page="clase8"] .c8-step7-values code {
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 211, 238, 0.18);
+  background: rgba(6, 182, 212, 0.08);
+  color: #e2e8f0;
+}
+
+body[data-page="clase8"] .c8-step7-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  gap: 16px;
+  margin: 0 0 28px;
+}
+
+body[data-page="clase8"] .c8-step7-summary article,
+body[data-page="clase8"] .c8-step7-summary aside {
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid var(--step7-border);
+  background: var(--step7-panel);
+}
+
+body[data-page="clase8"] .c8-step7-summary aside {
+  border-color: rgba(34, 197, 94, 0.28);
+  background:
+    radial-gradient(circle at top right, rgba(34, 197, 94, 0.13), transparent 42%),
+    rgba(15, 23, 42, 0.62);
+}
+
+body[data-page="clase8"] .c8-step7-summary h3,
+body[data-page="clase8"] .c8-step7-summary strong {
+  display: block;
+  margin: 0 0 10px;
+  color: var(--text-primary);
+  font-size: 1.05rem;
+}
+
+body[data-page="clase8"] .c8-step7-summary p {
+  margin: 0 0 12px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+body[data-page="clase8"] .c8-step7-summary p:last-child {
+  margin-bottom: 0;
+}
+
+body[data-page="clase8"] .c8-step7-block {
+  margin-top: 28px;
+  padding: 22px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(2, 6, 23, 0.30);
+}
+
+body[data-page="clase8"] .c8-step7-block-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+body[data-page="clase8"] .c8-step7-block-header h3 {
+  margin: 6px 0 0;
+  color: var(--text-primary);
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+body[data-page="clase8"] .c8-step7-code-card {
+  margin-top: 0 !important;
+}
+
+body[data-page="clase8"] .c8-step7-code-card pre {
+  max-height: 430px !important;
+}
+
+body[data-page="clase8"] .c8-step7-explain-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+body[data-page="clase8"] .c8-step7-explain-list article {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--step7-border);
+  background: rgba(15, 23, 42, 0.52);
+}
+
+body[data-page="clase8"] .c8-step7-explain-list h4 {
+  margin: 0 0 8px;
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+body[data-page="clase8"] .c8-step7-explain-list p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+body[data-page="clase8"] .c8-step7-learning {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+
+body[data-page="clase8"] .c8-step7-learning article {
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid var(--step7-border);
+  background: var(--step7-panel);
+}
+
+body[data-page="clase8"] .c8-step7-learning article.warning {
+  border-color: rgba(249, 115, 22, 0.32);
+  background: rgba(249, 115, 22, 0.08);
+}
+
+body[data-page="clase8"] .c8-step7-learning h3 {
+  margin: 0 0 12px;
+  color: var(--text-primary);
+}
+
+body[data-page="clase8"] .c8-step7-learning ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+body[data-page="clase8"] .c8-step7-learning p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+@media (max-width: 980px) {
+  body[data-page="clase8"] .c8-step7-compare,
+  body[data-page="clase8"] .c8-step7-summary,
+  body[data-page="clase8"] .c8-step7-learning {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-page="clase8"] .c8-step7-arrow {
+    transform: rotate(90deg);
+  }
+
+  body[data-page="clase8"] .c8-step7-explain-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================================= */
+/* CLASE 8 · AJUSTE DE ESPACIADO ENTRE SECCIONES */
+/* Reduce espacios vacíos sin modificar contenido ni lógica */
+/* ========================================================= */
+
+body[data-page="clase8"] {
+  --c8-section-padding-y: 46px;
+  --c8-section-padding-y-tight: 36px;
+  --c8-heading-gap: 20px;
+  --c8-block-gap: 18px;
+}
+
+/* Espaciado base de todas las secciones */
+body[data-page="clase8"] .c8edu-hero,
+body[data-page="clase8"] .c8edu-section {
+  padding-top: var(--c8-section-padding-y) !important;
+  padding-bottom: var(--c8-section-padding-y) !important;
+}
+
+/* Hero un poco más compacto */
+body[data-page="clase8"] .c8edu-hero {
+  padding-top: 54px !important;
+  padding-bottom: 42px !important;
+}
+
+/* Encabezados de sección más cercanos al contenido */
+body[data-page="clase8"] .c8edu-heading {
+  margin-bottom: var(--c8-heading-gap) !important;
+}
+
+body[data-page="clase8"] .c8edu-heading h2 {
+  margin-bottom: 10px !important;
+}
+
+body[data-page="clase8"] .c8edu-heading p {
+  margin-top: 0 !important;
+}
+
+/* Reducir márgenes de bloques visuales comunes */
+body[data-page="clase8"] .c8edu-wide-image,
+body[data-page="clase8"] .c8edu-full-code,
+body[data-page="clase8"] .c8edu-observe-box,
+body[data-page="clase8"] .c8edu-result-box,
+body[data-page="clase8"] .c8edu-error-box,
+body[data-page="clase8"] .c8edu-kaggle-rules,
+body[data-page="clase8"] .c8edu-before-after,
+body[data-page="clase8"] .c8edu-compare {
+  margin-top: var(--c8-block-gap) !important;
+}
+
+/* Grids más compactos */
+body[data-page="clase8"] .c8edu-concept-grid,
+body[data-page="clase8"] .c8edu-method-grid,
+body[data-page="clase8"] .c8edu-code-grid,
+body[data-page="clase8"] .c8edu-video-grid,
+body[data-page="clase8"] .c8edu-explain-row,
+body[data-page="clase8"] .c8edu-decision-grid,
+body[data-page="clase8"] .c8edu-kaggle-rules,
+body[data-page="clase8"] .c8edu-mission-grid,
+body[data-page="clase8"] .c8edu-before-after,
+body[data-page="clase8"] .c8edu-compare {
+  gap: 14px !important;
+}
+
+/* Tarjetas con menos aire interno */
+body[data-page="clase8"] .c8edu-concept-grid article,
+body[data-page="clase8"] .c8edu-method-grid article,
+body[data-page="clase8"] .c8edu-instruction-card,
+body[data-page="clase8"] .c8edu-observe-box,
+body[data-page="clase8"] .c8edu-result-box,
+body[data-page="clase8"] .c8edu-error-box,
+body[data-page="clase8"] .c8edu-explain-row article,
+body[data-page="clase8"] .c8edu-decision-grid article,
+body[data-page="clase8"] .c8edu-kaggle-rules article,
+body[data-page="clase8"] .c8edu-video-card,
+body[data-page="clase8"] .c8edu-compare article,
+body[data-page="clase8"] .c8edu-before-after article {
+  padding: 18px !important;
+}
+
+/* Bloques de código más pegados al flujo */
+body[data-page="clase8"] .c8edu-code-card {
+  padding: 18px !important;
+}
+
+body[data-page="clase8"] .c8edu-code-card pre {
+  margin-top: 10px !important;
+}
+
+/* Paso 6 embebido: menos espacio externo */
+body[data-page="clase8"] .c8edu-section-paso6-embed {
+  padding-top: 32px !important;
+  padding-bottom: 32px !important;
+}
+
+body[data-page="clase8"] .c8-paso6-frame {
+  margin: 0 !important;
+}
+
+/* Paso 7 restaurado: reducir separación entre sus bloques */
+body[data-page="clase8"] .c8edu-step7-redesign {
+  padding-top: 38px !important;
+  padding-bottom: 38px !important;
+}
+
+body[data-page="clase8"] .c8-step7-compare {
+  margin: 20px 0 16px !important;
+}
+
+body[data-page="clase8"] .c8-step7-summary {
+  margin-bottom: 20px !important;
+}
+
+body[data-page="clase8"] .c8-step7-block {
+  margin-top: 20px !important;
+  padding: 18px !important;
+}
+
+body[data-page="clase8"] .c8-step7-explain-list {
+  margin-top: 12px !important;
+  gap: 10px !important;
+}
+
+body[data-page="clase8"] .c8-step7-learning {
+  margin-top: 20px !important;
+}
+
+/* Paso 9 rediseñado: menos altura entre piezas */
+body[data-page="clase8"] .c8edu-step-intro {
+  margin-bottom: 16px !important;
+}
+
+body[data-page="clase8"] .c8edu-flow-explain {
+  margin-top: 16px !important;
+  gap: 12px !important;
+}
+
+body[data-page="clase8"] .c8edu-decision-strip,
+body[data-page="clase8"] .c8edu-dual-note {
+  margin-top: 16px !important;
+}
+
+/* Tablero de misiones más cerca del cierre */
+body[data-page="clase8"] .c8edu-mission-section {
+  padding-top: 38px !important;
+}
+
+body[data-page="clase8"] .c8edu-unlock {
+  margin-top: 18px !important;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  body[data-page="clase8"] {
+    --c8-section-padding-y: 38px;
+    --c8-section-padding-y-tight: 30px;
+    --c8-heading-gap: 16px;
+    --c8-block-gap: 14px;
+  }
+
+  body[data-page="clase8"] .c8edu-hero,
+  body[data-page="clase8"] .c8edu-section {
+    padding-top: var(--c8-section-padding-y) !important;
+    padding-bottom: var(--c8-section-padding-y) !important;
+  }
+
+  body[data-page="clase8"] .c8edu-section-paso6-embed,
+  body[data-page="clase8"] .c8edu-step7-redesign {
+    padding-top: 28px !important;
+    padding-bottom: 28px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  body[data-page="clase8"] {
+    --c8-section-padding-y: 32px;
+    --c8-heading-gap: 14px;
+    --c8-block-gap: 12px;
+  }
+
+  body[data-page="clase8"] .c8edu-concept-grid article,
+  body[data-page="clase8"] .c8edu-method-grid article,
+  body[data-page="clase8"] .c8edu-instruction-card,
+  body[data-page="clase8"] .c8edu-observe-box,
+  body[data-page="clase8"] .c8edu-result-box,
+  body[data-page="clase8"] .c8edu-error-box,
+  body[data-page="clase8"] .c8edu-code-card {
+    padding: 16px !important;
+  }
+}
+
+
+/* ========================================================= */
+/* CLASE 8 · EVIDENCIA FINAL CLASSROOM */
+/* ========================================================= */
+
+body[data-page="clase8"] .c8edu-evidence-final {
+  --evidence-panel: rgba(15, 23, 42, 0.62);
+  --evidence-border: rgba(255, 255, 255, 0.10);
+}
+
+body[data-page="clase8"] .c8-evidence-brief {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+body[data-page="clase8"] .c8-evidence-brief article,
+body[data-page="clase8"] .c8-delivery-panel,
+body[data-page="clase8"] .c8-naming-panel,
+body[data-page="clase8"] .c8-checklist-panel {
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid var(--evidence-border);
+  background: var(--evidence-panel);
+}
+
+body[data-page="clase8"] .c8-evidence-number {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: rgba(6, 182, 212, 0.14);
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  color: var(--cyan);
+  font-weight: 900;
+}
+
+body[data-page="clase8"] .c8-evidence-brief h3,
+body[data-page="clase8"] .c8-delivery-panel h3,
+body[data-page="clase8"] .c8-naming-panel h3,
+body[data-page="clase8"] .c8-checklist-panel h3 {
+  margin: 0 0 10px;
+  color: var(--text-primary);
+}
+
+body[data-page="clase8"] .c8-evidence-brief p,
+body[data-page="clase8"] .c8-delivery-panel p,
+body[data-page="clase8"] .c8-delivery-panel li,
+body[data-page="clase8"] .c8-checklist-grid label {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+body[data-page="clase8"] .c8-delivery-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 18px;
+  margin-top: 18px;
+}
+
+body[data-page="clase8"] .c8-delivery-panel ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+
+body[data-page="clase8"] .c8-delivery-panel aside {
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(34, 197, 94, 0.30);
+  background:
+    radial-gradient(circle at top right, rgba(34, 197, 94, 0.12), transparent 42%),
+    rgba(34, 197, 94, 0.08);
+}
+
+body[data-page="clase8"] .c8-delivery-panel aside strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #bbf7d0;
+}
+
+body[data-page="clase8"] .c8-naming-panel,
+body[data-page="clase8"] .c8-checklist-panel {
+  margin-top: 18px;
+}
+
+body[data-page="clase8"] .c8-file-grid {
+  display: grid;
+  gap: 12px;
+}
+
+body[data-page="clase8"] .c8-file-grid article {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+}
+
+body[data-page="clase8"] .c8-file-grid strong {
+  color: var(--text-primary);
+}
+
+body[data-page="clase8"] .c8-file-grid code {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #cffafe;
+}
+
+body[data-page="clase8"] .c8-checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+}
+
+body[data-page="clase8"] .c8-checklist-grid label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+body[data-page="clase8"] .c8-checklist-grid input {
+  margin-top: 3px;
+  accent-color: #22c55e;
+}
+
+@media (max-width: 980px) {
+  body[data-page="clase8"] .c8-evidence-brief,
+  body[data-page="clase8"] .c8-delivery-panel,
+  body[data-page="clase8"] .c8-checklist-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ========================================================= */
+/* CLASE 8 · VIDEOS ACTUALIZADOS */
+/* ========================================================= */
+
+body[data-page="clase8"] .c8-video-grid-updated {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+
+body[data-page="clase8"] .c8-video-card-updated {
+  overflow: hidden;
+  padding: 0 !important;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(15, 23, 42, 0.62);
+  box-shadow: 0 22px 60px rgba(0,0,0,0.28);
+}
+
+body[data-page="clase8"] .c8-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #020617;
+}
+
+body[data-page="clase8"] .c8-video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+body[data-page="clase8"] .c8-video-content {
+  padding: 18px;
+}
+
+body[data-page="clase8"] .c8-video-content h3 {
+  margin: 6px 0 8px;
+  color: var(--text-primary);
+}
+
+body[data-page="clase8"] .c8-video-content p {
+  margin: 0 0 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+body[data-page="clase8"] .c8-video-content a {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  color: #cffafe;
+  background: rgba(6, 182, 212, 0.08);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+body[data-page="clase8"] .c8-video-content a:hover {
+  background: rgba(6, 182, 212, 0.14);
+}
+
+@media (max-width: 900px) {
+  body[data-page="clase8"] .c8-video-grid-updated {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ========================================================= */
+/* INDEX · TARJETA CLASE 8 */
+/* ========================================================= */
+
+.c8-index-class-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.c8-index-class-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top right, rgba(34, 211, 238, 0.16), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.10), transparent 44%);
+  pointer-events: none;
+}
+
+.c8-index-class-link {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.c8-index-class-kicker {
+  display: inline-flex;
+  margin-bottom: 10px;
+  color: #22d3ee;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.c8-index-class-card h3 {
+  margin-top: 0;
+}
+
+.c8-index-class-card p {
+  margin-bottom: 16px;
+}
+
+.c8-index-class-cta {
+  display: inline-flex;
+  align-items: center;
+  color: #cffafe;
+  font-weight: 900;
+}
+
+
+/* ========================================================= */
+/* CLASE 8 · SIDEBAR BASE CLASE 7 */
+/* ========================================================= */
+
+body[data-page="clase8"] {
+  --c8-sidebar-width: 268px;
+  padding-left: 0 !important;
+  overflow-x: hidden !important;
+}
+
+body[data-page="clase8"] .course-sidebar {
+  position: fixed !important;
+  inset: 0 auto 0 0 !important;
+  width: var(--c8-sidebar-width) !important;
+  min-width: var(--c8-sidebar-width) !important;
+  max-width: var(--c8-sidebar-width) !important;
+  height: 100vh !important;
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  z-index: 900 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-gutter: stable !important;
+}
+
+body[data-page="clase8"].sidebar-collapsed .course-sidebar,
+body[data-page="clase8"] .course-sidebar.is-hidden {
+  transform: translateX(-105%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body[data-page="clase8"] .course-main.c8edu-main {
+  margin-left: var(--c8-sidebar-width) !important;
+  width: calc(100% - var(--c8-sidebar-width)) !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  transform: none !important;
+  transition: margin-left 0.22s ease, width 0.22s ease !important;
+}
+
+body[data-page="clase8"].sidebar-collapsed .course-main.c8edu-main {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+body[data-page="clase8"] .c8edu-hero,
+body[data-page="clase8"] .c8edu-section {
+  scroll-margin-top: 26px;
+}
+
+body[data-page="clase8"] .course-sidebar .lesson-tab {
+  display: block !important;
+  padding: 12px 14px !important;
+  margin-bottom: 8px !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  background: rgba(255,255,255,0.03) !important;
+  color: var(--text-secondary) !important;
+  text-decoration: none !important;
+  line-height: 1.35 !important;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease !important;
+}
+
+body[data-page="clase8"] .course-sidebar .lesson-tab strong {
+  display: block !important;
+  color: var(--text-primary) !important;
+  font-size: 0.92rem !important;
+  line-height: 1.2 !important;
+}
+
+body[data-page="clase8"] .course-sidebar .lesson-tab:hover,
+body[data-page="clase8"] .course-sidebar .lesson-tab.active,
+body[data-page="clase8"] .course-sidebar .lesson-tab.is-current {
+  border-color: rgba(34,211,238,0.34) !important;
+  background: rgba(6,182,212,0.1) !important;
+  color: #cffafe !important;
+}
+
+body[data-page="clase8"] .course-sidebar .lesson-tab.is-current {
+  box-shadow: inset 3px 0 0 rgba(34,211,238,0.72) !important;
+}
+
+body[data-page="clase8"] .course-sidebar .c8-section-link {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-size: 0.82rem !important;
+}
+
+body[data-page="clase8"] .course-sidebar .c8-section-link strong {
+  font-size: 0.84rem !important;
+}
+
+body[data-page="clase8"] .course-sidebar .c8-section-nav-label {
+  margin-top: 18px !important;
+}
+
+body[data-page="clase8"] .sidebar-toggle {
+  top: 16px !important;
+  left: 16px !important;
+  z-index: 1002 !important;
+}
+
+@media (max-width: 1100px) {
+  body[data-page="clase8"] .course-sidebar {
+    width: min(86vw, 310px) !important;
+    min-width: min(86vw, 310px) !important;
+    max-width: min(86vw, 310px) !important;
+    transform: translateX(-105%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  body[data-page="clase8"]:not(.sidebar-collapsed) .course-sidebar {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  body[data-page="clase8"] .course-main.c8edu-main,
+  body[data-page="clase8"].sidebar-collapsed .course-main.c8edu-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}

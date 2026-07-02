@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paso 6 · Sandbox de limpieza de columnas</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <span class="eyebrow">Paso 6 · Data Cleaning Lab</span>
+      <h1>Limpiar nombres de columnas</h1>
+      <p>
+        En este sandbox vas a probar cómo cambian los encabezados de un dataset
+        cuando aplicas transformaciones comunes de limpieza antes de trabajar con pandas.
+      </p>
+    </section>
+
+    <section class="objective-strip" aria-label="Objetivos del sandbox">
+      <strong>Objetivo del sandbox:</strong>
+      <span>quitar espacios</span>
+      <span>usar minúsculas</span>
+      <span>eliminar acentos</span>
+      <span>convertir a snake_case</span>
+    </section>
+
+    <section class="sandbox-layout">
+      <aside class="sandbox-menu" aria-label="Acciones del sandbox">
+        <h2>Acciones</h2>
+
+        <button type="button" class="sandbox-action active" data-action="detect">
+          Detectar columnas
+        </button>
+
+        <button type="button" class="sandbox-action" data-action="trim">
+          Quitar espacios
+        </button>
+
+        <button type="button" class="sandbox-action" data-action="lower">
+          Minúsculas
+        </button>
+
+        <button type="button" class="sandbox-action" data-action="normalize">
+          Quitar acentos
+        </button>
+
+        <button type="button" class="sandbox-action" data-action="snake">
+          Reemplazar espacios por _
+        </button>
+
+        <button type="button" class="sandbox-action" data-action="full">
+          Limpieza completa
+        </button>
+      </aside>
+
+      <section class="sandbox-main">
+        <article class="panel editor-panel">
+          <label for="columns-input">Encabezados de entrada</label>
+          <textarea id="columns-input" spellcheck="false"> Producto ,  Precio MXN , Tipo Cliente , Calificación , Fecha de Registro </textarea>
+          <p>
+            Escribe encabezados separados por comas, como si fueran columnas de un archivo CSV.
+          </p>
+        </article>
+
+        <article class="panel code-panel">
+          <div class="panel-header">
+            <h2>Comando seleccionado</h2>
+            <button type="button" id="copy-code">Copiar</button>
+          </div>
+
+          <pre><code id="code-output">df_limpio.columns</code></pre>
+        </article>
+
+        <section class="comparison-grid" aria-label="Comparación de columnas">
+          <article class="panel">
+            <h2>Columnas originales</h2>
+            <div id="original-output" class="chip-output"></div>
+          </article>
+
+          <article class="panel">
+            <h2>Resultado actual</h2>
+            <div id="result-output" class="chip-output"></div>
+          </article>
+        </section>
+
+        <article class="panel explanation-panel">
+          <h2>¿Qué hace este paso?</h2>
+          <p id="explanation-output">
+            Detecta cuántas columnas hay y cómo están escritas antes de empezar la limpieza.
+          </p>
+        </article>
+
+        <article class="warning-panel">
+          <strong>Error común</strong>
+          <p id="warning-output">
+            Empezar a programar sin revisar cómo vienen escritos los nombres de las columnas.
+          </p>
+        </article>
+
+        <article class="learning-panel">
+          <h2>¿Por qué esto importa?</h2>
+          <p>
+            En pandas debes escribir los nombres de las columnas exactamente como existen.
+            Si una columna tiene espacios, acentos o mayúsculas mezcladas, es más fácil cometer errores.
+          </p>
+
+          <div class="mini-example">
+            <div>
+              <small>Antes</small>
+              <code>Precio MXN</code>
+            </div>
+            <div>
+              <small>Después</small>
+              <code>precio_mxn</code>
+            </div>
+          </div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script src="js/paso6.js"></script>
+</body>
+</html>

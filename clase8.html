@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 8 · Data Cleaning Lab Autoguiado</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body data-page="clase8" data-active-lesson="clase-8">
+  <div id="progress-bar"></div>
+
+  <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Ocultar menú" aria-expanded="true">×</button>
+
+  <aside class="course-sidebar" id="course-sidebar" aria-label="Navegación del curso">
+    <p class="course-kicker">Curso</p>
+    <h2 class="course-title"><a href="index.html">Inteligencia Artificial</a></h2>
+
+    <div class="progress-panel">
+      <p><span>Clases disponibles</span><strong>8 / 30 aprox.</strong></p>
+      <p><span>Semana actual</span><strong>Semana 2</strong></p>
+      <p><span>Estado</span><strong>Data Cleaning Lab</strong></p>
+    </div>
+
+    <a class="lesson-tab" href="index.html" data-lesson="home">
+      <strong>Inicio</strong>
+      Ruta del curso
+    </a>
+
+    <p class="week-label">Semana 1</p>
+
+    <a class="lesson-tab" href="clase1.html" data-lesson="clase-1">
+      <strong>Clase 1</strong>
+      Introducción a la Inteligencia Artificial
+    </a>
+
+    <a class="lesson-tab" href="clase2.html" data-lesson="clase-2">
+      <strong>Clase 2</strong>
+      Agentes inteligentes y toma de decisiones
+    </a>
+
+    <a class="lesson-tab" href="clase3.html" data-lesson="clase-3">
+      <strong>Clase 3</strong>
+      Espacios de estado y técnicas de búsqueda
+    </a>
+
+    <a class="lesson-tab" href="clase4.html" data-lesson="clase-4">
+      <strong>Clase 4</strong>
+      Áreas de aplicación de la IA
+    </a>
+
+    <p class="week-label">Semana 2</p>
+
+    <a class="lesson-tab" href="clase5.html" data-lesson="clase-5">
+      <strong>Clase 5</strong>
+      IA Business Lab
+    </a>
+
+    <a class="lesson-tab" href="clase6.html" data-lesson="clase-6">
+      <strong>Clase 6</strong>
+      IA Data Lab
+    </a>
+
+    <a class="lesson-tab" href="clase7.html" data-lesson="clase-7">
+      <strong>Clase 7</strong>
+      Primer Notebook IA
+    </a>
+
+    <a class="lesson-tab active" href="clase8.html" data-lesson="clase-8">
+      <strong>Clase 8</strong>
+      Data Cleaning Lab
+    </a>
+
+    <p class="week-label c8-section-nav-label">Secciones Clase 8</p>
+
+    <a class="lesson-tab c8-section-link" href="#c8-section-1" data-c8-scroll-link><strong>Inicio</strong>Data Cleaning Lab</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-2" data-c8-scroll-link><strong>Antes de empezar</strong>Limpiar datos</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-3" data-c8-scroll-link><strong>Videos</strong>Guía rápida</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-4" data-c8-scroll-link><strong>Paso 1</strong>Crear notebook</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-5" data-c8-scroll-link><strong>Paso 2</strong>Preparar entorno</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-6" data-c8-scroll-link><strong>Paso 3</strong>Dataset sucio</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-7" data-c8-scroll-link><strong>Paso 4</strong>Diagnosticar</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-8" data-c8-scroll-link><strong>Paso 5</strong>Copia limpia</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-9" data-c8-scroll-link><strong>Paso 6</strong>Limpiar columnas</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-10" data-c8-scroll-link><strong>Paso 7</strong>Normalizar texto</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-11" data-c8-scroll-link><strong>Paso 8</strong>Corregir precios</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-12" data-c8-scroll-link><strong>Paso 9</strong>Fechas y faltantes</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-13" data-c8-scroll-link><strong>Paso 10</strong>Duplicados</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-14" data-c8-scroll-link><strong>Paso 11</strong>Exportar CSV</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-15" data-c8-scroll-link><strong>Reto</strong>Kaggle</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-16" data-c8-scroll-link><strong>Evidencia</strong>Entrega final</a>
+    <a class="lesson-tab c8-section-link" href="#c8-section-17" data-c8-scroll-link><strong>Misiones</strong>XP</a>
+  </aside>
+
+  <main class="course-main c8edu-main">
+    <section class="c8edu-hero" id="c8-section-1" data-section="1">
+      <div class="container c8edu-hero-grid">
+        <article>
+          <span class="eyebrow">Clase 8 · Tutorial autoguiado</span>
+          <h1>Data Cleaning Lab</h1>
+          <p>
+            En esta clase aprenderás a limpiar un dataset en Google Colab paso a paso.
+            La página está diseñada para guiarte sin depender de una explicación adicional
+            del maestro.
+          </p>
+
+          <div class="c8edu-path">
+            <div><strong>1</strong><span>Crear notebook</span></div>
+            <div><strong>2</strong><span>Diagnosticar errores</span></div>
+            <div><strong>3</strong><span>Limpiar datos</span></div>
+            <div><strong>4</strong><span>Exportar CSV</span></div>
+            <div><strong>5</strong><span>Aplicar a Kaggle</span></div>
+          </div>
+
+          <div class="c8edu-actions">
+            <a class="btn btn-primary" href="#c8-section-4">Comenzar tutorial</a>
+            <a class="btn btn-secondary" href="#c8-section-15">Ir al reto Kaggle</a>
+          </div>
+
+          <aside class="c8edu-xp-card">
+            <p>Progreso de misión</p>
+            <strong id="c8-xp-value">0 XP</strong>
+            <div class="c8edu-progress-track">
+              <div class="c8edu-progress-fill" id="c8-progress-fill"></div>
+            </div>
+            <small id="c8-progress-text">Completa las misiones para desbloquear la insignia.</small>
+          </aside>
+        </article>
+
+        <figure class="c8edu-hero-image">
+          <img src="clase8/assets/dirty-dataset.svg" alt="Dataset sucio con errores visibles">
+        </figure>
+      </div>
+    </section>
+
+    <section class="c8edu-section" id="c8-section-2" data-section="2">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Antes de empezar</span>
+          <h2>¿Qué significa limpiar datos?</h2>
+          <p>
+            Limpiar datos significa corregir problemas para que una tabla sea confiable.
+            Una IA no entiende intenciones: aprende de los datos que le entregas. Si los datos
+            están mal escritos, incompletos o duplicados, la IA puede aprender patrones incorrectos.
+          </p>
+        </div>
+
+        <div class="c8edu-concept-grid">
+          <article>
+            <span>🧾</span>
+            <h3>Dataset sucio</h3>
+            <p>Tiene valores vacíos, textos inconsistentes, números mal escritos, duplicados o errores de captura.</p>
+          </article>
+
+          <article>
+            <span>🧹</span>
+            <h3>Limpieza</h3>
+            <p>Proceso donde corriges columnas, texto, números, fechas, faltantes y duplicados.</p>
+          </article>
+
+          <article>
+            <span>🤖</span>
+            <h3>Dataset listo para IA</h3>
+            <p>Tabla clara, consistente y documentada que puede usarse para análisis o entrenamiento.</p>
+          </article>
+        </div>
+
+        <figure class="c8edu-wide-image">
+          <img src="clase8/assets/cleaning-flow.svg" alt="Flujo de limpieza de datos">
+        </figure>
+      </div>
+    </section>
+
+    <section class="c8edu-section c8edu-video-area" id="c8-section-3" data-section="3">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Multimedia</span>
+          <h2>Videos de apoyo listos para integrar</h2>
+          <p>
+            Dejé espacios preparados para videos propios. Cuando me compartas los archivos o links,
+            los conecto directamente. Por ahora cada tarjeta incluye el guion exacto de lo que debe explicar el video.
+          </p>
+        </div>
+
+        
+<div class="c8edu-video-grid c8-video-grid-updated">
+  <article class="c8edu-video-card c8-video-card-updated">
+    <div class="c8-video-frame">
+      <iframe
+        src="https://www.youtube.com/embed/Elllb11M6RY"
+        title="Video 1 · Apoyo para Clase 8"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="c8-video-content">
+      <span class="eyebrow">Video 1</span>
+      <h3>Apoyo visual para la práctica</h3>
+      <p>
+        Revisa este video para reforzar el proceso de limpieza y preparación de datos.
+      </p>
+      <a href="https://www.youtube.com/watch?v=Elllb11M6RY" target="_blank" rel="noopener">
+        Abrir en YouTube
+      </a>
+    </div>
+  </article>
+
+  <article class="c8edu-video-card c8-video-card-updated">
+    <div class="c8-video-frame">
+      <iframe
+        src="https://www.youtube.com/embed/XQXCY_7TgLs"
+        title="Video 2 · Apoyo para Clase 8"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="c8-video-content">
+      <span class="eyebrow">Video 2</span>
+      <h3>Complemento de aprendizaje</h3>
+      <p>
+        Usa este segundo recurso para complementar la explicación de la clase.
+      </p>
+      <a href="https://www.youtube.com/watch?v=XQXCY_7TgLs" target="_blank" rel="noopener">
+        Abrir en YouTube
+      </a>
+    </div>
+  </article>
+</div>
+
+</div>
+</section>
+
+    <section class="c8edu-section" id="c8-section-4" data-section="4">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Paso 1</span>
+          <h2>Abrir Google Colab y crear el notebook</h2>
+          <p>
+            Google Colab es el espacio donde vas a escribir texto, ejecutar Python y revisar
+            resultados. Un notebook mezcla explicación y código en un mismo archivo.
+          </p>
+        </div>
+
+        <div class="c8edu-teach-grid">
+          <figure>
+            <img src="clase8/assets/colab-dashboard.svg" alt="Guía visual de Google Colab">
+          </figure>
+
+          <article class="c8edu-instruction-card">
+            <h3>Instrucciones exactas</h3>
+            <ol>
+              <li>Abre <strong>Google Colab</strong>.</li>
+              <li>Selecciona <strong>Archivo → Nuevo notebook</strong>.</li>
+              <li>Cambia el nombre del archivo.</li>
+              <li>Usa este nombre: <code>clase8_data_cleaning_lab.ipynb</code>.</li>
+            </ol>
+
+            <div class="c8edu-result-box">
+              <strong>Resultado esperado</strong>
+              <p>Debes tener un notebook vacío con una primera celda lista para escribir código.</p>
+            </div>
+
+            <div class="c8edu-error-box">
+              <strong>Error común</strong>
+              <p>Si no puedes editar el nombre, da clic sobre el título del notebook en la parte superior izquierda.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="c8edu-section" id="c8-section-5" data-section="5">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Paso 2</span>
+          <h2>Escribir el título y cargar pandas</h2>
+          <p>
+            Antes del código, agrega una celda de texto para documentar qué estás haciendo.
+            Después importa pandas, que será la herramienta principal para manipular tablas.
+          </p>
+        </div>
+
+        <div class="c8edu-lab-step">
+          <div class="c8edu-explain">
+            <h3>Qué estás haciendo</h3>
+            <p>
+              Vas a preparar el notebook para trabajar con datos. La celda de texto sirve como
+              portada y la celda de código carga las librerías necesarias.
+            </p>
+
+            <h3>Por qué importa</h3>
+            <p>
+              Documentar tu notebook permite que otra persona entienda tu proceso. En análisis
+              de datos no solo importa el resultado: también importa explicar cómo llegaste a él.
+            </p>
+          </div>
+
+          <div class="c8edu-code-stack">
+            <article class="c8edu-code-card">
+              <button class="c8edu-copy" data-copy-target="c8-title">Copiar</button>
+              <h3>Celda de texto</h3>
+              <pre><code id="c8-title"># Clase 8 — Data Cleaning Lab
+
+En este notebook aprenderé a limpiar un dataset usando Python y pandas.
+
+El objetivo es convertir un dataset sucio en un dataset limpio que pueda usarse en un proyecto de Inteligencia Artificial.</code></pre>
+            </article>
+
+            <article class="c8edu-code-card">
+              <button class="c8edu-copy" data-copy-target="c8-imports">Copiar</button>
+              <h3>Celda de código</h3>
+              <pre><code id="c8-imports">import pandas as pd
+from io import StringIO</code></pre>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c8edu-section" id="c8-section-6" data-section="6">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Paso 3</span>
+          <h2>Crear un dataset sucio de práctica</h2>
+          <p>
+            Usaremos un dataset pequeño de cafetería para que todos vean los mismos errores.
+            Este dataset simula datos reales capturados con descuidos comunes.
+          </p>
+        </div>
+
+        <figure class="c8edu-wide-image">
+          <img src="clase8/assets/dirty-dataset.svg" alt="Tabla con errores en productos y precios">
+        </figure>
+
+        <div class="c8edu-observe-box">
+          <h3>Antes de ejecutar el código, observa estos problemas</h3>
+          <ul>
+            <li><strong>Frappe, frappé y FRAPE</strong> parecen el mismo producto, pero están escritos diferente.</li>
+            <li><strong>$55, 55 pesos y $0</strong> son precios, pero están guardados como texto.</li>
+            <li>Hay valores vacíos en calificación y recomendación.</li>
+            <li>Hay una fecha inválida: <strong>fecha incorrecta</strong>.</li>
+            <li>Hay una fila duplicada para practicar cómo detectarla.</li>
+          </ul>
+        </div>
+
+        <article class="c8edu-code-card c8edu-full-code">
+          <button class="c8edu-copy" data-copy-target="c8-dataset">Copiar código</button>
+          <h3>Copia esta celda en Colab</h3>
+          <pre><code id="c8-dataset">import pandas as pd
+from io import StringIO
+
+datos_sucios = """producto,precio_mxn,tipo_cliente,calificacion,fecha,clima,gusto,recomendacion
+ Frappe ,$55,Alumno,5,2026-01-15,Calor,Dulce,Frappé
+frappé,55 pesos,universitario,4,15/01/2026,calor,dulce,frappe
+FRAPE,$0,Estudiante,,fecha incorrecta,Calor,Dulce,
+Cafe,$35,Alumno,3,2026-01-16,Frio,Amargo,Café caliente
+café,35 pesos,Universitario,4,2026-01-16,frío,amargo,cafe caliente
+Té,$30,Estudiante,5,2026-01-17,Lluvia,Ligero,Té caliente
+te,30 pesos,alumno,5,2026-01-17,lluvia,ligero,te caliente
+Galleta,$20,Universitario,4,2026-01-18,Nublado,Dulce,Galleta
+galleta,20 pesos,Alumno,4,2026-01-18,nublado,dulce,galleta
+Frappe,$55,Alumno,5,2026-01-15,Calor,Dulce,Frappé
+"""
+
+df = pd.read_csv(StringIO(datos_sucios))
+
+df.head()</code></pre>
+        </article>
+
+        <div class="c8edu-result-box">
+          <strong>Resultado esperado</strong>
+          <p>Colab debe mostrar las primeras filas de un dataset creado manualmente para practicar limpieza.</p>
+          <p>El dataset contiene errores intencionales de limpieza: categorías escritas de diferentes formas, precios como texto, fechas problemáticas, valores faltantes y duplicados.</p>
+          <p>Si Colab marca un error por formato de copiado, revisa comillas, indentación o pide apoyo a Gemini/Colab para depurar.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="c8edu-section" id="c8-section-7" data-section="7">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Paso 4</span>
+          <h2>Diagnosticar el dataset</h2>
+          <p>
+            Diagnosticar significa revisar el estado del dataset antes de modificarlo.
+            Nunca limpies datos sin saber primero qué problemas existen.
+          </p>
+        </div>
+
+        <div class="c8edu-method-grid">
+          <article>
+            <h3><code>df.head()</code></h3>
+            <p>Muestra las primeras filas para revisar visualmente la estructura.</p>
+          </article>
+          <article>
+            <h3><code>df.info()</code></h3>
+            <p>Muestra columnas, cantidad de datos no vacíos y tipo de dato.</p>
+          </article>
+          <article>
+            <h3><code>df.isnull().sum()</code></h3>
+            <p>Cuenta valores faltantes por columna.</p>
+          </article>
+          <article>
+            <h3><code>df.duplicated().sum()</code></h3>
+            <p>Cuenta filas repetidas.</p>
+          </article>
+        </div>
+
+        <div class="c8edu-code-grid">
+          <article class="c8edu-code-card">
+            <button class="c8edu-copy" data-copy-target="c8-diagnosis">Copiar</button>
+            <h3>Código de diagnóstico</h3>
+            <pre><code id="c8-diagnosis">df.head()
+
+df.info()
+
+df.isnull().sum()
+
+df.duplicated().sum()
+
+df[df.duplicated()]
+
+df.nunique()</code></pre>
+          </article>
+
+          <article class="c8edu-instruction-card">
+            <h3>Qué debes escribir en tu evidencia</h3>
+            <ul>
+              <li>¿Qué columnas tienen valores faltantes?</li>
+              <li>¿Hay filas duplicadas?</li>
+              <li>¿Qué columnas deberían ser numéricas?</li>
+              <li>¿Qué columnas tienen categorías mal escritas?</li>
+              <li>¿Qué columna podría ser la variable objetivo?</li>
+            </ul>
+          </article>
+        </div>
+
+        <figure class="c8edu-wide-image">
+          <img src="clase8/assets/missing-duplicates.svg" alt="Explicación visual de valores faltantes y duplicados">
+        </figure>
+      </div>
+    </section>
+
+    <section class="c8edu-section" id="c8-section-8" data-section="8">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Paso 5</span>
+          <h2>Crear una copia para limpiar</h2>
+          <p>
+            La regla profesional es simple: conserva el dataset original y limpia una copia.
+            Así puedes comparar el antes y el después.
+          </p>
+        </div>
+
+        <article class="c8edu-code-card c8edu-full-code">
+          <button class="c8edu-copy" data-copy-target="c8-copy">Copiar</button>
+          <h3>Copia de trabajo</h3>
+          <pre><code id="c8-copy">df_limpio = df.copy()</code></pre>
+        </article>
+
+        <div class="c8edu-compare">
+          <article>
+            <strong><code>df</code></strong>
+            <p>Dataset original. No se toca.</p>
+          </article>
+          <article>
+            <strong><code>df_limpio</code></strong>
+            <p>Dataset corregido paso a paso.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    
+<section class="c8edu-section c8edu-section-paso6-embed" id="c8-section-9" data-section="9">
+  <div class="container">
+    <iframe
+      class="c8-paso6-frame"
+      src="clase8/paso6/index.html"
+      title="Paso 6 · Sandbox de limpieza de columnas"
+      loading="lazy">
+    </iframe>
+  </div>
+</section>
+
+
+
+
+<section class="c8edu-section c8edu-step7-redesign" id="c8-section-10" data-section="10">
+  <div class="container">
+    <div class="c8edu-heading c8edu-heading-narrow">
+      <span class="eyebrow">Paso 7</span>
+      <h2>Normalizar texto y categorías</h2>
+      <p>
+        En un dataset real, una misma categoría puede venir escrita de varias formas.
+        Si no corriges eso, la IA puede interpretar que son categorías distintas aunque
+        en realidad signifiquen lo mismo.
+      </p>
+    </div>
+
+    <div class="c8-step7-compare">
+      <article>
+        <span class="c8-step7-label danger">Problema</span>
+        <div class="c8-step7-values">
+          <code>Frappe</code>
+          <code>frappé</code>
+          <code>FRAPE</code>
+        </div>
+      </article>
+
+      <div class="c8-step7-arrow">→</div>
+
+      <article>
+        <span class="c8-step7-label success">Después de limpiar</span>
+        <div class="c8-step7-values">
+          <code>frappe</code>
+          <code>frappe</code>
+          <code>frappe</code>
+        </div>
+      </article>
+    </div>
+
+    <div class="c8-step7-summary">
+      <article>
+        <h3>¿Qué hace este bloque?</h3>
+        <p>
+          Primero convierte el texto a una forma uniforme: quita espacios sobrantes,
+          pone todo en minúsculas y elimina acentos.
+        </p>
+        <p>
+          Después corrige variantes equivalentes con <code>replace()</code>. Esto sirve para decirle
+          al dataset que <code>frape</code> y <code>frappe</code> deben tratarse como la misma categoría.
+        </p>
+      </article>
+
+      <aside>
+        <strong>Idea clave</strong>
+        <p>
+          Limpiar texto no es solo estética. Sirve para que la IA no aprenda categorías
+          duplicadas o mal escritas.
+        </p>
+      </aside>
+    </div>
+
+    <div class="c8-step7-block">
+      <div class="c8-step7-block-header">
+        <div>
+          <span class="eyebrow">Bloque 1</span>
+          <h3>Limpiar la columna <code>producto</code></h3>
+        </div>
+      </div>
+
+      <article class="c8edu-code-card c8edu-full-code c8-step7-code-card">
+        <button class="c8edu-copy" data-copy-target="c8-step7-producto-code">Copiar</button>
+        <h3>Código</h3>
+        <pre><code id="c8-step7-producto-code">df_limpio["producto"] = (
+    df_limpio["producto"]
+    .astype(str)
+    .str.strip()
+    .str.lower()
+    .str.normalize("NFKD")
+    .str.encode("ascii", errors="ignore")
+    .str.decode("utf-8")
+)
+
+df_limpio["producto"] = df_limpio["producto"].replace({
+    "frape": "frappe",
+    "frappe": "frappe",
+    "cafe": "cafe",
+    "te": "te"
+})
+
+df_limpio["producto"].unique()</code></pre>
+      </article>
+
+      <div class="c8-step7-explain-list">
+        <article>
+          <h4><code>df_limpio["producto"]</code></h4>
+          <p>Selecciona solo la columna <code>producto</code>.</p>
+        </article>
+
+        <article>
+          <h4><code>.astype(str)</code></h4>
+          <p>Convierte todos los valores a texto para que los métodos <code>.str</code> funcionen correctamente.</p>
+        </article>
+
+        <article>
+          <h4><code>.str.strip()</code></h4>
+          <p>Quita espacios al inicio y al final.</p>
+        </article>
+
+        <article>
+          <h4><code>.str.lower()</code></h4>
+          <p>Convierte todo a minúsculas para evitar diferencias entre mayúsculas y minúsculas.</p>
+        </article>
+
+        <article>
+          <h4><code>.str.normalize("NFKD")</code> + <code>.encode(...)</code> + <code>.decode(...)</code></h4>
+          <p>Eliminan acentos. Por ejemplo: <code>café</code> → <code>cafe</code>.</p>
+        </article>
+
+        <article>
+          <h4><code>.replace({...})</code></h4>
+          <p>Corrige variantes equivalentes. Ejemplo: <code>frape</code> pasa a <code>frappe</code>.</p>
+        </article>
+
+        <article>
+          <h4><code>.unique()</code></h4>
+          <p>Muestra los valores únicos para comprobar si todavía quedaron categorías raras.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="c8-step7-block">
+      <div class="c8-step7-block-header">
+        <div>
+          <span class="eyebrow">Bloque 2</span>
+          <h3>Limpiar otras columnas categóricas</h3>
+        </div>
+      </div>
+
+      <article class="c8edu-code-card c8edu-full-code c8-step7-code-card">
+        <button class="c8edu-copy" data-copy-target="c8-step7-categorias-code">Copiar</button>
+        <h3>Código</h3>
+        <pre><code id="c8-step7-categorias-code">df_limpio["tipo_cliente"] = (
+    df_limpio["tipo_cliente"]
+    .astype(str)
+    .str.strip()
+    .str.lower()
+    .str.normalize("NFKD")
+    .str.encode("ascii", errors="ignore")
+    .str.decode("utf-8")
+)
+
+df_limpio["tipo_cliente"] = df_limpio["tipo_cliente"].replace({
+    "alumno": "estudiante",
+    "universitario": "estudiante"
+})
+
+columnas_texto = ["clima", "gusto", "recomendacion"]
+
+for columna in columnas_texto:
+    df_limpio[columna] = (
+        df_limpio[columna]
+        .astype(str)
+        .str.strip()
+        .str.lower()
+        .str.normalize("NFKD")
+        .str.encode("ascii", errors="ignore")
+        .str.decode("utf-8")
+    )
+
+df_limpio[["producto", "tipo_cliente", "clima", "gusto", "recomendacion"]].head()</code></pre>
+      </article>
+
+      <div class="c8-step7-explain-list">
+        <article>
+          <h4><code>df_limpio["tipo_cliente"]</code></h4>
+          <p>Selecciona la columna <code>tipo_cliente</code> para limpiarla.</p>
+        </article>
+
+        <article>
+          <h4><code>.replace({"alumno": "estudiante", ...})</code></h4>
+          <p>
+            Aquí tomas una decisión de negocio: para este caso, alumno y universitario
+            se agrupan como estudiante.
+          </p>
+        </article>
+
+        <article>
+          <h4><code>columnas_texto = [...]</code></h4>
+          <p>Guarda en una lista las columnas que quieres limpiar con el mismo proceso.</p>
+        </article>
+
+        <article>
+          <h4><code>for columna in columnas_texto:</code></h4>
+          <p>Recorre una por una las columnas de esa lista para no repetir el mismo código varias veces.</p>
+        </article>
+
+        <article>
+          <h4><code>df_limpio[columna] = (...)</code></h4>
+          <p>Aplica la misma limpieza básica a cada columna: texto, espacios, minúsculas y acentos.</p>
+        </article>
+
+        <article>
+          <h4><code>df_limpio[[...]].head()</code></h4>
+          <p>Muestra solo algunas columnas para revisar rápidamente cómo quedaron después de la limpieza.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="c8-step7-learning">
+      <article>
+        <h3>Qué debes aprender aquí</h3>
+        <ul>
+          <li>Una misma categoría puede venir escrita de muchas formas.</li>
+          <li>Antes de usar IA, debes unificar esas variantes.</li>
+          <li>Si no limpias texto, el modelo puede interpretar una misma idea como categorías distintas.</li>
+          <li>Usar <code>.unique()</code> te ayuda a comprobar si ya quedó uniforme.</li>
+        </ul>
+      </article>
+
+      <article class="warning">
+        <h3>Error común</h3>
+        <p>
+          Limpiar texto y asumir que ya quedó perfecto sin revisar los valores únicos.
+          Siempre conviene ejecutar <code>.unique()</code> para inspeccionar el resultado.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<section class="c8edu-section" id="c8-section-11" data-section="11">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Paso 8</span>
+          <h2>Convertir precios a números</h2>
+          <p>
+            Una columna numérica no debe tener signos de pesos, palabras o texto. Para calcular,
+            graficar o entrenar modelos, pandas necesita números reales.
+          </p>
+        </div>
+
+        <div class="c8edu-before-after">
+          <article>
+            <h3>Antes</h3>
+            <p><code>$65</code></p>
+            <p><code>65 pesos</code></p>
+            <p><code>cien</code></p>
+            <p><code>-100</code></p>
+          </article>
+          <article>
+            <h3>Después</h3>
+            <p><code>65</code></p>
+            <p><code>65</code></p>
+            <p><code>NaN</code></p>
+            <p><code>NaN</code></p>
+          </article>
+        </div>
+
+        <article class="c8edu-code-card c8edu-full-code">
+          <button class="c8edu-copy" data-copy-target="c8-price">Copiar</button>
+          <h3>Código</h3>
+          <pre><code id="c8-price">df_limpio["precio_mxn"] = (
+    df_limpio["precio_mxn"]
+    .astype(str)
+    .str.lower()
+    .str.replace("$", "", regex=False)
+    .str.replace("pesos", "", regex=False)
+    .str.strip()
+)
+
+df_limpio["precio_mxn"] = pd.to_numeric(df_limpio["precio_mxn"], errors="coerce")
+
+df_limpio.loc[df_limpio["precio_mxn"] <= 0, "precio_mxn"] = None
+
+mediana_precio = df_limpio["precio_mxn"].median()
+
+df_limpio["precio_mxn"] = df_limpio["precio_mxn"].fillna(mediana_precio)
+
+df_limpio["precio_mxn"].isnull().sum()</code></pre>
+        </article>
+
+        <div class="c8edu-explain-row">
+          <article>
+            <h3>¿Qué hace <code>errors="coerce"</code>?</h3>
+            <p>Convierte valores imposibles, como <code>cien</code>, en <code>NaN</code>.</p>
+          </article>
+          <article>
+            <h3>¿Por qué usar mediana?</h3>
+            <p>La mediana es menos sensible a valores extremos que el promedio.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    
+
+<section class="c8edu-section" id="c8-section-12" data-section="12">
+  <div class="container">
+    <div class="c8edu-heading c8edu-heading-narrow">
+      <span class="eyebrow">Paso 9</span>
+      <h2>Corregir fechas, variable objetivo y duplicados</h2>
+      <p>
+        En este paso tomamos decisiones importantes de limpieza. No solo corregimos formato:
+        también decidimos qué filas siguen siendo útiles para un análisis o para una IA supervisada.
+      </p>
+    </div>
+
+    <div class="c8edu-step-intro">
+      <strong>Este paso resuelve 3 problemas:</strong>
+      <span>fechas inválidas</span>
+      <span>recomendaciones vacías</span>
+      <span>filas duplicadas</span>
+    </div>
+
+    <article class="c8edu-code-card c8edu-full-code c8edu-code-hero">
+      <button class="c8edu-copy" data-copy-target="c8-final-clean-explained">Copiar</button>
+      <h3>Código principal del paso</h3>
+      <pre><code id="c8-final-clean-explained">df_limpio["calificacion"] = pd.to_numeric(df_limpio["calificacion"], errors="coerce")
+
+df_limpio["fecha"] = pd.to_datetime(df_limpio["fecha"], errors="coerce")
+
+df_limpio["recomendacion"] = df_limpio["recomendacion"].replace({
+    "nan": None,
+    "": None
+})
+
+df_limpio = df_limpio.dropna(subset=["recomendacion"])
+
+df_limpio = df_limpio.drop_duplicates()
+
+df_limpio.head()</code></pre>
+    </article>
+
+    <div class="c8edu-flow-explain">
+      <article class="c8edu-flow-item">
+        <div class="c8edu-flow-label">Bloque A</div>
+        <div class="c8edu-flow-body">
+          <h3>Convertir calificación y fecha</h3>
+          <p>
+            <code>pd.to_numeric(..., errors="coerce")</code> intenta convertir la
+            <strong>calificación</strong> a número. Si encuentra algo inválido, lo pasa a <code>NaN</code>.
+          </p>
+          <p>
+            <code>pd.to_datetime(..., errors="coerce")</code> intenta convertir la
+            <strong>fecha</strong> a formato de fecha. Si no puede, la deja como <code>NaT</code>,
+            que significa “fecha no válida”.
+          </p>
+        </div>
+      </article>
+
+      <article class="c8edu-flow-item">
+        <div class="c8edu-flow-label">Bloque B</div>
+        <div class="c8edu-flow-body">
+          <h3>Corregir recomendación vacía</h3>
+          <p>
+            <code>.replace({"nan": None, "": None})</code> convierte textos vacíos
+            o cadenas que aparentan ser valores faltantes en un valor realmente nulo.
+          </p>
+          <p>
+            Esto es importante porque pandas ya puede reconocer que ahí falta información
+            y actuar sobre ella correctamente.
+          </p>
+        </div>
+      </article>
+
+      <article class="c8edu-flow-item">
+        <div class="c8edu-flow-label">Bloque C</div>
+        <div class="c8edu-flow-body">
+          <h3>Eliminar filas que ya no sirven</h3>
+          <p>
+            <code>dropna(subset=["recomendacion"])</code> elimina filas donde falta la
+            recomendación, porque esa columna puede ser la <strong>variable objetivo</strong>.
+          </p>
+          <p>
+            <code>drop_duplicates()</code> elimina filas repetidas para que un mismo caso
+            no cuente dos veces dentro del dataset.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <div class="c8edu-decision-strip">
+      <div>
+        <strong>Fecha inválida</strong>
+        <p>Se marca como <code>NaT</code>.</p>
+      </div>
+      <div>
+        <strong>Recomendación vacía</strong>
+        <p>La fila se elimina.</p>
+      </div>
+      <div>
+        <strong>Fila duplicada</strong>
+        <p>Se conserva solo una versión.</p>
+      </div>
+    </div>
+
+    <div class="c8edu-dual-note">
+      <article>
+        <strong>Qué debes entender</strong>
+        <p>
+          Limpiar datos también implica decidir qué registros todavía sirven
+          para el objetivo del análisis.
+        </p>
+      </article>
+
+      <article>
+        <strong>Error común</strong>
+        <p>
+          Eliminar filas sin justificar por qué. Toda decisión de limpieza debe
+          responder a una necesidad del proyecto.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<section class="c8edu-section" id="c8-section-13" data-section="13">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Paso 10</span>
+          <h2>Validar el dataset limpio</h2>
+          <p>
+            Después de limpiar, debes comprobar que el dataset realmente mejoró. No basta con ejecutar código:
+            tienes que verificar el resultado.
+          </p>
+        </div>
+
+        <article class="c8edu-code-card c8edu-full-code">
+          <button class="c8edu-copy" data-copy-target="c8-validate">Copiar</button>
+          <h3>Código de validación</h3>
+          <pre><code id="c8-validate">print("Filas y columnas originales:")
+print(df.shape)
+
+print("Filas y columnas después de limpiar:")
+print(df_limpio.shape)
+
+print("Valores faltantes después de limpiar:")
+print(df_limpio.isnull().sum())
+
+print("Duplicados después de limpiar:")
+print(df_limpio.duplicated().sum())
+
+df_limpio.info()
+
+df_limpio.describe()</code></pre>
+        </article>
+
+        <div class="c8edu-observe-box">
+          <h3>Qué debes comprobar</h3>
+          <ul>
+            <li>Que <code>precio_mxn</code> ya sea numérica.</li>
+            <li>Que no haya duplicados.</li>
+            <li>Que la columna <code>recomendacion</code> no esté vacía.</li>
+            <li>Que los nombres de columnas sean claros.</li>
+            <li>Que puedas explicar qué filas se eliminaron o modificaron.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="c8edu-section" id="c8-section-14" data-section="14">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Paso 11</span>
+          <h2>Exportar y descargar el CSV limpio</h2>
+          <p>
+            El archivo limpio será el insumo para clases posteriores. En una siguiente clase se puede usar
+            para análisis, visualización o un primer modelo de predicción.
+          </p>
+        </div>
+
+        <figure class="c8edu-wide-image">
+          <img src="clase8/assets/export-csv.svg" alt="Exportar y descargar CSV limpio">
+        </figure>
+
+        <article class="c8edu-code-card c8edu-full-code">
+          <button class="c8edu-copy" data-copy-target="c8-export">Copiar</button>
+          <h3>Código</h3>
+          <pre><code id="c8-export">df_limpio.to_csv("dataset_limpio_clase8.csv", index=False)
+
+from google.colab import files
+
+files.download("dataset_limpio_clase8.csv")</code></pre>
+        </article>
+
+        <div class="c8edu-result-box">
+          <strong>Resultado esperado</strong>
+          <p>El navegador debe descargar un archivo llamado <code>dataset_limpio_clase8.csv</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="c8edu-section" id="c8-section-15" data-section="15">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Reto Kaggle</span>
+          <h2>Aplicar el proceso a un dataset real</h2>
+          <p>
+            Ahora usarás datos reales. Kaggle tiene datasets grandes con problemas auténticos:
+            columnas mal documentadas, datos faltantes, formatos variados y categorías inconsistentes.
+          </p>
+        </div>
+
+        <figure class="c8edu-wide-image">
+          <img src="clase8/assets/kaggle-guide.svg" alt="Guía para buscar un dataset en Kaggle">
+        </figure>
+
+        <div class="c8edu-kaggle-rules">
+          <article>
+            <h3>El dataset debe cumplir</h3>
+            <ul>
+              <li>Formato CSV.</li>
+              <li>Más de 1,000 filas.</li>
+              <li>Mínimo 5 columnas.</li>
+              <li>Debe tener texto, números y categorías.</li>
+              <li>Debe permitir una pregunta de análisis o predicción.</li>
+            </ul>
+          </article>
+
+          <article>
+            <h3>Búsquedas sugeridas</h3>
+            <ul>
+              <li><code>retail sales</code></li>
+              <li><code>student performance</code></li>
+              <li><code>coffee shop sales</code></li>
+              <li><code>customer behavior</code></li>
+              <li><code>video games sales</code></li>
+              <li><code>spotify songs</code></li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="c8edu-code-grid">
+          <article class="c8edu-code-card">
+            <button class="c8edu-copy" data-copy-target="c8-kaggle-manual">Copiar</button>
+            <h3>Opción sencilla: subir CSV manualmente</h3>
+            <pre><code id="c8-kaggle-manual">import pandas as pd
+
+df_real = pd.read_csv("archivo_kaggle.csv")
+
+df_real.head()
+
+df_real.shape
+
+df_real.info()
+
+df_real.isnull().sum()
+
+df_real.duplicated().sum()</code></pre>
+          </article>
+
+          <article class="c8edu-code-card">
+            <button class="c8edu-copy" data-copy-target="c8-kagglehub">Copiar</button>
+            <h3>Opción avanzada: kagglehub</h3>
+            <pre><code id="c8-kagglehub">!pip install -q kagglehub
+
+import kagglehub
+import os
+import pandas as pd
+
+path = kagglehub.dataset_download("usuario/nombre-del-dataset")
+
+print("Dataset descargado en:", path)
+
+for carpeta, subcarpetas, archivos in os.walk(path):
+    for archivo in archivos:
+        print(os.path.join(carpeta, archivo))</code></pre>
+          </article>
+        </div>
+
+        <div class="c8edu-observe-box">
+          <h3>Ficha que debe llenar el alumno</h3>
+          <ul>
+            <li>Nombre del dataset.</li>
+            <li>Fuente.</li>
+            <li>Cantidad de filas.</li>
+            <li>Cantidad de columnas.</li>
+            <li>Columnas numéricas.</li>
+            <li>Columnas categóricas.</li>
+            <li>Valores faltantes detectados.</li>
+            <li>Variable objetivo posible.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    
+<section class="c8edu-section c8edu-evidence-final" id="c8-section-16" data-section="16">
+  <div class="container">
+    <div class="c8edu-heading">
+      <span class="eyebrow">Entrega</span>
+      <h2>Evidencia final</h2>
+      <p>
+        La evidencia debe demostrar que no solo ejecutaste código, sino que entendiste
+        qué problema tenía el dataset, qué decisiones tomaste para limpiarlo y por qué
+        el resultado final puede usarse en una siguiente fase de análisis o IA.
+      </p>
+    </div>
+
+    <div class="c8-evidence-brief">
+      <article>
+        <span class="c8-evidence-number">1</span>
+        <h3>Notebook de Colab</h3>
+        <p>
+          Debes entregar el notebook con todo el proceso realizado:
+          carga de datos, diagnóstico, limpieza, validación y exportación.
+        </p>
+      </article>
+
+      <article>
+        <span class="c8-evidence-number">2</span>
+        <h3>Dataset limpio</h3>
+        <p>
+          Debes entregar el archivo CSV limpio generado al final de la práctica.
+        </p>
+      </article>
+
+      <article>
+        <span class="c8-evidence-number">3</span>
+        <h3>Reporte de evidencia</h3>
+        <p>
+          Debes incluir una explicación breve de los problemas detectados,
+          acciones realizadas y conclusión técnica.
+        </p>
+      </article>
+    </div>
+
+    <div class="c8-delivery-panel">
+      <div>
+        <h3>Entregable obligatorio</h3>
+        <p>Sube a Classroom una carpeta o archivos individuales con:</p>
+
+        <ul>
+          <li><strong>Notebook de Colab:</strong> archivo <code>.ipynb</code> o enlace compartido de Colab.</li>
+          <li><strong>Dataset limpio:</strong> archivo <code>dataset_limpio_clase8.csv</code>.</li>
+          <li><strong>Reporte de evidencia:</strong> puede estar dentro del notebook o en un archivo PDF/Documento.</li>
+        </ul>
+      </div>
+
+      <aside>
+        <strong>Entrega en Classroom</strong>
+        <p>
+          La evidencia generada debe subirse en la actividad correspondiente de
+          <strong>Google Classroom</strong>. No se entrega por WhatsApp, correo ni mensaje privado,
+          salvo que el maestro lo indique.
+        </p>
+      </aside>
+    </div>
+
+    <div class="c8-naming-panel">
+      <h3>Nombre sugerido de los archivos</h3>
+
+      <div class="c8-file-grid">
+        <article>
+          <strong>Notebook</strong>
+          <code>clase8_data_cleaning_equipo_nombre.ipynb</code>
+        </article>
+
+        <article>
+          <strong>CSV limpio</strong>
+          <code>dataset_limpio_clase8_equipo_nombre.csv</code>
+        </article>
+
+        <article>
+          <strong>Reporte opcional</strong>
+          <code>reporte_clase8_equipo_nombre.pdf</code>
+        </article>
+      </div>
+    </div>
+
+    <div class="c8-checklist-panel">
+      <h3>Checklist antes de subir a Classroom</h3>
+
+      <div class="c8-checklist-grid">
+        <label><input type="checkbox"> El notebook abre correctamente.</label>
+        <label><input type="checkbox"> El código se ejecuta sin errores graves.</label>
+        <label><input type="checkbox"> Incluí diagnóstico inicial del dataset.</label>
+        <label><input type="checkbox"> Expliqué los problemas encontrados.</label>
+        <label><input type="checkbox"> Limpié encabezados, texto, números, fechas, nulos o duplicados según corresponda.</label>
+        <label><input type="checkbox"> Validé el dataset después de limpiar.</label>
+        <label><input type="checkbox"> Exporté el archivo CSV limpio.</label>
+        <label><input type="checkbox"> Incluí una conclusión técnica.</label>
+        <label><input type="checkbox"> Subí la evidencia a Classroom.</label>
+      </div>
+    </div>
+
+    <article class="c8edu-code-card c8edu-full-code">
+      <button class="c8edu-copy" data-copy-target="c8-evidence">Copiar plantilla</button>
+      <h3>Plantilla de entrega</h3>
+      <pre><code id="c8-evidence"># Evidencia Clase 8 — Data Cleaning Lab
+
+## Integrantes
+[Nombre del equipo o integrantes]
+
+## Dataset utilizado
+Nombre:
+Fuente:
+Tema:
+Filas:
+Columnas:
+
+## Archivos entregados
+- Notebook de Colab:
+- Dataset limpio CSV:
+- Reporte de evidencia:
+
+## Problemas detectados
+- Valores faltantes:
+- Duplicados:
+- Categorías inconsistentes:
+- Valores fuera de rango:
+- Tipos de dato incorrectos:
+- Encabezados problemáticos:
+
+## Acciones de limpieza realizadas
+- Encabezados:
+- Texto y categorías:
+- Nulos:
+- Duplicados:
+- Tipos de datos:
+- Valores raros:
+- Fechas:
+
+## Variables de entrada
+[Lista de columnas que podrían usarse para analizar o predecir]
+
+## Variable objetivo
+[Columna que podría predecirse]
+
+## Archivo generado
+dataset_limpio_clase8.csv
+
+## Validación final
+Explica cómo comprobaste que el dataset quedó más limpio que al inicio.
+
+## Conclusión
+Explica si el dataset está listo para IA. Justifica tu respuesta con evidencia técnica.
+
+## Entrega
+La evidencia fue subida a Google Classroom en la actividad correspondiente.</code></pre>
+    </article>
+  </div>
+</section>
+
+
+<section class="c8edu-section c8edu-mission-section" id="c8-section-17" data-section="17">
+      <div class="container">
+        <div class="c8edu-heading">
+          <span class="eyebrow">Gamificación</span>
+          <h2>Tablero de misiones</h2>
+          <p>Marca cada misión conforme avances. La barra de XP se actualiza automáticamente.</p>
+        </div>
+
+        <div class="c8edu-mission-grid">
+          <label class="c8edu-mission-card">
+            <input type="checkbox" data-c8-mission="notebook" data-xp="10">
+            <span>☁️</span>
+            <strong>Crear notebook en Colab</strong>
+            <small>10 XP</small>
+          </label>
+
+          <label class="c8edu-mission-card">
+            <input type="checkbox" data-c8-mission="dataset" data-xp="10">
+            <span>🧾</span>
+            <strong>Crear dataset sucio</strong>
+            <small>10 XP</small>
+          </label>
+
+          <label class="c8edu-mission-card">
+            <input type="checkbox" data-c8-mission="diagnosis" data-xp="10">
+            <span>🔎</span>
+            <strong>Diagnosticar errores</strong>
+            <small>10 XP</small>
+          </label>
+
+          <label class="c8edu-mission-card">
+            <input type="checkbox" data-c8-mission="copy" data-xp="5">
+            <span>🧬</span>
+            <strong>Crear copia limpia</strong>
+            <small>5 XP</small>
+          </label>
+
+          <label class="c8edu-mission-card">
+            <input type="checkbox" data-c8-mission="columns" data-xp="10">
+            <span>🏷️</span>
+            <strong>Limpiar columnas</strong>
+            <small>10 XP</small>
+          </label>
+
+          <label class="c8edu-mission-card">
+            <input type="checkbox" data-c8-mission="text" data-xp="15">
+            <span>✍️</span>
+            <strong>Normalizar texto</strong>
+            <small>15 XP</small>
+          </label>
+
+          <label class="c8edu-mission-card">
+            <input type="checkbox" data-c8-mission="numbers" data-xp="10">
+            <span>🔢</span>
+            <strong>Corregir números</strong>
+            <small>10 XP</small>
+          </label>
+
+          <label class="c8edu-mission-card">
+            <input type="checkbox" data-c8-mission="export" data-xp="10">
+            <span>📤</span>
+            <strong>Exportar CSV limpio</strong>
+            <small>10 XP</small>
+          </label>
+
+          <label class="c8edu-mission-card">
+            <input type="checkbox" data-c8-mission="kaggle" data-xp="10">
+            <span>📊</span>
+            <strong>Buscar dataset Kaggle</strong>
+            <small>10 XP</small>
+          </label>
+
+          <label class="c8edu-mission-card">
+            <input type="checkbox" data-c8-mission="evidence" data-xp="10">
+            <span>🎖️</span>
+            <strong>Entregar evidencia</strong>
+            <small>10 XP</small>
+          </label>
+        </div>
+
+        <div class="c8edu-unlock" id="c8-unlock" hidden>
+          <strong>🎖 Insignia desbloqueada: Curador de Datos IA</strong>
+          <p>Completaste el laboratorio de limpieza de datos.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="c8edu-arrow-nav" aria-label="Navegación de secciones">
+    <button type="button" id="c8-prev" aria-label="Sección anterior">←</button>
+    <button type="button" id="c8-next" aria-label="Siguiente sección">→</button>
+  </div>
+
+  <script src="main.js"></script>
+  <script src="clase8/clase8.js"></script>
+  <script src="clase8/clase8-syntax.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600">
+  <rect width="1100" height="600" fill="#020617"/>
+  <text x="70" y="75" fill="#f8fafc" font-family="Inter,Arial" font-size="38" font-weight="900">Nulos y duplicados</text>
+  <g font-family="Inter,Arial">
+    <rect x="80" y="130" width="450" height="360" rx="30" fill="#111827" stroke="#334155"/>
+    <text x="115" y="185" fill="#f8fafc" font-size="28" font-weight="900">Valor faltante</text>
+    <rect x="115" y="230" width="350" height="50" rx="14" fill="#1e293b"/>
+    <text x="135" y="263" fill="#94a3b8" font-size="20">precio_mxn</text>
+    <rect x="115" y="300" width="350" height="70" rx="14" fill="#450a0a" stroke="#ef4444"/>
+    <text x="135" y="344" fill="#fecaca" font-size="24" font-weight="900">NaN / vacío</text>
+    <text x="115" y="430" fill="#94a3b8" font-size="19">Decisión: eliminar, rellenar o justificar.</text>
+
+    <rect x="570" y="130" width="450" height="360" rx="30" fill="#111827" stroke="#334155"/>
+    <text x="605" y="185" fill="#f8fafc" font-size="28" font-weight="900">Fila duplicada</text>
+    <rect x="605" y="235" width="350" height="48" rx="14" fill="#1e293b"/>
+    <text x="625" y="267" fill="#e5e7eb" font-size="18">frappe · 65 · estudiante</text>
+    <rect x="605" y="295" width="350" height="48" rx="14" fill="#1e293b"/>
+    <text x="625" y="327" fill="#e5e7eb" font-size="18">frappe · 65 · estudiante</text>
+    <rect x="605" y="355" width="350" height="48" rx="14" fill="#451a03" stroke="#f97316"/>
+    <text x="625" y="387" fill="#fed7aa" font-size="18">repetido artificialmente</text>
+    <text x="605" y="460" fill="#94a3b8" font-size="19">Riesgo: sesgar el análisis o modelo.</text>
+  </g>
+</svg>
