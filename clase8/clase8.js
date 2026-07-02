@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (sidebarToggle && sidebar) {
     const desktopQuery = window.matchMedia("(min-width: 1101px)");
-    const sectionLinks = Array.from(sidebar.querySelectorAll("[data-c8-scroll-link]"));
+    const classLinks = Array.from(sidebar.querySelectorAll("nav a[href]"));
 
     function isDesktopLayout() {
       return desktopQuery.matches;
@@ -19,27 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
       sidebarToggle.textContent = open ? "×" : "☰";
       sidebarToggle.setAttribute("aria-label", open ? "Ocultar menú" : "Mostrar menú");
       sidebarToggle.setAttribute("aria-expanded", String(open));
-    }
-
-    function syncSectionLinks() {
-      if (!sectionLinks.length) return;
-
-      const reference = window.scrollY + window.innerHeight * 0.34;
-      let activeSection = null;
-
-      sectionLinks.forEach(link => {
-        const target = document.querySelector(link.hash);
-        if (!target) return;
-
-        const top = target.getBoundingClientRect().top + window.scrollY;
-        if (top <= reference) {
-          activeSection = target;
-        }
-      });
-
-      sectionLinks.forEach(link => {
-        link.classList.toggle("is-current", Boolean(activeSection && link.hash === `#${activeSection.id}`));
-      });
     }
 
     let wasDesktop = isDesktopLayout();
@@ -57,27 +36,15 @@ document.addEventListener("DOMContentLoaded", () => {
         wasDesktop = desktop;
       }
 
-      syncSectionLinks();
     });
 
-    sectionLinks.forEach(link => {
-      link.addEventListener("click", event => {
-        const target = document.querySelector(link.hash);
-        if (!target) return;
-
-        event.preventDefault();
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-
+    classLinks.forEach(link => {
+      link.addEventListener("click", () => {
         if (!isDesktopLayout()) {
           setSidebarOpen(false);
         }
-
-        window.setTimeout(syncSectionLinks, 260);
       });
     });
-
-    window.addEventListener("scroll", syncSectionLinks, { passive: true });
-    syncSectionLinks();
   }
 
   const checks = Array.from(document.querySelectorAll("[data-c8-mission][data-xp]"));

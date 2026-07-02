@@ -16858,20 +16858,6 @@ body[data-page="clase8"] .course-sidebar .lesson-tab.is-current {
   box-shadow: inset 3px 0 0 rgba(34,211,238,0.72) !important;
 }
 
-body[data-page="clase8"] .course-sidebar .c8-section-link {
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
-  font-size: 0.82rem !important;
-}
-
-body[data-page="clase8"] .course-sidebar .c8-section-link strong {
-  font-size: 0.84rem !important;
-}
-
-body[data-page="clase8"] .course-sidebar .c8-section-nav-label {
-  margin-top: 18px !important;
-}
-
 body[data-page="clase8"] .sidebar-toggle {
   top: 16px !important;
   left: 16px !important;
