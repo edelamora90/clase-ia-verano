@@ -8,9 +8,17 @@
   <link rel="stylesheet" href="./clase9.css">
 </head>
 <body>
-  <button class="c9-menu" type="button" aria-controls="c9-sidebar" aria-expanded="false">Misiones</button>
+  <button class="c9-menu sidebar-toggle" id="sidebar-toggle" type="button" aria-controls="mission-sidebar" aria-expanded="true">
+    <span class="hamburger-icon" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span class="sidebar-toggle-text">Misiones</span>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
 
-  <aside class="c9-sidebar" id="c9-sidebar" aria-label="Navegación de Clase 9">
+  <aside class="c9-sidebar" id="mission-sidebar" aria-label="Navegación de Clase 9">
     <a class="c9-back" href="../index.html">Curso IA</a>
     <div class="c9-brand">
       <svg viewBox="0 0 72 72" aria-hidden="true">
