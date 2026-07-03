@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Clase 9: diseño del agente inteligente desde un dataset limpio.">
+  <title>Clase 9 · Diseño del Agente Inteligente</title>
+  <link rel="stylesheet" href="./clase9.css">
+</head>
+<body>
+  <button class="c9-menu" type="button" aria-controls="c9-sidebar" aria-expanded="false">Misiones</button>
+
+  <aside class="c9-sidebar" id="c9-sidebar" aria-label="Navegación de Clase 9">
+    <a class="c9-back" href="../index.html">Curso IA</a>
+    <div class="c9-brand">
+      <svg viewBox="0 0 72 72" aria-hidden="true">
+        <rect x="13" y="20" width="46" height="36" rx="14"></rect>
+        <circle cx="28" cy="38" r="4"></circle>
+        <circle cx="44" cy="38" r="4"></circle>
+        <path d="M30 48h12"></path>
+        <path d="M36 20V10"></path>
+        <circle cx="36" cy="8" r="4"></circle>
+      </svg>
+      <div>
+        <strong>Agent Design Quest</strong>
+        <span>Clase 9</span>
+      </div>
+    </div>
+
+    <div class="c9-xp">
+      <span>Progreso XP</span>
+      <strong id="c9-xp-text">0 / 100 XP</strong>
+      <div class="c9-xp-track"><div id="c9-xp-bar"></div></div>
+      <small id="c9-badge-status">Insignia bloqueada</small>
+    </div>
+
+    <nav class="c9-nav" aria-label="Misiones">
+      <a href="#inicio">Inicio</a>
+      <a href="#mision-1">Misión 1 · Dataset usable</a>
+      <a href="#mision-2">Misión 2 · Problema</a>
+      <a href="#mision-3">Misión 3 · Objetivo</a>
+      <a href="#mision-4">Misión 4 · Validación</a>
+      <a href="#mision-5">Misión 5 · Hipótesis</a>
+      <a href="#mision-6">Misión 6 · Reglas</a>
+      <a href="#mision-7">Misión 7 · PEAS</a>
+      <a href="#mision-8">Misión 8 · Arquitectura</a>
+      <a href="#sandbox">Sandbox</a>
+      <a href="#evidencia">Evidencia y rúbrica</a>
+    </nav>
+  </aside>
+
+  <main class="c9-main">
+    <section class="c9-hero" id="inicio">
+      <div class="c9-hero-copy">
+        <span class="c9-kicker">Clase 9 · Diseño del Agente Inteligente</span>
+        <h1>Del dataset limpio al comportamiento del agente</h1>
+        <p>Tu CSV ya no es solo una tabla. Hoy lo convertirás en el plano de un agente: qué problema resuelve, para quién decide, qué salida produce, qué reglas puede explicar y cómo fluye la información.</p>
+        <div class="c9-actions">
+          <a class="c9-button c9-button-primary" href="#sandbox">Abrir sandbox</a>
+          <a class="c9-button" href="#mision-1">Iniciar misión</a>
+        </div>
+      </div>
+      <div class="c9-hero-art" aria-label="Ilustración vectorial de un agente analizando datos">
+        <svg viewBox="0 0 760 560" role="img">
+          <defs>
+            <linearGradient id="c9-g1" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#23d5ff"></stop>
+              <stop offset="48%" stop-color="#8b5cf6"></stop>
+              <stop offset="100%" stop-color="#ffb703"></stop>
+            </linearGradient>
+            <linearGradient id="c9-g2" x1="0" x2="1">
+              <stop offset="0%" stop-color="#2dd4bf"></stop>
+              <stop offset="100%" stop-color="#f472b6"></stop>
+            </linearGradient>
+          </defs>
+          <rect class="panel" x="56" y="70" width="648" height="410" rx="38"></rect>
+          <rect class="screen" x="94" y="118" width="210" height="270" rx="22"></rect>
+          <path class="line-a" d="M125 158h146M125 200h146M125 242h112M125 284h146M125 326h84"></path>
+          <rect class="chip-a" x="116" y="408" width="168" height="44" rx="16"></rect>
+          <circle class="bot" cx="488" cy="244" r="91"></circle>
+          <circle class="eye-a" cx="455" cy="221" r="12"></circle>
+          <circle class="eye-b" cx="521" cy="221" r="12"></circle>
+          <path class="mouth" d="M450 267c28 27 54 27 82 0"></path>
+          <path class="antenna" d="M488 153V103"></path>
+          <circle class="signal" cx="488" cy="88" r="17"></circle>
+          <path class="flow" d="M322 244h70M584 244h60M488 352v52"></path>
+          <rect class="node" x="594" y="202" width="100" height="84" rx="24"></rect>
+          <rect class="node" x="410" y="404" width="156" height="54" rx="20"></rect>
+          <text x="617" y="251">PEAS</text>
+          <text x="435" y="438">SI / ENTONCES</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="c9-board" aria-label="Tablero de misión">
+      <article><span>01</span><strong>Audita</strong><p>Confirma si el dataset está usable para diseñar un agente.</p></article>
+      <article><span>02</span><strong>Define</strong><p>Convierte tu tema en problema, usuario y decisión.</p></article>
+      <article><span>03</span><strong>Diseña</strong><p>Propón entradas, objetivo, hipótesis, reglas, PEAS y arquitectura.</p></article>
+    </section>
+
+    <section class="c9-section c9-mission" id="mision-1" data-xp="10">
+      <span class="c9-level">Misión 1</span>
+      <h2>Cargar dataset y auditar si está listo para agente</h2>
+      <div class="c9-concept-grid">
+        <article><h3>Qué es</h3><p>Un dataset usable es una tabla suficientemente ordenada, con columnas entendibles, registros coherentes y una posible salida que el agente pueda aprender o usar.</p></article>
+        <article><h3>Para qué sirve</h3><p>Sirve para evitar diseñar un agente sobre datos que todavía no sostienen una decisión clara.</p></article>
+        <article><h3>Aplicación al agente</h3><p>Antes de pensar en reglas o predicciones, el agente necesita entradas confiables y una salida posible.</p></article>
+        <article><h3>Ejemplo</h3><p>Un dataset de cafetería con <code>clima</code>, <code>presupuesto</code> y <code>recomendacion</code> puede alimentar un agente recomendador.</p></article>
+      </div>
+      <label class="c9-check"><input type="checkbox" data-xp-check="m1"> Dataset auditado antes de diseñar.</label>
+    </section>
+
+    <section class="c9-section c9-mission" id="mision-2" data-xp="10">
+      <div class="c9-m2-header">
+        <span class="c9-level">Misión 2 · Definir el problema real del agente</span>
+        <h2>Convierte tu dataset en una decisión inteligente</h2>
+        <p>Un agente no se crea solo porque tenemos una tabla. Se diseña porque hay una decisión real que queremos apoyar, automatizar o explicar con datos.</p>
+      </div>
+
+      <div class="c9-m2-layout">
+        <article class="c9-m2-primer">
+          <span class="c9-m2-badge">Concepto clave</span>
+          <h3>Problema de decisión</h3>
+          <p><strong>Un problema de decisión es una situación donde un agente debe elegir una respuesta útil con base en datos.</strong></p>
+          <p>La respuesta puede ser una recomendación, clasificación, alerta, diagnóstico, acción sugerida, prioridad o categoría.</p>
+          <div class="c9-m2-mini-grid">
+            <div><strong>Para qué sirve</strong><span>Convierte “tengo un dataset” en “mi agente usará este dataset para tomar esta decisión”.</span></div>
+            <div><strong>Cómo se aplica</strong><span>Define el comportamiento principal del agente: qué observará y qué respuesta deberá producir.</span></div>
+          </div>
+        </article>
+
+        <aside class="c9-m2-radar" aria-label="Detector del dataset cargado">
+          <div class="c9-m2-radar-top">
+            <span>Radar del dataset</span>
+            <strong id="c9-m2-radar-status">Esperando análisis</strong>
+          </div>
+          <div class="c9-m2-radar-scan" aria-hidden="true"><span></span></div>
+          <div id="c9-m2-dataset-context" class="c9-m2-dataset-context">
+            Analiza un CSV en la Misión 1 para detectar columnas y posibles salidas.
+          </div>
+        </aside>
+      </div>
+
+      <div class="c9-m2-examples" aria-label="Ejemplos de problema de decisión">
+        <article><span>Cafetería</span><strong>¿Qué producto conviene recomendar?</strong><p>Agente recomendador.</p></article>
+        <article><span>Alumnos</span><strong>¿Qué alumno puede estar en riesgo?</strong><p>Agente de alerta académica.</p></article>
+        <article><span>Ventas</span><strong>¿Qué producto requiere acción comercial?</strong><p>Agente de apoyo a ventas.</p></article>
+        <article><span>Soporte técnico</span><strong>¿Qué solución se debe sugerir?</strong><p>Agente de diagnóstico.</p></article>
+      </div>
+
+      <div class="c9-m2-workbench">
+        <article class="c9-m2-questions">
+          <h3>Preguntas guía</h3>
+          <ul>
+            <li>¿Qué representa cada fila?</li>
+            <li>¿Qué situación real describe el dataset?</li>
+            <li>¿Quién podría usar esta información?</li>
+            <li>¿Qué decisión se repite muchas veces?</li>
+            <li>¿Qué columna parece representar una respuesta, resultado o recomendación?</li>
+            <li>¿Qué pasaría si un agente pudiera tomar esa decisión automáticamente?</li>
+          </ul>
+        </article>
+
+        <article class="c9-m2-template">
+          <h3>Plantilla editable</h3>
+          <div class="c9-m2-form">
+            <label class="c9-field">Mi dataset describe:
+              <textarea id="m2-dataset-desc" placeholder="Ej. casos de estudiantes con asistencia, entregas, promedio y nivel de riesgo."></textarea>
+            </label>
+            <label class="c9-field">El usuario que podría necesitar este agente es:
+              <input id="m2-user" placeholder="Ej. coordinador académico, vendedor, técnico de soporte">
+            </label>
+            <label class="c9-field">La decisión que se repite en este problema es:
+              <input id="m2-repeated-decision" placeholder="Ej. clasificar riesgo, recomendar producto, sugerir solución">
+            </label>
+            <label class="c9-field">Mi agente ayudará a:
+              <textarea id="m2-agent-help" placeholder="Ej. priorizar alumnos que requieren intervención temprana."></textarea>
+            </label>
+            <label class="c9-field">Cuando el agente reciba un nuevo caso, debería decidir:
+              <textarea id="m2-agent-decide" placeholder="Ej. si el alumno tiene riesgo bajo, medio o alto y qué acción sugerir."></textarea>
+            </label>
+          </div>
+          <div class="c9-actions">
+            <button class="c9-button c9-button-primary" id="m2-review-problem" type="button">Revisar mi problema</button>
+          </div>
+          <div class="c9-m2-feedback" id="m2-feedback">Completa la plantilla y revisa tu problema para recibir retroalimentación.</div>
+          <div class="c9-m2-definition" id="m2-definition">Tu definición armada aparecerá aquí.</div>
+        </article>
+      </div>
+      <label class="c9-check"><input type="checkbox" data-xp-check="m2"> Problema real redactado como decisión.</label>
+    </section>
+
+    <section class="c9-section c9-mission" id="mision-3" data-xp="15">
+      <span class="c9-level">Misión 3</span>
+      <h2>Elegir columna objetivo y variables de entrada</h2>
+      <div class="c9-concept-grid">
+        <article><h3>Columna objetivo</h3><p>Es la salida que el agente intentará producir: <code>riesgo</code>, <code>diagnostico</code>, <code>categoria</code>, <code>accion</code> o <code>recomendacion</code>.</p></article>
+        <article><h3>Variables de entrada</h3><p>Son los datos que el agente recibe para decidir. Deben explicar la salida, no identificar personas sin aportar valor.</p></article>
+        <article><h3>Aplicación al agente</h3><p>Las entradas serán sensores de información; la columna objetivo será la respuesta esperada.</p></article>
+        <article><h3>Ejemplo</h3><p>Entradas: <code>asistencia</code>, <code>promedio</code>, <code>entregas</code>. Objetivo: <code>nivel_riesgo</code>.</p></article>
+      </div>
+      <div class="c9-flow-strip"><span>Entradas</span><strong>→</strong><span>Agente</span><strong>→</strong><span>Objetivo</span></div>
+      <label class="c9-check"><input type="checkbox" data-xp-check="m3"> Entradas y objetivo separados.</label>
+    </section>
+
+    <section class="c9-section c9-mission" id="mision-4" data-xp="15">
+      <span class="c9-level">Misión 4</span>
+      <h2>Validar si la columna objetivo sirve</h2>
+      <div class="c9-concept-grid">
+        <article><h3>Clases</h3><p>Son los valores posibles de la columna objetivo. Por ejemplo: <code>bajo</code>, <code>medio</code>, <code>alto</code>.</p></article>
+        <article><h3>Desbalance</h3><p>Ocurre cuando una clase domina demasiado. El agente podría aprender a responder casi siempre lo mismo.</p></article>
+        <article><h3>Valores únicos o vacíos</h3><p>Demasiados valores únicos pueden indicar que elegiste un identificador. Vacíos en el objetivo rompen la decisión esperada.</p></article>
+        <article><h3>Ejemplo</h3><p>Si <code>diagnostico</code> tiene 95% “normal”, el agente necesita más casos variados o una decisión distinta.</p></article>
+      </div>
+      <label class="c9-check"><input type="checkbox" data-xp-check="m4"> Objetivo validado por clases, vacíos y balance.</label>
+    </section>
+
+    <section class="c9-section c9-mission" id="mision-5" data-xp="10">
+      <span class="c9-level">Misión 5</span>
+      <h2>Crear hipótesis de decisión</h2>
+      <div class="c9-concept-grid">
+        <article><h3>Qué es</h3><p>Una hipótesis basada en datos es una sospecha razonable sobre cómo ciertas entradas se relacionan con la salida.</p></article>
+        <article><h3>Para qué sirve</h3><p>Sirve para transformar observaciones del dataset en ideas que luego podrán convertirse en reglas o modelos.</p></article>
+        <article><h3>Aplicación al agente</h3><p>El agente usará estas relaciones para explicar por qué una decisión tiene sentido.</p></article>
+        <article><h3>Ejemplo</h3><p>Cuando <code>asistencia</code> es baja y <code>entregas</code> es bajo, suele aparecer <code>riesgo = alto</code>.</p></article>
+      </div>
+      <label class="c9-check"><input type="checkbox" data-xp-check="m5"> Dos hipótesis candidatas redactadas.</label>
+    </section>
+
+    <section class="c9-section c9-mission" id="mision-6" data-xp="10">
+      <span class="c9-level">Misión 6</span>
+      <h2>Diseñar reglas candidatas SI/ENTONCES</h2>
+      <div class="c9-concept-grid">
+        <article><h3>Condición</h3><p>Es la parte SI: valores observados en las variables de entrada.</p></article>
+        <article><h3>Acción</h3><p>Es la parte ENTONCES: recomendación, alerta, clasificación o diagnóstico.</p></article>
+        <article><h3>Regla candidata</h3><p>No es definitiva. Es una regla propuesta desde evidencia del dataset para probarla después.</p></article>
+        <article><h3>Ejemplo</h3><p>SI <code>presupuesto = bajo</code> y <code>hambre = alta</code>, ENTONCES recomendar <code>combo escolar</code>.</p></article>
+      </div>
+      <div class="c9-rule-card"><strong>SI</strong><span>[condiciones observadas]</span><strong>ENTONCES</strong><span>[decisión explicada]</span></div>
+      <label class="c9-check"><input type="checkbox" data-xp-check="m6"> Reglas candidatas escritas con condición y acción.</label>
+    </section>
+
+    <section class="c9-section c9-mission" id="mision-7" data-xp="15">
+      <span class="c9-level">Misión 7</span>
+      <h2>Definir PEAS</h2>
+      <div class="c9-peas-grid">
+        <article><strong>P</strong><h3>Performance</h3><p>Cómo medirás si el agente funciona: precisión, satisfacción, rapidez o utilidad.</p></article>
+        <article><strong>E</strong><h3>Environment</h3><p>El entorno donde actúa: escuela, tienda, clínica, soporte, inventario o app.</p></article>
+        <article><strong>A</strong><h3>Actuators</h3><p>Lo que puede hacer: mostrar recomendación, alerta, prioridad, etiqueta o explicación.</p></article>
+        <article><strong>S</strong><h3>Sensors</h3><p>Los datos que recibe: columnas del dataset, formularios, historial o mediciones.</p></article>
+      </div>
+      <p class="c9-note">PEAS sirve para que el agente quede definido como sistema, no solo como una tabla con predicciones.</p>
+      <label class="c9-check"><input type="checkbox" data-xp-check="m7"> PEAS completo para mi agente.</label>
+    </section>
+
+    <section class="c9-section c9-mission" id="mision-8" data-xp="15">
+      <span class="c9-level">Misión 8</span>
+      <h2>Diseñar arquitectura del agente</h2>
+      <p>La arquitectura explica cómo viaja la información desde el caso nuevo hasta la respuesta final. Para esta clase usaremos un flujo híbrido: datos, validación, predicción o clasificación, reglas y explicación.</p>
+      <div class="c9-architecture">
+        <div>Datos de entrada</div>
+        <span>→</span>
+        <div>Validación</div>
+        <span>→</span>
+        <div>Predicción / clasificación</div>
+        <span>→</span>
+        <div>Reglas</div>
+        <span>→</span>
+        <div>Respuesta explicada</div>
+      </div>
+      <div class="c9-concept-grid">
+        <article><h3>Qué es</h3><p>Es el mapa operativo del agente.</p></article>
+        <article><h3>Para qué sirve</h3><p>Sirve para programar sin improvisar el flujo lógico.</p></article>
+        <article><h3>Aplicación</h3><p>Tu CSV define entradas y salida; tus reglas explican o ajustan la decisión.</p></article>
+        <article><h3>Ejemplo</h3><p>Un formulario captura datos, se valida, se clasifica el riesgo y se devuelve una recomendación justificada.</p></article>
+      </div>
+      <label class="c9-check"><input type="checkbox" data-xp-check="m8"> Arquitectura del agente explicada de punta a punta.</label>
+    </section>
+
+    <section class="c9-section c9-sandbox" id="sandbox">
+      <span class="c9-kicker">Sandbox guiado</span>
+      <h2>Constructor de evidencia del agente</h2>
+      <p>Carga o pega un CSV limpio. El sandbox analiza estructura, faltantes, duplicados, posibles objetivos y te ayuda a redactar la evidencia en Markdown.</p>
+
+      <div class="c9-sandbox-grid">
+        <article class="c9-panel">
+          <h3>1 · Dataset</h3>
+          <label class="c9-field">Cargar CSV
+            <input id="c9-file" type="file" accept=".csv,text/csv">
+          </label>
+          <label class="c9-field">Pegar CSV
+            <textarea id="c9-csv" spellcheck="false">clima,gusto,hambre,presupuesto,tipo_cliente,recomendacion,calificacion
+calor,dulce,baja,medio,estudiante,frappe,5
+frio,amargo,baja,bajo,estudiante,cafe caliente,4
+lluvia,ligero,baja,medio,universitario,te caliente,5
+nublado,dulce,media,bajo,estudiante,galleta,4
+calor,amargo,baja,medio,universitario,cafe frio,4
+calor,dulce,alta,medio,estudiante,combo escolar,5
+frio,dulce,alta,alto,universitario,pan dulce,4
+calor,salado,alta,bajo,estudiante,combo escolar,5</textarea>
+          </label>
+          <button class="c9-button c9-button-primary" id="c9-analyze" type="button">Analizar dataset</button>
+        </article>
+
+        <article class="c9-panel">
+          <h3>2 · Diagnóstico</h3>
+          <div class="c9-diagnosis" id="c9-diagnosis">Analiza el CSV para comenzar.</div>
+          <label class="c9-field">Columna objetivo
+            <select id="c9-target"></select>
+          </label>
+          <div class="c9-feedback" id="c9-target-feedback"></div>
+        </article>
+      </div>
+
+      <article class="c9-panel">
+        <h3>3 · Variables de entrada</h3>
+        <p>Selecciona las columnas que el agente puede usar para decidir. Evita identificadores, nombres, correos, teléfonos o folios.</p>
+        <div class="c9-checkbox-list" id="c9-input-vars"></div>
+        <div class="c9-feedback" id="c9-input-feedback"></div>
+      </article>
+
+      <article class="c9-panel">
+        <h3>4 · Diseño del agente</h3>
+        <div class="c9-form-grid">
+          <label class="c9-field">Nombre del agente <input id="agent-name" placeholder="Ej. CaféBot Analítico"></label>
+          <label class="c9-field">Usuario <input id="agent-user" placeholder="Ej. estudiante universitario"></label>
+          <label class="c9-field">Problema <textarea id="agent-problem" placeholder="Describe el problema real que resolverá."></textarea></label>
+          <label class="c9-field">Decisión <textarea id="agent-decision" placeholder="Qué recomendación, diagnóstico, clasificación o acción tomará."></textarea></label>
+          <label class="c9-field">Hipótesis 1 <textarea class="hypothesis" placeholder="Cuando _______, suele ocurrir _______."></textarea></label>
+          <label class="c9-field">Hipótesis 2 <textarea class="hypothesis" placeholder="Cuando _______ y _______, la salida común es _______."></textarea></label>
+          <label class="c9-field">Regla candidata 1 <textarea class="rule-candidate" placeholder="SI _______ ENTONCES _______."></textarea></label>
+          <label class="c9-field">Regla candidata 2 <textarea class="rule-candidate" placeholder="SI _______ ENTONCES _______."></textarea></label>
+          <label class="c9-field">Performance <textarea id="peas-p" placeholder="Cómo medirás si funciona."></textarea></label>
+          <label class="c9-field">Environment <textarea id="peas-e" placeholder="Dónde actúa el agente."></textarea></label>
+          <label class="c9-field">Actuators <textarea id="peas-a" placeholder="Qué respuestas o acciones produce."></textarea></label>
+          <label class="c9-field">Sensors <textarea id="peas-s" placeholder="Qué datos recibe."></textarea></label>
+        </div>
+        <div class="c9-actions">
+          <button class="c9-button c9-button-primary" id="c9-generate-evidence" type="button">Generar evidencia</button>
+          <button class="c9-button" id="c9-copy-evidence" type="button">Copiar evidencia</button>
+        </div>
+        <pre class="c9-evidence-output" id="c9-evidence-output">Completa el sandbox y genera tu evidencia.</pre>
+      </article>
+    </section>
+
+    <section class="c9-section" id="evidencia">
+      <span class="c9-kicker">Evidencia final</span>
+      <h2>Entrega y rúbrica</h2>
+      <div class="c9-rubric">
+        <article><strong>15</strong><span>Problema, usuario y decisión</span></article>
+        <article><strong>15</strong><span>Diagnóstico del dataset</span></article>
+        <article><strong>15</strong><span>Columna objetivo justificada</span></article>
+        <article><strong>15</strong><span>Variables de entrada con criterio</span></article>
+        <article><strong>15</strong><span>Hipótesis y reglas basadas en datos</span></article>
+        <article><strong>15</strong><span>PEAS correcto</span></article>
+        <article><strong>10</strong><span>Arquitectura clara</span></article>
+      </div>
+      <p class="c9-note">Tu evidencia debe demostrar cómo pasaste del dataset limpio al diseño del comportamiento del agente. En la siguiente clase ese diseño se convertirá en lógica ejecutable.</p>
+    </section>
+  </main>
+
+  <script src="./clase9.js"></script>
+</body>
+</html>
