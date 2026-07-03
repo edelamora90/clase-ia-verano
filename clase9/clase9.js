@@ -45,21 +45,92 @@
   }
 
   function setupNavigation() {
-    const sidebar = $("#c9-sidebar");
-    const menu = $(".c9-menu");
+    const sidebar = $("#mission-sidebar");
+    const toggle = $("#sidebar-toggle");
+    const overlay = $("#sidebar-overlay");
     const links = $$(".c9-nav a");
+    const desktopQuery = window.matchMedia("(min-width: 1101px)");
 
-    menu?.addEventListener("click", () => {
-      const open = sidebar?.classList.toggle("is-open") || false;
-      menu.setAttribute("aria-expanded", String(open));
+    function isDesktop() {
+      return desktopQuery.matches;
+    }
+
+    function syncSidebarState() {
+      if (!sidebar || !toggle || !overlay) return;
+      if (isDesktop()) {
+        document.body.classList.remove("sidebar-open");
+        overlay.setAttribute("aria-hidden", "true");
+        const expanded = !document.body.classList.contains("sidebar-collapsed");
+        toggle.setAttribute("aria-expanded", String(expanded));
+      } else {
+        document.body.classList.remove("sidebar-collapsed");
+        const expanded = document.body.classList.contains("sidebar-open");
+        toggle.setAttribute("aria-expanded", String(expanded));
+        overlay.setAttribute("aria-hidden", String(!expanded));
+      }
+    }
+
+    function openSidebar() {
+      if (!sidebar || !toggle || !overlay) return;
+      if (isDesktop()) {
+        document.body.classList.remove("sidebar-collapsed");
+      } else {
+        document.body.classList.add("sidebar-open");
+        overlay.setAttribute("aria-hidden", "false");
+      }
+      toggle.setAttribute("aria-expanded", "true");
+    }
+
+    function closeSidebar() {
+      if (!sidebar || !toggle || !overlay) return;
+      if (isDesktop()) {
+        document.body.classList.add("sidebar-collapsed");
+      } else {
+        document.body.classList.remove("sidebar-open");
+        overlay.setAttribute("aria-hidden", "true");
+      }
+      toggle.setAttribute("aria-expanded", "false");
+    }
+
+    function toggleSidebar() {
+      const expanded = isDesktop()
+        ? !document.body.classList.contains("sidebar-collapsed")
+        : document.body.classList.contains("sidebar-open");
+      if (expanded) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    }
+
+    toggle?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      toggleSidebar();
+    });
+
+    overlay?.addEventListener("click", () => {
+      if (!isDesktop()) closeSidebar();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (isDesktop() || !document.body.classList.contains("sidebar-open")) return;
+      if (sidebar?.contains(event.target) || toggle?.contains(event.target)) return;
+      closeSidebar();
     });
 
     links.forEach((link) => {
       link.addEventListener("click", () => {
-        sidebar?.classList.remove("is-open");
-        menu?.setAttribute("aria-expanded", "false");
+        if (!isDesktop()) closeSidebar();
       });
     });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !isDesktop()) closeSidebar();
+    });
+
+    desktopQuery.addEventListener("change", syncSidebarState);
+    syncSidebarState();
 
     const sections = links
       .map((link) => document.querySelector(link.getAttribute("href")))
