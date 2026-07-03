@@ -352,7 +352,7 @@
       <p><strong>${escapeHtml(column)}</strong>: ${uniques} clases · dominante: ${escapeHtml(top ? top[0] : "N/A")} (${topPct.toFixed(1)}%)</p>
       ${messages.map((message) => `<p>${escapeHtml(message)}</p>`).join("")}
       <div class="c9-dynamic-bars">
-        ${counts.slice(0, 6).map(([label, count]) => {
+        ${counts.map(([label, count]) => {
           const width = Math.max(10, (count / total) * 100);
           return `<div><span>${escapeHtml(label)}</span><strong style="width:${width}%">${count}</strong></div>`;
         }).join("")}
