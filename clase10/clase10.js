@@ -6,6 +6,14 @@
   const storagePrefix = "clase10-ruleforge";
   const storageKey = `${storagePrefix}:state`;
   const progressPrefix = `${storagePrefix}:progress`;
+  const LARGE_DATASET_THRESHOLD = 1000;
+  const MAX_PREVIEW_ROWS = 20;
+  const MAX_COLUMNS_PREVIEW = 30;
+  const MAX_PATTERN_RESULTS = 50;
+  const MAX_PATTERN_RENDER = 25;
+  const MAX_VALUE_COUNTS_RENDER = 20;
+  const MAX_TEST_HISTORY_RENDER = 20;
+  const MAX_DEBUG_FINDINGS_RENDER = 30;
 
   const state = {
     headers: [],
@@ -14,6 +22,12 @@
     target: "",
     inputs: [],
     patterns: [],
+    patternRenderLimit: MAX_PATTERN_RENDER,
+    patternFilters: { type: "all", minCoverage: 0, minPrecision: 0 },
+    patternWarning: "",
+    normalRuleRenderLimit: 20,
+    exceptionRuleRenderLimit: 20,
+    debugFindingsRenderLimit: MAX_DEBUG_FINDINGS_RENDER,
     rules: [],
     fallback: { answer: "", needs: "" },
     caseDraft: {},
@@ -61,6 +75,53 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
+  }
+
+  function isLargeDataset() {
+    return state.rows.length >= LARGE_DATASET_THRESHOLD;
+  }
+
+  function getRenderLimitMessage(total, rendered, label) {
+    if (total <= rendered) return "";
+    return `Mostrando ${rendered} de ${total} ${label}.`;
+  }
+
+  function renderLimitedList(items, limit, renderItemFn) {
+    return items.slice(0, limit).map(renderItemFn).join("");
+  }
+
+  function setupShowMoreButton(button, total, rendered, onClick) {
+    if (!button) return;
+    if (total > rendered) {
+      button.style.display = "inline-flex";
+      button.onclick = onClick;
+    } else {
+      button.style.display = "none";
+      button.onclick = null;
+    }
+  }
+
+  function confidenceScore(confidence) {
+    return { alta: 3, media: 2, baja: 1 }[confidence] || 0;
+  }
+
+  function sortPatternsByUsefulness(patterns) {
+    return [...patterns].sort((a, b) => (
+      (b.precision - a.precision)
+      || (b.coverage - a.coverage)
+      || (confidenceScore(b.confidence) - confidenceScore(a.confidence))
+    ));
+  }
+
+  function applyPatternFilters() {
+    const type = $("#pattern-filter-type")?.value || state.patternFilters.type || "all";
+    const minCoverage = Math.max(0, Number($("#pattern-filter-coverage")?.value || 0));
+    const minPrecision = Math.max(0, Math.min(100, Number($("#pattern-filter-precision")?.value || 0))) / 100;
+    state.patternFilters = { type, minCoverage, minPrecision };
+    return state.patterns.filter((pattern) => {
+      const typeMatch = type === "all" || pattern.type === type;
+      return typeMatch && pattern.coverage >= minCoverage && pattern.precision >= minPrecision;
+    });
   }
 
   function parseCSV(text) {
@@ -365,12 +426,49 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
     renderCaseForm();
   }
 
+  function renderDatasetPreview() {
+    const sizeNote = $("#dataset-size-note");
+    const note = $("#dataset-preview-note");
+    const root = $("#dataset-preview");
+    if (!note || !root) return;
+    if (!state.headers.length) {
+      if (sizeNote) sizeNote.innerHTML = "";
+      note.textContent = "Carga un CSV para ver una muestra limitada de filas y columnas.";
+      root.innerHTML = "";
+      return;
+    }
+
+    const previewHeaders = state.headers.slice(0, MAX_COLUMNS_PREVIEW);
+    const previewRows = state.rows.slice(0, MAX_PREVIEW_ROWS);
+    const rowMessage = getRenderLimitMessage(state.rows.length, previewRows.length, "filas");
+    const columnMessage = getRenderLimitMessage(state.headers.length, previewHeaders.length, "columnas");
+    if (sizeNote) {
+      sizeNote.innerHTML = isLargeDataset()
+        ? `<div class="large-dataset-badge">Dataset grande detectado: se analizarán las ${state.rows.length} filas, pero la pantalla mostrará vistas resumidas para mantener buen rendimiento.</div>`
+        : "";
+    }
+    note.textContent = [rowMessage || `Mostrando ${previewRows.length} filas.`, columnMessage].filter(Boolean).join(" ");
+    root.innerHTML = `
+      <table class="dataset-preview-table">
+        <thead>
+          <tr>${previewHeaders.map((header) => `<th>${escapeHtml(header)}</th>`).join("")}</tr>
+        </thead>
+        <tbody>
+          ${previewRows.map((row) => `
+            <tr>${previewHeaders.map((header) => `<td>${escapeHtml(row[header] || "")}</td>`).join("")}</tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
   function renderDiagnosis() {
     const metrics = $("#dataset-metrics");
     const targets = $("#possible-targets");
     if (!state.diagnosis) {
       metrics.innerHTML = "";
       targets.innerHTML = "";
+      renderDatasetPreview();
       return;
     }
     metrics.innerHTML = `
@@ -386,6 +484,7 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
     const notes = state.diagnosis.notes.length ? state.diagnosis.notes.join(" ") : "Dataset listo para buscar patrones.";
     feedback.className = `feedback ${state.diagnosis.notes.length ? "warn" : "good"}`;
     feedback.textContent = notes;
+    renderDatasetPreview();
   }
 
   function analyzeCurrentCSV() {
@@ -396,6 +495,7 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
     state.target = state.diagnosis.possibleTargets[0] || state.headers[state.headers.length - 1] || "";
     state.inputs = state.headers.filter((header) => header !== state.target).slice(0, 5);
     state.patterns = [];
+    state.patternRenderLimit = MAX_PATTERN_RENDER;
     renderDiagnosis();
     refreshColumnControls();
     renderPatterns();
@@ -454,8 +554,11 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
       if (!groups.has(key)) groups.set(key, []);
       groups.get(key).push(row);
     });
+    if (groups.size > MAX_PATTERN_RESULTS) {
+      state.patternWarning = `${state.patternWarning ? `${state.patternWarning} ` : ""}Se detectaron ${groups.size} combinaciones; se conservarán los mejores ${MAX_PATTERN_RESULTS} patrones.`;
+    }
 
-    return Array.from(groups.entries()).map(([key, rows]) => {
+    const patterns = Array.from(groups.entries()).map(([key, rows]) => {
       const counts = valueCounts(rows, state.target);
       const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
       const [result, count] = sorted[0] || ["", 0];
@@ -477,11 +580,12 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
         type,
         strength: typeToLegacyStrength(type),
         outputCount,
-        outputSummary: sorted.map(([value, total]) => `${value}: ${total}`).join(", "),
+        outputSummary: `${sorted.slice(0, MAX_VALUE_COUNTS_RENDER).map(([value, total]) => `${value}: ${total}`).join(", ")}${sorted.length > MAX_VALUE_COUNTS_RENDER ? `, +${sorted.length - MAX_VALUE_COUNTS_RENDER} más` : ""}`,
         feedback: patternFeedback(type, rows.length, precision, outputCount)
       };
-    }).filter((pattern) => pattern.cases >= 2)
-      .sort((a, b) => (b.precision - a.precision) || (b.cases - a.cases));
+    }).filter((pattern) => pattern.cases >= 2);
+
+    return sortPatternsByUsefulness(patterns).slice(0, MAX_PATTERN_RESULTS);
   }
 
   function classifyPattern(coverage, precision, outputCount) {
@@ -533,11 +637,30 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
 
   function renderPatterns() {
     const root = $("#pattern-results");
+    const summary = $("#pattern-summary");
+    const showMoreButton = $("#show-more-patterns");
     if (!state.patterns.length) {
       root.innerHTML = "<div class=\"feedback\">Analiza combinaciones para ver patrones candidatos.</div>";
+      if (summary) summary.textContent = "";
+      setupShowMoreButton(showMoreButton, 0, 0, null);
       return;
     }
-    root.innerHTML = state.patterns.slice(0, 16).map((pattern, index) => `
+    const filtered = applyPatternFilters();
+    const rendered = Math.min(state.patternRenderLimit, filtered.length);
+    if (summary) {
+      const filterNote = filtered.length !== state.patterns.length ? ` ${filtered.length} pasan los filtros actuales.` : "";
+      const capNote = state.patternWarning || (state.patterns.length >= MAX_PATTERN_RESULTS ? `Se conservaron los mejores ${MAX_PATTERN_RESULTS} para evitar saturar la pantalla.` : "");
+      summary.innerHTML = `
+        ${escapeHtml(`Se encontraron ${state.patterns.length} patrones candidatos.${filterNote} ${getRenderLimitMessage(filtered.length, rendered, "patrones")}`)}
+        ${capNote ? `<span class="performance-warning">${escapeHtml(capNote)}</span>` : ""}
+      `;
+    }
+    if (!filtered.length) {
+      root.innerHTML = "<div class=\"feedback warn\">No hay patrones que cumplan los filtros actuales.</div>";
+      setupShowMoreButton(showMoreButton, 0, 0, null);
+      return;
+    }
+    root.innerHTML = renderLimitedList(filtered, rendered, (pattern) => `
       <article class="pattern-card type-${pattern.type}">
         <header>
           <strong>${escapeHtml(Object.entries(pattern.conditions).map(([k, v]) => `${k} = ${v}`).join(" + "))}</strong>
@@ -551,9 +674,13 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
           <span>${escapeHtml(pattern.outputSummary)}</span>
         </div>
         <div class="pattern-feedback">${escapeHtml(pattern.feedback)}</div>
-        <button class="btn" type="button" data-pattern-rule="${index}">Convertir en regla</button>
+        <button class="btn" type="button" data-pattern-rule="${state.patterns.indexOf(pattern)}">Convertir en regla</button>
       </article>
-    `).join("");
+    `);
+    setupShowMoreButton(showMoreButton, filtered.length, rendered, () => {
+      state.patternRenderLimit += MAX_PATTERN_RENDER;
+      renderPatterns();
+    });
     $$("[data-pattern-rule]").forEach((button) => {
       button.addEventListener("click", () => {
         const pattern = state.patterns[Number(button.dataset.patternRule)];
@@ -574,13 +701,33 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
   function setupPatterns() {
     $("#analyze-patterns").addEventListener("click", () => {
       const size = Number($("#pattern-size").value);
-      const columns = selectedValues($("#pattern-columns")).slice(0, size);
+      const selected = selectedValues($("#pattern-columns"));
+      const columns = selected.slice(0, size);
       if (!state.rows.length || !state.target || columns.length !== size) {
         $("#pattern-results").innerHTML = "<div class=\"feedback warn\">Carga un CSV, elige objetivo y selecciona exactamente la cantidad de variables indicada.</div>";
         return;
       }
+      if (selected.length > size) {
+        state.patternWarning = `Seleccionaste ${selected.length} variables; se analizaron las primeras ${size} para controlar el número de combinaciones.`;
+      } else {
+        state.patternWarning = "";
+      }
+      state.patternRenderLimit = MAX_PATTERN_RENDER;
       state.patterns = groupPatterns(columns);
       renderPatterns();
+      saveState();
+    });
+    ["pattern-filter-type", "pattern-filter-coverage", "pattern-filter-precision"].forEach((id) => {
+      $(`#${id}`)?.addEventListener("input", () => {
+        state.patternRenderLimit = MAX_PATTERN_RENDER;
+        renderPatterns();
+        saveState();
+      });
+      $(`#${id}`)?.addEventListener("change", () => {
+        state.patternRenderLimit = MAX_PATTERN_RENDER;
+        renderPatterns();
+        saveState();
+      });
     });
   }
 
@@ -707,9 +854,31 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
   function renderRules() {
     const normal = state.rules.filter((rule) => rule.tipo === "normal");
     const exceptions = state.rules.filter((rule) => rule.tipo === "excepcion");
+    const rulesSummary = $("#rules-summary");
+    const confidenceCounts = state.rules.reduce((acc, rule) => {
+      const key = rule.confianza || "sin confianza";
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, {});
+    if (rulesSummary) {
+      const confidenceText = Object.entries(confidenceCounts)
+        .map(([confidence, total]) => `${confidence}: ${total}`)
+        .join(" · ") || "sin reglas";
+      rulesSummary.textContent = `Reglas normales: ${normal.length}. Excepciones: ${exceptions.length}. Confianza: ${confidenceText}.`;
+    }
     $("#normal-count").textContent = `${normal.length}/5`;
-    $("#normal-rules").innerHTML = renderRuleCards(normal);
-    $("#exception-rules").innerHTML = renderRuleCards(exceptions);
+    const normalRendered = Math.min(state.normalRuleRenderLimit, normal.length);
+    const exceptionRendered = Math.min(state.exceptionRuleRenderLimit, exceptions.length);
+    $("#normal-rules").innerHTML = renderRuleCards(normal.slice(0, normalRendered));
+    $("#exception-rules").innerHTML = renderRuleCards(exceptions.slice(0, exceptionRendered));
+    setupShowMoreButton($("#show-more-normal-rules"), normal.length, normalRendered, () => {
+      state.normalRuleRenderLimit += 20;
+      renderRules();
+    });
+    setupShowMoreButton($("#show-more-exception-rules"), exceptions.length, exceptionRendered, () => {
+      state.exceptionRuleRenderLimit += 20;
+      renderRules();
+    });
     const exceptionFeedback = $("#exception-feedback");
     exceptionFeedback.className = `feedback ${exceptions.length >= 2 ? "good" : "warn"}`;
     exceptionFeedback.textContent = exceptions.length >= 2
@@ -854,7 +1023,7 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
     $("#arena-result").className = `feedback ${matches.length && !conflict ? "good" : "warn"}`;
     $("#arena-result").textContent = message;
     state.tests.unshift({ example, message, conflict, at: new Date().toLocaleString("es-MX") });
-    state.tests = state.tests.slice(0, 12);
+    state.tests = state.tests.slice(0, 100);
     saveState();
     renderHistory();
   }
@@ -866,7 +1035,14 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
 
   function renderHistory() {
     $("#test-count").textContent = `${Math.min(5, state.tests.length)}/5`;
-    $("#test-history").innerHTML = state.tests.length ? state.tests.map((test) => `
+    const note = $("#test-history-note");
+    const visible = state.tests.slice(0, MAX_TEST_HISTORY_RENDER);
+    if (note) {
+      note.textContent = state.tests.length > visible.length
+        ? `Mostrando las últimas ${visible.length} pruebas.`
+        : state.tests.length ? `Mostrando ${visible.length} prueba(s).` : "";
+    }
+    $("#test-history").innerHTML = visible.length ? visible.map((test) => `
       <article class="history-item">
         <strong>${escapeHtml(test.at)}</strong>
         <p>${escapeHtml(Object.entries(test.example).map(([k, v]) => `${k}: ${v}`).join(" · "))}</p>
@@ -918,6 +1094,12 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
     state.target = "";
     state.inputs = [];
     state.patterns = [];
+    state.patternRenderLimit = MAX_PATTERN_RENDER;
+    state.patternFilters = { type: "all", minCoverage: 0, minPrecision: 0 };
+    state.patternWarning = "";
+    state.normalRuleRenderLimit = 20;
+    state.exceptionRuleRenderLimit = 20;
+    state.debugFindingsRenderLimit = MAX_DEBUG_FINDINGS_RENDER;
     state.rules = [];
     state.fallback = { answer: "", needs: "" };
     state.caseDraft = {};
@@ -996,6 +1178,8 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
       tipo_cliente: "estudiante"
     };
     state.patterns = groupPatterns(["clima", "gusto"]);
+    state.patternRenderLimit = MAX_PATTERN_RENDER;
+    state.patternWarning = "";
     $("#pattern-size").value = "2";
     $("#mini-value-1").value = "calor";
     $("#mini-value-2").value = "dulce";
@@ -1245,15 +1429,21 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
       });
     }
     state.debugFindings = [...ruleFindings, ...conflictFindings, ...fallbackFindings];
+    state.debugFindingsRenderLimit = MAX_DEBUG_FINDINGS_RENDER;
     const rulesWithIssues = new Set(state.debugFindings.flatMap((finding) => finding.ruleIds).filter((id) => id !== "respaldo"));
     const critical = state.debugFindings.filter((finding) => finding.severity === "high").length;
+    const review = state.debugFindings.filter((finding) => finding.severity === "medium").length;
+    const improvements = state.debugFindings.filter((finding) => finding.severity === "low").length;
     state.debugSummary = {
       totalRules: state.rules.length,
       readyRules: Math.max(0, state.rules.length - rulesWithIssues.size),
       reviewRules: rulesWithIssues.size,
       conflicts: conflictFindings.length,
       critical,
-      text: `Se analizaron ${state.rules.length} reglas. ${Math.max(0, state.rules.length - rulesWithIssues.size)} están listas, ${rulesWithIssues.size} requieren revisión y se detectaron ${conflictFindings.length} posible(s) conflicto(s).`
+      review,
+      improvements,
+      totalFindings: state.debugFindings.length,
+      text: `Se analizaron ${state.rules.length} reglas. Hallazgos: ${state.debugFindings.length}. Críticos: ${critical}. Revisión: ${review}. Mejoras: ${improvements}.`
     };
     renderDebugDashboard();
     renderDebugFindings();
@@ -1271,10 +1461,12 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
     root.innerHTML = `
       <div class="debug-summary">${escapeHtml(summary.text)}</div>
       <div class="debug-metric"><span>Total</span><strong>${summary.totalRules}</strong></div>
+      <div class="debug-metric"><span>Hallazgos</span><strong>${summary.totalFindings || 0}</strong></div>
       <div class="debug-metric"><span>Listas</span><strong>${summary.readyRules}</strong></div>
       <div class="debug-metric"><span>Revisión</span><strong>${summary.reviewRules}</strong></div>
       <div class="debug-metric"><span>Conflictos</span><strong>${summary.conflicts}</strong></div>
       <div class="debug-metric"><span>Críticas</span><strong>${summary.critical}</strong></div>
+      <div class="debug-metric"><span>Mejoras</span><strong>${summary.improvements || 0}</strong></div>
     `;
   }
 
@@ -1305,9 +1497,11 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
 
   function renderDebugFindings() {
     const root = $("#debug-results");
+    const showMoreButton = $("#show-more-debug-findings");
     if (!root) return;
     if (!state.debugSummary) {
       root.innerHTML = "";
+      setupShowMoreButton(showMoreButton, 0, 0, null);
       return;
     }
     if (!state.debugFindings.length) {
@@ -1320,9 +1514,11 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
           <p>La base no muestra errores básicos. Haz pruebas con casos límite antes de entregarla.</p>
         </article>
       `;
+      setupShowMoreButton(showMoreButton, 0, 0, null);
       return;
     }
-    root.innerHTML = state.debugFindings.map((finding) => {
+    const rendered = Math.min(state.debugFindingsRenderLimit, state.debugFindings.length);
+    root.innerHTML = state.debugFindings.slice(0, rendered).map((finding) => {
       const isConflict = finding.type === "conflict";
       return `
         <article class="debug-finding severity-${escapeHtml(finding.severity)}">
@@ -1351,6 +1547,10 @@ calor,salado,media,bajo,universitario,combo escolar,4`;
         </article>
       `;
     }).join("");
+    setupShowMoreButton(showMoreButton, state.debugFindings.length, rendered, () => {
+      state.debugFindingsRenderLimit += MAX_DEBUG_FINDINGS_RENDER;
+      renderDebugFindings();
+    });
   }
 
   function runDebug() {

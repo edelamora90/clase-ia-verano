@@ -152,6 +152,7 @@
         <article class="panel">
           <h3>Diagnóstico</h3>
           <div class="metrics" id="dataset-metrics"></div>
+          <div id="dataset-size-note"></div>
           <div class="target-list" id="possible-targets"></div>
           <label class="field">Columna objetivo
             <select id="target-column"></select>
@@ -161,6 +162,11 @@
           </label>
         </article>
       </div>
+      <article class="panel">
+        <h3>Vista previa del dataset</h3>
+        <div id="dataset-preview-note" class="render-limit-note">Carga un CSV para ver una muestra limitada de filas y columnas.</div>
+        <div class="dataset-preview-scroll" id="dataset-preview"></div>
+      </article>
       <div class="grid three">
         <label class="field">Nombre del agente
           <input id="agent-name" placeholder="Ej. Mentor de riesgo académico">
@@ -272,6 +278,24 @@
             <button class="btn primary" id="analyze-patterns" type="button">Analizar patrones</button>
           </div>
         </div>
+        <div class="pattern-filter-bar">
+          <label class="field">Confianza
+            <select id="pattern-filter-type">
+              <option value="all">todos</option>
+              <option value="strong">fuerte</option>
+              <option value="weak">débil</option>
+              <option value="doubtful">dudoso</option>
+              <option value="conflict">conflicto</option>
+            </select>
+          </label>
+          <label class="field">Cobertura mínima
+            <input id="pattern-filter-coverage" type="number" min="0" step="1" placeholder="0">
+          </label>
+          <label class="field">Precisión mínima %
+            <input id="pattern-filter-precision" type="number" min="0" max="100" step="1" placeholder="0">
+          </label>
+        </div>
+        <div id="pattern-summary" class="render-limit-note"></div>
         <div class="pattern-guidance">
           <strong>Si no encuentras patrones claros, prueba estas estrategias:</strong>
           <ul>
@@ -282,7 +306,10 @@
             <li>agrupa categorías parecidas si tiene sentido.</li>
           </ul>
         </div>
-        <div class="pattern-grid" id="pattern-results"></div>
+        <div class="patterns-scroll-panel">
+          <div class="pattern-grid" id="pattern-results"></div>
+        </div>
+        <button class="btn" id="show-more-patterns" type="button">Ver más patrones</button>
       </article>
 
       <article class="panel pattern-activity">
@@ -343,7 +370,11 @@
         </article>
         <article class="panel">
           <h3>Reglas normales <span id="normal-count">0/5</span></h3>
-          <div class="rule-list" id="normal-rules"></div>
+          <div id="rules-summary" class="render-limit-note"></div>
+          <div class="rules-scroll-panel">
+            <div class="rule-list" id="normal-rules"></div>
+          </div>
+          <button class="btn" id="show-more-normal-rules" type="button">Ver más reglas</button>
         </article>
       </div>
       <label class="complete"><input type="checkbox" data-complete="m4"> Tengo al menos 5 reglas normales.</label>
@@ -358,7 +389,10 @@
       <article class="panel">
         <h3>Meta de excepciones</h3>
         <p class="note">Usa el mismo editor de reglas, cambia el tipo a <strong>excepcion</strong> y prioridad alta si el caso debe imponerse sobre reglas normales.</p>
-        <div class="rule-list" id="exception-rules"></div>
+        <div class="rules-scroll-panel">
+          <div class="rule-list" id="exception-rules"></div>
+        </div>
+        <button class="btn" id="show-more-exception-rules" type="button">Ver más reglas</button>
         <div class="feedback" id="exception-feedback">Crea mínimo 2 excepciones. La página revisará si parecen excepciones o reglas normales.</div>
       </article>
       <label class="complete"><input type="checkbox" data-complete="m5"> Tengo al menos 2 reglas de excepción.</label>
@@ -400,7 +434,8 @@
         </article>
         <article class="panel">
           <h3>Historial de pruebas <span id="test-count">0/5</span></h3>
-          <div class="history" id="test-history"></div>
+          <div id="test-history-note" class="render-limit-note"></div>
+          <div class="history arena-history-scroll" id="test-history"></div>
         </article>
       </div>
       <label class="complete"><input type="checkbox" data-complete="m7"> Probé mínimo 5 casos.</label>
@@ -512,7 +547,10 @@
         <h3>Analizador de calidad</h3>
         <button class="btn primary" id="run-debug" type="button">Analizar base</button>
         <div class="debug-dashboard" id="debug-dashboard"></div>
-        <div class="debug-list" id="debug-results"></div>
+        <div class="debug-findings-scroll">
+          <div class="debug-list" id="debug-results"></div>
+        </div>
+        <button class="btn" id="show-more-debug-findings" type="button">Ver más hallazgos</button>
       </article>
 
       <article class="panel debug-reflection">
@@ -553,7 +591,7 @@
             <button class="btn" id="copy-json" type="button">Copiar JSON</button>
             <button class="btn" id="download-json" type="button">Descargar JSON</button>
           </div>
-          <textarea id="json-output" rows="14" readonly></textarea>
+          <textarea id="json-output" class="json-output-scroll" rows="14" readonly></textarea>
         </article>
         <article class="panel">
           <h3>Reporte de evidencia</h3>
@@ -564,7 +602,7 @@
             <button class="btn" id="download-report-md" type="button">Descargar reporte .md</button>
             <button class="btn" id="download-report-txt" type="button">Descargar reporte .txt</button>
           </div>
-          <textarea id="report-output" rows="14" readonly></textarea>
+          <textarea id="report-output" class="report-output-scroll" rows="14" readonly></textarea>
         </article>
       </div>
       <label class="complete"><input type="checkbox" data-complete="m9"> Exporté mi base de conocimiento.</label>
