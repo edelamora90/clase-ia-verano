@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Clase 10: Rule Forge Arena para construir, validar y probar bases de conocimiento con reglas.">
+  <title>Clase 10 · Rule Forge Arena</title>
+  <link rel="stylesheet" href="./clase10.css">
+</head>
+<body>
+  <button class="menu-toggle" id="sidebar-toggle" type="button" aria-controls="mission-sidebar" aria-expanded="true">
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+    <span>Misiones</span>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <aside class="sidebar" id="mission-sidebar" aria-label="Misiones de Clase 10">
+    <a class="back-link" href="../index.html">Curso IA</a>
+    <div class="brand-card">
+      <svg viewBox="0 0 80 80" aria-hidden="true">
+        <path d="M14 48 40 10l26 38-26 22Z"></path>
+        <path d="M26 47h28M31 38h18M36 29h8"></path>
+        <circle cx="40" cy="54" r="5"></circle>
+      </svg>
+      <div>
+        <strong>Rule Forge Arena</strong>
+        <span>Clase 10</span>
+      </div>
+    </div>
+    <div class="xp-panel">
+      <div><span>XP</span><strong id="xp-text">0 / 100</strong></div>
+      <div class="xp-track"><span id="xp-bar"></span></div>
+      <small id="xp-status">Completa misiones para desbloquear la base.</small>
+    </div>
+    <nav class="mission-nav" aria-label="Navegación interna">
+      <a href="#inicio">Inicio</a>
+      <a href="#progreso">Progreso</a>
+      <a href="#mision-1">M1 · Dataset</a>
+      <a href="#mision-2">M2 · Producción</a>
+      <a href="#mision-3">M3 · Patrones</a>
+      <a href="#mision-4">M4 · Normales</a>
+      <a href="#mision-5">M5 · Excepciones</a>
+      <a href="#mision-6">M6 · Respaldo</a>
+      <a href="#mision-7">M7 · Arena</a>
+      <a href="#mision-8">M8 · Debug</a>
+      <a href="#mision-9">M9 · Exportar</a>
+    </nav>
+  </aside>
+
+  <main class="app-shell">
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <span class="eyebrow">Clase 10 · Rule Forge Arena</span>
+        <h1>Construye, valida y prueba la base de conocimiento de tu agente</h1>
+        <p>Hoy construirán la primera mente lógica de su agente: una base de reglas que observa un caso, activa conocimiento validado con datos y explica por qué decide.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#mision-1">Entrar a la arena</a>
+          <a class="btn" href="#mision-9">Ver exportación</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Flujo visual Dataset a Agente explica">
+        <svg viewBox="0 0 900 520" role="img">
+          <defs>
+            <linearGradient id="forgeLine" x1="0" x2="1">
+              <stop offset="0%" stop-color="#34d399"></stop>
+              <stop offset="50%" stop-color="#38bdf8"></stop>
+              <stop offset="100%" stop-color="#f59e0b"></stop>
+            </linearGradient>
+          </defs>
+          <rect class="forge-bg" x="42" y="54" width="816" height="392" rx="36"></rect>
+          <path class="forge-path" d="M135 250h130c35 0 35-84 70-84h78c35 0 35 84 70 84h72c35 0 35-84 70-84h60"></path>
+          <g class="forge-node" transform="translate(82 184)">
+            <rect width="120" height="92" rx="22"></rect>
+            <path d="M28 28h64M28 46h64M28 64h42"></path>
+            <text x="60" y="124">Dataset</text>
+          </g>
+          <g class="forge-node" transform="translate(278 100)">
+            <rect width="132" height="92" rx="22"></rect>
+            <path d="M30 62c18-40 36-40 54 0 11-23 22-28 38-13"></path>
+            <text x="66" y="124">Patrones</text>
+          </g>
+          <g class="forge-node" transform="translate(462 184)">
+            <rect width="122" height="92" rx="22"></rect>
+            <path d="M25 33h72M25 58h44M80 53l17 17 25-36"></path>
+            <text x="61" y="124">Reglas</text>
+          </g>
+          <g class="forge-node" transform="translate(628 100)">
+            <rect width="152" height="92" rx="22"></rect>
+            <path d="M36 30h80M36 50h52M36 70h70"></path>
+            <text x="76" y="124">Base de conocimiento</text>
+          </g>
+          <g class="agent-orb" transform="translate(645 296)">
+            <circle cx="72" cy="58" r="54"></circle>
+            <circle cx="52" cy="45" r="7"></circle>
+            <circle cx="92" cy="45" r="7"></circle>
+            <path d="M48 73c17 14 32 14 48 0"></path>
+            <text x="72" y="138">Agente explica</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="work-mode" id="modo-trabajo" aria-label="Modo de trabajo">
+      <div>
+        <span class="eyebrow">Modo de trabajo</span>
+        <h2>Explora o empieza desde cero</h2>
+        <p>Puedes explorar la clase con un ejemplo completo o limpiar el entorno para trabajar con tu propio dataset.</p>
+      </div>
+      <div class="work-mode-actions">
+        <button class="btn primary" id="load-guided-example" type="button">Cargar ejemplo guiado</button>
+        <button class="btn danger" id="clear-workspace" type="button">Limpiar todo y usar mi dataset</button>
+      </div>
+      <div class="global-message" id="global-message" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="progress-board" id="progreso">
+      <div class="section-heading">
+        <span class="eyebrow">Tablero de progreso</span>
+        <h2>Mapa de misiones</h2>
+        <p>Usa ChatGPT, Claude o Gemini para proponer reglas. La página exige que las valides contra tu CSV antes de convertirlas en conocimiento del agente.</p>
+      </div>
+      <div class="mission-map">
+        <article><strong>Producto de la misión</strong><span>Dataset diagnosticado, objetivo elegido y variables de entrada listas.</span></article>
+        <article><strong>Concepto clave</strong><span>Reglas de producción convertidas en decisiones SI/ENTONCES.</span></article>
+        <article><strong>Lo que construirás</strong><span>Reglas normales, excepciones y respaldo para no inventar.</span></article>
+        <article><strong>Resultado esperado</strong><span>Base de conocimiento probada, depurada y exportable.</span></article>
+      </div>
+      <div class="checklist" id="mission-checklist"></div>
+    </section>
+
+    <section class="mission" id="mision-1" data-mission="m1" data-xp="12">
+      <div class="mission-title">
+        <span class="badge">Misión 1</span>
+        <h2>Cargar dataset y recuperar diseño</h2>
+        <p>Sube o pega un CSV. La arena detecta columnas, filas, faltantes, duplicados y posibles objetivos para que diseñes el agente con evidencia.</p>
+      </div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>CSV del equipo</h3>
+          <label class="field">Subir archivo CSV
+            <input id="csv-file" type="file" accept=".csv,text/csv">
+          </label>
+          <label class="field">O pegar CSV
+            <textarea id="csv-text" rows="9" placeholder="clima,gusto,recomendacion&#10;calor,dulce,frappe&#10;frio,amargo,americano"></textarea>
+          </label>
+          <div class="button-row">
+            <button class="btn primary" id="analyze-csv" type="button">Analizar dataset</button>
+            <button class="btn" id="load-sample" type="button">Cargar ejemplo</button>
+          </div>
+          <div class="feedback" id="dataset-feedback">Esperando dataset.</div>
+        </article>
+        <article class="panel">
+          <h3>Diagnóstico</h3>
+          <div class="metrics" id="dataset-metrics"></div>
+          <div class="target-list" id="possible-targets"></div>
+          <label class="field">Columna objetivo
+            <select id="target-column"></select>
+          </label>
+          <label class="field">Variables de entrada
+            <select id="input-columns" multiple size="7"></select>
+          </label>
+        </article>
+      </div>
+      <div class="grid three">
+        <label class="field">Nombre del agente
+          <input id="agent-name" placeholder="Ej. Mentor de riesgo académico">
+        </label>
+        <label class="field">Problema
+          <input id="agent-problem" placeholder="Ej. detectar estudiantes que requieren apoyo">
+        </label>
+        <label class="field">Usuario
+          <input id="agent-user" placeholder="Ej. coordinación académica">
+        </label>
+      </div>
+      <label class="complete"><input type="checkbox" data-complete="m1"> Dataset y diseño inicial listos.</label>
+    </section>
+
+    <section class="mission" id="mision-2" data-mission="m2" data-xp="10">
+      <div class="mission-title">
+        <span class="badge">Misión 2</span>
+        <h2>Reglas de producción</h2>
+        <p>Una regla SI/ENTONCES convierte observaciones del caso en una decisión explicable. Sirve para que el agente no improvise: revisa condiciones, produce resultado y justifica.</p>
+      </div>
+      <div class="rule-visual">
+        <div><span>SI</span><strong>clima = calor</strong></div>
+        <div><span>Y</span><strong>gusto = dulce</strong></div>
+        <div><span>ENTONCES</span><strong>recomendacion = frappe</strong></div>
+      </div>
+      <article class="panel">
+        <h3>Mini constructor</h3>
+        <div class="rule-builder">
+          <label class="field">SI variable
+            <select id="mini-var-1"></select>
+          </label>
+          <label class="field">=
+            <input id="mini-value-1" placeholder="valor">
+          </label>
+          <label class="field">Y variable
+            <select id="mini-var-2"></select>
+          </label>
+          <label class="field">=
+            <input id="mini-value-2" placeholder="valor">
+          </label>
+          <label class="field">ENTONCES <span id="mini-target-label">objetivo</span> =
+            <input id="mini-result" placeholder="resultado">
+          </label>
+        </div>
+        <div class="feedback" id="mini-feedback">Completa la regla para revisarla.</div>
+      </article>
+      <label class="complete"><input type="checkbox" data-complete="m2"> Entiendo cómo una regla guía al agente.</label>
+    </section>
+
+    <section class="mission" id="mision-3" data-mission="m3" data-xp="14">
+      <div class="mission-title">
+        <span class="badge">Misión 3</span>
+        <h2>Cazadores de patrones</h2>
+        <p>Antes de crear reglas, aprenderás a reconocer señales repetidas en tu dataset y a decidir si tienen suficiente evidencia.</p>
+      </div>
+
+      <div class="pattern-learning">
+        <article class="pattern-primer">
+          <span class="badge">Idea clave</span>
+          <h3>Un patrón no es una regla todavía</h3>
+          <p>Un patrón es una combinación de valores de entrada que aparece en el dataset y suele llevar al mismo resultado.</p>
+          <p>Un patrón no es una regla todavía. Es una señal encontrada en los datos. Si esa señal se repite y produce una salida consistente, puede convertirse en una regla candidata.</p>
+        </article>
+
+        <article class="pattern-diagram" aria-label="Entrada más entrada produce salida frecuente">
+          <div><span>Entrada</span><strong>clima = calor</strong></div>
+          <div><span>+</span><strong>gusto = dulce</strong></div>
+          <div><span>Salida frecuente</span><strong>recomendacion = frappe</strong></div>
+        </article>
+
+        <article class="pattern-steps">
+          <h3>Cómo identificar patrones</h3>
+          <ol>
+            <li>Elegir la columna objetivo.</li>
+            <li>Elegir variables de entrada.</li>
+            <li>Buscar combinaciones repetidas.</li>
+            <li>Revisar si la salida se repite.</li>
+            <li>Clasificar el patrón.</li>
+          </ol>
+        </article>
+
+        <article class="pattern-concepts">
+          <h3>Conceptos para evaluar</h3>
+          <div class="concept-grid">
+            <div><strong>Cobertura</strong><span>Cuántos casos cumplen la combinación.</span></div>
+            <div><strong>Precisión</strong><span>Porcentaje que termina en el resultado más común.</span></div>
+            <div><strong>Confianza</strong><span>Lectura cualitativa para decidir si conviene usarlo.</span></div>
+          </div>
+        </article>
+
+        <div class="traffic-grid" aria-label="Clasificación de patrones">
+          <article class="traffic-card strong"><strong>Patrón fuerte</strong><span>Buena cobertura y alta precisión. Puede convertirse en regla.</span></article>
+          <article class="traffic-card weak"><strong>Patrón débil</strong><span>Pocos casos, pero resultado coherente. Usar con confianza media o baja.</span></article>
+          <article class="traffic-card doubtful"><strong>Patrón dudoso</strong><span>Pocos casos o resultados mezclados. Revisar antes de usar.</span></article>
+          <article class="traffic-card conflict"><strong>Patrón conflictuado</strong><span>La misma combinación lleva a salidas distintas. Requiere más variables o prioridad.</span></article>
+        </div>
+      </div>
+
+      <article class="panel">
+        <h3>Detector de patrones</h3>
+        <div class="grid three">
+          <label class="field">Cantidad de variables
+            <select id="pattern-size"><option>1</option><option selected>2</option><option>3</option></select>
+          </label>
+          <label class="field">Variables para analizar
+            <select id="pattern-columns" multiple size="5"></select>
+          </label>
+          <div class="tool-actions">
+            <button class="btn primary" id="analyze-patterns" type="button">Analizar patrones</button>
+          </div>
+        </div>
+        <div class="pattern-guidance">
+          <strong>Si no encuentras patrones claros, prueba estas estrategias:</strong>
+          <ul>
+            <li>usa menos variables;</li>
+            <li>cambia una variable de entrada;</li>
+            <li>evita columnas con demasiados valores únicos;</li>
+            <li>revisa si la columna objetivo está bien elegida;</li>
+            <li>agrupa categorías parecidas si tiene sentido.</li>
+          </ul>
+        </div>
+        <div class="pattern-grid" id="pattern-results"></div>
+      </article>
+
+      <article class="panel pattern-activity">
+        <h3>Mini actividad</h3>
+        <p>Elige 3 patrones: 1 patrón fuerte, 1 patrón débil y 1 patrón dudoso o conflictivo. Explica cuál convertirías en regla y cuál no.</p>
+        <div class="grid three">
+          <label class="field">Patrón fuerte elegido
+            <textarea id="activity-strong-pattern" rows="4" placeholder="Condiciones, salida y por qué lo usarías."></textarea>
+          </label>
+          <label class="field">Patrón débil elegido
+            <textarea id="activity-weak-pattern" rows="4" placeholder="Qué evidencia tiene y qué precaución tomarías."></textarea>
+          </label>
+          <label class="field">Patrón dudoso o conflictivo
+            <textarea id="activity-doubtful-pattern" rows="4" placeholder="Por qué no lo convertirías todavía en regla."></textarea>
+          </label>
+        </div>
+        <div class="checklist pattern-activity-checks">
+          <label><input type="checkbox" id="activity-strong-check"> Registré 1 patrón fuerte.</label>
+          <label><input type="checkbox" id="activity-weak-check"> Registré 1 patrón débil.</label>
+          <label><input type="checkbox" id="activity-doubtful-check"> Registré 1 patrón dudoso o conflictivo.</label>
+        </div>
+      </article>
+
+      <div class="next-mission-note">En la siguiente misión no escribirás reglas desde cero. Vas a convertir tus mejores patrones en reglas SI/ENTONCES.</div>
+      <label class="complete"><input type="checkbox" data-complete="m3"> Seleccioné patrones candidatos.</label>
+    </section>
+
+    <section class="mission" id="mision-4" data-mission="m4" data-xp="14">
+      <div class="mission-title">
+        <span class="badge">Misión 4</span>
+        <h2>Forjar reglas normales</h2>
+        <p>Crea mínimo 5 reglas normales con evidencia. Pueden venir de patrones detectados o de propuestas de IA validadas con tu dataset.</p>
+      </div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Editor de regla</h3>
+          <div id="rule-condition-editor" class="condition-editor"></div>
+          <div class="button-row">
+            <button class="btn" id="add-condition" type="button">Agregar condición</button>
+            <button class="btn" id="clear-rule-form" type="button">Limpiar</button>
+          </div>
+          <div class="grid two compact">
+            <label class="field">Tipo
+              <select id="rule-type"><option value="normal">normal</option><option value="excepcion">excepcion</option></select>
+            </label>
+            <label class="field">Prioridad
+              <select id="rule-priority"><option>baja</option><option selected>media</option><option>alta</option></select>
+            </label>
+          </div>
+          <label class="field">Resultado
+            <input id="rule-result" placeholder="Ej. frappe">
+          </label>
+          <label class="field">Explicación
+            <textarea id="rule-explanation" rows="4" placeholder="Explica por qué estas condiciones llevan a este resultado."></textarea>
+          </label>
+          <button class="btn primary" id="save-rule" type="button">Guardar regla</button>
+          <div class="feedback" id="rule-feedback">Agrega condiciones y resultado.</div>
+        </article>
+        <article class="panel">
+          <h3>Reglas normales <span id="normal-count">0/5</span></h3>
+          <div class="rule-list" id="normal-rules"></div>
+        </article>
+      </div>
+      <label class="complete"><input type="checkbox" data-complete="m4"> Tengo al menos 5 reglas normales.</label>
+    </section>
+
+    <section class="mission" id="mision-5" data-mission="m5" data-xp="10">
+      <div class="mission-title">
+        <span class="badge">Misión 5</span>
+        <h2>Reglas de excepción</h2>
+        <p>Una excepción tiene mayor prioridad porque cubre casos raros, riesgosos o críticos donde la regla normal no basta.</p>
+      </div>
+      <article class="panel">
+        <h3>Meta de excepciones</h3>
+        <p class="note">Usa el mismo editor de reglas, cambia el tipo a <strong>excepcion</strong> y prioridad alta si el caso debe imponerse sobre reglas normales.</p>
+        <div class="rule-list" id="exception-rules"></div>
+        <div class="feedback" id="exception-feedback">Crea mínimo 2 excepciones. La página revisará si parecen excepciones o reglas normales.</div>
+      </article>
+      <label class="complete"><input type="checkbox" data-complete="m5"> Tengo al menos 2 reglas de excepción.</label>
+    </section>
+
+    <section class="mission" id="mision-6" data-mission="m6" data-xp="10">
+      <div class="mission-title">
+        <span class="badge">Misión 6</span>
+        <h2>Regla de respaldo</h2>
+        <p>La regla de respaldo evita que el agente invente. Si ninguna regla aplica, pide datos mínimos o declara incertidumbre.</p>
+      </div>
+      <article class="panel">
+        <div class="grid two">
+          <label class="field">Respuesta cuando no sabe
+            <textarea id="fallback-answer" rows="4" placeholder="No tengo evidencia suficiente para recomendar."></textarea>
+          </label>
+          <label class="field">Datos mínimos que necesita
+            <textarea id="fallback-needs" rows="4" placeholder="clima, presupuesto, gusto..."></textarea>
+          </label>
+        </div>
+        <button class="btn primary" id="save-fallback" type="button">Guardar respaldo</button>
+        <div class="feedback" id="fallback-feedback">El respaldo todavía no está definido.</div>
+      </article>
+      <label class="complete"><input type="checkbox" data-complete="m6"> Mi agente sabe qué responder cuando no sabe.</label>
+    </section>
+
+    <section class="mission" id="mision-7" data-mission="m7" data-xp="14">
+      <div class="mission-title">
+        <span class="badge">Misión 7</span>
+        <h2>Agent Arena</h2>
+        <p>Crea un caso nuevo, ejecuta las reglas y revisa regla activada, resultado, explicación, ausencia de regla o conflictos.</p>
+      </div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Caso nuevo</h3>
+          <div id="case-form" class="case-form"></div>
+          <button class="btn primary" id="run-arena" type="button">Ejecutar reglas</button>
+          <div class="feedback" id="arena-result">Esperando caso.</div>
+        </article>
+        <article class="panel">
+          <h3>Historial de pruebas <span id="test-count">0/5</span></h3>
+          <div class="history" id="test-history"></div>
+        </article>
+      </div>
+      <label class="complete"><input type="checkbox" data-complete="m7"> Probé mínimo 5 casos.</label>
+    </section>
+
+    <section class="mission" id="mision-8" data-mission="m8" data-xp="8">
+      <div class="mission-title">
+        <span class="badge">Misión 8</span>
+        <h2>Debug de conocimiento</h2>
+        <p>Revisa, entiende y mejora la base de conocimiento de tu agente antes de exportarla.</p>
+      </div>
+
+      <div class="debug-learning">
+        <article class="debug-intro">
+          <span class="badge">Misión 8 · Debug de conocimiento</span>
+          <h3>Revisa, entiende y mejora la base de conocimiento de tu agente</h3>
+          <p>Una base de conocimiento no está terminada cuando escribes reglas. Está terminada cuando esas reglas pueden ser entendidas, probadas, corregidas y explicadas. En esta misión vas a revisar la calidad de tus reglas para detectar errores antes de que el agente las use con casos reales.</p>
+        </article>
+        <article class="debug-explainer">
+          <h3>¿Qué es debug de conocimiento?</h3>
+          <p>Debuggear conocimiento significa revisar las reglas de un agente para encontrar problemas lógicos, vacíos, contradicciones o decisiones poco confiables.</p>
+        </article>
+        <article class="debug-explainer">
+          <h3>¿Para qué sirve?</h3>
+          <ul>
+            <li>Evita que el agente recomiende sin suficiente información.</li>
+            <li>Detecta reglas demasiado generales o específicas.</li>
+            <li>Encuentra contradicciones entre reglas.</li>
+            <li>Ayuda a pedir más datos cuando no hay evidencia.</li>
+          </ul>
+        </article>
+        <article class="debug-explainer">
+          <h3>¿Por qué es importante?</h3>
+          <p>Un agente basado en reglas puede parecer correcto aunque tenga errores ocultos. Una regla mal diseñada puede activarse en demasiados casos, chocar con otra regla o producir una recomendación sin justificación.</p>
+        </article>
+        <article class="debug-explainer">
+          <h3>Conexión con tu proyecto</h3>
+          <p>En tu agente, cada regla representa una decisión. Si una regla está mal redactada, el agente puede tomar malas decisiones. Por eso debes revisar la base antes de exportarla.</p>
+        </article>
+      </div>
+
+      <div class="debug-types-grid">
+        <article class="debug-type-card">
+          <figure class="debug-type-figure">
+            <img src="./assets/imgm81.png" alt="Ilustración de regla sin explicación" loading="lazy">
+          </figure>
+          <div class="debug-type-content">
+            <h4>Regla sin explicación</h4>
+            <p>El agente no puede explicar su razonamiento. Corrige conectando condiciones, problema y decisión.</p>
+          </div>
+        </article>
+        <article class="debug-type-card">
+          <figure class="debug-type-figure">
+            <img src="./assets/imgm82.png" alt="Ilustración de regla sin resultado" loading="lazy">
+          </figure>
+          <div class="debug-type-content">
+            <h4>Regla sin resultado</h4>
+            <p>Detecta un caso, pero no sabe qué recomendar, clasificar, alertar o decidir.</p>
+          </div>
+        </article>
+        <article class="debug-type-card">
+          <figure class="debug-type-figure">
+            <img src="./assets/imgm82.png" alt="Ilustración de regla demasiado general" loading="lazy">
+          </figure>
+          <div class="debug-type-content">
+            <h4>Demasiado general</h4>
+            <p>Usa muy pocas condiciones. Agrega gusto, hambre, presupuesto o tipo de usuario.</p>
+          </div>
+        </article>
+        <article class="debug-type-card">
+          <figure class="debug-type-figure">
+            <img src="./assets/imgm83.png" alt="Ilustración de regla demasiado específica" loading="lazy">
+          </figure>
+          <div class="debug-type-content">
+            <h4>Demasiado específica</h4>
+            <p>Usa tantas condiciones que casi nunca se activa. Quita lo que no sea necesario.</p>
+          </div>
+        </article>
+        <article class="debug-type-card">
+          <figure class="debug-type-figure">
+            <img src="./assets/imgm84.png" alt="Ilustración de posible conflicto entre reglas" loading="lazy">
+          </figure>
+          <div class="debug-type-content">
+            <h4>Posible conflicto</h4>
+            <p>Dos reglas pueden activarse juntas y producir resultados distintos. Usa prioridad o excepción.</p>
+          </div>
+        </article>
+        <article class="debug-type-card">
+          <figure class="debug-type-figure">
+            <img src="./assets/imgm85.png" alt="Ilustración de regla sin confianza" loading="lazy">
+          </figure>
+          <div class="debug-type-content">
+            <h4>Sin confianza</h4>
+            <p>No indica si representa un patrón fuerte, medio o débil.</p>
+          </div>
+        </article>
+        <article class="debug-type-card">
+          <figure class="debug-type-figure">
+            <img src="./assets/imgm86.png" alt="Ilustración de regla sin evidencia" loading="lazy">
+          </figure>
+          <div class="debug-type-content">
+            <h4>Sin evidencia</h4>
+            <p>Suena lógica, pero no se validó con patrones, cobertura o revisión en Colab.</p>
+          </div>
+        </article>
+      </div>
+
+      <article class="panel">
+        <h3>Analizador de calidad</h3>
+        <button class="btn primary" id="run-debug" type="button">Analizar base</button>
+        <div class="debug-dashboard" id="debug-dashboard"></div>
+        <div class="debug-list" id="debug-results"></div>
+      </article>
+
+      <article class="panel debug-reflection">
+        <h3>Tu reto de debug</h3>
+        <p>Resuelve al menos una regla sin explicación o débil, una regla demasiado general o específica, y un posible conflicto o regla sin confianza.</p>
+        <div class="checklist debug-checklist">
+          <label><input type="checkbox" id="debug-check-reviewed"> Revisé las reglas señaladas.</label>
+          <label><input type="checkbox" id="debug-check-explanation"> Mejoré al menos una explicación.</label>
+          <label><input type="checkbox" id="debug-check-condition"> Ajusté una condición.</label>
+          <label><input type="checkbox" id="debug-check-confidence"> Definí confianza o prioridad.</label>
+          <label><input type="checkbox" id="debug-check-limitation"> Documenté una limitación de mi base.</label>
+        </div>
+        <div class="grid two">
+          <label class="field">Mi mejora más importante fue:
+            <textarea id="debug-improvement" rows="4" placeholder="Ej. agregué presupuesto a R4 para evitar una recomendación demasiado general."></textarea>
+          </label>
+          <label class="field">Una limitación que todavía tiene mi base es:
+            <textarea id="debug-limitation" rows="4" placeholder="Ej. necesito más casos de lluvia para validar recomendaciones calientes."></textarea>
+          </label>
+        </div>
+        <button class="btn primary" id="save-debug-reflection" type="button">Guardar reflexión de debug</button>
+        <div class="feedback" id="debug-reflection-feedback">Tu reflexión aparecerá en el reporte final.</div>
+      </article>
+      <label class="complete"><input type="checkbox" data-complete="m8"> Revisé recomendaciones de mejora.</label>
+    </section>
+
+    <section class="mission" id="mision-9" data-mission="m9" data-xp="8">
+      <div class="mission-title">
+        <span class="badge">Misión 9</span>
+        <h2>Exportar</h2>
+        <p>Genera una base de conocimiento en JSON y un reporte de evidencia completo para documentar tu proceso.</p>
+      </div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>JSON</h3>
+          <div class="button-row">
+            <button class="btn primary" id="generate-json" type="button">Generar JSON</button>
+            <button class="btn" id="copy-json" type="button">Copiar JSON</button>
+            <button class="btn" id="download-json" type="button">Descargar JSON</button>
+          </div>
+          <textarea id="json-output" rows="14" readonly></textarea>
+        </article>
+        <article class="panel">
+          <h3>Reporte de evidencia</h3>
+          <p class="note">Este reporte resume lo que construiste durante la práctica. Debe reflejar tu proceso completo: dataset, patrones, reglas, pruebas, debug y reflexión final. Descárgalo y súbelo como evidencia de la Clase 10.</p>
+          <div class="button-row">
+            <button class="btn primary" id="generate-report" type="button">Generar reporte de evidencia</button>
+            <button class="btn" id="copy-report" type="button">Copiar reporte</button>
+            <button class="btn" id="download-report-md" type="button">Descargar reporte .md</button>
+            <button class="btn" id="download-report-txt" type="button">Descargar reporte .txt</button>
+          </div>
+          <textarea id="report-output" rows="14" readonly></textarea>
+        </article>
+      </div>
+      <label class="complete"><input type="checkbox" data-complete="m9"> Exporté mi base de conocimiento.</label>
+    </section>
+  </main>
+
+  <script src="./clase10.js"></script>
+</body>
+</html>
