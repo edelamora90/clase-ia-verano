@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Clase 11: Battle Inference Engine para aprender motores de inferencia con una batalla por turnos entre criaturas propias.">
+  <title>Clase 11 · Battle Inference Engine</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./clase11.css">
+</head>
+<body>
+  <button class="menu-toggle" id="sidebar-toggle" type="button" aria-controls="mission-sidebar" aria-expanded="true">
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+    <span>Misiones</span>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <aside class="sidebar" id="mission-sidebar" aria-label="Misiones de Clase 11">
+    <a class="back-link" href="../index.html">Curso IA</a>
+    <div class="brand-card">
+      <svg viewBox="0 0 84 84" aria-hidden="true">
+        <rect x="12" y="18" width="60" height="48" rx="10"></rect>
+        <path d="M22 35h16M30 27v16M49 32h12M49 44h12"></path>
+        <circle cx="58" cy="32" r="3"></circle>
+        <circle cx="58" cy="44" r="3"></circle>
+      </svg>
+      <div>
+        <strong>Battle Engine</strong>
+        <span>Clase 11</span>
+      </div>
+    </div>
+    <div class="xp-panel">
+      <div><span>XP</span><strong id="xp-text">0 / 100</strong></div>
+      <div class="xp-track"><span id="xp-bar"></span></div>
+      <small id="xp-status">Completa misiones para documentar el motor.</small>
+    </div>
+    <nav class="mission-nav" aria-label="Navegación interna">
+      <a href="#inicio">Inicio</a>
+      <a href="#ruta-aprendizaje">Ruta de aprendizaje</a>
+      <a href="#simulador">Escenario guiado</a>
+      <a href="#mision-1">M1 · Estrategias</a>
+      <a href="#mision-2">M2 · Motor</a>
+      <a href="#mision-3">M3 · Caso</a>
+      <a href="#mision-4">M4 · Comparar</a>
+      <a href="#mision-5">M5 · Activar</a>
+      <a href="#mision-6">M6 · Prioridad</a>
+      <a href="#mision-7">M7 · Respaldo</a>
+      <a href="#transicion-lab">Ahora tú</a>
+      <a href="#student-lab">Laboratorio del alumno</a>
+      <a href="#mision-8">H4 · Colab</a>
+      <a href="#mision-9">H2 · Casos</a>
+      <a href="#mision-10">H5 · Evidencia</a>
+    </nav>
+  </aside>
+
+  <main class="app-shell">
+    <div class="main-inner">
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <span class="eyebrow">Clase 11 · Battle Inference Engine</span>
+        <h1>Clase 11 · Battle Inference Engine</h1>
+        <p>Aprende cómo piensa un motor de inferencia con una batalla guiada y después aplica la misma lógica a tu propio agente.</p>
+        <p>Charm vs Bulbi será nuestro escenario de entrenamiento. No importa si tu proyecto final es una cafetería, un sistema médico, un recomendador escolar o un agente empresarial: el proceso de inferencia es el mismo.</p>
+        <p class="legal-note">Ejemplo educativo inspirado en combates por tipos estilo juegos de criaturas. Usa criaturas propias y no incluye logos, sprites, imágenes ni assets oficiales.</p>
+        <div class="hero-actions">
+          <button class="btn primary" id="load-guided-example" type="button">Cargar escenario guiado: Charm vs Bulbi</button>
+          <a class="btn" href="#student-lab">Ir al laboratorio de mi agente</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Base de conocimiento a log explicado">
+        <figure class="hero-cover">
+          <img src="./assets/Portada.jpeg" alt="Portada de la Clase 11 Battle Inference Engine">
+        </figure>
+        <div class="engine-flow" aria-label="Flujo del motor de inferencia">
+          <span>FASE 1<br>Aprendo con Charm vs Bulbi</span>
+          <span>FASE 2<br>Cargo mi JSON de Clase 10</span>
+          <span>FASE 3<br>Pruebo mi propio agente</span>
+        </div>
+      </div>
+    </section>
+
+    <textarea id="kb-json" class="visually-hidden" aria-hidden="true"></textarea>
+
+    <section class="learning-route" id="ruta-aprendizaje">
+      <div class="mission-title">
+        <span class="badge">Ruta de aprendizaje</span>
+        <h2>La ruta de esta clase</h2>
+        <p>Primero vas a mirar cómo razona un agente en una batalla. Después usarás el mismo motor para probar tu propio proyecto.</p>
+      </div>
+      <div class="route-grid">
+        <article><span>1 · Observar</span><h3>Aprende con una batalla guiada</h3><p>Charm enfrenta a Bulbi. El agente debe decidir si ataca, se cura, se defiende o pide más datos.</p></article>
+        <article><span>2 · Entender</span><h3>Descompón el razonamiento</h3><p>Verás cómo el motor compara el caso contra reglas SI/ENTONCES, activa reglas candidatas y elige la mejor.</p></article>
+        <article><span>3 · Aplicar</span><h3>Usa tu propio JSON</h3><p>Al final cargarás la base de conocimiento que construiste en la Clase 10 y harás pruebas con tu agente real.</p></article>
+      </div>
+    </section>
+
+    <section class="work-mode guided-mode" id="modo-trabajo">
+      <div>
+        <span class="eyebrow">EJEMPLO GUIADO</span>
+        <h2>Primero aprende con Charm vs Bulbi</h2>
+        <p>Este ejemplo usa criaturas y tipos para explicar el razonamiento. Después aplicarás la misma lógica a tu propio proyecto.</p>
+      </div>
+      <div class="work-mode-actions">
+        <button class="btn primary" id="load-guided-example-inline" type="button">Cargar escenario guiado: Charm vs Bulbi</button>
+        <button class="btn danger" id="clear-workspace" type="button">Limpiar todo y usar mi base</button>
+      </div>
+      <div class="global-message" id="global-message" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="battle-section" id="simulador" data-mission="sim" data-xp="10">
+      <div class="mission-title">
+        <span class="badge">EJEMPLO GUIADO</span>
+        <h2>Escenario guiado · Charm vs Bulbi</h2>
+        <p>Este escenario servirá como laboratorio visual para entender cada parte del motor de inferencia antes de trabajar con tu propio agente.</p>
+        <p class="legal-note">Durante las primeras misiones usaremos siempre este escenario. El objetivo no es hacer un juego, sino ver el razonamiento del agente en acción.</p>
+      </div>
+      <div class="battle-grid">
+        <article class="battle-console" aria-label="Pantalla de batalla">
+          <div class="arena-screen">
+            <div class="creature-card enemy" id="enemy-card">
+              <div class="creature-meta">
+                <strong id="enemy-name">Bulbi</strong>
+                <span id="enemy-type" class="type-badge type-planta">planta</span>
+              </div>
+              <div class="stat-row"><span>Vida</span><strong id="enemy-hp-label">90</strong></div>
+              <div class="hp-bar"><span id="enemy-hp-bar"></span></div>
+              <div class="creature-image-card" data-fallback="B">
+                <img id="enemy-img" src="./assets/bulbasur.png" alt="Bulbi criatura tipo planta">
+              </div>
+            </div>
+
+            <div class="turn-state">
+              <span>Turno <strong id="turn-number">1</strong></span>
+              <b id="turn-status">Esperando inferencia</b>
+            </div>
+
+            <div class="creature-card player" id="player-card">
+              <div class="creature-image-card" data-fallback="C">
+                <img id="player-img" src="./assets/charmander.png" alt="Charm criatura tipo fuego">
+              </div>
+              <div class="creature-meta">
+                <strong id="player-name">Charm</strong>
+                <span id="player-type" class="type-badge type-fuego">fuego</span>
+              </div>
+              <div class="stat-row"><span>Vida</span><strong id="player-hp-label">85</strong></div>
+              <div class="hp-bar"><span id="player-hp-bar"></span></div>
+              <div class="stat-row"><span>Energía</span><strong id="player-energy-label">70</strong></div>
+              <div class="energy-bar"><span id="player-energy-bar"></span></div>
+            </div>
+          </div>
+          <div class="attack-pad" id="attack-pad"></div>
+          <div class="battle-controls">
+            <button class="btn primary" id="run-turn-inference" type="button">Ejecutar siguiente turno</button>
+            <button class="btn" id="simulate-full-battle" type="button">Simular batalla completa</button>
+            <button class="btn danger" id="reset-battle" type="button">Reiniciar batalla</button>
+          </div>
+        </article>
+
+        <aside class="battle-side">
+          <article class="panel">
+            <h3>Panel de caso actual</h3>
+            <div class="case-chips" id="battle-case-panel"></div>
+          </article>
+          <article class="panel">
+            <h3>Última decisión del motor</h3>
+            <div id="decision-card" class="decision-card">Ejecuta la inferencia para ver la regla ganadora.</div>
+          </article>
+          <article class="panel">
+            <h3>Estado numérico</h3>
+            <div id="numeric-state" class="numeric-state">Batalla lista para iniciar.</div>
+          </article>
+          <article class="panel">
+            <h3>Qué reglas no aplicaron</h3>
+            <div id="battle-inactive-reasons" class="scroll-panel compact-scroll">Pendiente de evaluación.</div>
+          </article>
+        </aside>
+      </div>
+      <article class="battle-log-panel">
+        <h3>Logs de batalla</h3>
+        <pre class="battle-log" id="battle-log">Carga la batalla guiada y ejecuta el siguiente turno.</pre>
+      </article>
+    </section>
+
+    <section class="mission" id="mision-1" data-mission="m1" data-xp="9">
+      <div class="mission-title">
+        <span class="badge">Misión 1</span>
+        <h2>Misión 1 · Entiende la base de conocimiento como estrategias de batalla</h2>
+        <div class="learning-grid">
+          <p><strong>Qué estás aprendiendo.</strong> La base de conocimiento contiene las estrategias que el agente puede usar: atacar con ventaja, curarse, defenderse, usar ataque especial o pedir más datos.</p>
+          <p><strong>Ejemplo.</strong> SI tipo_ataque = fuego Y tipo_enemigo = planta ENTONCES usar_ataque_fuego.</p>
+          <p><strong>Conexión.</strong> Esta regla no ataca por sí sola. Solo está guardada. El motor de inferencia será quien la use cuando el caso coincida.</p>
+        </div>
+      </div>
+      <figure class="mission-banner mission-banner--m1">
+        <img src="./assets/bannerMision1.jpeg" alt="Banner visual de la Misión 1 sobre base de conocimiento">
+      </figure>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Regla R2 como estrategia</h3>
+          <pre class="code-box">SI tipo_ataque = fuego
+Y tipo_enemigo = planta
+ENTONCES usar_ataque_fuego</pre>
+        </article>
+        <article class="panel">
+          <h3>Base guiada cargada</h3>
+          <div class="metrics" id="kb-summary"></div>
+          <div class="scroll-panel" id="rules-preview">Carga el escenario guiado para ver las estrategias.</div>
+          <div class="feedback" id="kb-feedback">La práctica con tu JSON vendrá después, en el laboratorio del alumno.</div>
+        </article>
+      </div>
+      <label class="complete"><input type="checkbox" data-complete="m1"> Base validada y lista para inferir.</label>
+    </section>
+
+    <section class="mission inference-core-section" id="mision-2" data-mission="m2" data-xp="8">
+      <div class="mission-title core-title">
+        <span class="core-badge">PILAR DE LA CLASE</span>
+        <span class="badge">Misión 2</span>
+        <h2>Misión 2 · Entra al núcleo del motor de inferencia</h2>
+        <p>Aquí ocurre el razonamiento del agente: el motor lee el estado de batalla, compara reglas, activa estrategias y decide qué acción ejecutar.</p>
+        <blockquote class="core-statement">Las reglas son conocimiento. El motor de inferencia es quien las usa para pensar.</blockquote>
+      </div>
+
+      <article class="core-concept-card">
+        <span>Concepto clave</span>
+        <strong>Una IA basada en reglas no adivina: compara condiciones, activa reglas y justifica su decisión.</strong>
+      </article>
+
+      <div class="engine-layout" aria-label="Entrada, núcleo y salida del motor de inferencia">
+        <article class="engine-panel engine-input">
+          <span class="panel-kicker">Entrada del motor</span>
+          <h3>Estado de batalla</h3>
+          <div class="engine-data-list">
+            <div><span>Vida de Charm</span><strong>alta</strong></div>
+            <div><span>Energía</span><strong>media</strong></div>
+            <div><span>Tipo de ataque</span><strong>fuego</strong></div>
+            <div><span>Tipo enemigo</span><strong>planta</strong></div>
+            <div><span>Poción disponible</span><strong>sí</strong></div>
+          </div>
+        </article>
+
+        <article class="engine-core" aria-label="Núcleo del motor de inferencia">
+          <div class="engine-core-orbit" aria-hidden="true"></div>
+          <div class="engine-core-center">
+            <span>Motor de</span>
+            <strong>INFERENCIA</strong>
+            <small>reglas → decisión</small>
+          </div>
+          <div class="engine-step-list">
+            <span>Leer caso</span>
+            <span>Comparar reglas</span>
+            <span>Activar coincidencias</span>
+            <span>Resolver prioridad</span>
+            <span>Explicar decisión</span>
+          </div>
+        </article>
+
+        <article class="engine-panel engine-output">
+          <span class="panel-kicker">Salida del motor</span>
+          <h3>Decisión explicada</h3>
+          <div class="engine-result-card">
+            <span>Regla ganadora</span>
+            <strong>R2</strong>
+          </div>
+          <div class="engine-data-list compact">
+            <div><span>Acción</span><strong>usar_ataque_fuego</strong></div>
+            <div><span>Explicación</span><strong>Fuego tiene ventaja contra planta.</strong></div>
+            <div><span>Confianza</span><strong>alta</strong></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="inference-pipeline" aria-label="Flujo paso a paso del motor">
+        <article class="pipeline-step"><span>1</span><strong>Caso nuevo</strong><p>El agente observa vida, energía, tipo enemigo y ataque disponible.</p></article>
+        <article class="pipeline-step"><span>2</span><strong>Comparar reglas</strong><p>Cada regla se revisa condición por condición.</p></article>
+        <article class="pipeline-step"><span>3</span><strong>Activar reglas</strong><p>Solo pasan las reglas cuyas condiciones coinciden con el caso.</p></article>
+        <article class="pipeline-step"><span>4</span><strong>Resolver prioridad</strong><p>Si varias reglas aplican, gana la más importante.</p></article>
+        <article class="pipeline-step"><span>5</span><strong>Decidir acción</strong><p>El agente selecciona atacar, curarse, defender o pedir más datos.</p></article>
+        <article class="pipeline-step"><span>6</span><strong>Explicar</strong><p>El agente muestra qué regla usó y por qué.</p></article>
+      </div>
+
+      <div class="learning-grid core-learning-grid">
+        <article><strong>¿Qué es?</strong><p>Un motor de inferencia es el mecanismo que aplica conocimiento a una situación nueva.</p></article>
+        <article><strong>¿Para qué sirve?</strong><p>Sirve para que el agente no responda al azar. Cada decisión debe salir de una regla, una prioridad o una respuesta de respaldo.</p></article>
+        <article><strong>¿Por qué es el centro?</strong><p>Conecta la base de conocimiento, el caso nuevo, las reglas activadas, la decisión, la explicación y el código que después se llevará a Colab.</p></article>
+        <article><strong>¿Qué problema resuelve?</strong><p>Evita que el agente solo sea una lista estática de reglas. Lo convierte en un sistema que razona paso a paso.</p></article>
+      </div>
+
+      <div class="knowledge-vs-engine">
+        <article>
+          <span>Base de conocimiento</span>
+          <h3>Memoria del agente</h3>
+          <p>Guarda reglas, excepciones y respaldo.</p>
+          <pre>SI tipo_ataque = fuego
+Y tipo_enemigo = planta
+ENTONCES usar_ataque_fuego</pre>
+        </article>
+        <div class="engine-connector" aria-hidden="true">Sin motor, las reglas no hacen nada.</div>
+        <article>
+          <span>Motor de inferencia</span>
+          <h3>Proceso de decisión</h3>
+          <p>Usa esas reglas para decidir en un caso nuevo.</p>
+          <pre>Charm observa a Bulbi.
+Activa R2.
+Decide usar ataque de fuego.</pre>
+        </article>
+      </div>
+
+      <article class="battle-analogy">
+        <div>
+          <span class="panel-kicker">En la batalla se ve así</span>
+          <p>Charm no usa fuego porque sí. El motor primero revisa el estado del turno. Después compara ese estado contra la base de conocimiento. Cuando encuentra que tipo_ataque = fuego y tipo_enemigo = planta, activa la regla R2. Esa regla recomienda usar_ataque_fuego y explica que fuego tiene ventaja contra planta.</p>
+        </div>
+        <div class="engine-example">
+          <strong>Caso</strong>
+          <span>tipo_ataque = fuego</span>
+          <span>tipo_enemigo = planta</span>
+          <span>vida_jugador = alta</span>
+          <span>energia = media</span>
+          <strong>Resultado</strong>
+          <span>R2 se activa · Charm usa Chispa Fuego · La decisión es explicable</span>
+        </div>
+      </article>
+
+      <article class="engine-trace" aria-label="Mini Engine Trace">
+        <div class="trace-header">
+          <div>
+            <span class="panel-kicker">Mini Engine Trace</span>
+            <h3>Observa cómo piensa el motor en 5 pasos</h3>
+          </div>
+          <div class="button-row">
+            <button class="btn primary" id="runEngineTraceBtn" type="button">Ver cómo piensa el motor</button>
+            <button class="btn" id="resetEngineTraceBtn" type="button">Reiniciar traza</button>
+            <button class="btn" id="viewFullBattleBtn" type="button">Ver esta lógica en la batalla completa</button>
+          </div>
+        </div>
+        <div class="trace-steps">
+          <div class="trace-step" data-trace-step="1"><span>1</span><strong>Leyendo estado de batalla...</strong></div>
+          <div class="trace-step" data-trace-step="2"><span>2</span><strong>Comparando condiciones con reglas...</strong></div>
+          <div class="trace-step" data-trace-step="3"><span>3</span><strong>R2 coincide con el caso...</strong></div>
+          <div class="trace-step" data-trace-step="4"><span>4</span><strong>Prioridad media y confianza alta...</strong></div>
+          <div class="trace-step" data-trace-step="5"><span>5</span><strong>Decisión: Charm usa Chispa Fuego contra Bulbi.</strong></div>
+        </div>
+        <pre class="trace-log" id="engineTraceLog">Presiona “Ver cómo piensa el motor” para ver la traza.</pre>
+      </article>
+      <label class="complete"><input type="checkbox" data-complete="m2"> Entiendo cómo el motor convierte reglas en una decisión.</label>
+    </section>
+
+    <section class="mission" id="mision-3" data-mission="m3" data-xp="9">
+      <div class="mission-title">
+        <span class="badge">Misión 3</span>
+        <h2>Misión 3 · Convierte el turno actual en un caso nuevo</h2>
+        <div class="learning-grid">
+          <p><strong>Qué estás aprendiendo.</strong> El caso nuevo no es una historia completa; es una fotografía del momento actual del combate.</p>
+          <p><strong>Ejemplo.</strong> vida_jugador = alta, tipo_ataque = fuego, tipo_enemigo = planta, energia = media.</p>
+          <p><strong>Cómo se ve en la batalla.</strong> Charm no decide en abstracto: decide con datos del turno actual contra Bulbi.</p>
+        </div>
+      </div>
+      <figure class="mission-banner mission-banner--m3">
+        <img src="./assets/bannerMision3.jpeg" alt="Banner visual de la Misión 3 sobre estado del combate">
+      </figure>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Formulario de caso editable</h3>
+          <div class="case-form" id="case-form"></div>
+          <div class="button-row">
+            <button class="btn primary" id="save-case" type="button">Guardar caso</button>
+            <button class="btn" id="load-backup-case" type="button">Caso incompleto</button>
+          </div>
+        </article>
+        <article class="panel">
+          <h3>Caso actual</h3>
+          <pre class="code-box" id="case-preview">{}</pre>
+        </article>
+      </div>
+      <label class="complete"><input type="checkbox" data-complete="m3"> Caso de combate capturado.</label>
+    </section>
+
+    <section class="mission" id="mision-4" data-mission="m4" data-xp="8">
+      <div class="mission-title">
+        <span class="badge">Misión 4</span>
+        <h2>Misión 4 · Comprueba si una regla coincide con el caso</h2>
+        <div class="learning-grid">
+          <p><strong>Qué estás aprendiendo.</strong> Una regla aplica cuando todas sus condiciones coinciden con el caso.</p>
+          <p><strong>R2 aplica porque.</strong> tipo_ataque = fuego y tipo_enemigo = planta.</p>
+          <p><strong>Por qué importa.</strong> Esto evita decisiones arbitrarias: el agente debe demostrar qué condiciones cumplió.</p>
+        </div>
+      </div>
+      <figure class="mission-banner mission-banner--m4">
+        <img src="./assets/bannerMision4.jpeg" alt="Banner visual de la Misión 4 sobre coincidencia de reglas">
+      </figure>
+      <div class="grid two">
+        <article class="panel">
+          <label class="field">Regla a comparar
+            <select id="rule-selector"></select>
+          </label>
+          <button class="btn primary" id="compare-rule" type="button">Comparar regla</button>
+        </article>
+        <article class="panel">
+          <h3>Comparador visual</h3>
+          <div id="rule-match-output" class="scroll-panel">Selecciona una regla.</div>
+        </article>
+      </div>
+      <label class="complete"><input type="checkbox" data-complete="m4"> Puedo explicar por qué una regla aplica o no aplica.</label>
+    </section>
+
+    <section class="mission" id="mision-5" data-mission="m5" data-xp="10">
+      <div class="mission-title">
+        <span class="badge">Misión 5</span>
+        <h2>Misión 5 · Descubre qué estrategias se activan en este turno</h2>
+        <p>El motor no elige una regla al azar. Primero revisa toda la base de conocimiento y separa las reglas que coinciden del resto.</p>
+        <div class="learning-grid">
+          <p><strong>Qué aprenderás.</strong> Aprenderás a ver la diferencia entre una regla existente y una regla activada.</p>
+          <p><strong>Por qué importa.</strong> Un agente puede tener muchas reglas, pero solo algunas aplican al estado actual. Esta separación permite razonar con claridad.</p>
+          <p><strong>En la batalla se ve así.</strong> Charm tiene varias estrategias posibles, pero en este turno solo se activan las reglas cuyas condiciones coinciden con su vida, energía, tipo de ataque y tipo enemigo.</p>
+        </div>
+      </div>
+      <div class="button-row">
+        <button class="btn primary" id="run-inference" type="button">Ejecutar motor</button>
+        <button class="btn primary" id="evaluate-turn-rules" type="button">Evaluar reglas del turno actual</button>
+        <button class="btn" id="generate-response" type="button">Generar respuesta</button>
+        <button class="btn" id="mission5-battle-link" type="button">Ir al simulador de batalla</button>
+        <button class="btn" id="mission5-conflict-case" type="button">Probar conflicto</button>
+        <button class="btn" id="mission5-restore-case" type="button">Restaurar caso Charm vs Bulbi</button>
+      </div>
+      <div id="mission5RulesPanel" class="rules-activation-panel">Primero carga la batalla guiada o pega tu base de conocimiento.</div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Reglas activadas</h3>
+          <div id="active-rules" class="scroll-panel">Sin ejecución.</div>
+        </article>
+        <article class="panel">
+          <h3>Reglas no activadas</h3>
+          <div id="inactive-rules" class="scroll-panel">Sin ejecución.</div>
+        </article>
+      </div>
+      <article class="panel">
+        <h3>Respuesta del agente</h3>
+        <div id="agent-response" class="agent-response">Ejecuta el motor para ver la recomendación.</div>
+      </article>
+      <label class="complete"><input type="checkbox" data-complete="m5"> Motor ejecutado y reglas clasificadas.</label>
+    </section>
+
+    <section class="mission" id="mision-6" data-mission="m6" data-xp="9">
+      <div class="mission-title">
+        <span class="badge">Misión 6</span>
+        <h2>Misión 6 · Decide cuando varias reglas compiten</h2>
+        <div class="learning-grid">
+          <p><strong>Qué estás aprendiendo.</strong> Cuando varias reglas aplican, el agente necesita decidir cuál tiene mayor peso.</p>
+          <p><strong>En batalla.</strong> Si Charm tiene vida baja y también tiene ventaja elemental, compiten curarse y atacar con fuego.</p>
+          <p><strong>Resultado.</strong> La prioridad decide: sobrevivir puede ganar sobre atacar.</p>
+        </div>
+      </div>
+      <figure class="mission-banner mission-banner--m6">
+        <img src="./assets/bannerMision6.jpeg" alt="Banner visual de la Misión 6 sobre prioridad y conflicto">
+      </figure>
+      <div class="button-row">
+        <button class="btn primary" id="test-priority-conflict" type="button">Probar conflicto R1 vs R2</button>
+        <button class="btn" id="test-explicit-tie" type="button">Probar empate real</button>
+      </div>
+      <article class="panel">
+        <h3>Regla ganadora y conflicto</h3>
+        <div id="conflict-output" class="scroll-panel">Ejecuta el motor para resolver prioridades.</div>
+      </article>
+      <label class="complete"><input type="checkbox" data-complete="m6"> Sé cómo se resuelve un empate o conflicto.</label>
+    </section>
+
+    <section class="mission" id="mision-7" data-mission="m7" data-xp="8">
+      <div class="mission-title">
+        <span class="badge">Misión 7</span>
+        <h2>Misión 7 · Reconoce cuando el agente no sabe</h2>
+        <div class="learning-grid">
+          <p><strong>Qué estás aprendiendo.</strong> El agente no debe inventar cuando ninguna regla aplica.</p>
+          <p><strong>En batalla.</strong> Si falta tipo_enemigo o ataque_disponible, Charm no debería atacar al azar.</p>
+          <p><strong>Resultado.</strong> El respaldo permite pedir más datos en lugar de fabricar una respuesta.</p>
+        </div>
+      </div>
+      <div class="button-row">
+        <button class="btn primary" id="test-fallback" type="button">Probar caso incompleto</button>
+        <button class="btn" id="restore-guided-case" type="button">Restaurar Charm vs Bulbi</button>
+      </div>
+      <div id="fallback-output" class="panel">Pendiente de prueba.</div>
+      <label class="complete"><input type="checkbox" data-complete="m7"> Probé un caso donde ninguna regla normal aplica.</label>
+    </section>
+
+    <section class="handoff-section" id="transicion-lab">
+      <div>
+        <span class="badge">TU PRÁCTICA</span>
+        <h2>Ahora te toca a ti: usa tu propia base de conocimiento</h2>
+        <p>Ya viste cómo el motor decidió en una batalla. Ahora usarás la misma lógica con el JSON que construiste en la Clase 10.</p>
+        <p>Tu proyecto no necesita ser de batalla. Puede ser una cafetería, un agente escolar, un recomendador, un sistema de riesgo o cualquier problema que hayas trabajado. Lo importante es que tu JSON tenga reglas, condiciones, resultados y explicaciones.</p>
+      </div>
+      <div class="handoff-flow" aria-label="Del ejemplo guiado al agente real">
+        <span>Charm vs Bulbi</span>
+        <strong>↓</strong>
+        <span>Mismo motor</span>
+        <strong>↓</strong>
+        <span>Tu agente real</span>
+      </div>
+      <a class="btn primary" href="#student-lab">Ir al laboratorio de mi agente</a>
+    </section>
+
+    <section class="student-lab-section" id="student-lab" data-mission="student-lab" data-xp="12">
+      <div class="mission-title">
+        <span class="core-badge">MOTOR GENÉRICO</span>
+        <span class="badge">TU PRÁCTICA</span>
+        <h2>Laboratorio del alumno · Prueba tu propio agente</h2>
+        <p>Carga tu base de conocimiento de la Clase 10 y usa el motor de inferencia para evaluar casos reales de tu proyecto.</p>
+        <p class="legal-note">Esta zona ya no depende de Charm ni Bulbi. Aquí el motor trabaja con las variables de tu JSON.</p>
+      </div>
+
+      <div class="student-tool-grid">
+        <article class="student-tool-card">
+          <span>Herramienta 1</span>
+          <h3>Carga tu base de conocimiento</h3>
+          <p>Sube o pega el JSON que generaste en la Clase 10. La página revisará si tus reglas pueden ser usadas por el motor.</p>
+          <label class="field">Subir archivo JSON
+            <input id="student-json-file" type="file" accept=".json,application/json">
+          </label>
+          <label class="field">O pegar JSON
+            <textarea id="student-json" rows="10" spellcheck="false" placeholder='{"agent":{"nombre":"Mi agente"},"rules":[{"id":"R1","tipo":"normal","prioridad":"media","condiciones":{"clima":"lluvia"},"resultado":{"accion_recomendada":"llevar_paraguas"},"explicacion":"Si llueve conviene llevar paraguas.","confianza":"alta"}]}'></textarea>
+          </label>
+          <button class="btn primary" id="student-validate" type="button">Validar mi base</button>
+          <div class="metrics" id="student-summary"></div>
+          <div class="feedback" id="student-feedback">Esperando JSON del alumno.</div>
+        </article>
+
+        <article class="student-tool-card">
+          <span>Herramienta 2</span>
+          <h3>Crea casos de prueba para tu agente</h3>
+          <p>Un caso de prueba es una situación que tu agente debe resolver usando sus reglas. Los campos se crean con las variables detectadas en tu JSON.</p>
+          <div id="student-case-form" class="case-form"></div>
+          <div class="button-row">
+            <button class="btn primary" id="student-save-case" type="button">Guardar caso</button>
+            <button class="btn" id="student-example-case" type="button">Cargar caso de ejemplo</button>
+            <button class="btn danger" id="student-clear-case" type="button">Limpiar caso</button>
+          </div>
+          <pre class="code-box" id="student-case-preview">{}</pre>
+        </article>
+
+        <article class="student-tool-card wide">
+          <span>Herramienta 3</span>
+          <h3>Ejecuta el motor con tus reglas</h3>
+          <p>El motor comparará tu caso contra todas las reglas de tu base de conocimiento, sin asumir variables de batalla.</p>
+          <button class="btn primary" id="student-run-inference" type="button">Ejecutar inferencia de mi agente</button>
+          <div id="student-inference-output" class="rules-activation-panel">Carga tu JSON y crea un caso para ejecutar el motor genérico.</div>
+        </article>
+
+        <article class="student-tool-card">
+          <span>Herramienta 4</span>
+          <h3>Genera el motor en Python para Colab</h3>
+          <p>Copia el código y pruébalo con tu propio JSON en un notebook.</p>
+          <div class="button-row">
+            <button class="btn" id="student-generate-colab" type="button">Generar código para mi agente</button>
+            <button class="btn" id="student-copy-colab" type="button">Copiar código para mi agente</button>
+          </div>
+          <pre class="code-box tall" id="student-colab-code">Carga tu JSON para generar código genérico.</pre>
+        </article>
+
+        <article class="student-tool-card">
+          <span>Herramienta 5</span>
+          <h3>Genera evidencia de tu práctica</h3>
+          <p>Documenta qué base cargaste, qué casos probaste, qué reglas se activaron y qué aprendiste.</p>
+          <button class="btn primary" id="student-generate-report" type="button">Generar evidencia de mi agente</button>
+          <pre class="code-box tall" id="student-report-output">Carga tu JSON y ejecuta inferencia para generar evidencia.</pre>
+        </article>
+      </div>
+      <label class="complete"><input type="checkbox" data-complete="student-lab"> Probé mi propio agente con el motor genérico.</label>
+    </section>
+
+    <section class="mission colab-guide-section" id="mision-8" data-mission="m8" data-xp="9">
+      <div class="mission-title">
+        <span class="core-badge">TU PRÁCTICA EN COLAB</span>
+        <span class="badge">Misión 8</span>
+        <h2>Misión 8 · Lleva tu motor de inferencia a Google Colab</h2>
+        <p>Convierte tu JSON de la Clase 10 en un notebook funcional: carga reglas, crea casos de prueba, ejecuta inferencia y explica las decisiones de tu agente.</p>
+        <blockquote class="core-statement">En esta parte ya no usamos Charm vs Bulbi. Ahora el motor trabaja con tu propia base de conocimiento.</blockquote>
+      </div>
+
+      <div class="colab-flow-grid">
+        <article class="colab-step-card">
+          <span>1</span>
+          <h3>¿Qué harás en Google Colab?</h3>
+          <p>Vas a crear un notebook donde tu agente pueda leer la base de conocimiento que construiste en la Clase 10. Después escribirás casos nuevos y el motor decidirá qué regla aplica, qué regla gana y qué respuesta debe dar.</p>
+          <ol>
+            <li>Subir tu JSON.</li>
+            <li>Cargar reglas.</li>
+            <li>Crear un caso de prueba.</li>
+            <li>Comparar caso contra reglas.</li>
+            <li>Detectar reglas activadas.</li>
+            <li>Elegir regla ganadora.</li>
+            <li>Generar respuesta explicada.</li>
+            <li>Probar varios casos.</li>
+          </ol>
+        </article>
+
+        <article class="colab-data-requirements">
+          <span>2</span>
+          <h3>¿Qué datos debes meter?</h3>
+          <p><strong>A. Base de conocimiento JSON.</strong> Es el archivo generado en la Clase 10. Debe tener reglas con id, tipo, prioridad, condiciones, resultado, explicación y confianza.</p>
+          <pre class="code-box">{
+  "id": "R1",
+  "tipo": "normal",
+  "prioridad": "media",
+  "condiciones": { "variable": "valor" },
+  "resultado": { "accion_recomendada": "..." },
+  "explicacion": "...",
+  "confianza": "alta"
+}</pre>
+          <p><strong>B. Casos de prueba.</strong> Son situaciones nuevas que tu agente debe resolver. El caso debe usar las mismas variables que aparecen en las condiciones del JSON.</p>
+          <pre class="code-box">{
+  "clima": "calor",
+  "gusto": "dulce",
+  "hambre": "baja",
+  "presupuesto": "medio"
+}</pre>
+        </article>
+      </div>
+
+      <article class="colab-processing-flow">
+        <h3>¿Cómo procesa Colab tus datos?</h3>
+        <div>
+          <span>JSON del alumno</span>
+          <span>Lista de reglas</span>
+          <span>Caso de prueba</span>
+          <span>Comparación condición por condición</span>
+          <span>Reglas activadas</span>
+          <span>Prioridad y confianza</span>
+          <span>Respuesta explicada</span>
+        </div>
+        <p>El motor no interpreta lenguaje libre. Compara valores. Si tu regla dice <strong>clima = calor</strong>, tu caso también debe escribir <strong>clima = calor</strong>. Si escribes “caluroso”, la regla no coincidirá a menos que tu base contemple ese valor.</p>
+        <div class="colab-warning-panel">Cuida que los nombres de variables y valores coincidan exactamente con tu JSON.</div>
+      </article>
+
+      <div class="colab-flow-grid">
+        <article class="colab-step-card">
+          <h3>Flujo del notebook</h3>
+          <div class="colab-notebook-timeline">
+            <span>Celda 1 · Importar librerías básicas</span>
+            <span>Celda 2 · Subir o pegar el JSON</span>
+            <span>Celda 3 · Validar reglas</span>
+            <span>Celda 4 · Crear caso de prueba</span>
+            <span>Celda 5 · Ejecutar inferencia</span>
+            <span>Celda 6 · Mostrar explicación</span>
+            <span>Celda 7 · Probar varios casos</span>
+            <span>Celda 8 · Guardar evidencia</span>
+          </div>
+        </article>
+
+        <article class="colab-checklist">
+          <h3>Antes de copiar el código verifica</h3>
+          <ul>
+            <li>Ya cargué mi JSON de Clase 10.</li>
+            <li>Mis reglas tienen condiciones.</li>
+            <li>Mis reglas tienen resultado.</li>
+            <li>Mis reglas tienen explicación.</li>
+            <li>Mi caso de prueba usa las mismas variables que mis reglas.</li>
+            <li>Probé más de un caso.</li>
+            <li>Guardé evidencia de reglas activadas y decisión final.</li>
+          </ul>
+        </article>
+      </div>
+
+      <article class="colab-generator-panel">
+        <div>
+          <h3>Generador de código</h3>
+          <p>El botón principal genera Python usando el JSON, reglas, caso actual y casos guardados del alumno.</p>
+        </div>
+        <div class="colab-actions">
+          <button class="btn primary" id="generate-colab" type="button">Generar código con mi JSON</button>
+          <button class="btn" id="copy-colab" type="button">Copiar código</button>
+          <button class="btn danger" id="clear-colab-code" type="button">Limpiar código</button>
+          <button class="btn" id="go-student-json" type="button">Ir a cargar mi JSON</button>
+        </div>
+        <div class="feedback" id="studentColabStatus">Primero carga y valida tu JSON en el Laboratorio del alumno.</div>
+        <pre class="code-box tall student-code-output" id="studentColabCodeOutput"></pre>
+      </article>
+      <label class="complete"><input type="checkbox" data-complete="m8"> Código de Colab generado.</label>
+    </section>
+
+    <section class="mission" id="mision-9" data-mission="m9" data-xp="9">
+      <div class="mission-title">
+        <span class="badge">Misión 9</span>
+        <h2>Herramienta 2 · Crea casos de prueba de tu agente</h2>
+        <div class="learning-grid">
+          <p><strong>Qué estás aprendiendo.</strong> Un agente debe probarse con varios casos, no con uno solo.</p>
+          <p><strong>Por qué importa.</strong> Una regla puede funcionar en un caso y fallar en otro.</p>
+          <p><strong>Cómo se ve en la batalla.</strong> Cada turno probado se clasifica como resuelto, respaldo, conflicto o error.</p>
+          <p><strong>Qué debe hacer el alumno.</strong> Registrar el caso actual y repetir con variantes.</p>
+          <p><strong>Qué produce esta misión.</strong> Historial de pruebas con clasificación y regla ganadora.</p>
+        </div>
+      </div>
+      <div class="button-row">
+        <button class="btn primary" id="add-trial" type="button">Registrar caso actual</button>
+        <button class="btn danger" id="clear-trials" type="button">Limpiar historial</button>
+      </div>
+      <div class="metrics" id="trial-metrics"></div>
+      <div id="trial-history" class="scroll-panel">Sin casos registrados.</div>
+      <label class="complete"><input type="checkbox" data-complete="m9"> Tengo mínimo 5 casos probados.</label>
+    </section>
+
+    <section class="mission" id="mision-10" data-mission="m10" data-xp="10">
+      <div class="mission-title">
+        <span class="badge">Misión 10</span>
+        <h2>Herramienta 5 · Genera evidencia final</h2>
+        <div class="learning-grid">
+          <p><strong>Qué estás aprendiendo.</strong> El reporte demuestra que construiste y probaste un motor, no solo viste teoría.</p>
+          <p><strong>Por qué importa.</strong> La evidencia permite explicar decisiones, fallos, conflictos y respaldo.</p>
+          <p><strong>Cómo se ve en la batalla.</strong> El log del turno se convierte en documentación técnica del agente.</p>
+          <p><strong>Qué debe hacer el alumno.</strong> Escribir reflexión, generar reporte y descargar evidencia.</p>
+          <p><strong>Qué produce esta misión.</strong> Reporte con base, caso Charm vs Bulbi, ganadora, no aplicadas, pruebas, conflicto, respaldo y reflexión.</p>
+        </div>
+      </div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Reflexión</h3>
+          <label class="field">¿Qué aprendiste sobre motores de inferencia?
+            <textarea id="reflection-learning" rows="3"></textarea>
+          </label>
+          <label class="field">Mejor caso probado
+            <textarea id="reflection-best" rows="3"></textarea>
+          </label>
+          <label class="field">Caso que falló o quedó débil
+            <textarea id="reflection-failed" rows="3"></textarea>
+          </label>
+          <label class="field">Siguiente mejora del agente
+            <textarea id="reflection-next" rows="3"></textarea>
+          </label>
+          <div class="button-row">
+            <button class="btn primary" id="generate-report" type="button">Generar reporte</button>
+            <button class="btn" id="download-md" type="button">Descargar Markdown</button>
+            <button class="btn" id="download-txt" type="button">Descargar TXT</button>
+          </div>
+        </article>
+        <article class="panel">
+          <h3>Reporte</h3>
+          <pre class="code-box tall" id="report-output">Genera el reporte para verlo aquí.</pre>
+        </article>
+      </div>
+      <label class="complete"><input type="checkbox" data-complete="m10"> Evidencia final generada y lista para entregar.</label>
+    </section>
+    </div>
+  </main>
+
+  <script src="./clase11.js"></script>
+</body>
+</html>
