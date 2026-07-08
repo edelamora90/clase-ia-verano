@@ -2,6 +2,7 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const storageKey = "clase12-strategy-tree-arena";
+  const rightPanelStorageKey = "clase12RightPanelHidden";
   const legacyStrategyActionName = ["cambiar", "estrategia"].join("_");
   const initialBattleState = {
     schemaVersion: 2,
@@ -73,6 +74,9 @@
       scenarios: [],
       report: "",
       colabCode: ""
+    },
+    ui: {
+      rightPanelHidden: false
     },
     battle: structuredClone(initialBattleState)
   };
@@ -978,6 +982,37 @@ ${strategyState.student.rankedOptions.map((option) => `- ${option.name}: ${optio
     });
   }
 
+  function setRightPanelHidden(hidden) {
+    const shell = $(".lesson-shell") || document.body;
+    const panel = $("#rightPanel");
+    const button = $("#toggleRightPanelBtn");
+    if (!panel || !button) return;
+
+    strategyState.ui.rightPanelHidden = hidden;
+    panel.classList.toggle("is-hidden", hidden);
+    shell.classList.toggle("right-panel-hidden", hidden);
+    document.body.classList.toggle("right-panel-hidden", hidden);
+    button.setAttribute("aria-expanded", String(!hidden));
+    button.textContent = hidden ? "Mostrar panel" : "Ocultar panel";
+    localStorage.setItem(rightPanelStorageKey, hidden ? "1" : "0");
+  }
+
+  function toggleRightPanel() {
+    const panel = $("#rightPanel");
+    if (!panel) return;
+    setRightPanelHidden(!panel.classList.contains("is-hidden"));
+  }
+
+  function initRightPanelToggle() {
+    const panel = $("#rightPanel");
+    const button = $("#toggleRightPanelBtn");
+    if (!panel || !button) return;
+
+    const saved = localStorage.getItem(rightPanelStorageKey) === "1";
+    setRightPanelHidden(saved);
+    button.addEventListener("click", toggleRightPanel);
+  }
+
   function saveState() {
     localStorage.setItem(storageKey, JSON.stringify(strategyState));
   }
@@ -1044,6 +1079,7 @@ ${strategyState.student.rankedOptions.map((option) => `- ${option.name}: ${optio
   function init() {
     loadState();
     setupSidebar();
+    initRightPanelToggle();
     hydrateImages();
     renderDecisionTree();
     renderScoreTable("#guided-score-table", strategyState.guided.options, "guided");
@@ -1059,4 +1095,246 @@ ${strategyState.student.rankedOptions.map((option) => `- ${option.name}: ${optio
   }
 
   document.addEventListener("DOMContentLoaded", init);
+})();
+
+/* ==================================================
+   SIDEBAR LIMPIA CLASE 12
+   Elimina paneles anteriores y crea una barra izquierda funcional
+================================================== */
+
+(function initClase12CleanSidebar() {
+  const STORAGE_KEY = "clase12-clean-sidebar-hidden";
+
+  const links = [
+    ["Hero", "hero"],
+    ["Ruta de aprendizaje", "ruta"],
+    ["Escenario guiado", "escenario"],
+    ["M1 · Opciones", "mision1"],
+    ["M2 · Árbol", "mision2"],
+    ["M3 · Criterios", "mision3"],
+    ["M4 · Puntajes", "mision4"],
+    ["M4.5 · Simulación", "mision45"],
+    ["M5 · Justificar", "mision5"],
+    ["M6 · Escenarios", "mision6"],
+    ["Laboratorio", "laboratorio"],
+    ["H1 · Acciones", "herramienta1"],
+    ["H2 · Matriz", "herramienta2"],
+    ["H3 · Colab", "herramienta3"],
+    ["Reporte final", "reporte"]
+  ];
+
+  function normalize(text) {
+    return String(text || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function findSectionId(label, fallbackId) {
+    if (document.getElementById(fallbackId)) return fallbackId;
+
+    const target = normalize(label.replace(/^M\d+(\.\d+)? ·\s*/i, "").replace(/^H\d+ ·\s*/i, ""));
+    const headings = Array.from(document.querySelectorAll("section[id], article[id], div[id]"));
+
+    const found = headings.find((el) => {
+      const text = normalize(el.innerText || "");
+      const id = normalize(el.id || "");
+      return id.includes(target) || text.includes(target);
+    });
+
+    return found ? found.id : "";
+  }
+
+  function removeOldPanels() {
+    const candidates = Array.from(document.querySelectorAll("aside, nav, .right-panel, .lesson-aside, .side-panel, .lesson-sidebar, .desktop-aside, .support-panel"));
+
+    candidates.forEach((el) => {
+      if (el.id === "clase12CleanSidebar") return;
+
+      const text = normalize(el.innerText || "");
+      const rect = el.getBoundingClientRect();
+
+      const looksLikeLeftOld =
+        text.includes("curso ia") ||
+        text.includes("strategy tree arena") ||
+        text.includes("ruta de aprendizaje") ||
+        text.includes("m1") ||
+        text.includes("hero");
+
+      const looksLikeRightOld =
+        text.includes("panel de apoyo") ||
+        text.includes("accesos rapidos") ||
+        text.includes("matriz de puntajes") ||
+        text.includes("simulacion heuristica") ||
+        text.includes("secuencia") ||
+        text.includes("generar colab");
+
+      const isSidebarSized = rect.width >= 160 && rect.width <= 430 && rect.height >= 250;
+
+      if (isSidebarSized && (looksLikeLeftOld || looksLikeRightOld)) {
+        el.classList.add("clase12-remove-panel");
+        el.setAttribute("aria-hidden", "true");
+      }
+    });
+
+    Array.from(document.querySelectorAll("button")).forEach((button) => {
+      if (button.id === "clase12CleanSidebarToggle") return;
+
+      const text = normalize(button.innerText || "");
+      const rect = button.getBoundingClientRect();
+
+      if (
+        (text.includes("ocultar panel") || text.includes("mostrar panel")) &&
+        rect.width >= 60
+      ) {
+        button.classList.add("clase12-remove-panel");
+        button.setAttribute("aria-hidden", "true");
+      }
+    });
+  }
+
+  function createSidebar() {
+    if (document.getElementById("clase12CleanSidebar")) return;
+
+    const sidebar = document.createElement("nav");
+    sidebar.id = "clase12CleanSidebar";
+    sidebar.className = "clase12-clean-sidebar-panel";
+    sidebar.setAttribute("aria-label", "Navegación Clase 12");
+
+    const items = links
+      .map(([label, fallbackId]) => {
+        const id = findSectionId(label, fallbackId);
+        if (!id) return "";
+        return `<li><a class="clase12-clean-sidebar-link" href="#${id}">${label}</a></li>`;
+      })
+      .filter(Boolean)
+      .join("");
+
+    sidebar.innerHTML = `
+      <div class="clase12-clean-sidebar-title">
+        <strong>Clase 12</strong>
+        <span>Strategy Tree Arena</span>
+      </div>
+      <ul class="clase12-clean-sidebar-list">
+        ${items}
+      </ul>
+    `;
+
+    document.body.appendChild(sidebar);
+  }
+
+  function createToggle() {
+    if (document.getElementById("clase12CleanSidebarToggle")) return;
+
+    const button = document.createElement("button");
+    button.id = "clase12CleanSidebarToggle";
+    button.className = "clase12-clean-sidebar-toggle";
+    button.type = "button";
+    button.setAttribute("aria-controls", "clase12CleanSidebar");
+
+    document.body.appendChild(button);
+  }
+
+  function setSidebarHidden(hidden) {
+    const button = document.getElementById("clase12CleanSidebarToggle");
+
+    document.body.classList.toggle("clase12-sidebar-hidden", hidden);
+
+    if (button) {
+      button.setAttribute("aria-expanded", String(!hidden));
+      button.innerHTML = hidden
+        ? `<span class="icon">☰</span><span>Mostrar menú</span>`
+        : `<span class="icon">☰</span><span>Ocultar menú</span>`;
+    }
+
+    localStorage.setItem(STORAGE_KEY, hidden ? "1" : "0");
+  }
+
+  function bindToggle() {
+    const button = document.getElementById("clase12CleanSidebarToggle");
+    if (!button || button.dataset.bound === "1") return;
+
+    button.addEventListener("click", () => {
+      const hidden = !document.body.classList.contains("clase12-sidebar-hidden");
+      setSidebarHidden(hidden);
+    });
+
+    button.dataset.bound = "1";
+  }
+
+  function init() {
+    document.body.classList.add("clase12-clean-sidebar");
+
+    removeOldPanels();
+    createSidebar();
+    createToggle();
+
+    const savedHidden = localStorage.getItem(STORAGE_KEY) === "1";
+    setSidebarHidden(savedHidden);
+
+    bindToggle();
+
+    window.setTimeout(removeOldPanels, 100);
+    window.setTimeout(removeOldPanels, 400);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
+  window.addEventListener("load", init);
+})();
+
+/* ==================================================
+   FIX BOTÓN DUPLICADO CLASE 12
+   Elimina botón viejo "Clase 12" que se sobrepone al nuevo menú
+================================================== */
+
+(function removeClase12DuplicateMenuButton() {
+  function normalize(text) {
+    return String(text || "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+  }
+
+  function hideDuplicateButton() {
+    const elements = Array.from(document.querySelectorAll("button, a"));
+
+    elements.forEach((el) => {
+      if (el.id === "clase12CleanSidebarToggle") return;
+      if (el.closest("#clase12CleanSidebar")) return;
+
+      const text = normalize(el.innerText || el.textContent || "");
+      const rect = el.getBoundingClientRect();
+
+      const isTopLeft = rect.left < 220 && rect.top < 120;
+      const saysClase12 = text.includes("clase 12");
+      const looksLikeOldMenu =
+        el.className.toString().toLowerCase().includes("toggle") ||
+        el.className.toString().toLowerCase().includes("menu") ||
+        el.className.toString().toLowerCase().includes("sidebar") ||
+        el.querySelector("svg, .icon, [class*='icon']");
+
+      if (isTopLeft && saysClase12 && looksLikeOldMenu) {
+        el.classList.add("clase12-duplicate-old-menu-button");
+        el.setAttribute("aria-hidden", "true");
+        el.setAttribute("tabindex", "-1");
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", hideDuplicateButton);
+  } else {
+    hideDuplicateButton();
+  }
+
+  window.addEventListener("load", hideDuplicateButton);
+  window.setTimeout(hideDuplicateButton, 150);
+  window.setTimeout(hideDuplicateButton, 500);
 })();

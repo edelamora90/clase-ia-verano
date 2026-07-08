@@ -13,6 +13,7 @@
   --red: #ff6b7f;
   --violet: #b59cff;
   --sidebar: 304px;
+  --right-panel: 320px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -82,10 +83,99 @@ a { color: inherit; }
 .brand-card span, .lesson-nav a { color: var(--muted); }
 .lesson-nav a:hover { color: var(--text); border-color: rgba(109, 242, 138, 0.35); }
 
+.right-panel-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 39;
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgba(109, 242, 138, 0.34);
+  border-radius: 999px;
+  color: var(--text);
+  font-weight: 950;
+  background: rgba(5, 10, 17, 0.92);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.28);
+}
+
+.right-panel {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 38;
+  width: var(--right-panel);
+  height: 100vh;
+  padding: 4.8rem 1rem 1rem;
+  overflow-y: auto;
+  border-left: 1px solid var(--line);
+  background: rgba(5, 10, 17, 0.92);
+  backdrop-filter: blur(20px);
+}
+
+body.sidebar-open .right-panel,
+body.sidebar-open .right-panel-toggle {
+  display: none;
+}
+
+.right-panel.is-hidden,
+.lesson-aside.is-hidden,
+.side-panel.is-hidden {
+  display: none !important;
+}
+
+.right-panel-card, .right-panel-links {
+  display: grid;
+  gap: 0.65rem;
+  margin-bottom: 0.8rem;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.right-panel-kicker {
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.right-panel h2, .right-panel h3 { margin-bottom: 0.35rem; }
+.right-panel p { margin-bottom: 0; }
+.right-panel ol { margin: 0; padding-left: 1.2rem; color: var(--muted); line-height: 1.55; }
+
+.right-panel-links a {
+  padding: 0.66rem 0.7rem;
+  border: 1px solid rgba(210, 226, 255, 0.12);
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 850;
+  text-decoration: none;
+  background: rgba(5, 10, 17, 0.42);
+}
+
+.right-panel-links a:hover {
+  color: var(--text);
+  border-color: rgba(72, 199, 255, 0.34);
+}
+
 .lesson-shell {
-  width: min(1480px, calc(100% - var(--sidebar)));
+  min-width: 0;
+  width: min(1480px, calc(100% - var(--sidebar) - var(--right-panel)));
   margin-left: var(--sidebar);
+  margin-right: var(--right-panel);
   padding: clamp(1rem, 2vw, 2rem);
+  transition: margin-right 220ms ease, width 220ms ease;
+}
+
+.lesson-shell.right-panel-hidden,
+body.right-panel-hidden .lesson-shell {
+  width: min(1480px, calc(100% - var(--sidebar)));
+  margin-right: 0 !important;
+  max-width: none;
 }
 
 .hero-section, .learning-path, .scenario-section, .mission, .student-lab-section {
@@ -568,7 +658,18 @@ textarea { min-height: 120px; resize: vertical; }
 }
 
 @media (max-width: 1100px) {
-  .lesson-shell { width: 100%; margin-left: 0; padding-top: 5rem; }
+  .lesson-shell { width: 100%; margin-left: 0; margin-right: 0; padding-top: 5rem; }
+  .lesson-shell.right-panel-hidden,
+  body.right-panel-hidden .lesson-shell { width: 100%; }
+  .right-panel {
+    top: 4.75rem;
+    bottom: 1rem;
+    height: auto;
+    max-width: min(340px, calc(100vw - 2rem));
+    padding-top: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 8px 0 0 8px;
+  }
   .lesson-sidebar { transform: translateX(-110%); }
   body.sidebar-open .lesson-sidebar { transform: translateX(0); }
   body.sidebar-open .sidebar-overlay { pointer-events: auto; opacity: 1; }
@@ -583,6 +684,8 @@ textarea { min-height: 120px; resize: vertical; }
 
 @media (max-width: 760px) {
   .lesson-shell { padding-inline: 1rem; }
+  .right-panel-toggle { top: 4.4rem; right: 0.75rem; min-height: 38px; padding: 0.52rem 0.72rem; font-size: 0.88rem; }
+  .right-panel { top: 7.5rem; max-width: min(320px, calc(100vw - 1rem)); }
   .hero-section { min-height: auto; }
   h1 { font-size: clamp(2.3rem, 12vw, 3.4rem); }
   .learning-path-grid, .grid.two, .criteria-grid, .scenario-controls, .student-option-form, .reflection-grid, .mission-explainer-grid, .lesson-explainer-grid, .heuristic-explainer-grid, .formula-breakdown, .value-scale-panel, .score-matrix-explained { grid-template-columns: 1fr; }
@@ -597,3 +700,189 @@ textarea { min-height: 120px; resize: vertical; }
   .form-actions--right { justify-content: stretch; }
   .add-action-btn { width: 100%; max-width: none; }
 }
+
+/* ==================================================
+   SIDEBAR LIMPIA CLASE 12
+   Quita paneles anteriores y crea una barra izquierda funcional
+================================================== */
+
+/* Ocultar paneles viejos detectados */
+.clase12-remove-panel {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Evitar espacio reservado por layouts anteriores */
+body.clase12-clean-sidebar {
+  --clase12-clean-sidebar-width: 286px;
+}
+
+body.clase12-clean-sidebar .lesson-shell,
+body.clase12-clean-sidebar .app-shell,
+body.clase12-clean-sidebar .page-shell,
+body.clase12-clean-sidebar .layout-shell,
+body.clase12-clean-sidebar .lesson-layout,
+body.clase12-clean-sidebar .main-layout {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+/* Contenido principal con sidebar visible */
+body.clase12-clean-sidebar:not(.clase12-sidebar-hidden) main,
+body.clase12-clean-sidebar:not(.clase12-sidebar-hidden) .lesson-main,
+body.clase12-clean-sidebar:not(.clase12-sidebar-hidden) .main-content {
+  margin-left: calc(var(--clase12-clean-sidebar-width) + 28px) !important;
+  margin-right: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+/* Contenido principal con sidebar oculta */
+body.clase12-clean-sidebar.clase12-sidebar-hidden main,
+body.clase12-clean-sidebar.clase12-sidebar-hidden .lesson-main,
+body.clase12-clean-sidebar.clase12-sidebar-hidden .main-content {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+/* Nueva sidebar */
+.clase12-clean-sidebar-panel {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: var(--clase12-clean-sidebar-width) !important;
+  height: 100vh !important;
+  z-index: 50 !important;
+  padding: 5.2rem 1rem 1rem !important;
+  overflow-y: auto !important;
+  background: rgba(3, 7, 14, 0.97) !important;
+  border-right: 1px solid rgba(148, 163, 184, 0.2) !important;
+  box-shadow: 18px 0 48px rgba(0, 0, 0, 0.35) !important;
+}
+
+body.clase12-sidebar-hidden .clase12-clean-sidebar-panel {
+  transform: translateX(-105%) !important;
+  pointer-events: none !important;
+}
+
+.clase12-clean-sidebar-title {
+  margin: 0 0 1rem !important;
+  padding: 0.85rem 0.95rem !important;
+  border: 1px solid rgba(125, 255, 190, 0.22) !important;
+  border-radius: 16px !important;
+  background: rgba(15, 23, 42, 0.72) !important;
+}
+
+.clase12-clean-sidebar-title strong {
+  display: block !important;
+  color: #f8fafc !important;
+  font-size: 0.98rem !important;
+}
+
+.clase12-clean-sidebar-title span {
+  display: block !important;
+  color: #94a3b8 !important;
+  font-size: 0.82rem !important;
+  margin-top: 0.2rem !important;
+}
+
+.clase12-clean-sidebar-list {
+  display: grid !important;
+  gap: 0.55rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.clase12-clean-sidebar-link {
+  display: block !important;
+  padding: 0.78rem 0.85rem !important;
+  border: 1px solid rgba(148, 163, 184, 0.18) !important;
+  border-radius: 12px !important;
+  background: rgba(15, 23, 42, 0.62) !important;
+  color: #cbd5e1 !important;
+  text-decoration: none !important;
+  font-size: 0.91rem !important;
+  line-height: 1.2 !important;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease !important;
+}
+
+.clase12-clean-sidebar-link:hover,
+.clase12-clean-sidebar-link:focus {
+  color: #ffffff !important;
+  border-color: rgba(94, 234, 212, 0.55) !important;
+  background: rgba(20, 184, 166, 0.13) !important;
+  transform: translateX(3px) !important;
+}
+
+/* Botón visible siempre */
+.clase12-clean-sidebar-toggle {
+  position: fixed !important;
+  left: 0.85rem !important;
+  top: 0.85rem !important;
+  z-index: 80 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  width: auto !important;
+  max-width: max-content !important;
+  min-height: 42px !important;
+  padding: 0.65rem 0.9rem !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(125, 211, 252, 0.55) !important;
+  background: rgba(2, 6, 23, 0.92) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+.clase12-clean-sidebar-toggle:hover {
+  background: rgba(14, 165, 233, 0.16) !important;
+}
+
+.clase12-clean-sidebar-toggle .icon {
+  color: #67e8f9 !important;
+  font-size: 1.1rem !important;
+  line-height: 1 !important;
+}
+
+body.clase12-sidebar-hidden .clase12-clean-sidebar-toggle {
+  left: 0.85rem !important;
+}
+
+/* Evitar que paneles derechos anteriores ocupen espacio */
+body.clase12-clean-sidebar aside:not(.clase12-clean-sidebar-panel),
+body.clase12-clean-sidebar nav:not(.clase12-clean-sidebar-panel):has(+ main) {
+  max-width: none;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  body.clase12-clean-sidebar:not(.clase12-sidebar-hidden) main,
+  body.clase12-clean-sidebar:not(.clase12-sidebar-hidden) .lesson-main,
+  body.clase12-clean-sidebar:not(.clase12-sidebar-hidden) .main-content {
+    margin-left: 0 !important;
+  }
+
+  .clase12-clean-sidebar-panel {
+    width: min(86vw, 310px) !important;
+  }
+}
+
+
+/* ==================================================
+   FIX BOTÓN DUPLICADO CLASE 12
+   Oculta el botón viejo que se sobrepone al nuevo menú
+================================================== */
+
+.clase12-duplicate-old-menu-button {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
