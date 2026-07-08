@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Clase 12: Strategy Tree Arena para comparar opciones, calcular puntajes y justificar decisiones con heurísticas sencillas.">
+  <title>Clase 12 · Strategy Tree Arena</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./clase12.css">
+</head>
+<body>
+  <button class="menu-toggle" id="sidebar-toggle" type="button" aria-controls="lesson-sidebar" aria-expanded="true">
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+    <span>Clase 12</span>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <aside class="lesson-sidebar" id="lesson-sidebar" aria-label="Navegación de Clase 12">
+    <a class="back-link" href="../index.html">Curso IA</a>
+    <div class="brand-card">
+      <strong>Strategy Tree Arena</strong>
+      <span>Clase 12</span>
+    </div>
+    <nav class="lesson-nav" aria-label="Secciones">
+      <a href="#inicio">Hero</a>
+      <a href="#ruta">Ruta de aprendizaje</a>
+      <a href="#escenario">Escenario guiado</a>
+      <a href="#mision-1">M1 · Opciones</a>
+      <a href="#mision-2">M2 · Árbol</a>
+      <a href="#mision-3">M3 · Criterios</a>
+      <a href="#mision-4">M4 · Puntajes</a>
+      <a href="#mision-4-5">M4.5 · Simulación</a>
+      <a href="#mision-5">M5 · Justificar</a>
+      <a href="#mision-6">M6 · Escenarios</a>
+      <a href="#laboratorio">Laboratorio</a>
+      <a href="#herramienta-1">H1 · Opciones</a>
+      <a href="#herramienta-2">H2 · Matriz</a>
+      <a href="#herramienta-3">H3 · Colab</a>
+      <a href="#herramienta-4">H4 · Evidencia</a>
+    </nav>
+  </aside>
+
+  <main class="lesson-shell">
+    <section class="hero-section" id="inicio">
+      <div class="hero-copy">
+        <span class="eyebrow">Clase 12 · Strategy Tree Arena</span>
+        <h1 class="hero-title">Clase 12 · Strategy Tree Arena</h1>
+        <p class="hero-subtitle">Compara rutas, calcula puntajes y enseña a tu agente a elegir la mejor decisión cuando varias acciones parecen posibles.</p>
+        <p>En la Clase 11 tu agente aprendió a activar reglas. Eso le permitió responder preguntas como: “¿qué regla coincide con este caso?”. En la Clase 12 avanzamos a un problema más realista: cuando existen varias acciones posibles, el agente debe compararlas, calcular cuál conviene más y explicar por qué eligió esa ruta.</p>
+        <blockquote>Una regla dice qué se puede hacer. Una estrategia decide qué conviene hacer.</blockquote>
+        <div class="button-row">
+          <a class="btn primary" href="#escenario">Entrar a Charm vs Oni</a>
+          <a class="btn" href="#mision-4">Ir a la sección clave</a>
+        </div>
+      </div>
+      <figure class="hero-cover image-slot" data-image="./assets/portadaClase12.png" data-label="Arena estratégica para comparar rutas de decisión">
+        <div class="image-fallback"><strong>Strategy Tree Arena</strong><span>portadaClase12.png</span></div>
+      </figure>
+    </section>
+
+    <section class="learning-path" id="ruta">
+      <div class="section-heading">
+        <span class="badge">Ruta de aprendizaje</span>
+        <h2>La ruta de esta clase</h2>
+        <p>Esta clase tiene tres momentos: entender por qué una acción disponible no siempre conviene, comparar opciones con criterios numéricos y aplicar esa lógica a tu propio agente.</p>
+      </div>
+      <div class="learning-path-grid">
+        <article><span>1</span><h3>Entender el problema</h3><p>Charm enfrenta a Oni. Atacar no siempre es la mejor decisión, aunque exista una acción disponible.</p></article>
+        <article><span>2</span><h3>Comparar opciones</h3><p>El agente calcula puntajes usando criterios como beneficio, seguridad, ventaja, costo y riesgo.</p></article>
+        <article><span>3</span><h3>Aplicar al proyecto</h3><p>Diseñarás una matriz para tu agente: recomendador, cafetería, agente escolar o sistema de apoyo.</p></article>
+      </div>
+    </section>
+
+    <section class="scenario-section" id="escenario">
+      <div class="section-heading">
+        <span class="badge">Escenario guiado</span>
+        <h2>Escenario guiado · Charm vs Oni</h2>
+        <p>En la clase anterior, Charm enfrentaba a Bulbi y la regla era clara: fuego contra planta activaba una buena estrategia. Ahora Charm enfrenta a Oni, una criatura tipo roca con defensa alta. Esto cambia el problema: usar fuego puede estar disponible, pero no necesariamente es la mejor ruta.</p>
+      </div>
+      <div class="lesson-explainer-grid">
+        <article><h3>Qué significa</h3><p>Una acción posible no siempre es una acción conveniente. El agente necesita mirar contexto, recursos y consecuencias.</p></article>
+        <article><h3>Por qué importa</h3><p>Los agentes reales rara vez tienen una sola regla activa. Deben comparar varias rutas antes de actuar.</p></article>
+        <article><h3>Resultado esperado</h3><p>Al terminar el escenario podrás explicar por qué Charm no debe elegir solo por disponibilidad, sino por utilidad.</p></article>
+      </div>
+      <div class="scenario-arena">
+        <article class="creature-card charm-card">
+          <figure class="creature-portrait image-slot" data-image="./assets/charm.png" data-label="Charm criatura tipo fuego">
+            <div class="image-fallback"><strong>Charm</strong><span>tipo fuego</span></div>
+          </figure>
+          <h3>Charm</h3>
+          <p>Tipo fuego · vida media · energía media · poción disponible</p>
+        </article>
+        <article class="options-hub">
+          <span>Opciones posibles</span>
+          <button data-focus-option="usar_ataque_fuego">usar_ataque_fuego</button>
+          <button data-focus-option="defender">defender</button>
+          <button data-focus-option="usar_pocion">usar_pocion</button>
+          <button data-focus-option="concentrarse">concentrarse</button>
+          <button data-focus-option="ataque_especial">ataque_especial</button>
+        </article>
+        <article class="creature-card oni-card">
+          <figure class="creature-portrait image-slot" data-image="./assets/oni.png" data-label="Oni criatura tipo roca">
+            <div class="image-fallback"><strong>Oni</strong><span>tipo roca</span></div>
+          </figure>
+          <h3>Oni</h3>
+          <p>Tipo roca · vida alta · defensa alta · riesgo alto</p>
+        </article>
+      </div>
+      <pre class="log-panel" id="guided-log">Charm observa a Oni.
+Oni tiene defensa alta.
+El ataque de fuego no tiene ventaja clara.
+El agente debe comparar opciones antes de decidir.</pre>
+    </section>
+
+    <section class="mission" id="mision-1">
+      <div class="section-heading">
+        <span class="badge">Misión 1</span>
+        <h2>Misión 1 · De reglas activadas a opciones posibles</h2>
+        <p>En Clase 11, el motor de inferencia buscaba reglas que coincidieran con un caso. Si una regla coincidía, el agente podía decidir una acción. En decisiones reales, varias acciones pueden estar disponibles al mismo tiempo.</p>
+      </div>
+      <figure class="section-banner image-slot" data-image="./assets/bannerMision1.png" data-label="Opciones posibles desde reglas activadas">
+        <div class="image-fallback"><strong>Misión 1</strong><span>bannerMision1.png</span></div>
+      </figure>
+      <div class="mission-explainer-grid">
+        <article><h3>Qué significa</h3><p>El problema ya no es solamente encontrar una regla, sino construir una lista de alternativas candidatas.</p></article>
+        <article><h3>Por qué importa</h3><p>Si el agente solo toma la primera regla activada, puede ignorar opciones más seguras o más útiles.</p></article>
+        <article><h3>Charm vs Oni</h3><p>Charm puede atacar, defenderse, usar poción, cambiar estrategia o usar un ataque especial. Todas son posibles, pero no equivalentes.</p></article>
+        <article><h3>Tu agente</h3><p>Primero usarás reglas para detectar opciones candidatas; después usarás puntajes para elegir la mejor.</p></article>
+      </div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Antes</h3>
+          <p>SI tipo_ataque = fuego Y tipo_enemigo = planta → usar fuego.</p>
+        </article>
+        <article class="panel">
+          <h3>Ahora</h3>
+          <p>Si el enemigo es fuerte, la vida es media y la energía es limitada, puede haber varias rutas: atacar, defenderse, curarse, esperar o cambiar estrategia.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="mission" id="mision-2">
+      <div class="section-heading">
+        <span class="badge">Misión 2</span>
+        <h2>Misión 2 · Construye el árbol de decisión</h2>
+        <p>Un árbol de decisión es una forma visual de ordenar caminos posibles. Parte de un estado actual y muestra las acciones que el agente podría tomar, junto con sus consecuencias esperadas.</p>
+      </div>
+      <figure class="section-banner image-slot" data-image="./assets/bannerMision2.png" data-alt-image="./assets/decisionTree.png" data-label="Árbol de decisión para Charm vs Oni">
+        <div class="image-fallback"><strong>Misión 2</strong><span>bannerMision2.png / decisionTree.png</span></div>
+      </figure>
+      <figure class="support-visual image-slot" data-image="./assets/decisionTree.png" data-label="Diagrama visual del árbol de decisión">
+        <div class="image-fallback"><strong>Árbol visual</strong><span>decisionTree.png</span></div>
+      </figure>
+      <div class="mission-explainer-grid">
+        <article><h3>Qué significa</h3><p>No necesitas un árbol enorme: para esta práctica basta con representar estado actual, opciones posibles y consecuencias esperadas.</p></article>
+        <article><h3>Por qué importa</h3><p>El árbol evita que el agente “salte” directo a una acción sin revisar rutas alternativas.</p></article>
+        <article><h3>Charm vs Oni</h3><p>Estado actual: vida media, energía media y enemigo con defensa alta. Cada rama estima daño, seguridad, costo o riesgo.</p></article>
+        <article><h3>Resultado esperado</h3><p>Al seleccionar una rama podrás leer qué consecuencia tendría y qué criterios conviene evaluar después.</p></article>
+      </div>
+      <div class="decision-tree" id="decision-tree"></div>
+      <article class="panel option-detail" id="option-detail">Selecciona una rama del árbol para ver beneficio, riesgo, costo y explicación.</article>
+    </section>
+
+    <section class="mission" id="mision-3">
+      <div class="section-heading">
+        <span class="badge">Misión 3</span>
+        <h2>Misión 3 · Define criterios para evaluar rutas</h2>
+        <p>Un criterio es una pregunta que ayuda al agente a comparar opciones: ¿esta acción ayuda mucho?, ¿es peligrosa?, ¿consume recursos?, ¿aumenta la supervivencia?, ¿aprovecha alguna ventaja?</p>
+      </div>
+      <figure class="section-banner image-slot" data-image="./assets/bannerMision3.png" data-label="Criterios de beneficio, riesgo, costo, seguridad y ventaja">
+        <div class="image-fallback"><strong>Misión 3</strong><span>bannerMision3.png</span></div>
+      </figure>
+      <div class="criteria-grid">
+        <article><strong>Beneficio</strong><span>Suma puntos: ¿qué gano?</span></article>
+        <article><strong>Seguridad</strong><span>Suma puntos: ¿me ayuda a sobrevivir?</span></article>
+        <article><strong>Ventaja</strong><span>Suma puntos: ¿aprovecha el contexto?</span></article>
+        <article><strong>Confianza</strong><span>Suma puntos: ¿qué tan segura es la recomendación?</span></article>
+        <article class="negative"><strong>Riesgo</strong><span>Resta puntos: ¿qué puede salir mal?</span></article>
+        <article class="negative"><strong>Costo</strong><span>Resta puntos: ¿qué recurso consume?</span></article>
+      </div>
+      <div class="mission-explainer-grid">
+        <article><h3>Qué significa</h3><p>Los criterios convierten una decisión subjetiva en una evaluación más ordenada.</p></article>
+        <article><h3>Por qué importa</h3><p>No todos los agentes necesitan los mismos criterios. Un agente de cafetería puede usar gusto, clima, hambre y presupuesto.</p></article>
+        <article><h3>Charm vs Oni</h3><p>Para combate usaremos daño, seguridad, ventaja, costo y riesgo porque describen bien el intercambio entre actuar y protegerse.</p></article>
+        <article><h3>Tu agente</h3><p>Elegirás criterios que tengan sentido para tu proyecto: académico, recomendador, soporte, cafetería o clasificación.</p></article>
+      </div>
+    </section>
+
+    <section class="mission score-core-section" id="mision-4">
+      <div class="section-heading">
+        <span class="core-section-badge">SECCIÓN CLAVE DE LA CLASE</span>
+        <span class="badge">Misión 4</span>
+        <h2>Misión 4 · Calcula puntajes con una heurística de decisión</h2>
+        <p>Una heurística ayuda al agente a elegir una buena opción cuando no puede analizar todo perfectamente. En esta misión convertirás criterios en números para comparar rutas de decisión.</p>
+      </div>
+      <figure class="section-banner image-slot" data-image="./assets/bannerMision4.png" data-alt-image="./assets/scoreMatrix.png" data-label="Matriz de puntajes de decisión">
+        <div class="image-fallback"><strong>Misión 4</strong><span>bannerMision4.png / scoreMatrix.png</span></div>
+      </figure>
+      <article class="score-formula-card">
+        <strong>Una heurística no es una adivinanza: es una regla práctica para decidir mejor con información limitada.</strong>
+        <span>puntaje = beneficio + seguridad + ventaja - costo - riesgo</span>
+      </article>
+      <figure class="support-visual image-slot" data-image="./assets/scoreMatrix.png" data-label="Matriz visual de puntajes">
+        <div class="image-fallback"><strong>Matriz visual</strong><span>scoreMatrix.png</span></div>
+      </figure>
+
+      <div class="heuristic-explainer-grid">
+        <article>
+          <h3>¿Qué es una heurística?</h3>
+          <p>Una heurística es una estrategia práctica para tomar decisiones cuando no tenemos tiempo, datos o capacidad para analizar todas las posibilidades del mundo real.</p>
+          <p>En inteligencia artificial ayuda al agente a elegir una opción razonablemente buena sin probar absolutamente todos los caminos. No garantiza la solución perfecta, pero produce una decisión útil, rápida y justificable.</p>
+        </article>
+        <article>
+          <h3>¿Por qué necesitamos una heurística?</h3>
+          <p>Porque el agente puede tener varias acciones posibles. Sin heurística podría elegir arbitrariamente. Con heurística puede explicar qué opción tiene más beneficio, menos riesgo, mayor seguridad o demasiado costo.</p>
+          <p>En Charm vs Oni no simulamos todos los futuros del combate: evaluamos cada acción con criterios simples y elegimos el mejor balance.</p>
+        </article>
+      </div>
+
+      <div class="formula-breakdown">
+        <article><h3>Beneficio</h3><p>Lo que el agente gana si toma esa acción: daño, avance, satisfacción, probabilidad de compra o mejora de posición.</p></article>
+        <article><h3>Seguridad</h3><p>Cuánto protege la acción al agente o al usuario: sobrevivir, estabilizar la situación o reducir riesgo académico.</p></article>
+        <article><h3>Ventaja</h3><p>Si la acción aprovecha una condición favorable del contexto: tipo, clima, gusto, presupuesto o información disponible.</p></article>
+        <article><h3>Costo</h3><p>Lo que se gasta para ejecutar la acción: energía, tiempo, dinero, recursos o esfuerzo.</p></article>
+        <article><h3>Riesgo</h3><p>Lo que puede salir mal: recibir daño, recomendar mal, perder recursos o decidir con poca información.</p></article>
+      </div>
+
+      <div class="value-scale-panel">
+        <article>
+          <h3>¿De dónde salen los números?</h3>
+          <p>Los números no aparecen mágicamente. Son estimaciones definidas por el diseñador del agente y deben justificarse.</p>
+          <ol>
+            <li><strong>Conocimiento del dominio:</strong> si Oni tiene defensa alta, atacar con fuego tiene menos beneficio.</li>
+            <li><strong>Reglas de la Clase 11:</strong> una regla de supervivencia puede subir la seguridad de usar poción.</li>
+            <li><strong>Datos observados:</strong> patrones históricos pueden aumentar beneficio o confianza.</li>
+            <li><strong>Criterio del equipo:</strong> si faltan datos, el equipo asigna valores razonados.</li>
+          </ol>
+          <p><strong>Advertencia:</strong> el número debe tener justificación. No basta con poner 90 porque se ve bien.</p>
+        </article>
+        <article>
+          <h3>Escala sugerida</h3>
+          <p>Para beneficio, seguridad y ventaja: 0 = no aporta, 25 = bajo, 50 = medio, 75 = alto, 100 = muy alto.</p>
+          <p>Para costo y riesgo: 0 = no cuesta o no hay riesgo, 25 = bajo, 50 = medio, 75 = alto, 100 = muy alto.</p>
+          <p>Ejemplo: atacar con fuego contra Oni puede tener beneficio 20, seguridad 10, ventaja 0, costo 12 y riesgo 25. Su puntaje es 20 + 10 + 0 - 12 - 25 = -7: está disponible, pero no conviene mucho.</p>
+        </article>
+      </div>
+
+      <div class="score-calculator-panel">
+        <div class="score-table-wrap">
+          <table class="score-matrix" id="guided-score-table"></table>
+          <div class="score-matrix-explained">
+            <span><strong>Beneficio:</strong> ¿qué gana el agente?</span>
+            <span><strong>Seguridad:</strong> ¿qué tanto protege o estabiliza?</span>
+            <span><strong>Ventaja:</strong> ¿aprovecha una condición favorable?</span>
+            <span><strong>Costo:</strong> ¿qué recurso consume?</span>
+            <span><strong>Riesgo:</strong> ¿qué puede salir mal?</span>
+            <span><strong>Justificación:</strong> razón breve de los valores asignados.</span>
+          </div>
+        </div>
+        <aside class="score-winner-spotlight winner-diagnostic-panel" id="guided-winner-panel">Calcula puntajes para ver la mejor ruta.</aside>
+      </div>
+      <div class="button-row">
+        <button class="btn primary" id="calculate-guided-scores" type="button">Calcular puntajes</button>
+      </div>
+
+      <div class="heuristic-development-steps">
+        <h3>¿Cómo desarrollo mi propia heurística?</h3>
+        <ol>
+          <li>Define el objetivo: qué significa una buena decisión para tu agente.</li>
+          <li>Lista opciones: qué acciones puede tomar.</li>
+          <li>Elige criterios: qué factores ayudan a comparar esas opciones.</li>
+          <li>Asigna escala: 0 a 10, 0 a 100 o baja/media/alta convertida a números.</li>
+          <li>Justifica valores: cada número debe tener una razón.</li>
+          <li>Calcula puntaje, compara resultados y ordena opciones.</li>
+          <li>Prueba escenarios y ajusta si el agente decide mal.</li>
+        </ol>
+      </div>
+
+      <div class="validation-panel">
+        <div>
+          <h3>Prueba de validación rápida</h3>
+          <p>Una heurística se valida probándola con casos diferentes. Si el resultado no coincide con lo esperado, la heurística necesita ajuste.</p>
+        </div>
+        <div class="button-row">
+          <button class="btn" type="button" data-validation-scenario="balanced">Escenario balanceado</button>
+          <button class="btn" type="button" data-validation-scenario="emergency">Escenario de emergencia</button>
+          <button class="btn" type="button" data-validation-scenario="offensive">Escenario ofensivo</button>
+        </div>
+        <pre class="log-panel validation-result" id="validation-result">Elige un escenario para validar si la heurística responde como esperamos.</pre>
+      </div>
+    </section>
+
+    <section class="mission heuristic-battle-sim" id="mision-4-5">
+      <div class="section-heading">
+        <span class="badge">Misión 4.5</span>
+        <h2>Simulación heurística · Charm decide automáticamente</h2>
+        <p>Llena la tabla de valores y observa cómo Charm toma decisiones turno por turno según su vida, energía, riesgo y recursos.</p>
+      </div>
+      <article class="panel emphasis-panel">
+        <h3>La heurística en movimiento</h3>
+        <p>Ahora veremos si la heurística funciona en movimiento. Cada turno cambia el estado; por eso la mejor acción puede cambiar. Si la tabla está bien diseñada, Charm debería defenderse, curarse o atacar según la situación.</p>
+        <p><strong>Idea clave:</strong> las decisiones del agente salen de la tabla de valores, no de una acción elegida manualmente.</p>
+      </article>
+
+      <div class="state-table-grid" aria-label="Estado actual del combate">
+        <article class="state-card">
+          <h3>Charm</h3>
+          <label>vida_actual<input type="number" id="battle-charm-hp" min="0"></label>
+          <label>vida_maxima<input type="number" id="battle-charm-max-hp" min="1"></label>
+          <label>energia_actual<input type="number" id="battle-charm-energy" min="0"></label>
+          <label>energia_maxima<input type="number" id="battle-charm-max-energy" min="1"></label>
+          <label>pociones<input type="number" id="battle-charm-potions" min="0"></label>
+          <label>defensa_activa<select id="battle-charm-defense"><option value="no">no</option><option value="si">sí</option></select></label>
+          <label>impulso_preparado<select id="battle-charm-boost"><option value="no">no</option><option value="si">sí</option></select></label>
+          <div class="state-bars">
+            <span>Vida</span><div class="meter"><i id="battle-charm-hp-bar"></i></div>
+            <span>Energía</span><div class="meter energy"><i id="battle-charm-energy-bar"></i></div>
+          </div>
+        </article>
+        <article class="state-card">
+          <h3>Oni</h3>
+          <label>vida_actual<input type="number" id="battle-oni-hp" min="0"></label>
+          <label>vida_maxima<input type="number" id="battle-oni-max-hp" min="1"></label>
+          <label>energia_actual<input type="number" id="battle-oni-energy" min="0"></label>
+          <label>energia_maxima<input type="number" id="battle-oni-max-energy" min="1"></label>
+          <label>defensa<select id="battle-oni-defense"><option value="alta">alta</option><option value="media">media</option><option value="baja">baja</option></select></label>
+          <label>riesgo_ataque<select id="battle-oni-risk"><option value="alto">alto</option><option value="medio">medio</option><option value="bajo">bajo</option></select></label>
+          <label>estado<select id="battle-oni-status"><option value="normal">normal</option><option value="debilitado">debilitado</option><option value="agresivo">agresivo</option></select></label>
+          <div class="state-bars">
+            <span>Vida</span><div class="meter danger"><i id="battle-oni-hp-bar"></i></div>
+            <span>Energía</span><div class="meter energy"><i id="battle-oni-energy-bar"></i></div>
+          </div>
+        </article>
+      </div>
+
+      <article class="panel strategy-principle-card">
+        <h3>Fotografía actual → estrategia → acción</h3>
+        <p>La estrategia no es una acción. Es una postura que el agente adopta al leer el estado actual.</p>
+        <p><strong>Fotografía actual</strong> = lo que está pasando. <strong>Estrategia</strong> = cómo conviene enfrentar la situación. <strong>Acción</strong> = lo que el agente hace en el turno.</p>
+        <p>Si Charm tiene poca vida, la estrategia puede ser recuperación y la acción probable usar_pocion. Si Oni está débil, la estrategia puede ser ofensiva y la acción probable ataque_especial. Si Oni tiene defensa alta, la estrategia puede ser cautela y la acción probable defender o concentrarse.</p>
+      </article>
+
+      <div class="turn-photo-card" id="turn-photo-card">
+        <h3>Fotografía del turno y estrategia recomendada</h3>
+        <div id="turn-photo-summary"></div>
+      </div>
+
+      <div class="strategy-rules-table-wrap">
+        <h3>Tabla de estrategia por fotografía actual</h3>
+        <table class="strategy-rules-table">
+          <thead>
+            <tr><th>Condición detectada</th><th>Estrategia recomendada</th><th>Por qué</th><th>Acciones favorecidas</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Vida baja + poción disponible</td><td>recuperación</td><td>Sobrevivir es más importante que atacar.</td><td>usar_pocion, defender</td></tr>
+            <tr><td>Vida baja + sin poción</td><td>defensiva</td><td>No se puede curar, así que debe reducir daño.</td><td>defender</td></tr>
+            <tr><td>Oni con vida baja + energía alta</td><td>ofensiva</td><td>Existe oportunidad de cerrar el combate.</td><td>ataque_especial, ataque_fuego</td></tr>
+            <tr><td>Oni con defensa alta</td><td>cautela</td><td>Atacar sin ventaja puede desperdiciar recursos.</td><td>defender, concentrarse</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="score-calculator-panel battle-panel">
+        <div class="score-table-wrap">
+          <h3>Matriz de acciones concretas</h3>
+          <table class="heuristic-matrix-table" id="battle-heuristic-table"></table>
+        </div>
+        <aside class="winner-action-panel" id="battle-winner-panel">Recalcula para ver qué acción elegiría Charm.</aside>
+      </div>
+
+      <div class="turn-controls">
+        <button class="btn primary" id="next-heuristic-turn" type="button">Siguiente turno</button>
+        <button class="btn" id="recalculate-battle" type="button">Recalcular sin avanzar turno</button>
+        <button class="btn" id="reset-battle" type="button">Reiniciar simulación</button>
+        <button class="btn danger" id="clear-battle-console" type="button">Limpiar consola</button>
+      </div>
+
+      <div class="score-ranking-list" id="battle-ranking-list"></div>
+
+      <div class="decision-console">
+        <h3>Consola de decisión heurística</h3>
+        <pre id="battle-console">Presiona “Siguiente turno” para observar cómo Charm decide automáticamente con base en la matriz heurística.</pre>
+      </div>
+    </section>
+
+    <section class="mission" id="mision-5">
+      <div class="section-heading">
+        <span class="badge">Misión 5</span>
+        <h2>Misión 5 · Elige la mejor ruta y justifica la decisión</h2>
+        <p>Después de calcular puntajes, el agente debe elegir la opción con mejor equilibrio. Pero elegir no basta: debe explicar por qué esa opción ganó frente a las demás.</p>
+      </div>
+      <figure class="section-banner image-slot" data-image="./assets/bannerMision5.png" data-label="Ranking de opciones y decisión ganadora">
+        <div class="image-fallback"><strong>Misión 5</strong><span>bannerMision5.png</span></div>
+      </figure>
+      <div class="mission-explainer-grid">
+        <article><h3>Qué significa</h3><p>La mejor decisión no siempre es la que tiene más beneficio. Es la que logra mejor equilibrio entre ganar algo, mantenerse seguro y gastar poco.</p></article>
+        <article><h3>Por qué importa</h3><p>Un agente útil debe ser capaz de decir “elegí esto por estas razones”, no solo entregar un resultado.</p></article>
+        <article><h3>Charm vs Oni</h3><p>La explicación debe comparar: cambiar estrategia puede ganar por mayor ventaja y menor riesgo, mientras que ataque especial impacta más pero cuesta demasiado.</p></article>
+        <article><h3>Tu agente</h3><p>Tu explicación final debe conectar el puntaje con el problema real que resuelve tu sistema.</p></article>
+      </div>
+      <div class="ranking-list" id="guided-ranking"></div>
+      <article class="panel" id="guided-explanation">Calcula la matriz para generar una explicación final.</article>
+    </section>
+
+    <section class="mission" id="mision-6">
+      <div class="section-heading">
+        <span class="badge">Misión 6</span>
+        <h2>Misión 6 · Prueba escenarios alternativos</h2>
+        <p>Una buena decisión depende del contexto. Si cambian los datos, puede cambiar la mejor opción. Esta sección enseña que una heurística debe probarse con varios escenarios, no con uno solo.</p>
+      </div>
+      <figure class="section-banner image-slot" data-image="./assets/bannerMision6.png" data-label="Escenarios alternativos de decisión">
+        <div class="image-fallback"><strong>Misión 6</strong><span>bannerMision6.png</span></div>
+      </figure>
+      <div class="mission-explainer-grid">
+        <article><h3>Qué significa</h3><p>La misma fórmula puede producir ganadores distintos si cambia la vida, energía, defensa, riesgo o ventaja.</p></article>
+        <article><h3>Por qué importa</h3><p>Si siempre gana la misma opción, aunque el contexto cambie, la heurística probablemente está mal calibrada.</p></article>
+        <article><h3>Charm vs Oni</h3><p>Con vida baja debería subir usar_pocion. Con energía alta y enemigo vulnerable puede subir ataque_especial. Con riesgo alto puede convenir defender.</p></article>
+        <article><h3>Resultado esperado</h3><p>Aprenderás a revisar si una decisión sigue teniendo sentido cuando cambian los datos de entrada.</p></article>
+      </div>
+      <div class="scenario-controls">
+        <label>Vida de Charm<select id="scenario-hp"><option value="media">media</option><option value="baja">baja</option><option value="alta">alta</option></select></label>
+        <label>Energía<select id="scenario-energy"><option value="media">media</option><option value="alta">alta</option><option value="baja">baja</option></select></label>
+        <label>Defensa de Oni<select id="scenario-defense"><option value="alta">alta</option><option value="media">media</option><option value="baja">baja</option></select></label>
+        <label>Riesgo<select id="scenario-risk"><option value="alto">alto</option><option value="medio">medio</option><option value="bajo">bajo</option></select></label>
+        <label>Poción<select id="scenario-potion"><option value="si">sí</option><option value="no">no</option></select></label>
+        <label>Ventaja elemental<select id="scenario-advantage"><option value="no">no</option><option value="si">sí</option></select></label>
+      </div>
+      <button class="btn primary" id="recalculate-scenario" type="button">Recalcular decisión</button>
+      <pre class="log-panel" id="scenario-result">Modifica el escenario y recalcula.</pre>
+    </section>
+
+    <section class="student-lab-section" id="laboratorio">
+      <div class="section-heading">
+        <span class="badge">Laboratorio del alumno</span>
+        <h2>Laboratorio del alumno · Aplica la estrategia a tu propio agente</h2>
+        <p>Ahora debes tomar la misma lógica y aplicarla a tu propio agente. Tu proyecto no tiene que ser de combate: la matriz puede servir para recomendar productos, priorizar estudiantes en riesgo, elegir una acción de soporte, clasificar solicitudes, sugerir recursos u ordenar alternativas.</p>
+      </div>
+      <figure class="section-banner image-slot" data-image="./assets/bannerLaboratorio.png" data-label="Laboratorio de estrategia del alumno">
+        <div class="image-fallback"><strong>Laboratorio</strong><span>bannerLaboratorio.png</span></div>
+      </figure>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Ejemplo cafetería</h3>
+          <p>Opciones: recomendar café frío, recomendar frappé, recomendar combo escolar o recomendar pan dulce.</p>
+        </article>
+        <article class="panel">
+          <h3>Criterios posibles</h3>
+          <p>Gusto del cliente, clima, hambre, presupuesto, rapidez y probabilidad de compra.</p>
+        </article>
+      </div>
+      <article class="panel emphasis-panel">
+        <h3>No pongas números al azar</h3>
+        <p>Usa tu conocimiento del problema, tus reglas de la Clase 11, datos del dataset si existen, o acuerdos del equipo. Cada número debe poder explicarse.</p>
+      </article>
+    </section>
+
+    <section class="mission" id="herramienta-1">
+      <div class="section-heading">
+        <span class="badge">Herramienta 1</span>
+        <h2>Herramienta 1 · Define las acciones que tu agente puede elegir</h2>
+        <p>Las opciones no son reglas completas. Son las acciones posibles que tu agente puede tomar. Muchas veces salen del resultado de tus reglas de la Clase 11.</p>
+      </div>
+      <article class="panel">
+        <h3>Reglas y opciones no son lo mismo</h3>
+        <p>En la Clase 11 construiste reglas SI/ENTONCES. Muchas de esas reglas terminaban en una acción recomendada.</p>
+        <p><strong>Regla:</strong> SI clima = calor Y gusto = dulce ENTONCES recomendar frappé.</p>
+        <p>La regla completa incluye condiciones y resultado. Pero la opción de decisión es solamente: <strong>recomendar frappé</strong>.</p>
+        <p>En la Clase 12 tomarás esas acciones posibles y las compararás con una heurística para decidir cuál conviene más según beneficio, seguridad, ventaja, costo y riesgo.</p>
+      </article>
+      <div class="rule-option-heuristic-grid">
+        <article>
+          <h3>Regla</h3>
+          <p>Define cuándo una acción aplica.</p>
+          <strong>SI clima = calor Y gusto = dulce ENTONCES recomendar frappé</strong>
+        </article>
+        <article>
+          <h3>Opción</h3>
+          <p>Es la acción que el agente podría elegir.</p>
+          <strong>recomendar frappé</strong>
+        </article>
+        <article>
+          <h3>Heurística</h3>
+          <p>Compara opciones para decidir cuál conviene más.</p>
+          <strong>frappé obtiene mayor puntaje porque coincide con clima, gusto y necesidad del cliente.</strong>
+        </article>
+      </div>
+      <blockquote>Regla = cuándo se activa una acción.<br>Opción = qué acción puede tomar el agente.<br>Heurística = cómo decide cuál opción conviene más.</blockquote>
+      <div class="mission-explainer-grid project-options-grid">
+        <article>
+          <h3>Cafetería</h3>
+          <p>Reglas pueden terminar en recomendar frappé, recomendar café caliente o recomendar combo escolar. Entonces esas son opciones.</p>
+        </article>
+        <article>
+          <h3>Agente académico</h3>
+          <p>Reglas pueden terminar en recomendar tutoría, enviar alerta, agendar seguimiento o sugerir recurso de estudio.</p>
+        </article>
+        <article>
+          <h3>Agente de soporte</h3>
+          <p>Reglas pueden terminar en escalar ticket, responder automáticamente, pedir más información o priorizar solicitud.</p>
+        </article>
+        <article>
+          <h3>Tip</h3>
+          <p>Revisa los resultados de tus reglas de la Clase 11. Si varias reglas terminan en la misma acción, registra esa acción una sola vez.</p>
+        </article>
+      </div>
+      <article class="panel justification-info-card">
+        <h3>¿Qué escribo en la justificación?</h3>
+        <p>Describe por qué esa acción tiene sentido y de dónde saldrían sus valores de beneficio, seguridad, ventaja, costo y riesgo.</p>
+        <p><strong>Cafetería:</strong> un combo escolar puede tener beneficio alto cuando el cliente tiene hambre alta, pero costo mayor porque incluye más productos.</p>
+        <p><strong>Agente académico:</strong> recomendar tutoría puede tener beneficio alto para bajo promedio, pero costo medio porque requiere tiempo del alumno y del tutor.</p>
+      </article>
+      <div class="student-option-form">
+        <input id="student-agent-name" placeholder="Nombre del agente">
+        <input id="student-problem" placeholder="Problema que resuelve">
+        <input id="student-option-name" placeholder="Nombre de la acción. Ejemplo: recomendar_combo_escolar">
+        <input id="student-option-description" placeholder="Descripción: explica qué hace esta acción">
+        <input id="student-option-when" placeholder="Cuándo podría usarse: ¿en qué tipo de caso tendría sentido?">
+        <input id="student-option-result" placeholder="Resultado esperado: ¿qué debería pasar si se elige?">
+        <div class="justification-field">
+          <textarea id="student-option-justification" placeholder="Ejemplo: Recomendar frappé tiene beneficio alto cuando el clima es caluroso y el cliente busca algo dulce. Su costo es medio porque puede ser más caro que un café sencillo. Su riesgo es bajo si el cliente ya indicó gusto dulce, pero subiría si busca algo económico."></textarea>
+          <p class="form-help justification-help">Tip: no pongas números al azar. Explica de dónde salen tus valores: datos del proyecto, reglas de la Clase 11, experiencia del equipo o una razón lógica.</p>
+          <p class="form-help justification-help">Ejemplo corto: Beneficio 80 porque satisface la necesidad principal; costo 40 porque consume recursos medios; riesgo 15 porque es poco probable que sea una mala recomendación.</p>
+        </div>
+        <div class="form-actions form-actions--right">
+          <button class="btn primary add-action-btn" id="add-student-option" type="button">Agregar acción</button>
+        </div>
+      </div>
+      <div class="student-options-table" id="student-options-list"></div>
+    </section>
+
+    <section class="mission" id="herramienta-2">
+      <div class="section-heading">
+        <span class="badge">Herramienta 2</span>
+        <h2>Herramienta 2 · Crea tu matriz de decisión</h2>
+        <p>Asigna beneficio, seguridad, ventaja, costo y riesgo. Después justifica cada fila para que tu decisión sea explicable.</p>
+      </div>
+      <div class="score-table-wrap">
+        <table class="score-matrix" id="student-score-table"></table>
+      </div>
+      <button class="btn primary" id="calculate-student-matrix" type="button">Calcular matriz</button>
+      <aside class="score-winner-panel" id="student-winner-panel">Agrega opciones para calcular la matriz.</aside>
+    </section>
+
+    <section class="mission" id="herramienta-3">
+      <div class="section-heading">
+        <span class="badge">Herramienta 3</span>
+        <h2>Herramienta 3 · Genera código para Colab</h2>
+      </div>
+      <figure class="section-banner image-slot" data-image="./assets/colabStrategy.png" data-label="Código de estrategia listo para Colab">
+        <div class="image-fallback"><strong>Colab</strong><span>colabStrategy.png</span></div>
+      </figure>
+      <button class="btn primary" id="generate-student-colab" type="button">Generar código Colab</button>
+      <button class="btn danger" id="clear-student-colab" type="button">Limpiar código</button>
+      <pre class="colab-code-output" id="student-colab-output">Agrega opciones y genera código.</pre>
+    </section>
+
+    <section class="mission" id="herramienta-4">
+      <div class="section-heading">
+        <span class="badge">Herramienta 4</span>
+        <h2>Herramienta 4 · Genera evidencia final</h2>
+      </div>
+      <figure class="section-banner image-slot" data-image="./assets/reportEvidence.png" data-label="Evidencia final de la decisión estratégica">
+        <div class="image-fallback"><strong>Evidencia</strong><span>reportEvidence.png</span></div>
+      </figure>
+      <div class="reflection-grid">
+        <textarea id="reflection-compare" placeholder="¿Qué aprendí sobre comparar opciones?"></textarea>
+        <textarea id="reflection-criteria" placeholder="¿Qué criterio fue más importante?"></textarea>
+        <textarea id="reflection-winner" placeholder="¿Qué opción ganó y por qué?"></textarea>
+        <textarea id="reflection-improve" placeholder="¿Qué cambiaría para mejorar mi agente?"></textarea>
+        <textarea id="reflection-class11" placeholder="¿Cómo se conecta esto con la Clase 11?"></textarea>
+      </div>
+      <div class="button-row">
+        <button class="btn primary" id="generate-report" type="button">Generar reporte</button>
+        <button class="btn" id="copy-report" type="button">Copiar reporte</button>
+        <button class="btn" id="download-md" type="button">Descargar .md</button>
+        <button class="btn" id="download-txt" type="button">Descargar .txt</button>
+        <button class="btn danger" id="clear-report" type="button">Limpiar reporte</button>
+      </div>
+      <pre class="report-output" id="report-output">Genera evidencia para verla aquí.</pre>
+    </section>
+  </main>
+
+  <script src="./clase12.js"></script>
+</body>
+</html>
