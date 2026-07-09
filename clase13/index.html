@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Laboratorio de feedback y confianza para agentes inteligentes.">
+  <title>Clase 13 · Laboratorio de Feedback y Confianza</title>
+  <link rel="stylesheet" href="clase13.css">
+</head>
+<body>
+  <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-controls="lesson-sidebar" aria-expanded="true" title="Ocultar navegación">
+    <span aria-hidden="true">☰</span><span class="toggle-label">Ocultar</span>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <aside class="lesson-sidebar" id="lesson-sidebar" aria-label="Navegación de Clase 13">
+    <a class="course-link" href="../index.html">← Curso IA</a>
+    <div class="sidebar-heading">
+      <span>Clase 13</span>
+      <strong>Laboratorio de Feedback y Confianza</strong>
+    </div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#ruta">Ruta de aprendizaje</a>
+      <a href="#conexion">Clases 12, 13 y 14</a>
+      <a href="#parte-a">Parte A · CaféBot</a>
+      <a href="#mision-1">1 · Feedback</a>
+      <a href="#mision-2">2 · Confianza</a>
+      <a href="#mision-3">3 · Resultado real</a>
+      <a href="#mision-4">4 · Ajustar confianza</a>
+      <a href="#mision-5">5 · Simulación</a>
+      <a href="#mision-6">6 · Antes y después</a>
+      <a href="#parte-b">Parte B · Laboratorio</a>
+      <a href="#herramienta-1">1 · Caso real</a>
+      <a href="#herramienta-2">2 · Registros</a>
+      <a href="#herramienta-3">3 · Confianza</a>
+      <a href="#herramienta-4">4 · Ranking</a>
+      <a href="#parte-c">Parte C · Colab</a>
+      <a href="#generador">Generador Python</a>
+      <a href="#reporte">Reporte final</a>
+    </nav>
+  </aside>
+
+  <main class="lesson-shell">
+    <section class="hero" id="inicio">
+      <div class="eyebrow">Inteligencia artificial · Aprendizaje explicable</div>
+      <h1>Clase 13 · Laboratorio de Feedback y Confianza</h1>
+      <p class="hero-lead">Convierte resultados reales en ajustes de confianza para que tu agente mejore sus decisiones.</p>
+      <p>En la Clase 12 tu agente aprendió a decidir usando una heurística. Ahora aprenderá a revisar si esa decisión funcionó y a ajustar su confianza con base en feedback.</p>
+      <figure class="hero-cover visual-overlay-card">
+        <img src="./assets/hero-feedback-confidence.jpg" alt="Estudiante trabajando con datos desde una cafetería">
+      </figure>
+      <div class="visual-equation" aria-label="Calor más gusto dulce más frío lleva a frappé, resultado positivo y aumento de confianza">
+        <span>🌡️</span><b>+</b><span>👄</span><b>+</b><span>🧊</span><b>→</b><span>🥤</span><b>→</b><span>✅</span><b>→</b><strong>Confianza ↑</strong>
+      </div>
+      <blockquote>El feedback convierte la experiencia en ajuste.</blockquote>
+      <p class="microcopy">Si una recomendación funciona varias veces en casos similares, el agente puede confiar más en ella.</p>
+    </section>
+
+    <section id="ruta">
+      <div class="section-heading"><span>Ruta</span><h2>Ruta de aprendizaje</h2></div>
+      <figure class="section-visual section-visual--banner">
+        <img src="./assets/ruta-aprendizaje.jpg" alt="Planeación visual con notas que representan una ruta de aprendizaje">
+      </figure>
+      <div class="route-grid">
+        <article><span class="step-number">1</span><h3>Observar la decisión</h3><p>El agente decide usando la heurística de Clase 12.</p></article>
+        <article><span class="step-number">2</span><h3>Revisar el resultado</h3><p>Compara lo esperado contra lo que realmente pasó.</p></article>
+        <article><span class="step-number">3</span><h3>Ajustar confianza</h3><p>Si el feedback confirma la decisión, la confianza sube. Si falla, baja.</p></article>
+      </div>
+      <div class="feedback-flow"><span>Decisión</span><b>→</b><span>Resultado real</span><b>→</b><span>Feedback</span><b>→</b><span>Ajuste</span><b>→</b><span>Nueva decisión</span></div>
+    </section>
+
+    <section id="conexion">
+      <div class="section-heading"><span>Conexión</span><h2>De decidir a aprender</h2></div>
+      <figure class="section-visual section-visual--banner">
+        <img src="./assets/conexion-clases.jpg" alt="Personas conectando ideas durante un proceso de aprendizaje y evolución tecnológica">
+      </figure>
+      <div class="comparison-grid three">
+        <article><span class="class-tag">Clase 12</span><h3>Antes de actuar</h3><p><strong>Pregunta:</strong> ¿qué conviene hacer ahora?</p><p><strong>Concepto:</strong> heurística.</p></article>
+        <article class="current"><span class="class-tag">Clase 13</span><h3>Después de actuar</h3><p><strong>Pregunta:</strong> ¿funcionó lo que hice?</p><p><strong>Concepto:</strong> feedback y confianza.</p></article>
+        <article><span class="class-tag">Clase 14</span><h3>Con muchos ejemplos</h3><p><strong>Pregunta:</strong> ¿cómo aprende un modelo automáticamente?</p><p><strong>Concepto:</strong> redes neuronales y ajuste de pesos.</p></article>
+      </div>
+      <div class="key-line"><strong>Clase 12:</strong> El agente decide con la fotografía actual. <strong>Clase 13:</strong> El agente revisa qué pasó después y ajusta confianza. <strong>Clase 14:</strong> Veremos cómo una red neuronal ajusta pesos automáticamente con muchos datos.</div>
+      <p>Hoy ajustamos confianza de forma manual y explicable. En la próxima clase veremos cómo una red neuronal ajusta pesos automáticamente con muchos datos.</p>
+    </section>
+
+    <section class="part-banner" id="parte-a">
+      <span>Parte A · Ejemplo guiado</span>
+      <h2>CaféBot aprende con feedback</h2>
+      <p>Primero veremos cómo una recomendación produce un resultado y cómo ese resultado modifica la confianza del agente.</p>
+      <figure class="section-visual section-visual--square visual-overlay-card">
+        <img src="./assets/cafebot-feedback.jpg" alt="Bebida fría de café utilizada en el ejemplo guiado de CaféBot">
+      </figure>
+      <div class="case-signals" id="guided-case"></div>
+      <div class="case-story">
+        <article><small>Decisión</small><strong>🥤 recomendar_frappe</strong></article>
+        <b>→</b><article><small>Resultado real</small><strong>El estudiante aceptó</strong></article>
+        <b>→</b><article><small>Feedback</small><strong>✅ Positivo</strong></article>
+        <b>→</b><article><small>Ajuste</small><strong>Confianza sube</strong></article>
+      </div>
+    </section>
+
+    <section id="mision-1">
+      <div class="section-heading"><span>Misión 1</span><h2>Qué es feedback</h2></div>
+      <figure class="section-visual section-visual--banner">
+        <img src="./assets/feedback-usuario.jpg" alt="Personas revisando resultados y compartiendo retroalimentación">
+      </figure>
+      <p class="lead">Feedback es la información que recibimos después de una decisión. Indica si funcionó, funcionó a medias, falló o todavía no tenemos suficiente información.</p>
+      <div class="feedback-types">
+        <article><span>✅</span><h3>Positivo</h3><p>La decisión funcionó.</p></article>
+        <article><span>🟡</span><h3>Parcial</h3><p>Ayudó, pero no resolvió todo.</p></article>
+        <article><span>❌</span><h3>Negativo</h3><p>La decisión falló.</p></article>
+        <article><span>❔</span><h3>Incierto</h3><p>No sabemos si funcionó.</p></article>
+      </div>
+      <div class="example-strip"><strong>No es solo una opinión.</strong> Es una señal basada en lo que pasó realmente.</div>
+    </section>
+
+    <section id="mision-2">
+      <div class="section-heading"><span>Misión 2</span><h2>Qué es confianza</h2></div>
+      <figure class="section-visual section-visual--square visual-overlay-card">
+        <img src="./assets/confianza-medidor.jpg" alt="Visualización analítica que representa el nivel de confianza de una decisión">
+      </figure>
+      <p class="lead">La confianza mide qué tan seguro está el agente de que una acción funcionará en un caso parecido. No significa que sea buena siempre.</p>
+      <div class="confidence-demo">
+        <article>
+          <span class="large-icon">🥤</span><h3>Frappé</h3>
+          <div class="confidence-meter"><span style="width:70%"></span></div><strong>Confianza inicial: 70%</strong>
+        </article>
+        <div class="experience-list"><p>Caso 1: aceptado ✅ → 75%</p><p>Caso 2: aceptado ✅ → 80%</p><p>Caso 3: rechazado ❌ → 73%</p></div>
+      </div>
+      <div class="confidence-scale"><span>Baja · 0–39</span><span>Media · 40–69</span><span>Alta · 70–100</span></div>
+      <blockquote>La confianza crece cuando una decisión funciona varias veces en contextos parecidos.</blockquote>
+    </section>
+
+    <section id="mision-3">
+      <div class="section-heading"><span>Misión 3</span><h2>De decisión a resultado real</h2></div>
+      <figure class="section-visual section-visual--banner">
+        <img src="./assets/decision-resultado.jpg" alt="Checklist para comparar una decisión con su resultado real">
+      </figure>
+      <p class="lead">Una decisión no termina cuando el agente responde. Termina cuando observamos qué pasó después.</p>
+      <div class="vertical-flow">
+        <span>🌡️ calor + 👄 dulce + 🧊 frío</span><b>↓</b><span>🥤 recomendar frappé</span><b>↓</b><span>Esperado: cliente acepta</span><b>↓</b><span>Real: cliente acepta</span><b>↓</b><span>✅ Feedback positivo</span>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Caso</th><th>Decisión</th><th>Esperado</th><th>Real</th><th>Feedback</th></tr></thead><tbody><tr><td>Calor + dulce + frío</td><td>Frappé</td><td>Acepta</td><td>Aceptó</td><td><span class="feedback-badge positive">Positivo</span></td></tr><tr><td>Calor + poco presupuesto</td><td>Café caliente</td><td>Acepta</td><td>Rechazó</td><td><span class="feedback-badge negative">Negativo</span></td></tr></tbody></table></div>
+    </section>
+
+    <section class="key-section" id="mision-4">
+      <div class="section-heading"><span>Misión 4</span><h2>Ajusta la confianza con feedback</h2><em>Sección clave</em></div>
+      <figure class="section-visual section-visual--banner key-section-visual">
+        <span class="visual-badge">SECCIÓN CLAVE</span>
+        <img src="./assets/ajuste-confianza.jpg" alt="Panel analítico utilizado para ajustar y comparar niveles de confianza">
+      </figure>
+      <p>En la Clase 12 la confianza era un valor inicial. Ahora puede cambiar según la experiencia.</p>
+      <div class="formula">confianza_nueva = confianza_actual + ajuste_feedback</div>
+      <div class="adjustment-grid"><span>✅ Positivo <b>+5</b></span><span>🟡 Parcial <b>+1</b></span><span>❌ Negativo <b>−7</b></span><span>❔ Incierto <b>0</b></span></div>
+      <div class="before-after-panel">
+        <article><small>Antes</small><strong>🥤 Frappé · 70%</strong></article>
+        <div><span>✅ positivo</span><b>→</b></div>
+        <article><small>Después</small><strong>🥤 Frappé · 75%</strong></article>
+      </div>
+      <a class="button-link" href="#mision-5">Probar la simulación ↓</a>
+      <div class="callout">La confianza siempre queda entre 0 y 100. Una experiencia aislada no basta: buscamos feedback repetido en casos parecidos.</div>
+    </section>
+
+    <section id="mision-5">
+      <div class="section-heading"><span>Misión 5</span><h2>Simulación visual de feedback</h2></div>
+      <figure class="section-visual section-visual--wide visual-overlay-card">
+        <img src="./assets/simulacion-feedback.jpg" alt="Pantalla de análisis de datos utilizada para representar una simulación">
+      </figure>
+      <div class="formula compact">puntaje = beneficio + confianza + seguridad − costo − riesgo</div>
+      <div class="simulator-layout">
+        <div>
+          <div class="case-photo-card"><h3>Caso actual</h3><div class="case-signals compact" id="sim-case"></div></div>
+          <div class="actions-grid" id="guided-actions"></div>
+        </div>
+        <aside class="simulator-console">
+          <h3>Consola de aprendizaje</h3>
+          <div id="guided-summary" aria-live="polite"><p>Calcula una recomendación para comenzar.</p></div>
+          <div class="button-stack">
+            <button class="primary" id="calculate-guided" type="button">Calcular recomendación</button>
+            <button data-guided-feedback="positivo" type="button">✅ Feedback positivo</button>
+            <button data-guided-feedback="parcial" type="button">🟡 Feedback parcial</button>
+            <button data-guided-feedback="negativo" type="button">❌ Feedback negativo</button>
+            <button class="ghost" id="reset-guided" type="button">Reiniciar ejemplo</button>
+          </div>
+        </aside>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Posición</th><th>Acción</th><th>Confianza</th><th>Puntaje</th></tr></thead><tbody id="guided-ranking"></tbody></table></div>
+      <div class="log-panel"><h3>Registro</h3><ol id="feedback-logs"><li>Aún no hay feedback aplicado.</li></ol></div>
+    </section>
+
+    <section id="mision-6">
+      <div class="section-heading"><span>Misión 6</span><h2>Compara antes y después</h2></div>
+      <figure class="section-visual section-visual--banner">
+        <img src="./assets/antes-despues.jpg" alt="Gráficas que permiten comparar el desempeño antes y después del feedback">
+      </figure>
+      <div class="comparison-grid" id="guided-before-after">
+        <article><h3>Antes del feedback</h3><p>Calcula la recomendación para guardar el ranking inicial.</p></article>
+        <article><h3>Después del feedback</h3><p>Aplica feedback para observar el cambio.</p></article>
+      </div>
+      <p>Si el feedback se repite, una decisión puede mantenerse con más respaldo o cambiar. Por ejemplo, varios rechazos por precio podrían hacer que el combo económico supere al frappé.</p>
+    </section>
+
+    <section class="transition">
+      <h2>Ahora aplica feedback a tu agente</h2>
+      <p>La lógica funciona en cafetería, escuela, soporte, salud o ventas: decisión, resultado, feedback y ajuste.</p>
+      <div class="visual-equation small"><strong>Ejemplo CaféBot</strong><b>↓</b><strong>Misma lógica</strong><b>↓</b><strong>Tu agente real</strong></div>
+    </section>
+
+    <section class="part-banner student" id="parte-b">
+      <span>Parte B · Laboratorio del alumno</span>
+      <h2>Ajusta la confianza de tu agente</h2>
+      <p>Registra decisiones, observa resultados y modifica la confianza de tus acciones.</p>
+      <figure class="section-visual section-visual--square section-visual--side visual-overlay-card">
+        <img src="./assets/laboratorio-alumno.jpg" alt="Equipo de estudiantes colaborando en un proyecto con computadoras">
+      </figure>
+    </section>
+
+    <section id="herramienta-1">
+      <div class="section-heading"><span>Herramienta 1</span><h2>Define tu caso real</h2></div>
+      <form id="student-case-form" class="form-grid">
+        <label>Nombre del agente<input id="agent-name" required placeholder="Ej. TutorBot"></label>
+        <label>Usuario final<input id="agent-user" placeholder="Ej. Estudiantes"></label>
+        <label class="wide">Problema que resuelve<textarea id="agent-problem" required placeholder="¿Qué decisión ayuda a tomar?"></textarea></label>
+        <label class="wide">Caso o situación de entrada<textarea id="case-description" required placeholder="Describe señales concretas del caso"></textarea></label>
+        <label>Acción recomendada inicialmente<input id="initial-action" placeholder="Ej. recomendar_tutoria"></label>
+        <label>Resultado esperado<input id="expected-result" placeholder="Ej. El alumno agenda apoyo"></label>
+        <button class="primary" type="submit">Guardar caso</button>
+      </form>
+      <div class="status-box" id="case-status">Completa tu caso para personalizar el laboratorio.</div>
+    </section>
+
+    <section id="herramienta-2">
+      <div class="section-heading"><span>Herramienta 2</span><h2>Registra decisiones y resultados</h2></div>
+      <form id="record-form" class="form-grid compact-form">
+        <label>Caso<input id="record-case" required></label><label>Acción tomada<input id="record-action" required></label>
+        <label>Resultado esperado<input id="record-expected"></label><label>Resultado real<input id="record-real" required></label>
+        <label>Feedback<select id="record-feedback"><option>positivo</option><option>parcial</option><option>negativo</option><option>incierto</option></select></label>
+        <label>Observación<input id="record-note"></label><button class="primary" type="submit">Agregar registro</button>
+      </form>
+      <p class="microcopy">No registres solo si te gustó la decisión. Registra qué pasó realmente.</p>
+      <div class="table-wrap"><table><thead><tr><th>Caso</th><th>Acción</th><th>Esperado</th><th>Real</th><th>Feedback</th><th>Observación</th><th></th></tr></thead><tbody id="records-body"><tr><td colspan="7">Agrega tu primer registro.</td></tr></tbody></table></div>
+    </section>
+
+    <section id="herramienta-3">
+      <div class="section-heading"><span>Herramienta 3</span><h2>Ajusta confianza</h2></div>
+      <div class="adjustment-controls">
+        <label>Positivo<input id="adjust-positive" type="number" value="5"></label><label>Parcial<input id="adjust-partial" type="number" value="1"></label>
+        <label>Negativo<input id="adjust-negative" type="number" value="-7"></label><label>Incierto<input id="adjust-uncertain" type="number" value="0"></label>
+      </div>
+      <form id="action-form" class="form-grid action-form">
+        <label>Acción<input id="action-name" required placeholder="recomendar_tutoria"></label>
+        <label>Confianza inicial<input id="action-confidence" type="number" min="0" max="100" value="60" required></label>
+        <label>Beneficio<input id="action-benefit" type="number" value="70" required></label><label>Seguridad<input id="action-safety" type="number" value="70" required></label>
+        <label>Costo<input id="action-cost" type="number" value="30" required></label><label>Riesgo<input id="action-risk" type="number" value="20" required></label>
+        <button class="primary" type="submit">Agregar acción</button>
+      </form>
+      <div class="toolbar"><button id="calculate-adjustments" type="button">Calcular ajustes desde registros</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Acción</th><th>Confianza inicial</th><th>Feedback recibido</th><th>Ajuste</th><th>Confianza nueva</th><th>Justificación</th><th></th></tr></thead><tbody id="student-actions-body"><tr><td colspan="7">Agrega acciones de tu agente.</td></tr></tbody></table></div>
+    </section>
+
+    <section id="herramienta-4">
+      <div class="section-heading"><span>Herramienta 4</span><h2>Prueba antes y después</h2></div>
+      <p>El puntaje usa los valores de cada acción. La comparación muestra si el feedback cambió la decisión final.</p>
+      <button class="primary" id="compare-student" type="button">Calcular ranking antes y después</button>
+      <div class="comparison-grid" id="student-comparison">
+        <article><h3>Antes</h3><p>Agrega acciones y calcula.</p></article><article><h3>Después</h3><p>Los ajustes aparecerán aquí.</p></article>
+      </div>
+      <div class="status-box" id="comparison-explanation">Si el feedback modifica la confianza, también puede modificar la decisión final.</div>
+    </section>
+
+    <section class="part-banner colab" id="parte-c">
+      <span>Parte C · Tutorial Colab paso a paso</span>
+      <h2>Programa feedback y confianza</h2>
+      <p>Lleva tu sistema de feedback a Python para probarlo con tu escenario real.</p>
+      <figure class="section-visual section-visual--wide visual-overlay-card">
+        <img src="./assets/colab-notebook.jpg" alt="Programación y análisis de datos en una computadora portátil">
+      </figure>
+    </section>
+
+    <section id="tutorial">
+      <div class="section-heading"><span>Tutorial</span><h2>Ocho pasos para llevarlo a Python</h2></div>
+      <div class="tutorial-grid">
+        <article><b>1</b><h3>Crear notebook</h3><p>Abre Colab, crea un cuaderno nuevo y nómbralo con tu agente.</p></article>
+        <article><b>2</b><h3>Definir acciones</h3><p>Guarda beneficio, confianza, seguridad, costo y riesgo.</p></article>
+        <article><b>3</b><h3>Calcular puntaje</h3><p>Suma señales favorables y resta costo y riesgo.</p></article>
+        <article><b>4</b><h3>Elegir acción</h3><p>Ordena las opciones y toma la de mayor puntaje.</p></article>
+        <article><b>5</b><h3>Registrar feedback</h3><p>Guarda el caso, lo esperado, lo real y la señal.</p></article>
+        <article><b>6</b><h3>Aplicar ajuste</h3><p>Usa +5, +1, −7 o 0 y limita entre 0 y 100.</p></article>
+        <article><b>7</b><h3>Comparar</h3><p>Calcula el ranking antes y después del ajuste.</p></article>
+        <article><b>8</b><h3>Reflexionar</h3><p>Explica qué evidencia cambió y qué aprendió el agente.</p></article>
+      </div>
+    </section>
+
+    <section id="generador">
+      <div class="section-heading"><span>Generador</span><h2>Código Colab con mi caso</h2></div>
+      <div class="toolbar">
+        <button class="primary" id="generate-code" type="button">Generar código</button><button id="copy-code" type="button">Copiar código</button>
+        <button id="download-py" type="button">Descargar .py</button><button id="download-code-txt" type="button">Descargar .txt</button><button class="ghost" id="clear-code" type="button">Limpiar código</button>
+      </div>
+      <pre class="code-output"><code id="colab-code">Completa tu caso y tus acciones para generar Python personalizado.</code></pre>
+      <div class="status-line" id="code-status" aria-live="polite"></div>
+    </section>
+
+    <section id="reporte">
+      <div class="section-heading"><span>Cierre</span><h2>Reporte final</h2></div>
+      <figure class="section-visual section-visual--square section-visual--side visual-overlay-card">
+        <img src="./assets/reporte-final.jpg" alt="Reporte de resultados con gráficas y evidencia analítica">
+      </figure>
+      <label class="reflection-label">Reflexión personal<textarea id="student-reflection" placeholder="¿Qué descubriste al comparar la decisión antes y después?"></textarea></label>
+      <div class="toolbar">
+        <button class="primary" id="generate-report" type="button">Generar reporte</button><button id="copy-report" type="button">Copiar reporte</button>
+        <button id="download-md" type="button">Descargar .md</button><button id="download-report-txt" type="button">Descargar .txt</button><button class="ghost" id="clear-report" type="button">Limpiar reporte</button>
+      </div>
+      <pre class="report-output" id="report-output">Tu reporte aparecerá aquí.</pre>
+      <div class="status-line" id="report-status" aria-live="polite"></div>
+    </section>
+
+    <footer><strong>Clase 13</strong><span>Decisión → resultado → feedback → aprendizaje</span></footer>
+  </main>
+  <script src="clase13.js"></script>
+</body>
+</html>
