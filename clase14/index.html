@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Laboratorio visual de redes neuronales, pesos, error y entrenamiento con Python, TensorFlow y Keras.">
+  <title>Clase 14 · Laboratorio de Redes Neuronales</title>
+  <link rel="stylesheet" href="clase14.css">
+</head>
+<body>
+  <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-controls="lesson-sidebar" aria-expanded="true" title="Ocultar navegación">
+    <span aria-hidden="true">☰</span><span class="toggle-label">Ocultar</span>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <aside class="lesson-sidebar" id="lesson-sidebar" aria-label="Navegación de Clase 14">
+    <a class="course-link" href="../index.html">← Curso IA</a>
+    <div class="sidebar-heading">
+      <span>Clase 14</span>
+      <strong>Laboratorio de Redes Neuronales</strong>
+    </div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#ruta">Ruta</a>
+      <a href="#conexion">12, 13, 14 y 15</a>
+      <a href="#mision-1">1 · Idea central</a>
+      <a href="#mision-2">2 · Neurona artificial</a>
+      <a href="#comparacion">Reglas vs red</a>
+      <a href="#mision-3">3 · Pesos</a>
+      <a href="#mision-4">4 · Entrenamiento</a>
+      <a href="#simulador">Simulación</a>
+      <a href="#herramientas">Herramientas</a>
+      <a href="#puente-tecnico">Video de apoyo</a>
+      <a href="#laboratorio">Laboratorio alumno</a>
+      <a href="#codigo">Código Colab</a>
+      <a href="#reporte">Reporte final</a>
+    </nav>
+  </aside>
+
+  <main class="lesson-shell">
+    <section class="hero" id="inicio">
+      <div class="eyebrow">Inteligencia artificial · Aprendizaje automático</div>
+      <h1>Clase 14 · Laboratorio de Redes Neuronales</h1>
+      <p class="hero-lead">Descubre cómo una red neuronal aprende ajustando pesos a partir de ejemplos.</p>
+      <p>En la Clase 13 ajustamos la confianza de forma manual con feedback. En esta clase veremos la misma idea llevada a un modelo que ajusta valores automáticamente usando datos, error y entrenamiento.</p>
+      <figure class="hero-cover">
+        <img src="./assets/hero-redes-neuronales.png?v=3" alt="Diagrama moderno de una red neuronal con entradas, conexiones, salida y panel de datos">
+      </figure>
+      <div class="visual-equation" aria-label="Datos, predicción, resultado real, error y ajuste de pesos">
+        <span>datos</span><b>→</b><span>predicción</span><b>→</b><span>resultado real</span><b>→</b><span>error</span><b>→</b><strong>ajuste de pesos</strong>
+      </div>
+      <blockquote>Una red neuronal no nace sabiendo: aprende ajustando pesos con ejemplos.</blockquote>
+      <p class="microcopy">No empezaremos con fórmulas pesadas. Primero construiremos la intuición visual y luego veremos cómo se programa con Python, TensorFlow y Keras.</p>
+    </section>
+
+    <section id="ruta">
+      <div class="section-heading"><span>Ruta</span><h2>Ruta de aprendizaje</h2></div>
+      <div class="route-grid">
+        <article><span class="step-number">1</span><h3>Ver el ciclo</h3><p>Entrada, predicción, resultado real, error y ajuste.</p></article>
+        <article><span class="step-number">2</span><h3>Entender pesos</h3><p>Los pesos indican qué señales pesan más en la decisión.</p></article>
+        <article><span class="step-number">3</span><h3>Entrenar</h3><p>El modelo repite ejemplos muchas veces para reducir el error.</p></article>
+        <article><span class="step-number">4</span><h3>Programar</h3><p>Usamos Python, Colab, TensorFlow y Keras para verlo funcionando.</p></article>
+      </div>
+      <div class="feedback-flow"><span>Ejemplos</span><b>→</b><span>Modelo</span><b>→</b><span>Error</span><b>→</b><span>Pesos ajustados</span><b>→</b><span>Mejor predicción</span></div>
+    </section>
+
+    <section id="conexion">
+      <div class="section-heading"><span>Conexión</span><h2>De confianza manual a pesos automáticos</h2></div>
+      <div class="comparison-grid four">
+        <article><span class="class-tag">Clase 12</span><h3>Fotografía actual</h3><p>El agente decidía usando una heurística con el estado actual.</p></article>
+        <article><span class="class-tag">Clase 13</span><h3>Feedback real</h3><p>El agente revisaba el resultado y ajustaba confianza manualmente.</p></article>
+        <article class="current"><span class="class-tag">Clase 14</span><h3>Pesos automáticos</h3><p>La red neuronal ajusta pesos usando ejemplos y error.</p></article>
+        <article><span class="class-tag">Clase 15</span><h3>Datos reales</h3><p>Entrenaremos con datos del proyecto del alumno.</p></article>
+      </div>
+      <div class="key-line"><strong>Clase 13 = ajuste manual de confianza.</strong> <strong>Clase 14 = ajuste automático de pesos.</strong> <strong>Clase 15 = entrenamiento con datos reales del proyecto.</strong></div>
+    </section>
+
+    <section id="mision-1">
+      <div class="section-heading"><span>Misión 1</span><h2>Qué aprende una red neuronal</h2></div>
+      <p class="lead">Una red neuronal aprende una relación entre entradas y salidas. No le damos una lista rígida de reglas: le damos ejemplos para que ajuste valores internos llamados pesos.</p>
+      <div class="concept-grid">
+        <article><span>📥</span><h3>Entradas</h3><p>Datos del caso: temperatura, hábitos, señales del usuario o variables del proyecto.</p></article>
+        <article><span>🧠</span><h3>Pesos</h3><p>Números internos que indican la importancia de cada señal.</p></article>
+        <article><span>📤</span><h3>Salida</h3><p>La predicción o respuesta que el modelo propone.</p></article>
+        <article><span>📉</span><h3>Error</h3><p>La distancia entre la predicción y el resultado correcto.</p></article>
+      </div>
+      <div class="callout">La red no “entiende” como una persona. Aprende a ajustar números para que sus predicciones se acerquen más a los ejemplos correctos.</div>
+    </section>
+
+    <section id="mision-2">
+      <div class="section-heading"><span>Misión 2</span><h2>La neurona artificial</h2></div>
+      <figure class="section-visual section-visual--natural visual-overlay-card">
+        <img src="./assets/neurona-artificial.png?v=3" alt="Diagrama de neurona artificial con entradas, pesos, suma, activación y salida">
+      </figure>
+      <p class="lead">Una neurona artificial recibe entradas, multiplica cada entrada por un peso, combina la información y produce una salida.</p>
+      <div class="formula">entrada × peso → suma → activación → salida</div>
+      <p>Si una señal ayuda a predecir mejor, su peso puede aumentar. Si confunde al modelo, su peso puede disminuir.</p>
+    </section>
+
+    <section id="comparacion">
+      <div class="section-heading"><span>Comparación</span><h2>Reglas programadas vs red neuronal</h2></div>
+      <figure class="section-visual section-visual--natural">
+        <img src="./assets/reglas-vs-red-neuronal.png?v=3" alt="Comparación visual entre programación tradicional con reglas y red neuronal que aprende con datos">
+      </figure>
+      <div class="comparison-grid">
+        <article><h3>Programación tradicional</h3><p>La persona escribe reglas explícitas: si pasa A, entonces haz B.</p></article>
+        <article><h3>Red neuronal</h3><p>La persona da ejemplos. El modelo ajusta pesos para aproximarse al resultado correcto.</p></article>
+      </div>
+      <blockquote>Pasamos de escribir todas las reglas a entrenar un modelo para que encuentre patrones.</blockquote>
+    </section>
+
+    <section id="mision-3">
+      <div class="section-heading"><span>Misión 3</span><h2>Pesos: la confianza automática del modelo</h2></div>
+      <p class="lead">En Clase 13 cambiábamos una confianza visible: 70%, 75%, 68%. En una red neuronal cambian muchos pesos internos. Es menos manual, pero sigue la misma lógica de aprender a partir del resultado.</p>
+      <div class="weight-board">
+        <article><small>Señal</small><strong>calor</strong><div class="weight-meter"><span style="width:82%"></span></div><b>peso alto</b></article>
+        <article><small>Señal</small><strong>dulce</strong><div class="weight-meter"><span style="width:64%"></span></div><b>peso medio</b></article>
+        <article><small>Señal</small><strong>ruido</strong><div class="weight-meter"><span style="width:24%"></span></div><b>peso bajo</b></article>
+      </div>
+      <div class="key-line">No todos los datos importan igual. El entrenamiento ayuda al modelo a descubrir qué señales merecen más peso.</div>
+    </section>
+
+    <section class="key-section" id="mision-4">
+      <div class="section-heading"><span>Misión 4</span><h2>Cómo entrena una red neuronal</h2><em>Sección clave</em></div>
+      <figure class="section-visual section-visual--natural key-section-visual">
+        <span class="visual-badge">SECCIÓN CLAVE</span>
+        <img src="./assets/entrenamiento-red-neuronal.png?v=3" alt="Ciclo de entrenamiento con datos, predicción, resultado real, error, ajuste y nueva predicción">
+      </figure>
+      <p class="lead">Entrenar significa repetir un ciclo: el modelo predice, se compara con la respuesta correcta, calcula error y ajusta pesos para equivocarse menos la próxima vez.</p>
+      <div class="training-cycle">
+        <span>1 · Datos</span><b>→</b><span>2 · Predicción</span><b>→</b><span>3 · Resultado real</span><b>→</b><span>4 · Error</span><b>→</b><span>5 · Ajuste</span>
+      </div>
+      <a class="button-link" href="#simulador">Probar simulación ↓</a>
+    </section>
+
+    <section id="simulador">
+      <div class="section-heading"><span>Simulación</span><h2>Observa cómo bajan el error y el loss</h2></div>
+      <p class="lead">En esta simulación veremos una versión simplificada de entrenamiento. El modelo recibe un caso, hace una predicción, compara esa predicción con la salida esperada y ajusta su peso para reducir el error. No necesitas memorizar fórmulas: observa cómo el modelo se equivoca menos con cada época.</p>
+      <div class="training-note">
+        <h3>¿Qué está pasando aquí?</h3>
+        <p>Estamos entrenando una neurona muy simple. Le damos una entrada numérica, como el nivel de calor, y le pedimos que produzca una salida esperada, como la probabilidad de aceptación. Al inicio el peso puede no ser correcto, por eso la predicción se equivoca. Después de cada época, el modelo calcula el error y ajusta el peso para acercarse más a la salida esperada.</p>
+        <strong>Entrenar significa repetir este ciclo: predecir, comparar, medir error y ajustar.</strong>
+      </div>
+      <div class="concept-help-grid" aria-label="Definiciones rápidas de herramientas y variables">
+        <article class="concept-help-card">
+          <h4>TensorFlow</h4>
+          <p>TensorFlow es una biblioteca de aprendizaje automático. Nos permite construir modelos, entrenarlos con ejemplos y pedirles predicciones. En esta página no usamos TensorFlow real: hacemos una versión visual simplificada. En Colab sí veremos código con TensorFlow/Keras.</p>
+        </article>
+        <article class="concept-help-card">
+          <h4>Keras</h4>
+          <p>Keras es una forma sencilla de construir redes neuronales dentro de TensorFlow. Nos permite crear modelos por capas usando menos código. <strong>Sequential</strong> es un modelo ordenado por capas y <strong>Dense</strong> es una capa donde las entradas se conectan con neuronas.</p>
+        </article>
+        <article class="concept-help-card">
+          <h4>Época</h4>
+          <p>Una época es una vuelta de entrenamiento. Si entrenamos 1 época, el modelo ajusta una vez; si entrenamos 20, tiene 20 oportunidades para corregirse. Más épocas no siempre significa mejor.</p>
+        </article>
+      </div>
+      <div class="micro-glossary" aria-label="Guía rápida de la simulación">
+        <h3>Guía rápida de la simulación</h3>
+        <div class="micro-glossary-grid">
+          <span class="micro-glossary-item">🌡️ <b>Entrada</b><small>Dato que recibe el modelo.</small></span>
+          <span class="micro-glossary-item">🎚️ <b>Peso</b><small>Importancia asignada a la entrada.</small></span>
+          <span class="micro-glossary-item">📈 <b>Predicción</b><small>Respuesta calculada por el modelo.</small></span>
+          <span class="micro-glossary-item">🎯 <b>Salida esperada</b><small>Respuesta correcta o deseada.</small></span>
+          <span class="micro-glossary-item">⚠️ <b>Error</b><small>Distancia entre predicción y salida.</small></span>
+          <span class="micro-glossary-item">📉 <b>Loss</b><small>Medida del error que buscamos reducir.</small></span>
+          <span class="micro-glossary-item">🔁 <b>Época</b><small>Una ronda de entrenamiento.</small></span>
+        </div>
+      </div>
+      <div class="simulator-layout">
+        <div class="sim-card">
+          <h3>Ejemplo CaféBot</h3>
+          <p>Entrada: intensidad de calor. Salida esperada: probabilidad de recomendar bebida fría.</p>
+          <div class="slider-row">
+            <label>Calor del caso<input id="heat-input" type="range" min="0" max="10" value="8"></label>
+            <output id="heat-output">8</output>
+          </div>
+          <div class="concept-help-card inline-help">
+            <h4>Calor del caso</h4>
+            <p>La escala de 1 a 10 convierte una idea del mundo real en un número que el modelo puede procesar. Una red neuronal no entiende directamente la palabra “calor”; por eso la transformamos en un valor numérico.</p>
+            <div class="scale-pills"><span>🌡️ 1 = poco calor</span><span>🌡️ 5 = calor medio</span><span>🌡️ 10 = mucho calor</span></div>
+            <small>1–3 = clima fresco · 4–6 = templado · 7–10 = caluroso</small>
+          </div>
+          <div class="slider-row">
+            <label>Salida esperada<input id="target-input" type="range" min="0" max="100" value="90"></label>
+            <output id="target-output">90%</output>
+          </div>
+          <div class="concept-help-card inline-help">
+            <h4>Salida esperada</h4>
+            <p>Es lo que queremos que el modelo aprenda a predecir. Se maneja como porcentaje porque representa una probabilidad o nivel esperado: 80% indica alta probabilidad de aceptación; 20% indica baja probabilidad.</p>
+            <small>Funciona como la respuesta correcta durante el entrenamiento.</small>
+          </div>
+          <div class="toolbar">
+            <button class="primary" id="train-step" type="button">Entrenar 1 época</button>
+            <button id="train-ten" type="button">Entrenar 10 épocas</button>
+            <button class="ghost" id="reset-training" type="button">Reiniciar</button>
+          </div>
+          <div class="training-note compact">
+            <strong>Tip sobre épocas:</strong> si son pocas, el modelo puede no aprender suficiente; si son demasiadas, puede memorizar demasiado. Aquí las usamos para observar cómo baja el error.
+          </div>
+        </div>
+        <aside class="sim-card">
+          <h3>Estado del modelo</h3>
+          <div class="metric-grid">
+            <article><small>Peso actual</small><strong id="weight-value">0.20</strong></article>
+            <article><small>Predicción</small><strong id="prediction-value">16%</strong></article>
+            <article><small>Error</small><strong id="error-value">74</strong></article>
+            <article><small>Loss</small><strong id="loss-value">5476</strong></article>
+          </div>
+          <div class="loss-chart" id="loss-chart" aria-label="Historial visual del loss"></div>
+          <div class="model-state-card">
+            <h4>Estados del modelo</h4>
+            <dl>
+              <div><dt>Peso actual</dt><dd>Importancia que el modelo le da a la entrada.</dd></div>
+              <div><dt>Predicción</dt><dd>Respuesta que calcula antes de saber si está bien o mal.</dd></div>
+              <div><dt>Error</dt><dd>Diferencia entre predicción y salida esperada.</dd></div>
+              <div><dt>Loss</dt><dd>Medida del error usada para ver si el modelo mejora.</dd></div>
+            </dl>
+          </div>
+        </aside>
+      </div>
+      <div class="loss-explainer">
+        <h3>Error vs loss</h3>
+        <p><strong>Error:</strong> diferencia directa entre lo que predijo y lo que debía predecir. Si el modelo predice 60% y la salida esperada era 80%, el error es 20 puntos porcentuales.</p>
+        <p><strong>Loss:</strong> forma de medir ese error para guiar el entrenamiento. El modelo intenta reducirlo con cada ajuste.</p>
+        <strong>El error nos dice cuánto se equivocó en este intento. El loss nos ayuda a seguir la evolución del aprendizaje.</strong>
+      </div>
+      <div class="log-panel"><h3>Registro de entrenamiento</h3><ol id="training-log"><li>Aún no has entrenado el modelo.</li></ol></div>
+      <div class="class-connection-grid">
+        <article class="class-connection-card">
+          <h3>Conexión con Clase 13</h3>
+          <p>En la Clase 13 ajustábamos la confianza manualmente con feedback. Aquí el modelo ajusta un peso usando error. La idea es parecida: observar qué pasó y corregir para decidir mejor después.</p>
+          <div><span>Clase 13</span><b>feedback positivo o negativo → ajustamos confianza</b></div>
+          <div><span>Clase 14</span><b>predicción vs salida esperada → error → ajustamos peso</b></div>
+        </article>
+        <article class="class-connection-card">
+          <h3>Puente hacia Clase 15</h3>
+          <p>En esta clase entrenamos una neurona simple para entender el proceso. En la Clase 15 usaremos más ejemplos y más variables para entrenar un modelo con datos del proyecto.</p>
+          <strong>Hoy entendemos el mecanismo. En la siguiente clase lo aplicamos con datos reales.</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="part-banner tools" id="herramientas">
+      <span>Herramientas</span>
+      <h2>Python, Google Colab, TensorFlow y Keras</h2>
+      <p>Ahora conectamos la intuición visual con el ecosistema técnico que usarán los alumnos.</p>
+      <figure class="section-visual section-visual--natural visual-overlay-card">
+        <img src="./assets/tensorflow-keras-colab.png?v=3" alt="Notebook con código, modelo, entrenamiento y predicción">
+      </figure>
+    </section>
+
+    <section id="herramientas-detalle">
+      <div class="tool-grid">
+        <article><h3>Python</h3><p>Lenguaje que usamos para programar el ejemplo y expresar los pasos del entrenamiento.</p></article>
+        <article><h3>Google Colab</h3><p>Entorno de notebook donde el alumno puede ejecutar Python sin instalar nada.</p></article>
+        <article><h3>TensorFlow</h3><p>Biblioteca de aprendizaje automático que permite construir y entrenar modelos.</p></article>
+        <article><h3>Keras</h3><p>Interfaz de alto nivel dentro de TensorFlow para crear redes neuronales de forma sencilla.</p></article>
+      </div>
+      <div class="callout"><strong>TensorFlow</strong> es como el motor que permite entrenar modelos. <strong>Keras</strong> es una forma más sencilla y ordenada de construir esos modelos.</div>
+      <div class="syntax-grid">
+        <article><code>model.fit(...)</code><p>Entrena el modelo con ejemplos.</p></article>
+        <article><code>model.predict(...)</code><p>Pide una predicción nueva después de entrenar.</p></article>
+        <article><code>epochs</code><p>Indica cuántas veces el modelo revisa los ejemplos.</p></article>
+        <article><code>loss</code><p>Representa el error. Si baja, el modelo aprende mejor.</p></article>
+      </div>
+    </section>
+
+    <section class="video-section" id="puente-tecnico">
+      <div class="section-heading"><span>Puente técnico</span><h2>Puente técnico · Tu primera red neuronal en Python</h2></div>
+      <figure class="section-visual section-visual--natural">
+        <img src="./assets/celsius-fahrenheit-video.png?v=3" alt="Ejemplo visual Celsius a Fahrenheit usando un modelo neuronal">
+      </figure>
+      <p class="lead">Este video no es el tema completo de la clase. Es un ejemplo simple para ver una red neuronal funcionando en Python con TensorFlow usando Celsius → Fahrenheit.</p>
+      <div class="watch-guide">
+        <h3>Mientras ves el video, identifica:</h3>
+        <ol>
+          <li>¿Cuál es la entrada?</li>
+          <li>¿Cuál es la salida esperada?</li>
+          <li>¿Qué ejemplos se usan para entrenar?</li>
+          <li>¿Dónde ocurre el entrenamiento?</li>
+          <li>¿Qué significa <code>model.fit</code>?</li>
+          <li>¿Qué significa <code>predict</code>?</li>
+          <li>¿Cómo sabemos si el modelo aprendió?</li>
+        </ol>
+      </div>
+      <div class="video-frame">
+        <iframe title="Primera red neuronal en Python y TensorFlow" src="https://www.youtube-nocookie.com/embed/iX_on3VxZzk?start=15" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="key-line">El ejemplo de Celsius a Fahrenheit es útil porque permite ver que el modelo aprende una relación a partir de ejemplos. En la Clase 15 usaremos esta misma lógica con datos del proyecto del alumno.</div>
+    </section>
+
+    <section class="part-banner student" id="laboratorio">
+      <span>Laboratorio del alumno</span>
+      <h2>Prepara tu primera red neuronal para tu proyecto</h2>
+      <p>Antes de entrenar con datos reales, define qué será entrada, qué será salida y qué ejemplos necesitarás.</p>
+      <figure class="section-visual section-visual--natural visual-overlay-card">
+        <img src="./assets/laboratorio-alumno-red-neuronal.png?v=3" alt="Estudiantes trabajando con datos del proyecto y un modelo neuronal">
+      </figure>
+    </section>
+
+    <section id="lab-form">
+      <div class="section-heading"><span>Proyecto</span><h2>Diseña el dataset de tu modelo</h2></div>
+      <form id="project-form" class="form-grid">
+        <label>Nombre del proyecto<input id="project-name" placeholder="Ej. TutorBot" required></label>
+        <label>Usuario final<input id="project-user" placeholder="Ej. estudiantes de secundaria"></label>
+        <label class="wide">Qué quieres predecir<textarea id="project-prediction" placeholder="Ej. si un estudiante necesita tutoría personalizada" required></textarea></label>
+        <label>Entrada 1<input id="feature-one" placeholder="Ej. promedio reciente"></label>
+        <label>Entrada 2<input id="feature-two" placeholder="Ej. tareas entregadas"></label>
+        <label>Entrada 3<input id="feature-three" placeholder="Ej. asistencia"></label>
+        <label>Salida esperada<input id="target-name" placeholder="Ej. necesita_tutoria"></label>
+        <button class="primary" type="submit">Guardar diseño</button>
+      </form>
+      <div class="status-box" id="project-status">Completa el diseño para personalizar el código y el reporte.</div>
+    </section>
+
+    <section id="codigo">
+      <div class="section-heading"><span>Colab</span><h2>Generador de código Keras</h2></div>
+      <p>Con Keras podemos decir: crea un modelo, agrega una capa, compílalo, entrénalo y haz una predicción.</p>
+      <div class="toolbar">
+        <button class="primary" id="generate-code" type="button">Generar código</button>
+        <button id="copy-code" type="button">Copiar código</button>
+        <button id="download-py" type="button">Descargar .py</button>
+        <button class="ghost" id="clear-code" type="button">Limpiar</button>
+      </div>
+      <pre class="code-output"><code id="colab-code">Completa el diseño de tu proyecto para generar un ejemplo base.</code></pre>
+      <div class="status-line" id="code-status" aria-live="polite"></div>
+    </section>
+
+    <section id="reporte">
+      <div class="section-heading"><span>Cierre</span><h2>Reporte final</h2></div>
+      <figure class="section-visual section-visual--natural visual-overlay-card">
+        <img src="./assets/reporte-clase14.png?v=3" alt="Reporte final con evidencia, notebook, resultados y reflexión">
+      </figure>
+      <label class="reflection-label">Reflexión personal<textarea id="student-reflection" placeholder="¿Qué diferencia ves entre ajustar confianza manualmente y ajustar pesos automáticamente?"></textarea></label>
+      <div class="toolbar">
+        <button class="primary" id="generate-report" type="button">Generar reporte</button>
+        <button id="copy-report" type="button">Copiar reporte</button>
+        <button id="download-md" type="button">Descargar .md</button>
+        <button class="ghost" id="clear-report" type="button">Limpiar</button>
+      </div>
+      <pre class="report-output" id="report-output">Tu reporte aparecerá aquí.</pre>
+      <div class="status-line" id="report-status" aria-live="polite"></div>
+    </section>
+
+    <footer><strong>Clase 14</strong><span>Datos → predicción → error → ajuste de pesos</span></footer>
+  </main>
+  <script src="clase14.js"></script>
+</body>
+</html>
