@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Laboratorio de entrenamiento de modelos con datasets de Kaggle, TensorFlow, Keras y agentes de IA.">
+  <title>Clase 15 · Laboratorio de Entrenamiento de Modelos</title>
+  <link rel="stylesheet" href="clase15.css">
+</head>
+<body>
+  <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-controls="lesson-sidebar" aria-expanded="true" title="Ocultar navegación"><span aria-hidden="true">☰</span><span class="toggle-label">Ocultar</span></button>
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <aside class="lesson-sidebar" id="lesson-sidebar" aria-label="Navegación de Clase 15">
+    <a class="course-link" href="../index.html">← Curso IA</a>
+    <div class="sidebar-heading"><span>Clase 15</span><strong>Laboratorio de Entrenamiento de Modelos</strong></div>
+    <nav>
+      <a href="#inicio">Inicio</a><a href="#ruta">Ruta</a><a href="#conexion">14 → 15 → 16</a><a href="#parte-a">Parte A</a>
+      <a href="#mision-1">1 · Entrenar</a><a href="#mision-2">2 · Dataset</a><a href="#mision-3">3 · X/y</a><a href="#mision-4">4 · Kaggle</a>
+      <a href="#mision-5">5 · Preparar datos</a><a href="#mision-6">6 · Train/test</a><a href="#mision-7">7 · TensorFlow/Keras</a><a href="#mision-8">8 · Métricas</a><a href="#mision-9">9 · Predicciones</a>
+      <a href="#parte-b">Parte B</a><a href="#herramienta-1">Diagnóstico</a><a href="#herramienta-2">Problema</a><a href="#herramienta-3">X/y</a><a href="#herramienta-4">Limpieza</a><a href="#herramienta-5">Entrenamiento</a><a href="#herramienta-6">Resultados</a>
+      <a href="#parte-c">Colab</a><a href="#generador">Generador</a><a href="#agente-entrenado">Agente entrenado</a><a href="#reporte">Reporte</a>
+    </nav>
+  </aside>
+
+  <main class="lesson-shell">
+    <section class="hero" id="inicio">
+      <div class="eyebrow">Inteligencia artificial · Entrenamiento aplicado</div>
+      <h1>Clase 15 · Laboratorio de Entrenamiento de Modelos</h1>
+      <p class="hero-lead">Entrena un modelo con datos de Kaggle, evalúa su aprendizaje y úsalo dentro de tu agente de IA.</p>
+      <p>En la Clase 14 entendiste cómo una red neuronal ajusta pesos para reducir el error. Ahora llevarás esa idea a un entrenamiento completo: preparar un dataset, separar entradas y salida, entrenar un modelo, evaluar su aprendizaje y usarlo para hacer predicciones dentro de tu agente.</p>
+      <figure class="hero-cover"><img src="./assets/hero-model-training.png" alt="Flujo dataset, preparación, modelo, evaluación, predicción y agente"></figure>
+      <div class="visual-flow"><span>Dataset</span><b>→</b><span>Preparación</span><b>→</b><span>Modelo</span><b>→</b><span>Entrenamiento</span><b>→</b><span>Evaluación</span><b>→</b><span>Predicción</span><b>→</b><strong>Agente</strong></div>
+      <blockquote>Un modelo no aprende de una explicación: aprende de ejemplos.</blockquote>
+    </section>
+
+    <section id="ruta">
+      <div class="section-heading"><span>Ruta</span><h2>Ruta de aprendizaje</h2></div>
+      <div class="route-grid">
+        <article><span class="step-number">1</span><h3>Entender el dataset</h3><p>Revisar columnas, tipos de datos, valores vacíos y objetivo.</p><b>Resultado:</b><small>sabes qué contiene tu CSV.</small></article>
+        <article><span class="step-number">2</span><h3>Preparar los datos</h3><p>Convertir categorías, limpiar, separar X/y y crear train/test.</p><b>Resultado:</b><small>datos listos para entrenar.</small></article>
+        <article><span class="step-number">3</span><h3>Entrenar y usar</h3><p>Entrenar con TensorFlow/Keras, revisar métricas y probar predicciones.</p><b>Resultado:</b><small>modelo conectado a tu agente.</small></article>
+      </div>
+      <div class="vertical-mini-flow"><span>Kaggle dataset</span><b>↓</b><span>Datos preparados</span><b>↓</b><span>Modelo entrenado</span><b>↓</b><span>Predicción para el agente</span></div>
+    </section>
+
+    <section id="conexion">
+      <div class="section-heading"><span>Conexión</span><h2>De una neurona simple a un agente entrenado</h2></div>
+      <div class="comparison-grid three">
+        <article><span class="class-tag">Clase 14</span><h3>Una neurona</h3><p>Un ejemplo para entender entrada, peso, predicción, error y ajuste.</p></article>
+        <article class="current"><span class="class-tag">Clase 15</span><h3>Dataset</h3><p>Varios ejemplos para entrenar un modelo real con TensorFlow/Keras.</p></article>
+        <article><span class="class-tag">Clase 16</span><h3>Agente híbrido</h3><p>Reglas + heurística + modelo entrenado con explicación.</p></article>
+      </div>
+      <div class="key-line">En la Clase 14 entendimos cómo aprende una neurona. En la Clase 15 entrenaremos un modelo con datos. Hoy entrenamos el modelo; en la siguiente clase lo conectaremos con el agente.</div>
+    </section>
+
+    <section class="part-banner" id="parte-a">
+      <span>Parte A · Ejemplo guiado</span><h2>Entrenar un modelo sencillo</h2>
+      <p>Antes de usar datasets complejos de Kaggle, veremos el flujo completo con CaféBot: predecir si un estudiante aceptará una recomendación.</p>
+      <figure class="section-visual"><img src="./assets/kaggle-dataset-lab.png" alt="Tabla de dataset con columnas diferentes"></figure>
+      <div class="table-wrap"><table><thead><tr><th>calor</th><th>dulce</th><th>frio</th><th>hambre_alta</th><th>presupuesto_bajo</th><th>acepta</th></tr></thead><tbody id="guided-dataset"></tbody></table></div>
+      <p class="microcopy">Cada fila es un ejemplo. Cada columna de entrada es una pista. La columna <code>acepta</code> es la respuesta que queremos que el modelo aprenda.</p>
+    </section>
+
+    <section id="mision-1">
+      <div class="section-heading"><span>Misión 1</span><h2>Qué significa entrenar un modelo</h2></div>
+      <p class="lead">Entrenar un modelo significa darle ejemplos para que aprenda una relación entre datos de entrada y una salida esperada.</p>
+      <div class="comparison-grid"><article><h3>Programación tradicional</h3><p>Nosotros escribimos reglas: <code>SI calor = sí Y busca frío = sí ENTONCES recomendar frappé</code>.</p></article><article><h3>Aprendizaje automático</h3><p>Damos ejemplos: calor + dulce + frío → aceptó; calor + dulce + presupuesto bajo → rechazó.</p></article></div>
+      <div class="key-line">Entrenar es repetir: ejemplo, predicción, error y ajuste. El modelo no adivina: aprende de ejemplos limpios con una salida correcta para comparar.</div>
+    </section>
+
+    <section id="mision-2">
+      <div class="section-heading"><span>Misión 2</span><h2>Qué es un dataset</h2></div>
+      <p class="lead">Un dataset es una colección de registros. Cada registro describe un caso: una visita, un alumno, una compra o un intento de compra.</p>
+      <div class="concept-grid"><article><h3>Fila = caso</h3><p>Una visita de un estudiante o una compra.</p></article><article><h3>Columna = dato</h3><p>Edad, ciudad, precio, fecha o si compró.</p></article><article><h3>X = entradas</h3><p>Columnas que el modelo puede observar después de prepararlas.</p></article><article><h3>y = respuesta</h3><p>La columna correcta que queremos que aprenda a predecir.</p></article></div>
+      <div class="dataset-flow-note">
+        <h3>Cómo leer las columnas de un dataset</h3>
+        <p>Un dataset no es solo una tabla. Cada columna tiene un papel. Algunas columnas serán entradas para el modelo y una columna será la respuesta que queremos predecir.</p>
+        <strong>Antes de entrenar, debemos clasificar las columnas.</strong>
+        <p>No todas las columnas se usan igual: unas se limpian, otras se convierten, otras se eliminan y una se usa como salida esperada.</p>
+      </div>
+      <div class="table-wrap dataset-sample-table" aria-label="Tabla pequeña tipo Kaggle">
+        <table>
+          <thead><tr><th>edad</th><th>ciudad</th><th>precio</th><th>fecha</th><th>compró</th></tr></thead>
+          <tbody>
+            <tr><td>23</td><td>CDMX</td><td>349</td><td>2026-03</td><td>1</td></tr>
+            <tr><td>41</td><td>Puebla</td><td>120</td><td>2026-04</td><td>0</td></tr>
+            <tr><td>29</td><td>León</td><td>?</td><td>2026-04</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="dataset-column-map" aria-label="Relación de cada columna con su tipo y tratamiento">
+        <article class="dataset-column-card numeric"><h3>edad <span>→ numérica</span></h3><p><b>Qué significa:</b> dato que ya está en número.</p><p><b>Qué hacer:</b> puede usarse como entrada; a veces conviene escalarla.</p><small>X · entrada del modelo</small></article>
+        <article class="dataset-column-card category"><h3>ciudad <span>→ categórica</span></h3><p><b>Qué significa:</b> dato en texto con opciones.</p><p><b>Qué hacer:</b> convertir a columnas 0/1 con one-hot encoding.</p><small>X · entrada que debe convertirse</small></article>
+        <article class="dataset-column-card missing"><h3>precio <span>→ numérica con vacío</span></h3><p><b>Qué significa:</b> debería ser número, pero tiene un dato faltante.</p><p><b>Qué hacer:</b> limpiar, rellenar o eliminar ese registro.</p><small>X · entrada que debe limpiarse</small></article>
+        <article class="dataset-column-card date"><h3>fecha <span>→ fecha</span></h3><p><b>Qué significa:</b> representa tiempo.</p><p><b>Qué hacer:</b> convertir a mes, año o día si aporta al objetivo.</p><small>X opcional · requiere transformación</small></article>
+        <article class="dataset-column-card label"><h3>compró <span>→ label / salida esperada</span></h3><p><b>Qué significa:</b> es la respuesta que queremos que el modelo aprenda.</p><p><b>Qué hacer:</b> usarla como y, no como entrada X.</p><small>y · columna objetivo</small></article>
+      </div>
+      <div class="table-wrap dataset-role-table" aria-label="Tabla explicativa de columnas, tipos, rol y tratamiento">
+        <table>
+          <thead><tr><th>Columna</th><th>Ejemplo</th><th>Tipo</th><th>¿X o y?</th><th>Qué hacer</th></tr></thead>
+          <tbody>
+            <tr><td>edad</td><td>23</td><td><span class="dataset-column-type numeric">Numérica</span></td><td>X</td><td>Usar o escalar.</td></tr>
+            <tr><td>ciudad</td><td>CDMX</td><td><span class="dataset-column-type category">Categórica</span></td><td>X</td><td>Convertir con one-hot encoding.</td></tr>
+            <tr><td>precio</td><td>?</td><td><span class="dataset-column-type missing">Numérica con vacío</span></td><td>X</td><td>Limpiar, rellenar o revisar el registro.</td></tr>
+            <tr><td>fecha</td><td>2026-03</td><td><span class="dataset-column-type date">Fecha</span></td><td>X opcional</td><td>Extraer mes, año o día.</td></tr>
+            <tr><td>compró</td><td>1</td><td><span class="dataset-column-type label">Label</span></td><td>y</td><td>Predecir. No usar como entrada.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="dataset-warning">
+        <h3>Importante sobre el label</h3>
+        <p><strong>Label</strong> = la respuesta correcta que queremos que el modelo aprenda. En este ejemplo, <strong>compró = 1</strong> significa que sí compró y <strong>compró = 0</strong> significa que no compró.</p>
+        <p>Si metemos la respuesta dentro de X, el modelo estaría haciendo trampa.</p>
+      </div>
+      <div class="dataset-flow-note compact">
+        <h3>Relación con X/y</h3>
+        <p><strong>X = columnas de entrada:</strong> edad, ciudad, precio, fecha. <strong>y = columna objetivo:</strong> compró.</p>
+        <ul>
+          <li>ciudad debe convertirse a números;</li>
+          <li>precio tiene un valor vacío y necesita limpieza;</li>
+          <li>fecha debe transformarse si la queremos usar.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="mision-3">
+      <div class="section-heading"><span>Misión 3</span><h2>Features y labels</h2></div>
+      <p class="lead">Aprende a separar las columnas que el modelo observa de la columna que debe aprender a predecir.</p>
+      <div class="xy-highlight-note">
+        <p>Antes de entrenar una red neuronal, debemos decirle al modelo dos cosas: <strong>qué datos puede mirar</strong> y <strong>qué respuesta debe aprender a predecir</strong>.</p>
+        <p>A los datos que el modelo mira les llamamos <strong>features</strong> o <strong>X</strong>. A la respuesta que queremos predecir le llamamos <strong>label</strong> o <strong>y</strong>.</p>
+        <strong>X son las preguntas. y es la respuesta.</strong>
+      </div>
+
+      <div class="features-labels-grid">
+        <article class="feature-label-card feature">
+          <h3>¿Qué son las features?</h3>
+          <p>Las features son las columnas que el modelo usa como pistas para aprender un patrón. Son los datos de entrada.</p>
+          <ul><li>calor</li><li>dulce</li><li>frío</li><li>hambre_alta</li><li>presupuesto_bajo</li></ul>
+          <div class="mini-card"><b>Features = pistas del caso</b><span>calor = 1 · dulce = 1 · frío = 1 · presupuesto_bajo = 0</span></div>
+          <p><strong>Las features no son la respuesta;</strong> son las pistas que ayudan a encontrar la respuesta.</p>
+        </article>
+        <article class="feature-label-card label">
+          <h3>¿Qué es el label?</h3>
+          <p>El label es la columna que contiene la respuesta correcta o salida esperada. Es lo que queremos que el modelo aprenda a predecir.</p>
+          <ul><li><strong>acepta = 1</strong> significa sí aceptó</li><li><strong>acepta = 0</strong> significa no aceptó</li></ul>
+          <div class="mini-card"><b>Label = respuesta esperada</b><span>acepta = 1</span></div>
+          <p><strong>El label</strong> es la respuesta que el modelo usará para medir si se equivocó.</p>
+        </article>
+      </div>
+
+      <div class="xy-highlight-note compact">
+        <h3>¿Por qué se llaman X y y?</h3>
+        <p>En machine learning se usa comúnmente <strong>X</strong> para la matriz o tabla de entradas y <strong>y</strong> para la columna de respuestas. No necesitas memorizarlo matemáticamente: <strong>X = lo que el modelo puede ver</strong> y <strong>y = lo que el modelo debe aprender</strong>.</p>
+        <p><strong>X:</strong> calor, dulce, frío, presupuesto_bajo. <strong>y:</strong> acepta.</p>
+      </div>
+
+      <figure class="section-visual"><img src="./assets/features-labels.png" alt="X features, modelo que busca patrones y y label"></figure>
+      <div class="xy-flow">
+        <article><span>X · Features</span><p>Datos que el modelo observa.</p></article>
+        <b>→</b>
+        <article><span>Modelo</span><p>Busca patrones y ajusta pesos.</p></article>
+        <b>→</b>
+        <article><span>y · Label</span><p>Respuesta correcta para aprender.</p></article>
+      </div>
+      <p class="microcopy">El modelo recibe X, genera una predicción y la compara contra y. Esa comparación produce el error que guía el entrenamiento.</p>
+
+      <div class="table-wrap xy-example-table" aria-label="Ejemplo visual de features X y label y">
+        <table>
+          <thead><tr><th>Caso</th><th class="xy-column-feature">calor<br><small>X</small></th><th class="xy-column-feature">dulce<br><small>X</small></th><th class="xy-column-feature">frío<br><small>X</small></th><th class="xy-column-feature">hambre_alta<br><small>X</small></th><th class="xy-column-feature">presupuesto_bajo<br><small>X</small></th><th class="xy-column-label">acepta<br><small>y</small></th></tr></thead>
+          <tbody>
+            <tr><td>Caso 1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+            <tr><td>Caso 2</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+            <tr><td>Caso 3</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>Caso 4</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="xy-highlight-note">
+        <h3>Cómo separar X/y</h3>
+        <p><strong>Dataset completo:</strong> calor, dulce, frío, hambre_alta, presupuesto_bajo, acepta.</p>
+        <p><strong>X =</strong> calor, dulce, frío, hambre_alta, presupuesto_bajo. <strong>y =</strong> acepta.</p>
+        <div class="xy-flow vertical">
+          <article><span>X features</span><p>El modelo recibe las entradas.</p></article>
+          <b>↓</b><article><span>modelo</span><p>Genera una predicción.</p></article>
+          <b>↘</b><article><span>comparación con y</span><p>Se mide error.</p></article>
+          <b>↓</b><article><span>ajuste</span><p>Corrige pesos para mejorar.</p></article>
+        </div>
+      </div>
+
+      <div class="xy-fix-section">
+        <div class="xy-highlight-note compact">
+          <h3>Errores comunes y cómo corregirlos</h3>
+          <p>Cuando elegimos X/y, no solo necesitamos saber qué evitar. También necesitamos ver cómo se corrige. En cada ejemplo compara el lado incorrecto con el lado correcto.</p>
+          <strong>Un buen entrenamiento empieza con una buena separación entre entradas y respuesta.</strong>
+        </div>
+
+        <article class="xy-fix-card">
+          <h4>Error 1 · Usar el label dentro de X</h4>
+          <div class="xy-fix-comparison">
+            <div class="xy-fix-wrong"><span class="xy-fix-label">Incorrecto ❌</span><pre class="xy-fix-code">X = calor, dulce, frío, acepta
+y = acepta</pre><p><strong>Por qué está mal:</strong> “acepta” es la respuesta. Si la incluimos dentro de X, el modelo ya está viendo lo que debe predecir.</p></div>
+            <div class="xy-fix-right"><span class="xy-fix-label">Correcto ✅</span><pre class="xy-fix-code">X = calor, dulce, frío
+y = acepta</pre><p><strong>Por qué está bien:</strong> X contiene solo pistas del caso. y contiene la respuesta que el modelo debe aprender.</p></div>
+          </div>
+          <p class="xy-fix-explanation"><strong>Frase clave:</strong> La respuesta nunca debe ir dentro de las entradas.</p>
+        </article>
+
+        <article class="xy-fix-card">
+          <h4>Error 2 · Elegir una columna objetivo que no responde a mi pregunta</h4>
+          <p class="xy-fix-explanation"><strong>Escenario:</strong> quiero predecir si una persona compró.</p>
+          <div class="xy-fix-comparison">
+            <div class="xy-fix-wrong"><span class="xy-fix-label">Incorrecto ❌</span><pre class="xy-fix-code">y = ciudad</pre><p><strong>Por qué está mal:</strong> “ciudad” no responde si la persona compró o no compró. Solo indica ubicación.</p></div>
+            <div class="xy-fix-right"><span class="xy-fix-label">Correcto ✅</span><pre class="xy-fix-code">X = edad, ciudad, precio, visitas_previas
+y = compró</pre><p><strong>Por qué está bien:</strong> “compró” sí representa la respuesta que quiero predecir.</p></div>
+          </div>
+          <p class="xy-fix-explanation"><strong>Frase clave:</strong> La columna y debe responder directamente a la pregunta del proyecto.</p>
+        </article>
+
+        <article class="xy-fix-card">
+          <h4>Error 3 · Usar columnas ID como features</h4>
+          <div class="xy-fix-comparison">
+            <div class="xy-fix-wrong"><span class="xy-fix-label">Incorrecto ❌</span><pre class="xy-fix-code">X = customer_id, edad, precio
+y = compró</pre><p><strong>Por qué está mal:</strong> customer_id solo identifica el registro. Normalmente no explica por qué alguien compró.</p></div>
+            <div class="xy-fix-right"><span class="xy-fix-label">Correcto ✅</span><pre class="xy-fix-code">X = edad, precio
+y = compró</pre><p><strong>Por qué está bien:</strong> X contiene datos que pueden tener relación con el resultado.</p></div>
+          </div>
+          <p class="xy-fix-explanation"><strong>Nota:</strong> hay casos avanzados donde un ID podría conectarse con historial, pero para esta clase se elimina.</p>
+        </article>
+
+        <article class="xy-fix-card">
+          <h4>Error 4 · Usar texto largo sin prepararlo</h4>
+          <div class="xy-fix-comparison">
+            <div class="xy-fix-wrong"><span class="xy-fix-label">Incorrecto ❌</span><pre class="xy-fix-code">X = comentario_completo, precio
+y = compró</pre><p><strong>Ejemplo:</strong> “Me gustó mucho, pero el precio se me hizo alto...”</p><p><strong>Por qué está mal:</strong> una red neuronal simple no entiende texto largo directamente si no lo procesamos.</p></div>
+            <div class="xy-fix-right"><span class="xy-fix-label">Correcto ✅</span><pre class="xy-fix-code">X = longitud_comentario, precio
+y = compró</pre><pre class="xy-fix-code">X = precio
+y = compró</pre><p><strong>Por qué está bien:</strong> convertimos el texto en una variable simple o lo dejamos fuera para no complicar el primer entrenamiento.</p></div>
+          </div>
+          <p class="xy-fix-explanation"><strong>Frase clave:</strong> Si el texto no está procesado, primero simplifícalo o déjalo fuera.</p>
+        </article>
+
+        <article class="xy-fix-card">
+          <h4>Error 5 · Usar demasiadas columnas al inicio</h4>
+          <div class="xy-fix-comparison">
+            <div class="xy-fix-wrong"><span class="xy-fix-label">Incorrecto ❌</span><pre class="xy-fix-code">X = 80 columnas del dataset
+y = compró</pre><p><strong>Por qué está mal:</strong> si usas todo desde el inicio, será difícil detectar errores, limpiar datos y entender qué está aprendiendo el modelo.</p></div>
+            <div class="xy-fix-right"><span class="xy-fix-label">Correcto ✅</span><pre class="xy-fix-code">X = 4 a 8 columnas útiles
+y = compró</pre><p><strong>Por qué está bien:</strong> primero hacemos una versión mínima funcional. Después podemos agregar más columnas.</p></div>
+          </div>
+          <p class="xy-fix-explanation"><strong>Frase clave:</strong> Primero entrena simple. Luego mejora.</p>
+        </article>
+
+        <article class="xy-fix-card">
+          <h4>Error 6 · Usar columnas con valores vacíos sin limpiarlas</h4>
+          <div class="xy-fix-comparison">
+            <div class="xy-fix-wrong"><span class="xy-fix-label">Incorrecto ❌</span><pre class="xy-fix-code">X = edad, precio, ciudad
+y = compró</pre><p><strong>Problema:</strong> “precio” tiene valores como ?, vacío o NaN.</p><p><strong>Por qué está mal:</strong> el modelo no puede aprender correctamente si hay valores faltantes sin resolver.</p></div>
+            <div class="xy-fix-right"><span class="xy-fix-label">Correcto ✅</span><pre class="xy-fix-code">X = edad, precio_limpio, ciudad_convertida
+y = compró</pre><p><strong>Por qué está bien:</strong> antes de entrenar, limpiamos o rellenamos los valores vacíos.</p></div>
+          </div>
+          <p class="xy-fix-explanation"><strong>Acciones válidas:</strong> eliminar filas con pocos vacíos; rellenar numéricos con mediana; rellenar categorías con “desconocido”; eliminar columnas con demasiados vacíos.</p>
+        </article>
+
+        <article class="xy-fix-card">
+          <h4>Error 7 · Usar categorías sin convertir</h4>
+          <div class="xy-fix-comparison">
+            <div class="xy-fix-wrong"><span class="xy-fix-label">Incorrecto ❌</span><pre class="xy-fix-code">X = ciudad, género, precio
+y = compró</pre><p><strong>Donde:</strong> ciudad = “CDMX”, “Puebla”, “León”.</p><p><strong>Por qué está mal:</strong> el modelo necesita números. No puede usar texto categórico directamente en una red neuronal simple.</p></div>
+            <div class="xy-fix-right"><span class="xy-fix-label">Correcto ✅</span><pre class="xy-fix-code">X = ciudad_CDMX, ciudad_Puebla, ciudad_León, precio
+y = compró</pre><p><strong>Por qué está bien:</strong> convertimos categorías en columnas 0/1 con one-hot encoding.</p></div>
+          </div>
+          <p class="xy-fix-explanation"><strong>Frase clave:</strong> Las categorías deben convertirse antes de entrenar.</p>
+        </article>
+
+        <div class="xy-training-checklist">
+          <h4>Checklist rápido antes de entrenar</h4>
+          <ul>
+            <li>¿Mi y responde a la pregunta del proyecto?</li>
+            <li>¿Mi y NO aparece dentro de X?</li>
+            <li>¿Quité columnas ID?</li>
+            <li>¿Limpié valores vacíos?</li>
+            <li>¿Convertí categorías a números?</li>
+            <li>¿Empecé con pocas columnas útiles?</li>
+            <li>¿Puedo explicar por qué cada columna de X ayuda a predecir y?</li>
+          </ul>
+          <strong>Si una respuesta es “no”, todavía no entrenes. Primero corrige el dataset.</strong>
+        </div>
+      </div>
+
+      <div class="xy-practice">
+        <h3>Mini práctica · Identifica X/y en tu dataset</h3>
+        <form id="xy-practice-form" class="form-grid">
+          <label class="wide">¿Qué quieres predecir?<textarea id="xy-practice-goal" placeholder="Ej. si un cliente comprará, si un alumno está en riesgo, el precio esperado"></textarea></label>
+          <label>¿Cuál columna será y?<input id="xy-practice-target" placeholder="Ej. compro"></label>
+          <label class="wide">Escribe 3 a 6 columnas que podrían ser X<textarea id="xy-practice-features" placeholder="edad, ciudad, precio, visitas_previas"></textarea></label>
+          <label class="wide">Escribe columnas que NO usarías<textarea id="xy-practice-remove" placeholder="id, nombre, url, comentario_largo"></textarea></label>
+          <label class="wide">¿Por qué esas columnas ayudan a predecir?<textarea id="xy-practice-reason" placeholder="Explica brevemente qué relación podrían tener con la respuesta"></textarea></label>
+          <button class="primary" type="submit">Guardar mi separación X/y</button>
+        </form>
+        <div class="status-box" id="xy-practice-summary">Completa la mini práctica para guardar tu separación X/y.</div>
+      </div>
+
+      <div class="features-labels-grid">
+        <article class="feature-label-card kaggle">
+          <h3>Conexión con Kaggle</h3>
+          <p>En Kaggle, los datasets vienen con muchas columnas. Tu primer trabajo no es entrenar de inmediato, sino decidir cuál columna representa la respuesta, cuáles ayudan a predecirla, cuáles deben limpiarse y cuáles se eliminan.</p>
+          <p><strong>Kaggle te da la tabla, pero tú defines el problema de aprendizaje.</strong></p>
+          <ul><li><strong>Ventas:</strong> X = edad, ciudad, precio, visitas_previas · y = compró</li><li><strong>Académico:</strong> X = promedio, asistencia, tareas_entregadas · y = riesgo_academico</li><li><strong>Salud:</strong> X = sueño, estrés, actividad_física · y = nivel_alerta</li></ul>
+        </article>
+        <article class="feature-label-card code">
+          <h3>Conexión con Colab</h3>
+          <p>Así se verá la separación en código:</p>
+          <pre class="xy-code-block">target = "acepta"
+
+X = df.drop(columns=[target])
+y = df[target]</pre>
+          <p><strong>target</strong> guarda el nombre de la columna que queremos predecir. <strong>X</strong> contiene todas las columnas excepto la respuesta. <strong>y</strong> contiene solo la respuesta.</p>
+          <p>Después todavía tendremos que limpiar X: eliminar IDs, convertir categorías, manejar valores vacíos y escalar números.</p>
+        </article>
+      </div>
+      <blockquote>Si no defines bien qué entra y qué sale, el modelo no puede aprender correctamente.</blockquote>
+    </section>
+
+    <section class="key-section" id="mision-4">
+      <div class="section-heading"><span>Misión 4</span><h2>Cuando tu dataset viene de Kaggle</h2><em>Sección clave</em></div>
+      <figure class="section-visual key-section-visual"><span class="visual-badge">SECCIÓN CLAVE</span><img src="./assets/kaggle-complex-datasets.png" alt="Tipos de columnas comunes en Kaggle"></figure>
+      <p class="lead">Los datasets de Kaggle pueden tener columnas muy distintas. Para no perdernos, usaremos colores con significado. Cada color nos dice qué tipo de dato estamos viendo y qué acción debemos tomar antes de entrenar.</p>
+      <div class="key-line"><strong>En esta misión, el color funciona como una señal de preparación del dato.</strong> Color = tipo de dato o problema detectado = qué hacer antes de entrenar.</div>
+
+      <div class="dataset-color-legend" aria-label="Leyenda de colores del dataset">
+        <h3>Leyenda de colores del dataset</h3>
+        <div class="dataset-legend-grid">
+          <article class="dataset-legend-card dataset-type-numeric"><span>🟦 Cyan · Numérica</span><p>Columnas que ya son números.</p><small>Ejemplo: edad, precio, calificación.</small><strong>Qué hacer: usar directamente o escalar.</strong></article>
+          <article class="dataset-legend-card dataset-type-categorical"><span>🟩 Verde · Categórica</span><p>Columnas con opciones o texto corto.</p><small>Ejemplo: ciudad, género, tipo_producto.</small><strong>Qué hacer: convertir con one-hot encoding.</strong></article>
+          <article class="dataset-legend-card dataset-type-date"><span>🟨 Amarillo · Fecha</span><p>Columnas de tiempo.</p><small>Ejemplo: fecha_compra, mes, año.</small><strong>Qué hacer: extraer año, mes, día o eliminar si no aporta.</strong></article>
+          <article class="dataset-legend-card dataset-type-missing"><span>🟧 Naranja · Valor vacío</span><p>Columnas con datos faltantes.</p><small>Ejemplo: precio = ?, edad vacía.</small><strong>Qué hacer: limpiar, rellenar o eliminar.</strong></article>
+          <article class="dataset-legend-card dataset-type-risk"><span>🟥 Rojo · Riesgo / revisar</span><p>Columnas que pueden causar problemas.</p><small>Ejemplo: texto largo, datos muy sucios, clases desbalanceadas.</small><strong>Qué hacer: simplificar, revisar o dejar fuera al inicio.</strong></article>
+          <article class="dataset-legend-card dataset-type-label"><span>🟪 Violeta · Label / objetivo</span><p>Columna que queremos predecir.</p><small>Ejemplo: compró, aceptó, riesgo.</small><strong>Qué hacer: usar como y, nunca como X.</strong></article>
+          <article class="dataset-legend-card dataset-type-drop"><span>⬛ Gris · Eliminar</span><p>Columnas que normalmente no ayudan.</p><small>Ejemplo: ID, folio, nombre, URL.</small><strong>Qué hacer: eliminar de X.</strong></article>
+        </div>
+      </div>
+
+      <div class="dataset-flow-note compact">
+        <h3>Antes de entrenar, cada columna necesita una decisión</h3>
+        <p>Usar, convertir, limpiar, transformar o eliminar. No basta con cargar el CSV: hay que preparar cada columna para que el modelo aprenda sin trampas ni ruido.</p>
+      </div>
+
+      <h3>Ejemplo visual de dataset crudo</h3>
+      <div class="table-wrap dataset-sample-table"><table><thead><tr><th class="dataset-type-drop">customer_id<br><small>Eliminar</small></th><th class="dataset-type-numeric">edad<br><small>Numérica</small></th><th class="dataset-type-categorical">ciudad<br><small>Categórica</small></th><th class="dataset-type-missing">precio<br><small>Valor vacío</small></th><th class="dataset-type-date">fecha<br><small>Fecha</small></th><th class="dataset-type-risk">comentario<br><small>Revisar</small></th><th class="dataset-type-label">compró<br><small>Label</small></th></tr></thead><tbody><tr><td>A001</td><td>23</td><td>CDMX</td><td>349</td><td>2026-03</td><td>“muy bueno”</td><td>1</td></tr><tr><td>A002</td><td>41</td><td>Puebla</td><td>120</td><td>2026-04</td><td>“caro”</td><td>0</td></tr><tr><td>A003</td><td>29</td><td>León</td><td>?</td><td>2026-04</td><td>“lo compraría”</td><td>1</td></tr></tbody></table></div>
+
+      <h3>Clasificación por columna</h3>
+      <div class="dataset-column-map">
+        <article class="dataset-column-card dataset-type-drop"><h3>customer_id <span>Gris · Eliminar</span></h3><p><strong>Tipo:</strong> eliminar.</p><p><strong>Por qué:</strong> identifica el registro, pero no explica la compra.</p><small>Acción: eliminar de X.</small></article>
+        <article class="dataset-column-card dataset-type-numeric"><h3>edad <span>Cyan · Numérica</span></h3><p><strong>Tipo:</strong> numérica.</p><p><strong>Por qué:</strong> ya es número.</p><small>Acción: usar o escalar.</small></article>
+        <article class="dataset-column-card dataset-type-categorical"><h3>ciudad <span>Verde · Categórica</span></h3><p><strong>Tipo:</strong> categórica.</p><p><strong>Por qué:</strong> es texto con opciones.</p><small>Acción: convertir a números con one-hot encoding.</small></article>
+        <article class="dataset-column-card dataset-type-missing"><h3>precio <span>Naranja · Valor vacío</span></h3><p><strong>Tipo:</strong> valor vacío.</p><p><strong>Por qué:</strong> tiene un dato faltante.</p><small>Acción: rellenar, limpiar o eliminar fila.</small></article>
+        <article class="dataset-column-card dataset-type-date"><h3>fecha <span>Amarillo · Fecha</span></h3><p><strong>Tipo:</strong> fecha.</p><p><strong>Por qué:</strong> representa tiempo.</p><small>Acción: extraer mes/año si aporta.</small></article>
+        <article class="dataset-column-card dataset-type-risk"><h3>comentario <span>Rojo · Revisar</span></h3><p><strong>Tipo:</strong> revisar.</p><p><strong>Por qué:</strong> es texto largo.</p><small>Acción: dejar fuera por ahora o simplificar.</small></article>
+        <article class="dataset-column-card dataset-type-label"><h3>compró <span>Violeta · Label</span></h3><p><strong>Tipo:</strong> label / objetivo.</p><p><strong>Por qué:</strong> es la respuesta que queremos predecir.</p><small>Acción: usar como y, no meter en X.</small></article>
+      </div>
+
+      <div class="dataset-flow-note">
+        <h3>Cómo leer los colores</h3>
+        <ul>
+          <li>Si es <strong>cyan</strong>, probablemente puede entrar al modelo como número.</li>
+          <li>Si es <strong>verde</strong>, primero hay que convertirlo.</li>
+          <li>Si es <strong>naranja</strong>, primero hay que limpiarlo.</li>
+          <li>Si es <strong>amarillo</strong>, hay que transformarlo si aporta.</li>
+          <li>Si es <strong>rojo</strong>, hay que revisarlo con cuidado.</li>
+          <li>Si es <strong>violeta</strong>, es la respuesta y no debe entrar en X.</li>
+          <li>Si es <strong>gris</strong>, normalmente se elimina.</li>
+        </ul>
+      </div>
+
+      <div class="dataset-xy-connection">
+        <h3>Conexión con X/y</h3>
+        <div class="dataset-xy-grid">
+          <article><h4>X podría incluir</h4><ul><li>edad</li><li>ciudad convertida</li><li>precio limpio</li><li>fecha transformada si aporta</li></ul></article>
+          <article><h4>X no debería incluir</h4><ul><li>customer_id</li><li>comentario sin procesar</li><li>compró</li></ul></article>
+          <article><h4>y será</h4><ul><li>compró</li></ul></article>
+        </div>
+        <p class="dataset-warning"><strong>Advertencia:</strong> Si metemos compró dentro de X, el modelo estaría viendo la respuesta. Eso invalida el entrenamiento.</p>
+      </div>
+    </section>
+
+    <section id="mision-5">
+      <div class="section-heading"><span>Misión 5</span><h2>Preparar datos antes de entrenar</h2></div>
+      <figure class="section-visual"><img src="./assets/dataset-cleaning.png" alt="Limpieza y conversión de datos"></figure>
+      <div class="step-list">
+        <article><b>1</b><h3>Revisar columnas</h3><p><code>df.head()</code>, <code>df.info()</code>, <code>df.isna().sum()</code>.</p></article>
+        <article><b>2</b><h3>Elegir objetivo</h3><p><code>target = "columna_que_quiero_predecir"</code>.</p></article>
+        <article><b>3</b><h3>Eliminar irrelevantes</h3><p>IDs, nombres, URLs, vacías o duplicadas.</p></article>
+        <article><b>4</b><h3>Manejar vacíos</h3><p>Eliminar pocos, rellenar numéricos con mediana y categorías con “desconocido”.</p></article>
+        <article><b>5</b><h3>One-hot encoding</h3><p><code>pd.get_dummies(...)</code> convierte categorías en columnas 0/1.</p></article>
+        <article><b>6</b><h3>Escalar</h3><p>Evita que números grandes dominen a otros valores.</p></article>
+      </div>
+      <blockquote>La red neuronal aprende mejor cuando los datos están limpios y en formato numérico.</blockquote>
+    </section>
+
+    <section id="mision-6">
+      <div class="section-heading"><span>Misión 6</span><h2>Separar entrenamiento y prueba</h2></div>
+      <figure class="section-visual"><img src="./assets/train-test-split.png" alt="Separación de training data y test data"></figure>
+      <p>No debemos evaluar el modelo con los mismos datos que usó para aprender. <strong>Training data</strong> sirve para aprender; <strong>test data</strong> sirve para revisar si aprendió con casos que no vio.</p>
+      <div class="formula">train_test_split(..., test_size=0.2)</div>
+      <div class="callout"><strong>Overfitting:</strong> cuando el modelo memoriza los ejemplos, pero falla con casos nuevos. El objetivo no es memorizar el dataset; es aprender patrones útiles.</div>
+    </section>
+
+    <section id="mision-7">
+      <div class="section-heading"><span>Misión 7</span><h2>Entrenar con TensorFlow/Keras</h2></div>
+      <figure class="section-visual"><img src="./assets/tensorflow-keras-training.png" alt="Código TensorFlow Keras en Colab"></figure>
+      <div class="concept-grid"><article><h3>TensorFlow</h3><p>Biblioteca para construir y entrenar modelos.</p></article><article><h3>Keras</h3><p>Forma sencilla de crear redes neuronales dentro de TensorFlow.</p></article><article><h3>Sequential</h3><p>Modelo organizado por capas.</p></article><article><h3>Dense</h3><p>Capa donde las entradas se conectan con neuronas.</p></article><article><h3>compile</h3><p>Prepara el modelo.</p></article><article><h3>fit</h3><p>Entrena con ejemplos.</p></article><article><h3>predict</h3><p>Predice casos nuevos.</p></article><article><h3>relu / sigmoid</h3><p>relu detecta señales; sigmoid genera probabilidad sí/no.</p></article></div>
+      <pre class="code-snippet">modelo = tf.keras.Sequential([
+  tf.keras.layers.Dense(16, activation="relu", input_shape=[X_train_scaled.shape[1]]),
+  tf.keras.layers.Dense(8, activation="relu"),
+  tf.keras.layers.Dense(1, activation="sigmoid")
+])</pre>
+    </section>
+
+    <section id="mision-8">
+      <div class="section-heading"><span>Misión 8</span><h2>Observar loss y accuracy</h2></div>
+      <figure class="section-visual"><img src="./assets/neural-training-dashboard.png" alt="Dashboard de loss bajando y accuracy subiendo"></figure>
+      <div class="comparison-grid"><article><h3>Loss</h3><p>Mide qué tanto se equivoca el modelo. Queremos que baje.</p></article><article><h3>Accuracy</h3><p>Mide qué porcentaje de aciertos tiene. Queremos que suba, pero no siempre cuenta toda la historia.</p></article></div>
+      <div class="callout"><strong>Dataset desbalanceado:</strong> cuando una clase aparece muchísimo más que otra. Si 95% son “no compra”, un modelo que siempre diga “no compra” puede tener 95% de accuracy sin aprender realmente.</div>
+    </section>
+
+    <section id="mision-9">
+      <div class="section-heading"><span>Misión 9</span><h2>Probar predicciones nuevas</h2></div>
+      <p>Después de entrenar, podemos darle al modelo un caso nuevo. Si CaféBot recibe calor = 1, dulce = 1, frio = 1 y presupuesto_bajo = 0, el modelo puede responder <strong>0.82</strong>: 82% de probabilidad de salida positiva.</p>
+      <div class="prediction-demo"><span>Predicción ≥ 0.5 → salida positiva</span><span>Predicción &lt; 0.5 → salida negativa</span></div>
+      <blockquote>Una predicción no es verdad absoluta. Es una estimación basada en patrones aprendidos.</blockquote>
+    </section>
+
+    <section class="part-banner student" id="parte-b">
+      <span>Parte B · Laboratorio del alumno</span><h2>Entrena tu modelo con un dataset de Kaggle</h2>
+      <p>Tu dataset puede ser de cualquier tema, pero debes convertirlo en un problema de entrenamiento: qué datos tienes, qué quieres predecir, qué columnas sirven, qué limpiar y qué modelo necesitas.</p>
+    </section>
+
+    <section id="herramienta-1">
+      <div class="section-heading"><span>Herramienta 1</span><h2>Diagnóstico rápido de mi dataset</h2></div>
+      <form id="dataset-form" class="form-grid">
+        <label>Nombre del dataset<input id="dataset-name" required placeholder="Ej. Student Performance"></label><label>Tema del dataset<input id="dataset-topic" placeholder="Educación, ventas, salud..."></label>
+        <label class="wide">URL o fuente de Kaggle<input id="kaggle-source" placeholder="Pega la fuente o nombre del dataset en Kaggle"></label>
+        <label>Filas aproximadas<input id="row-count" type="number" min="0"></label><label>Columnas aproximadas<input id="column-count" type="number" min="0"></label>
+        <label class="wide">¿Qué quiero predecir?<textarea id="prediction-goal" required></textarea></label><label>Columna objetivo<input id="target-column"></label>
+        <label>Columnas numéricas<input id="numeric-columns"></label><label>Columnas categóricas<input id="categorical-columns"></label><label>Texto largo<input id="text-columns"></label><label>Fechas<input id="date-columns"></label><label>IDs<input id="id-columns"></label>
+        <label>¿Hay valores vacíos?<select id="missing-values"><option value="no">No o pocos</option><option value="yes">Sí</option><option value="unknown">No estoy seguro</option></select></label>
+        <label>¿Clases balanceadas?<select id="balanced-classes"><option>No estoy seguro</option><option>Sí</option><option>No</option></select></label>
+        <label>Tipo de problema<select id="problem-type"><option value="binary">clasificación binaria</option><option value="multiclass">clasificación multiclase</option><option value="regression">regresión</option><option value="unknown">no estoy seguro</option></select></label>
+        <button class="primary" type="submit">Analizar estructura</button>
+      </form>
+      <div class="status-box" id="dataset-recommendations">Completa el diagnóstico para recibir recomendaciones.</div>
+    </section>
+
+    <section id="herramienta-2">
+      <div class="section-heading"><span>Herramienta 2</span><h2>Definir problema predictivo</h2></div>
+      <form id="problem-form" class="form-grid">
+        <label>Nombre del agente<input id="agent-name" placeholder="CaféBot"></label><label>Problema que resuelve<input id="agent-problem"></label>
+        <label>Decisión que ayudará a tomar<input id="agent-decision"></label><label>Qué predice el modelo<input id="model-predicts"></label>
+        <label>Resultado positivo<input id="positive-meaning"></label><label>Resultado negativo<input id="negative-meaning"></label>
+        <label class="wide">Cómo usará el agente la predicción<textarea id="agent-use"></textarea></label><button class="primary" type="submit">Guardar problema</button>
+      </form>
+      <div class="status-box" id="problem-status">Define cómo se conecta el modelo con tu agente.</div>
+    </section>
+
+    <section id="herramienta-3">
+      <div class="section-heading"><span>Herramienta 3</span><h2>Seleccionar columnas X/y</h2></div>
+      <p>X son las preguntas. y es la respuesta.</p>
+      <form id="xy-form" class="form-grid">
+        <label>Columna objetivo y<input id="xy-target"></label><label class="wide">Columnas de entrada X<textarea id="xy-features" placeholder="promedio, asistencia, entregas"></textarea></label>
+        <label class="wide">Columnas a eliminar<textarea id="xy-remove" placeholder="id, nombre, url"></textarea></label><button class="primary" type="submit">Generar plan X/y</button>
+      </form>
+      <div class="status-box" id="xy-plan">Tu plan X/y aparecerá aquí.</div>
+    </section>
+
+    <section id="herramienta-4">
+      <div class="section-heading"><span>Herramienta 4</span><h2>Plan de limpieza y conversión</h2></div>
+      <form id="cleaning-form" class="checkbox-grid">
+        <label><input type="checkbox" value="missing"> Tiene valores vacíos</label><label><input type="checkbox" value="categorical"> Tiene columnas categóricas</label><label><input type="checkbox" value="text"> Tiene texto largo</label><label><input type="checkbox" value="dates"> Tiene fechas</label><label><input type="checkbox" value="ids"> Tiene IDs</label><label><input type="checkbox" value="imbalanced"> Tiene clases desbalanceadas</label><label><input type="checkbox" value="scale"> Tiene escalas numéricas muy diferentes</label><label><input type="checkbox" value="many"> Tiene muchas columnas</label>
+        <button class="primary" type="submit">Crear plan de preparación</button>
+      </form>
+      <div class="status-box" id="cleaning-plan">Marca lo que necesita tu dataset.</div>
+    </section>
+
+    <section id="herramienta-5">
+      <div class="section-heading"><span>Herramienta 5</span><h2>Configurar entrenamiento</h2></div>
+      <form id="training-form" class="form-grid">
+        <label>Tipo de problema<select id="training-type"><option value="binary">clasificación binaria</option><option value="regression">regresión</option><option value="multiclass">clasificación multiclase</option></select></label>
+        <label>Épocas<input id="epochs" type="number" value="50" min="1"></label><label>Tamaño de prueba<input id="test-size" type="number" value="0.2" step="0.05" min="0.1" max="0.5"></label><label>Learning rate<input id="learning-rate" type="number" value="0.001" step="0.001"></label><label>Capas ocultas<input id="hidden-layers" type="number" value="2" min="1"></label><label>Neuronas capa 1<input id="neurons-1" type="number" value="16" min="1"></label><label>Neuronas capa 2<input id="neurons-2" type="number" value="8" min="1"></label>
+        <button class="primary" type="submit">Guardar configuración</button>
+      </form>
+      <div class="status-box" id="training-status">Para empezar, usa configuración simple. Primero verifica que el flujo funcione. Después ajusta.</div>
+    </section>
+
+    <section id="herramienta-6">
+      <div class="section-heading"><span>Herramienta 6</span><h2>Interpretar resultados</h2></div>
+      <form id="results-form" class="form-grid">
+        <label>Loss obtenido<input id="result-loss"></label><label>Accuracy obtenido<input id="result-accuracy"></label><label>¿El loss bajó?<select id="loss-down"><option>Sí</option><option>No</option><option>No sé</option></select></label><label>¿La accuracy subió?<select id="accuracy-up"><option>Sí</option><option>No</option><option>No sé</option></select></label><label>¿La predicción tiene sentido?<select id="prediction-sense"><option>Sí</option><option>No</option><option>No sé</option></select></label><label class="wide">Observaciones<textarea id="result-notes"></textarea></label><label class="wide">Siguiente ajuste<textarea id="next-adjustment"></textarea></label><button class="primary" type="submit">Interpretar resultados</button>
+      </form>
+      <div class="status-box" id="results-guide">Registra resultados para recibir guía.</div>
+    </section>
+
+    <section class="part-banner colab" id="parte-c">
+      <span>Parte C · Tutorial Colab</span><h2>Entrena tu modelo con un dataset de Kaggle</h2><p>Sigue este flujo para pasar de un CSV de Kaggle a un modelo entrenado.</p>
+      <figure class="section-visual"><img src="./assets/tensorflow-keras-training.png" alt="Notebook de Colab para entrenamiento"></figure>
+    </section>
+
+    <section id="tutorial">
+      <div class="section-heading"><span>Tutorial</span><h2>18 pasos en Colab</h2></div>
+      <div class="tutorial-grid" id="tutorial-steps"></div>
+    </section>
+
+    <section id="generador">
+      <div class="section-heading"><span>Generador</span><h2>Código Colab para mi dataset</h2></div>
+      <div class="toolbar"><button class="primary" id="generate-code" type="button">Generar código Colab para mi dataset</button><button id="copy-code" type="button">Copiar código</button><button id="download-py" type="button">Descargar .py</button><button id="download-code-txt" type="button">Descargar .txt</button><button class="ghost" id="clear-code" type="button">Limpiar código</button></div>
+      <pre class="code-output"><code id="colab-code">Completa el laboratorio para generar código personalizado.</code></pre><div class="status-line" id="code-status" aria-live="polite"></div>
+    </section>
+
+    <section id="agente-entrenado">
+      <div class="section-heading"><span>Agente entrenado</span><h2>Cómo se conecta con tu agente</h2></div>
+      <figure class="section-visual"><img src="./assets/prediction-agent.png" alt="Agente híbrido usando reglas, heurística y modelo"></figure>
+      <p>El modelo entrenado no reemplaza todo el agente. Se convierte en una parte del agente. El agente puede combinar reglas, heurística y una señal predictiva adicional.</p>
+      <div class="comparison-grid three"><article><h3>Reglas</h3><p>Validan condiciones básicas.</p></article><article><h3>Heurística</h3><p>Compara opciones.</p></article><article><h3>Modelo entrenado</h3><p>Predice probabilidad, riesgo, aceptación o categoría.</p></article></div>
+      <blockquote>La red neuronal no reemplaza tu agente. Le da una señal predictiva adicional.</blockquote>
+    </section>
+
+    <section id="reporte">
+      <div class="section-heading"><span>Cierre</span><h2>Reporte final</h2></div>
+      <figure class="section-visual"><img src="./assets/final-trained-agent-report.png" alt="Reporte final con notebook, evidencia y agente"></figure>
+      <label class="wide reflection-label">Nombre del alumno/equipo<input id="student-name"></label>
+      <label class="wide reflection-label">Problemas encontrados<textarea id="project-issues"></textarea></label>
+      <div class="toolbar"><button class="primary" id="generate-report" type="button">Generar reporte</button><button id="copy-report" type="button">Copiar reporte</button><button id="download-md" type="button">Descargar .md</button><button id="download-report-txt" type="button">Descargar .txt</button><button class="ghost" id="clear-report" type="button">Limpiar reporte</button></div>
+      <pre class="report-output" id="report-output">Tu reporte aparecerá aquí.</pre><div class="status-line" id="report-status" aria-live="polite"></div>
+    </section>
+    <footer><strong>Clase 15</strong><span>Dataset → entrenamiento → predicción → agente</span></footer>
+  </main>
+  <script src="clase15.js"></script>
+</body>
+</html>
