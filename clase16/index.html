@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 16 · Clasificación de texto</title>
+<link rel="stylesheet" href="clase16.css">
+</head>
+<body>
+
+  <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-expanded="true" aria-controls="lesson-sidebar">
+    <span aria-hidden="true">☰</span><span class="toggle-label">Menú</span>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <aside class="lesson-sidebar" id="lesson-sidebar">
+    <a class="course-link" href="../index.html">← Curso IA</a>
+    <div class="sidebar-heading"><span>Clase 16</span><strong>Clasificación de texto</strong></div>
+    <div class="xp-panel">
+      <div class="xp-panel-top"><span>Progreso</span><strong id="reading-progress-label">0%</strong></div>
+      <div class="xp-bar"><span id="reading-progress-fill"></span></div>
+      <small id="reading-progress-note">Recorre la clase para completar tu progreso.</small>
+    </div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#ruta">Ruta de aprendizaje</a>
+      <a href="#conexion">Conexión con clases previas</a>
+      <span class="nav-group-label">Fase 1 · Fundamentos</span>
+      <a href="#mision-1">¿Qué es clasificar texto?</a>
+      <a href="#mision-2">Tokenización</a>
+      <span class="nav-group-label">Fase 2 · Vectorización y modelo</span>
+      <a href="#mision-3">Bolsa de palabras</a>
+      <a href="#mision-4">TF-IDF</a>
+      <a href="#mision-5">Naive Bayes paso a paso</a>
+      <span class="nav-group-label">Fase 3 · Evaluación</span>
+      <a href="#mision-6">Matriz de confusión</a>
+      <a href="#mision-7">Precisión, recall y F1</a>
+      <a href="#mision-8">Casos difíciles</a>
+      <span class="nav-group-label">Fase 4 · Aplicación completa</span>
+      <a class="sidebar-feature-link" href="#mision-9">⭐ Anatomía del pipeline</a>
+      <a href="#mision-10">Las otras 3 métricas de campaña</a>
+      <span class="nav-group-label">Fase 5 · Simulador</span>
+      <a href="#simulador">Simulador</a>
+      <span class="nav-group-label">Fase 6 · Tu propio clasificador</span>
+      <a href="#diseno">Diseño</a>
+      <a href="#colab">Colab</a>
+      <a href="#generador">Generador</a>
+      <a href="#prueba">Prueba</a>
+      <span class="nav-group-label">Fase 7 · Cierre</span>
+      <a href="#integracion">Integración</a>
+      <a href="#reporte">Reporte</a>
+    </nav>
+  </aside>
+
+  <main class="lesson-shell">
+
+    <section class="hero" id="inicio">
+      <span class="eyebrow">Clase 16 · Curso de Inteligencia Artificial</span>
+      <h1>Construye un agente que analiza una campaña y mide lo que importa</h1>
+      <p class="hero-lead">Hasta ahora trabajaste solo con tablas de números. Esta clase te lleva paso a paso a convertir texto libre — comentarios reales de redes sociales sobre el lanzamiento de un producto — en información que un equipo de marketing puede usar: qué tan bien está recibida la campaña, quién quiere comprar, y de qué se está quejando la gente.</p>
+      <div class="hero-visual">
+        <div class="hero-comments">
+          <article class="comment-card positivo compact"><p>"Wow, estos tenis se ven increíbles 😍 ya los quiero"</p><span class="comment-tag">positivo</span></article>
+          <article class="comment-card negativo compact"><p>"Están carísimos para lo que ofrecen, la neta"</p><span class="comment-tag">negativo</span></article>
+          <article class="comment-card neutral compact"><p>"Cuánto cuestan? no encuentro el precio en ningún lado"</p><span class="comment-tag">neutral</span></article>
+          <article class="comment-card negativo compact"><p>"Mi pedido nunca llegó, pésimo servicio de envío 😡"</p><span class="comment-tag">negativo</span></article>
+        </div>
+        <div class="hero-agent-card">
+          <h3>Agente de análisis de campaña</h3>
+          <p>Lee cada comentario y mide sentimiento, intención de compra, tipo de comentario y tema.</p>
+        </div>
+      </div>
+      <p class="microcopy">El mismo tipo de texto que verás una y otra vez en esta clase: comentarios reales de una campaña de lanzamiento.</p>
+    </section>
+
+    <section id="ruta">
+      <div class="section-heading"><span>Ruta de aprendizaje</span><h2>Cómo está construida esta clase</h2></div>
+      <p class="lead">Igual que en las clases anteriores: primero observas un ejemplo real, luego entiendes el mecanismo por dentro, y finalmente lo aplicas en un simulador o en tu propio Colab.</p>
+      <div class="learn-grid">
+        <article class="observar"><span>1 · Observar</span><h3>Lees texto real</h3><p>Cada misión arranca con comentarios reales de campaña, no oraciones inventadas al azar.</p></article>
+        <article class="entender"><span>2 · Entender</span><h3>Abres la caja</h3><p>Ves cómo el texto se convierte en números, y cómo el modelo calcula una probabilidad real por categoría.</p></article>
+        <article class="aplicar"><span>3 · Aplicar</span><h3>Lo pruebas tú</h3><p>Un simulador que arma un mini-dashboard de campaña, un notebook de Colab, y un generador de código para tu propio clasificador.</p></article>
+      </div>
+    </section>
+
+    <section id="conexion">
+      <div class="section-heading"><span>Conexión con clases previas</span><h2>De columnas de números a comentarios sueltos</h2></div>
+      <p class="lead">En las Clases 6 a 15 trabajaste exclusivamente con datos tabulares: columnas como edad, presupuesto o reclamos previos. Pero un comentario de campaña no llega en columnas — llega como texto libre, casual, con emojis y errores de dedo, sin estructura fija.</p>
+      <div class="comment-grid">
+        <article class="comment-card positivo"><p>"Wow, estos tenis se ven increíbles 😍 ya los quiero"</p><span class="comment-tag">positivo</span></article>
+        <article class="comment-card negativo"><p>"Están carísimos para lo que ofrecen, la neta"</p><span class="comment-tag">negativo</span></article>
+        <article class="comment-card positivo"><p>"Me llegaron ayer y la calidad se siente buenísima"</p><span class="comment-tag">positivo</span></article>
+        <article class="comment-card neutral"><p>"Cuánto cuestan? no encuentro el precio en ningún lado"</p><span class="comment-tag">neutral</span></article>
+        <article class="comment-card negativo"><p>"Mi pedido nunca llegó, pésimo servicio de envío 😡"</p><span class="comment-tag">negativo</span></article>
+        <article class="comment-card negativo"><p>"El diseño está bonito pero la suela se ve muy delgada"</p><span class="comment-tag">negativo</span></article>
+        <article class="comment-card neutral"><p>"Tienen talla 27 para hombre? ando buscando unos así"</p><span class="comment-tag">neutral</span></article>
+        <article class="comment-card positivo"><p>"Excelente atención, resolvieron mi duda en minutos"</p><span class="comment-tag">positivo</span></article>
+        <article class="comment-card neutral"><p>"Se ven bien pero prefiero esperar a que bajen de precio"</p><span class="comment-tag">neutral</span></article>
+        <article class="comment-card negativo"><p>"Esto es una copia barata de otra marca, no los recomiendo"</p><span class="comment-tag">negativo</span></article>
+        <article class="comment-card positivo"><p>"Llegaron perfectos y antes de lo esperado, superaron mis expectativas 🙌"</p><span class="comment-tag">positivo</span></article>
+        <article class="comment-card negativo"><p>"La talla me quedó chica, tuve que cambiarlos"</p><span class="comment-tag">negativo</span></article>
+      </div>
+      <p class="microcopy">Estos doce comentarios son el corpus real que usamos en toda la clase.</p>
+      <div class="note key">
+        <h3>La pregunta que resolvemos</h3>
+        <p>¿Cómo puede una computadora, que solo entiende números, leer miles de comentarios como estos y decirle a un equipo de marketing algo útil: "70% de los comentarios son positivos", "hay 12 personas listas para comprar", "la queja más común es el precio"? Esta clase responde eso de principio a fin, construyendo un agente que mide las 4 métricas que le importan a una campaña real: <strong>sentimiento neto</strong>, <strong>intención de compra</strong>, <strong>tipo de comentario</strong> y <strong>tema mencionado</strong>.</p>
+      </div>
+    </section>
+
+    <section id="mision-1">
+      <div class="section-heading"><span>Misión 1</span><h2>¿Qué es clasificar texto?</h2></div>
+      <p class="lead"><strong>Clasificar texto</strong> es asignarle una categoría a partir de sus palabras: spam o no spam, positivo o negativo, urgente o no urgente. El modelo aprende de ejemplos ya etiquetados por humanos.</p>
+      <div class="comparison-grid">
+        <article>
+          <h3>Ejemplos comunes</h3>
+          <p>Detección de spam, análisis de sentimiento en reseñas, prioridad de tickets de soporte, moderación de comentarios, y — como en esta clase — la reacción real de la gente ante una campaña de marketing.</p>
+        </article>
+        <article>
+          <h3>Lo que NO es</h3>
+          <p>No es "entender" el texto como un humano. El modelo no capta contexto amplio ni intención real: solo detecta patrones estadísticos en las palabras que ya vio en el entrenamiento.</p>
+        </article>
+      </div>
+      <div class="route-grid">
+        <article><b>1</b><h3>Texto llega</h3><p>Un comentario de campaña, sin estructura fija.</p></article>
+        <article><b>2</b><h3>Limpieza</h3><p>Minúsculas, sin puntuación ni emojis.</p></article>
+        <article><b>3</b><h3>Tokenizar</h3><p>Se separa en palabras individuales.</p></article>
+        <article><b>4</b><h3>Vectorizar</h3><p>Cada palabra se convierte en un número.</p></article>
+        <article><b>5</b><h3>Predecir</h3><p>El modelo entrega una categoría con una probabilidad.</p></article>
+      </div>
+    </section>
+
+    <section id="mision-2">
+      <div class="section-heading"><span>Misión 2</span><h2>Tokenización: de un comentario a una lista de palabras</h2></div>
+      <p class="lead">El primer paso real es partir el texto en <strong>tokens</strong> (palabras) y descartar las que casi no aportan información — las <strong>stopwords</strong> (el, la, de, a...).</p>
+      <div class="note compact">"El diseño está bonito pero la suela se ve muy delgada"</div>
+      <div class="token-row">
+        <span class="token-chip stopword">el</span>
+        <span class="token-chip key">diseño</span>
+        <span class="token-chip key">está</span>
+        <span class="token-chip key">bonito</span>
+        <span class="token-chip key">pero</span>
+        <span class="token-chip stopword">la</span>
+        <span class="token-chip key">suela</span>
+        <span class="token-chip stopword">se</span>
+        <span class="token-chip key">ve</span>
+        <span class="token-chip stopword">muy</span>
+        <span class="token-chip key">delgada</span>
+      </div>
+      <p class="microcopy">Gris = está en la lista fija de 23 stopwords en español. Verde = no está en la lista.</p>
+      <div class="note">
+        <h3>¿Cómo decide el color de cada token?</h3>
+        <p>No hay ninguna inteligencia detrás de esa decisión: es una simple búsqueda en una <strong>lista fija de 23 palabras</strong> (artículos, preposiciones y pronombres muy comunes en español, como "el", "la", "se", "a", "de", "no"...). Si la palabra está en la lista, se pinta gris; si no está, se pinta verde — sin importar el significado real de esa palabra en la frase. Por eso "pero" queda verde en el ejemplo de arriba aunque aporte poco significado por sí solo: no está en la lista de 23, así que la regla mecánica lo conserva.</p>
+      </div>
+      <div class="token-row" id="tokenize-demo-output"></div>
+      <div class="form-grid compact-form">
+        <label class="wide" for="tokenize-input">Escribe tu propio comentario y compara con la lista de arriba</label>
+        <input type="text" id="tokenize-input" class="wide" value="Está carísimo pero el diseño me encanta" placeholder="Escribe un comentario...">
+      </div>
+      <button class="primary" id="tokenize-run" type="button">Tokenizar</button>
+      <p class="microcopy">Esta misma lista de 23 palabras es la que usa el simulador de la Fase 5 y la que genera la imagen de arriba — prueba con tu propia frase y verifica que un token como "diseño" o "pero" siempre quede verde, porque no está en la lista.</p>
+    </section>
+
+    <section class="part-banner" id="fase-2-banner">
+      <span>Fase 2 · Vectorización y modelo</span>
+      <h2>De palabras a números que un modelo puede aprender</h2>
+      <p>Un modelo no entiende palabras: entiende números. Aquí ves las dos formas más comunes de convertir texto en vectores, y cómo un modelo simple aprende a clasificar con ellos.</p>
+    </section>
+
+    <section id="mision-3">
+      <div class="section-heading"><span>Misión 3</span><h2>Bolsa de palabras (bag-of-words)</h2></div>
+      <p class="lead"><strong>Bolsa de palabras (bag-of-words)</strong> es la técnica más simple para vectorizar texto — es decir, para convertir palabras en números que un modelo pueda usar. La idea: contar cuántas veces aparece cada palabra del vocabulario en cada documento. El orden de las palabras se pierde — solo importa la frecuencia.</p>
+      <div class="table-wrap">
+        <table class="bow-table">
+          <thead>
+            <tr><th>Comentario</th><th class="count-cell">pero</th><th class="count-cell">precio</th><th class="count-cell">ven</th><th class="count-cell">bajen</th><th class="count-cell">bien</th><th class="count-cell">bonito</th><th class="count-cell">cuestan</th><th class="count-cell">cuánto</th><th class="count-cell">delgada</th><th class="count-cell">diseño</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Comentario 1</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">1</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td></tr>
+            <tr><td>Comentario 9</td><td class="count-cell">1</td><td class="count-cell">1</td><td class="count-cell">1</td><td class="count-cell">1</td><td class="count-cell">1</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td></tr>
+            <tr><td>Comentario 4</td><td class="count-cell">0</td><td class="count-cell">1</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">1</td><td class="count-cell">1</td><td class="count-cell">0</td><td class="count-cell">0</td></tr>
+            <tr><td>Comentario 6</td><td class="count-cell">1</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">1</td><td class="count-cell">0</td><td class="count-cell">0</td><td class="count-cell">1</td><td class="count-cell">1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="microcopy">Cada fila es un comentario real; cada columna, cuántas veces aparece ese término.</p>
+      <div class="note">
+        <h3>¿De dónde salen las columnas y los números?</h3>
+        <p>Cada columna es una palabra real que aparece en al menos uno de estos 4 comentarios del corpus de esta clase, después de quitar las stopwords de la Misión 2. Cada número es un conteo real: cuántas veces aparece exactamente esa palabra en ese comentario — no hay ninguna estimación, es una cuenta directa. Se eligieron estos 4 (de los 12 totales) porque comparten vocabulario entre sí, para que se note el patrón.</p>
+      </div>
+      <div class="note">
+        <h3>Limitación importante</h3>
+        <p>"No está caro" y "está caro" tienen casi las mismas palabras, pero significados opuestos. La bolsa de palabras, por sí sola, no distingue eso — lo verás de nuevo en la Misión 8.</p>
+      </div>
+    </section>
+
+    <section id="mision-4">
+      <div class="section-heading"><span>Misión 4</span><h2>TF-IDF: palabras que sí importan</h2></div>
+      <p class="lead"><strong>TF-IDF</strong> es un algoritmo para calcular qué tan importante es una palabra dentro de un comentario, comparándola contra el resto del corpus. Sus siglas vienen del inglés "Term Frequency - Inverse Document Frequency" (frecuencia de término - frecuencia inversa de documento). No necesitas memorizar el nombre — lo que importa es la idea de fondo.</p>
+      <div class="analogy">
+        <h3>La idea en una analogía</h3>
+        <p>Imagina un salón donde casi todos traen mochila azul. Si alguien te dice "trae mochila azul", eso no te ayuda a identificar a nadie en particular — es demasiado común. Pero si solo una persona trae una gorra roja, decir "gorra roja" sí es una pista útil, porque es rara. TF-IDF hace exactamente eso con palabras: le baja el peso a las que aparecen en casi todos los comentarios (como "precio" o "talla"), y le sube el peso a las raras y específicas (como "pésimo" o "calidad"), porque esas son las que realmente distinguen un comentario de otro.</p>
+      </div>
+      <div class="comparison-grid">
+        <article>
+          <h3>TF — qué tan seguido aparece AQUÍ</h3>
+          <p>Term Frequency: cuántas veces aparece la palabra en ESE comentario en particular. Si "precio" aparece 2 veces en un comentario, su TF ahí es 2.</p>
+        </article>
+        <article>
+          <h3>IDF — qué tan rara es EN GENERAL</h3>
+          <p>Inverse Document Frequency: qué tan poco común es esa palabra en TODO el corpus. Entre menos comentarios la usen, más alto es su IDF — es más distintiva.</p>
+        </article>
+      </div>
+      <p class="lead">TF-IDF combina las dos ideas en un solo número: multiplica qué tan seguido aparece la palabra aquí, por qué tan rara es en general. Así es como se ven esas dos ideas aplicadas a palabras reales de esta clase:</p>
+      <div class="word-weight-list">
+        <div><span>precio (en 2 de 12)</span><i style="--w:72%"></i><strong>1.792</strong></div>
+        <div><span>talla (en 2 de 12)</span><i style="--w:72%"></i><strong>1.792</strong></div>
+        <div><span>tenis (en 1 de 12)</span><i style="--w:100%"></i><strong>2.485</strong></div>
+        <div><span>calidad (en 1 de 12)</span><i style="--w:100%"></i><strong>2.485</strong></div>
+        <div><span>pésimo (en 1 de 12)</span><i style="--w:100%"></i><strong>2.485</strong></div>
+      </div>
+      <div class="formula">tf-idf(palabra) = frecuencia en el documento × log(total de documentos / documentos que contienen la palabra)</div>
+      <div class="note">
+        <h3>¿Cómo se calculó cada barra?</h3>
+        <p>"Precio" aparece en 2 de los 12 comentarios, así que su puntaje es 1 × log(12/2) = 1 × 1.792 = <strong>1.792</strong>. "Talla" también aparece en 2 comentarios, mismo puntaje. "Tenis" aparece en solo 1 de los 12, así que su puntaje es 1 × log(12/1) = 1 × 2.485 = <strong>2.485</strong> — más alto, porque aparecer en menos comentarios lo hace más específico. "Calidad" y "pésimo" también aparecen en un solo comentario cada una, por eso comparten ese mismo puntaje real de 2.485.</p>
+      </div>
+    </section>
+
+    <section id="mision-5">
+      <div class="section-heading"><span>Misión 5</span><h2>Naive Bayes, paso a paso</h2></div>
+      <p class="lead"><strong>Naive Bayes</strong> es un algoritmo de clasificación basado en probabilidad: para cada categoría posible (positivo, negativo, neutral), calcula qué tan probable es esa categoría dado las palabras del comentario, y elige la que salga con mayor probabilidad. Se llama "naive" (ingenuo, en inglés) porque asume — de forma simplificada — que cada palabra aporta su probabilidad de manera independiente, sin importar el orden ni el contexto de las demás. Recorre a continuación las etapas reales de este algoritmo: de un comentario crudo hasta una probabilidad final de sentimiento.</p>
+      <div class="nb-panels">
+        <div class="nb-panel positivo">
+          <h4>SI EL COMENTARIO ES POSITIVO (25 palabras en total)</h4>
+          <div class="word-weight-list">
+            <div><span>llegaron</span><i style="--w:100%"></i><strong>0.0319</strong></div>
+            <div><span>excelente</span><i style="--w:67%"></i><strong>0.0213</strong></div>
+            <div><span>increíbles</span><i style="--w:67%"></i><strong>0.0213</strong></div>
+          </div>
+        </div>
+        <div class="nb-panel negativo">
+          <h4>SI EL COMENTARIO ES NEGATIVO (30 palabras en total)</h4>
+          <div class="word-weight-list">
+            <div><span>pésimo</span><i style="--w:100%"></i><strong>0.0202</strong></div>
+            <div><span>carísimos</span><i style="--w:100%"></i><strong>0.0202</strong></div>
+            <div><span>copia</span><i style="--w:100%"></i><strong>0.0202</strong></div>
+          </div>
+        </div>
+      </div>
+      <p class="microcopy">Cada palabra tiene una probabilidad distinta calculada sobre los 12 comentarios reales de esta clase, no valores inventados.</p>
+      <div class="note">
+        <h3>¿De dónde salen exactamente estos números?</h3>
+        <p>El corpus tiene 4 comentarios positivos (25 palabras útiles en total) y 5 negativos (30 palabras útiles). "Llegaron" aparece 2 veces en los 25 de la clase positiva. Con <strong>suavizado de Laplace</strong> (se suma 1 a cada conteo para que ninguna palabra tenga probabilidad cero) la fórmula es: (2 + 1) / (25 + 69) = 3/94 = 3.19%. El 69 es el tamaño del vocabulario completo del corpus. Por eso los números son pequeños: con solo 12 comentarios de entrenamiento, ninguna palabra puede tener una probabilidad muy alta todavía.</p>
+      </div>
+      <div class="cnn-journey" id="nb-journey">
+        <div class="cnn-progress" id="nb-progress"></div>
+
+        <div class="cnn-stage" data-stage="0">
+          <div>
+            <span class="stage-kicker">Etapa 1</span>
+            <h3>Texto crudo</h3>
+            <dl><dt>Entrada</dt><dd>"El diseño está bonito pero la suela se ve muy delgada."</dd></dl>
+          </div>
+          <div class="cnn-stage-visual"><p style="font-size:1.3rem;color:var(--text)">"El diseño está bonito pero la suela se ve muy delgada."</p></div>
+        </div>
+        <div class="cnn-stage" data-stage="1">
+          <div>
+            <span class="stage-kicker">Etapa 2</span>
+            <h3>Limpieza y tokenización</h3>
+            <dl><dt>Qué pasa</dt><dd>Minúsculas, sin puntuación, dividido en palabras.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual"><div class="token-row"><span class="token-chip">el</span><span class="token-chip">diseño</span><span class="token-chip">está</span><span class="token-chip">bonito</span><span class="token-chip">pero</span><span class="token-chip">la</span><span class="token-chip">suela</span><span class="token-chip">se</span><span class="token-chip">ve</span><span class="token-chip">muy</span><span class="token-chip">delgada</span></div></div>
+        </div>
+        <div class="cnn-stage" data-stage="2">
+          <div>
+            <span class="stage-kicker">Etapa 3</span>
+            <h3>Quitar stopwords</h3>
+            <dl><dt>Qué pasa</dt><dd>Se descartan solo las palabras que están en la lista fija de 23 stopwords (Misión 2): aquí "el", "la", "se" y "muy". "Pero" NO está en esa lista, así que se conserva, aunque aporte poco significado — la regla es mecánica, no entiende que es poco relevante.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual"><div class="token-row"><span class="token-chip stopword">el</span><span class="token-chip key">diseño</span><span class="token-chip key">está</span><span class="token-chip key">bonito</span><span class="token-chip key">pero</span><span class="token-chip stopword">la</span><span class="token-chip key">suela</span><span class="token-chip stopword">se</span><span class="token-chip key">ve</span><span class="token-chip stopword">muy</span><span class="token-chip key">delgada</span></div></div>
+        </div>
+        <div class="cnn-stage" data-stage="3">
+          <div>
+            <span class="stage-kicker">Etapa 4</span>
+            <h3>Vectorizar</h3>
+            <dl><dt>Qué pasa</dt><dd>Cada palabra que sobrevivió se convierte en una posición del vector de bolsa de palabras, con su conteo real.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual"><pre style="color:#c9f6da">[diseño:1, está:1, bonito:1, pero:1, suela:1, ve:1, delgada:1, excelente:0, pésimo:0]</pre></div>
+        </div>
+        <div class="cnn-stage" data-stage="4">
+          <div>
+            <span class="stage-kicker">Etapa 5</span>
+            <h3>Probabilidad por clase (antes de normalizar)</h3>
+            <dl><dt>Qué calcula</dt><dd>Multiplica P(palabra | clase) de cada uno de los 7 tokens, para cada clase. El resultado real es un número minúsculo porque se multiplican varias probabilidades pequeñas — aquí se muestra cada clase en proporción a la que salió más alta, solo para poder compararlas visualmente.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="word-weight-list">
+              <div><span>Negativo (el más alto)</span><i style="--w:100%"></i><strong>1.00</strong></div>
+              <div><span>Neutral</span><i style="--w:3%"></i><strong>0.03</strong></div>
+              <div class="negative"><span>Positivo</span><i style="--w:1.1%"></i><strong>0.01</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="cnn-stage" data-stage="5">
+          <div>
+            <span class="stage-kicker">Etapa 6</span>
+            <h3>Predicción final</h3>
+            <dl><dt>Resultado</dt><dd>Se multiplica cada probabilidad por su clase más frecuente en el corpus (el "prior") y se normaliza para que sumen 100%. Con solo 12 comentarios de entrenamiento, la confianza real puede ser alta cuando las palabras son muy claras: "negativo" gana con 97.3%.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="cnn-probability-bars">
+              <div class="winner"><span>Negativo</span><i style="--w:97.3%"></i><strong>97.3%</strong></div>
+              <div><span>Neutral</span><i style="--w:1.8%"></i><strong>1.8%</strong></div>
+              <div><span>Positivo</span><i style="--w:0.9%"></i><strong>0.9%</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cnn-stage-controls">
+          <button class="ghost" id="nb-prev" type="button">Etapa anterior</button>
+          <button class="primary" id="nb-next" type="button">Siguiente etapa</button>
+          <button class="ghost" id="nb-show-all" type="button">Ver todas las etapas</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="part-banner" id="fase-3-banner">
+      <span>Fase 3 · Evaluación</span>
+      <h2>¿Qué tan bien clasifica realmente?</h2>
+      <p>Entrenar un modelo no basta: hay que medir sus errores con números concretos, y entender en qué casos falla.</p>
+    </section>
+
+    <section id="mision-6">
+      <div class="section-heading"><span>Misión 6</span><h2>Matriz de confusión</h2></div>
+      <p class="lead">Una matriz de confusión compara lo que el modelo predijo contra lo que realmente era. Empecemos con el ejemplo más simple posible: un detector de spam, con solo dos categorías.</p>
+      <p class="microcopy">Ejemplo clásico: detector de spam sobre 100 correos de prueba.</p>
+      <div class="confusion-grid">
+        <span class="label"></span><span class="label">Predicho: SPAM</span><span class="label">Predicho: NO SPAM</span>
+        <span class="label">Real: SPAM (45)</span>
+        <span class="hit"><strong>40</strong><small>Verdadero Positivo</small></span>
+        <span class="miss"><strong>5</strong><small>Falso Negativo</small></span>
+        <span class="label">Real: NO SPAM (55)</span>
+        <span class="miss"><strong>10</strong><small>Falso Positivo</small></span>
+        <span class="hit"><strong>45</strong><small>Verdadero Negativo</small></span>
+      </div>
+      <div class="note">
+        <h3>Cómo leer las 4 celdas</h3>
+        <p><strong>Verdadero Positivo (40):</strong> era spam y el modelo dijo spam — acierto. <strong>Falso Negativo (5):</strong> era spam pero el modelo dijo "no spam" — error, se le escapó. <strong>Falso Positivo (10):</strong> no era spam pero el modelo dijo spam — error, una falsa alarma. <strong>Verdadero Negativo (45):</strong> no era spam y el modelo dijo "no spam" — acierto. La diagonal (verde) son los aciertos; las otras dos celdas (rojo) son los dos tipos de error posibles.</p>
+      </div>
+      <p class="lead">Ahora la versión real: así clasificó nuestro propio modelo Naive Bayes los 12 comentarios del corpus de esta clase, usando <strong>validación leave-one-out</strong> (se entrena con 11 comentarios y se predice el que queda, repitiendo 12 veces).</p>
+      <div class="confusion-matrix-real">
+        <span class="cm-corner"></span>
+        <span class="cm-head">positivo</span><span class="cm-head">negativo</span><span class="cm-head">neutral</span>
+        <span class="cm-row-label">positivo</span>
+        <span class="cm-cell v3">3</span><span class="cm-cell v0">0</span><span class="cm-cell v1">1</span>
+        <span class="cm-row-label">negativo</span>
+        <span class="cm-cell v1">1</span><span class="cm-cell v2">2</span><span class="cm-cell v2">2</span>
+        <span class="cm-row-label">neutral</span>
+        <span class="cm-cell v0">0</span><span class="cm-cell v1">1</span><span class="cm-cell v2">2</span>
+      </div>
+      <p class="microcopy">Filas = etiqueta real, columnas = predicción del modelo. Real, no ilustrativa: son los 12 comentarios de esta clase, cada uno predicho por un modelo entrenado sin haberlo visto.</p>
+      <div class="warning">
+        <h3>Por qué salen algunos errores aquí</h3>
+        <p>Con solo 12 ejemplos, el modelo acierta 7 de 12 (58.3%) — mejor que lanzar una moneda, pero lejos de perfecto. Esto es honesto, no un error de cálculo: con tan pocos datos de entrenamiento, cualquier modelo (no solo el nuestro) tiene resultados así de inestables. Es la razón principal por la que en un proyecto real necesitas cientos o miles de comentarios etiquetados, no doce.</p>
+      </div>
+      <p class="lead">¿Y si en vez de 12 comentarios usamos cientos? Generamos un archivo de práctica con <strong>890 comentarios sintéticos</strong> (mismo tono casual, mismos temas de esta campaña, incluyendo algunos casos ambiguos a propósito) para que lo veas — y para que lo uses tú mismo en tu Colab en vez de escribir tus propios ejemplos a mano.</p>
+      <p>
+        <a class="button-link" href="./assets/practica-comentarios-campana.csv" download>Descargar archivo de práctica (890 comentarios, CSV)</a>
+      </p>
+      <p class="lead">Entrenamos el mismo Naive Bayes con este archivo, esta vez con una <strong>división train/test 80/20</strong> (712 comentarios para entrenar, 178 para probar) — la forma normal de evaluar un modelo cuando ya tienes datos suficientes, en vez de leave-one-out.</p>
+      <div class="confusion-matrix-real">
+        <span class="cm-corner"></span>
+        <span class="cm-head">positivo</span><span class="cm-head">negativo</span><span class="cm-head">neutral</span>
+        <span class="cm-row-label">positivo</span>
+        <span class="cm-cell v3">60</span><span class="cm-cell v0">0</span><span class="cm-cell v0">0</span>
+        <span class="cm-row-label">negativo</span>
+        <span class="cm-cell v0">0</span><span class="cm-cell v3">72</span><span class="cm-cell v0">0</span>
+        <span class="cm-row-label">neutral</span>
+        <span class="cm-cell err">1</span><span class="cm-cell v0">0</span><span class="cm-cell v3">45</span>
+      </div>
+      <p class="microcopy">Filas = etiqueta real, columnas = predicción del modelo, sobre los 178 comentarios de prueba (nunca vistos en el entrenamiento).</p>
+      <div class="note key">
+        <h3>177 de 178 correctos (99.4%) — y el único error es honesto</h3>
+        <p>Con cientos de ejemplos, la exactitud sube de 58.3% a 99.4%. Pero fíjate en la celda roja: el modelo se equivocó exactamente una vez, clasificando como <em>positivo</em> el comentario "Me encanta el diseño pero el precio no tanto" — que en realidad es <em>neutral</em>. Es el mismo problema de texto mixto que viste en la Misión 8: más datos ayudan muchísimo, pero no eliminan por completo esos puntos ciegos.</p>
+      </div>
+    </section>
+
+    <section id="mision-7">
+      <div class="section-heading"><span>Misión 7</span><h2>Precisión, recall y F1</h2></div>
+      <p class="lead">Un solo número de "aciertos" esconde matices importantes. Estas tres métricas se calculan directamente de las 4 celdas del ejemplo del detector de spam (Misión 6).</p>
+      <div class="metric-cards">
+        <article><h3>Precisión</h3><p>De lo que el modelo llamó "spam", ¿cuánto lo era en verdad?</p><strong>80%</strong></article>
+        <article><h3>Recall</h3><p>De lo que era realmente "spam", ¿cuánto detectó el modelo?</p><strong>88.9%</strong></article>
+        <article><h3>F1-score</h3><p>El balance entre precisión y recall en un solo número.</p><strong>84.2%</strong></article>
+      </div>
+      <div class="note">
+        <h3>La división exacta, celda por celda</h3>
+        <p>Precisión = Verdaderos Positivos / (Verdaderos Positivos + Falsos Positivos) = 40 / (40+10) = 40/50 = <strong>80%</strong>. Recall = Verdaderos Positivos / (Verdaderos Positivos + Falsos Negativos) = 40 / (40+5) = 40/45 = <strong>88.9%</strong>. El F1 combina ambos con la fórmula de abajo: 2 × (0.80 × 0.889) / (0.80 + 0.889) = <strong>84.2%</strong>. Nota que precisión y recall dan distinto — por eso hace falta ver ambos, no solo uno.</p>
+      </div>
+      <div class="formula">F1 = 2 × (precisión × recall) / (precisión + recall)</div>
+    </section>
+
+    <section id="mision-8">
+      <div class="section-heading"><span>Misión 8</span><h2>Casos difíciles para un modelo simple</h2></div>
+      <p class="lead">La bolsa de palabras y Naive Bayes son rápidos, pero tropiezan con estos tres patrones documentados del lenguaje natural — muy comunes en comentarios reales de redes sociales.</p>
+      <div class="difficult-case-grid">
+        <article><h3>Negación</h3><p>"No está tan caro como pensé"</p><small>El modelo ve "caro" y puede marcarlo negativo, ignorando el "no" que invierte el sentido.</small></article>
+        <article><h3>Sarcasmo</h3><p>"Qué rápido llegó... después de un mes 🙄"</p><small>La palabra "rápido" suena positiva, pero el tono real es una queja sarcástica.</small></article>
+        <article><h3>Texto mixto</h3><p>"Me encanta el diseño pero el precio no tanto"</p><small>Tiene señales positivas y negativas a la vez; el modelo debe promediarlas.</small></article>
+      </div>
+      <div class="note">
+        <h3>¿Estos ejemplos son cálculos reales?</h3>
+        <p>El primero sí lo puedes comprobar tú mismo en el simulador de la Fase 5 (y en la Prueba, más adelante): escribe "No está tan caro como pensé" y observa cómo el modelo real de esta clase también se equivoca con la negación. Los otros dos (sarcasmo y texto mixto) son ejemplos ilustrativos de problemas bien conocidos en clasificación de texto, no una salida directa de nuestro modelo.</p>
+      </div>
+      <div class="warning">
+        <h3>Por qué importa para el agente híbrido (Clase 18)</h3>
+        <p>Cuando este modelo de texto se combine con otros (tabular, CNN) en la Clase 18, su confianza reportada debe reflejar estos puntos ciegos — por eso nunca decide solo, sino en conjunto con reglas y otros modelos.</p>
+      </div>
+    </section>
+
+    <section class="anatomy-main-section" id="mision-9">
+      <div class="section-heading"><span>Misión 9 · Pieza central</span><h2>Anatomía completa del pipeline de texto</h2></div>
+      <p class="lead">Todas las piezas anteriores, en un solo recorrido: de un comentario crudo hasta una predicción con confianza.</p>
+      <div class="pipeline-strip">
+        <div class="pipeline-step"><span class="pipeline-badge">1</span><h4>Comentario crudo</h4><code>"el servicio fue pésimo"</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">2</span><h4>Limpieza</h4><code>minúsculas, sin puntuación</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">3</span><h4>Tokenizar</h4><code>[el, servicio, fue, pésimo]</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">4</span><h4>Quitar stopwords</h4><code>[servicio, pésimo]</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">5</span><h4>Vectorizar</h4><code>[0,1,0,1,0...]</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">6</span><h4>Modelo</h4><code>Naive Bayes</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">7</span><h4>Predicción</h4><code>negativo (71.3%)</code></div>
+      </div>
+      <p class="microcopy">El mismo camino que recorriste en la Misión 5, ahora completo de principio a fin, con un comentario distinto.</p>
+      <pre class="code-snippet">def clasificar_sentimiento(comentario):
+    texto = limpiar(comentario.lower())
+    tokens = tokenizar(texto)
+    tokens_utiles = quitar_stopwords(tokens)
+    vector = vectorizar(tokens_utiles, vocabulario)
+    probabilidades = modelo.predecir_proba(vector)
+    return {
+        "etiqueta": max(probabilidades, key=probabilidades.get),
+        "confianza": max(probabilidades.values()),
+        "probabilidades": probabilidades
+    }</pre>
+    </section>
+
+    <section id="mision-10">
+      <div class="section-heading"><span>Misión 10</span><h2>Las otras 3 métricas de campaña (y sus límites)</h2></div>
+      <p class="lead">El sentimiento (Misiones 3-9) usó un modelo <strong>entrenado</strong> — Naive Bayes con matemáticas reales detrás. Pero un agente de campaña completo mide 4 cosas, y no todas necesitan un modelo entrenado. Las otras 3 se resuelven con <strong>reglas de palabras clave</strong>: si el comentario contiene ciertas palabras, se asigna una etiqueta. Es una técnica real y muy usada en la práctica cuando el patrón es simple y claro.</p>
+      <div class="term-grid">
+        <article><h3>Intención de compra</h3><p><strong>Interesado / ya compró / indiferente.</strong> Busca palabras como "quiero", "cuánto cuesta" o "talla" (interesado) vs. "llegaron" o "recibí" (ya compró).</p></article>
+        <article><h3>Tipo de comentario</h3><p><strong>Queja / pregunta / elogio / spam.</strong> Un "?" sugiere pregunta; palabras como "pésimo" sugieren queja; "excelente" sugiere elogio; enlaces y "gratis"/"gana" sugieren spam.</p></article>
+        <article><h3>Tema mencionado</h3><p><strong>Precio / calidad / envío / servicio / diseño.</strong> Cada tema tiene su propia lista de palabras asociadas — "precio" y "caro" apuntan a precio, "suela" y "material" a calidad.</p></article>
+        <article><h3>¿Por qué no Naive Bayes para las tres?</h3><p>Se podría — de hecho el generador de código de la Fase 6 te deja intentarlo. Pero con un corpus tan chico, reglas simples y explicables son más honestas que fingir un modelo bien entrenado.</p></article>
+      </div>
+      <div class="warning">
+        <h3>El límite honesto de las reglas de palabras clave</h3>
+        <p>Estas reglas no entienden contexto: en el comentario "La talla me quedó chica, tuve que cambiarlos", la palabra "talla" hace que la regla marque <em>intención de compra: interesado</em>, aunque en realidad la persona ya compró y solo necesita un cambio de talla. Es el mismo tipo de error que viste con la negación en la Misión 8 — la diferencia es que aquí el error viene de una regla fija, no de un modelo estadístico. Pruébalo tú mismo en el Simulador de la Fase 5.</p>
+      </div>
+    </section>
+
+    <section class="part-banner student" id="simulador-banner">
+      <span>Fase 5 · Simulador</span>
+      <h2>Escribe un comentario y arma tu dashboard de campaña</h2>
+      <p>Escribe cualquier comentario — en español, sobre cualquier producto — y observa cómo el agente mide las 4 métricas en tiempo real.</p>
+    </section>
+
+    <section id="simulador">
+      <div class="section-heading"><span>Simulador</span><h2>Analiza un comentario en vivo</h2></div>
+      <p class="lead">El sentimiento corre el mismo cálculo de Naive Bayes con suavizado de Laplace que recorriste en la Misión 5 — no es una versión simplificada aparte, es exactamente esa fórmula. Las otras 3 métricas usan las reglas de palabras clave de la Misión 10.</p>
+      <div class="note">
+        <h3>¿Por qué mis palabras a veces no cambian el sentimiento?</h3>
+        <p>El modelo de sentimiento solo "conoce" las palabras que aparecieron en el corpus de 12 comentarios de esta clase (69 palabras en total, después de quitar stopwords). Si escribes una palabra que nunca vio — como "cómodos" o "envoltura" — el suavizado de Laplace le asigna una probabilidad pequeña e igual en las tres clases, así que no inclina la decisión hacia ningún lado. Prueba con palabras del corpus como "excelente", "pésimo", "carísimos" o "talla" para ver un efecto más claro.</p>
+      </div>
+      <textarea id="text-sim-input" class="text-input-demo" placeholder="Escribe un comentario, por ejemplo: cuánto cuestan? se ven increíbles pero no encuentro el precio">Cuánto cuestan? Se ven increíbles pero no encuentro el precio en ningún lado 😍</textarea>
+      <button class="primary" id="text-sim-run" type="button">Analizar comentario</button>
+      <div class="status-box" id="text-sim-output">Presiona "Analizar comentario" para ver el dashboard.</div>
+    </section>
+
+    <section class="part-banner design" id="diseno-banner">
+      <span>Fase 6 · Tu propio clasificador</span>
+      <h2>Diseña tu propio clasificador de texto</h2>
+      <p>Piensa en un caso real (no tiene que ser una campaña de marketing) donde clasificar texto resuelva un problema.</p>
+    </section>
+
+    <section id="diseno">
+      <div class="section-heading"><span>Diseño</span><h2>Diseña tu clasificador</h2></div>
+      <form class="form-grid" id="architecture-form">
+        <label class="wide" for="arch-case">¿Qué tipo de texto quieres clasificar?</label>
+        <input type="text" id="arch-case" placeholder="Ej. reseñas de producto, tickets de soporte, comentarios de una app...">
+        <p class="microcopy wide">Tu clasificador elegirá entre dos etiquetas posibles cada vez que reciba un texto nuevo — como positivo/negativo en esta clase.</p>
+        <label for="arch-cat1">Primera etiqueta (una de las dos categorías)</label>
+        <input type="text" id="arch-cat1" placeholder="Ej. positivo, urgente, spam...">
+        <label for="arch-cat2">Segunda etiqueta (la otra categoría)</label>
+        <input type="text" id="arch-cat2" placeholder="Ej. negativo, no urgente, no spam...">
+        <label for="arch-example">Escribe un texto de ejemplo que debería caer en la primera etiqueta</label>
+        <input type="text" id="arch-example" placeholder="Ej. llegó rapidísimo y quedé encantado">
+        <label for="arch-strategy">¿Cómo vectorizas el texto? (Misiones 3 y 4)</label>
+        <select id="arch-strategy">
+          <option value="bow">Bolsa de palabras — cuenta cuántas veces aparece cada palabra</option>
+          <option value="tfidf">TF-IDF — le baja peso a palabras comunes y sube a las raras</option>
+        </select>
+        <button class="primary" type="submit">Guardar diseño</button>
+      </form>
+      <div id="student-architecture-map" class="architecture-map">Completa el formulario y guarda para ver el resumen de tu clasificador.</div>
+    </section>
+
+    <section class="part-banner colab" id="colab-banner">
+      <span>Fase 6 · Laboratorio en Google Colab</span>
+      <h2>Construye la función clasificar_sentimiento(comentario)</h2>
+      <p>El notebook usa <code>scikit-learn</code>: <code>CountVectorizer</code> para vectorizar y <code>MultinomialNB</code> para entrenar un modelo real con los doce comentarios de esta clase.</p>
+    </section>
+
+    <section id="colab">
+      <pre class="code-snippet">from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+
+comentarios = ["ya los quiero, se ven increibles", "estan carisimos", ...]
+sentimiento = ["positivo", "negativo", ...]
+
+vectorizador = CountVectorizer(stop_words=stopwords_es)
+X = vectorizador.fit_transform(comentarios)
+
+modelo = MultinomialNB()
+modelo.fit(X, sentimiento)
+
+nuevo_comentario = ["llegaron perfectos, superaron mis expectativas"]
+X_nuevo = vectorizador.transform(nuevo_comentario)
+prediccion = modelo.predict(X_nuevo)
+print(prediccion)  # ["positivo"]</pre>
+      <p class="microcopy">Código central del notebook <code>clasificador_campana.ipynb</code>.</p>
+      <div class="note">
+        <h3>Usa el archivo de práctica de la Misión 6</h3>
+        <p>En vez de escribir <code>comentarios</code> y <code>sentimiento</code> a mano, carga con <code>pandas.read_csv()</code> el mismo archivo de <strong>890 comentarios</strong> que viste en la Misión 6: <a href="./assets/practica-comentarios-campana.csv" download>practica-comentarios-campana.csv</a>. Con ese volumen ya puedes hacer una división train/test real (como la de la Misión 6) en vez de entrenar y probar con los mismos 12 comentarios.</p>
+      </div>
+    </section>
+
+    <section id="colab-pasos">
+      <div class="section-heading"><span>Colab</span><h2>10 pasos del notebook</h2></div>
+      <div class="step-list">
+        <article><b>1</b><h3>Imports</h3><p>sklearn, pandas y re para limpieza de texto.</p></article>
+        <article><b>2</b><h3>Corpus</h3><p>Carga el CSV de práctica (890 comentarios) o tus propios comentarios reales.</p></article>
+        <article><b>3</b><h3>Limpieza</h3><p>Minúsculas y quitar puntuación y emojis.</p></article>
+        <article><b>4</b><h3>Stopwords</h3><p>Lista de palabras a descartar en español.</p></article>
+        <article><b>5</b><h3>Vectorizador</h3><p>CountVectorizer o TfidfVectorizer.</p></article>
+        <article><b>6</b><h3>Entrenamiento</h3><p>MultinomialNB.fit(X, sentimiento).</p></article>
+        <article><b>7</b><h3>Predicción</h3><p>modelo.predict() sobre comentarios nuevos.</p></article>
+        <article><b>8</b><h3>Evaluación</h3><p>Matriz de confusión y F1-score.</p></article>
+        <article><b>9</b><h3>Función final</h3><p>clasificar_sentimiento(comentario).</p></article>
+        <article><b>10</b><h3>Guardar modelo</h3><p>Exportar con pickle para reutilizarlo.</p></article>
+      </div>
+    </section>
+
+    <section id="generador">
+      <div class="section-heading"><span>Generador</span><h2>Genera el esqueleto de tu función en Python</h2></div>
+      <p class="lead">Usa lo que diseñaste en la Fase 6 para generar el esqueleto de código que puedes pegar en tu notebook de Colab.</p>
+      <div class="toolbar">
+        <button class="primary" id="generate-code" type="button">Generar código</button>
+        <button class="ghost" id="copy-code" type="button">Copiar</button>
+      </div>
+      <pre class="code-output" id="generated-code">Presiona "Generar código" después de guardar tu diseño en la sección Diseño.</pre>
+    </section>
+
+    <section id="prueba">
+      <div class="section-heading"><span>Prueba</span><h2>Pon a prueba tu clasificador con 5 casos</h2></div>
+      <p class="lead">Un buen clasificador de texto debe sobrevivir a estos cinco casos sin romperse. Cada botón corre el modelo real de sentimiento en vivo.</p>
+      <div class="toolbar" id="test-case-buttons">
+        <button class="primary" data-case="claro-positivo" type="button">Claro positivo</button>
+        <button data-case="claro-negativo" type="button">Claro negativo</button>
+        <button data-case="neutral" type="button">Neutral</button>
+        <button data-case="negacion" type="button">Con negación</button>
+        <button data-case="corto" type="button">Muy corto</button>
+      </div>
+      <div class="status-box" id="test-case-output">Selecciona un caso de prueba arriba.</div>
+    </section>
+
+    <section class="part-banner" id="cierre-banner">
+      <span>Fase 7 · Cierre</span>
+      <h2>Integra y entrega tu clasificador</h2>
+      <p>Última etapa: prepara la integración funcional con una API y genera tu reporte final de la clase.</p>
+    </section>
+
+    <section id="integracion">
+      <div class="section-heading"><span>Integración</span><h2>De tu función a un dashboard en vivo</h2></div>
+      <p class="lead">Tu función <code>clasificar_sentimiento(comentario)</code>, combinada con las reglas de la Misión 10, está lista para alimentar un dashboard que un equipo de marketing pueda revisar cada mañana.</p>
+      <div class="pipeline-strip">
+        <div class="pipeline-step"><span class="pipeline-badge">1</span><h4>Comentario de campaña</h4></div>
+        <div class="pipeline-step"><span class="pipeline-badge">2</span><h4>Texto crudo</h4></div>
+        <div class="pipeline-step"><span class="pipeline-badge">3</span><h4>Clasificador de texto</h4></div>
+        <div class="pipeline-step"><span class="pipeline-badge">4</span><h4>4 etiquetas + confianza</h4></div>
+        <div class="pipeline-step"><span class="pipeline-badge">5</span><h4>Dashboard / API</h4></div>
+      </div>
+      <div class="note">
+        <h3>Siguiente paso natural</h3>
+        <p>Esta misma función es la que la Clase 18 (agente híbrido) llama como uno de sus especialistas de texto.</p>
+      </div>
+    </section>
+
+    <section id="reporte">
+      <div class="section-heading"><span>Reporte</span><h2>Genera tu reporte final de la clase</h2></div>
+      <form class="form-grid" id="report-form">
+        <label for="report-name">Tu nombre</label>
+        <input type="text" id="report-name" placeholder="Tu nombre">
+        <label for="report-strategy">Técnica que elegiste</label>
+        <input type="text" id="report-strategy" placeholder="Ej. TF-IDF + Naive Bayes">
+        <label class="wide" for="report-learning">¿Qué fue lo más difícil de convertir texto en números?</label>
+        <textarea id="report-learning" placeholder="Escribe tu reflexión..."></textarea>
+        <label class="wide" for="report-next">¿Qué mejorarías de tu clasificador si tuvieras más tiempo?</label>
+        <textarea id="report-next" placeholder="Escribe tu reflexión..."></textarea>
+        <button class="primary wide" type="submit">Generar reporte</button>
+      </form>
+      <pre class="report-output" id="report-output">Completa el formulario y presiona "Generar reporte".</pre>
+    </section>
+
+    <footer>
+      <span>Clase 16 · Clasificación de texto</span>
+      <span>Curso de Inteligencia Artificial</span>
+    </footer>
+
+  </main>
+
+  <script src="clase16.js"></script>
+</body>
+</html>
