@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 17 · CNN y clasificación de imágenes</title>
+<link rel="stylesheet" href="clase17.css">
+</head>
+<body>
+
+  <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-expanded="true" aria-controls="lesson-sidebar">
+    <span aria-hidden="true">☰</span><span class="toggle-label">Menú</span>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <aside class="lesson-sidebar" id="lesson-sidebar">
+    <a class="course-link" href="../index.html">← Curso IA</a>
+    <div class="sidebar-heading"><span>Clase 17</span><strong>CNN y clasificación de imágenes</strong></div>
+    <div class="xp-panel">
+      <div class="xp-panel-top"><span>Progreso</span><strong id="reading-progress-label">0%</strong></div>
+      <div class="xp-bar"><span id="reading-progress-fill"></span></div>
+      <small id="reading-progress-note">Recorre la clase para completar tu progreso.</small>
+    </div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#ruta">Ruta de aprendizaje</a>
+      <a href="#conexion">Conexión con clases previas</a>
+      <span class="nav-group-label">Fase 1 · Fundamentos</span>
+      <a href="#mision-1">Una imagen es una matriz</a>
+      <a href="#mision-2">Por qué no basta una red densa</a>
+      <span class="nav-group-label">Fase 2 · Convolución</span>
+      <a href="#mision-3">El filtro convolucional</a>
+      <a href="#mision-4">Mapas de características reales</a>
+      <a href="#mision-5">Pooling</a>
+      <span class="nav-group-label">Fase 3 · Arquitectura completa</span>
+      <a href="#mision-6">Aplanar y capa densa</a>
+      <a href="#mision-7">Softmax</a>
+      <a class="sidebar-feature-link" href="#mision-8">⭐ CNN paso a paso</a>
+      <span class="nav-group-label">Fase 4 · Evaluación</span>
+      <a href="#mision-9">Anatomía del pipeline</a>
+      <a href="#mision-10">Casos de uso y límites</a>
+      <span class="nav-group-label">Fase 5 · Simulador</span>
+      <a href="#simulador">Simulador</a>
+      <span class="nav-group-label">Fase 6 · Tu propio clasificador</span>
+      <a href="#diseno">Diseño</a>
+      <a href="#colab">Colab</a>
+      <a href="#generador">Generador</a>
+      <a href="#prueba">Prueba</a>
+      <span class="nav-group-label">Fase 7 · Cierre</span>
+      <a href="#integracion">Integración</a>
+      <a href="#reporte">Reporte</a>
+    </nav>
+  </aside>
+
+  <main class="lesson-shell">
+
+    <section class="hero" id="inicio">
+      <span class="eyebrow">Clase 17 · Curso de Inteligencia Artificial</span>
+      <h1>Enseña a una máquina a ver una fotografía</h1>
+      <p class="hero-lead">En la Clase 16 convertiste texto en números. Ahora conviertes una fotografía real en números, y construyes una red neuronal convolucional (CNN) que aprende a reconocer patrones visuales — usando la misma foto de daño vehicular en toda la clase.</p>
+      <div class="hero-visual">
+        <figure class="hero-photo-step"><img src="./assets/imagen-cnn-vehiculo.webp" alt="Foto real de entrada del vehículo dañado."><figcaption>Foto original</figcaption></figure>
+        <figure class="hero-photo-step map"><img src="./assets/cnn-contour.webp" alt="Mapa real de bordes calculado por convolución sobre la fotografía."><figcaption>Mapa de bordes real</figcaption></figure>
+        <div class="hero-agent-card">
+          <h3>Daño moderado</h3>
+          <strong>81%</strong>
+          <p>de confianza (Misión 7 · softmax)</p>
+        </div>
+      </div>
+      <p class="microcopy">De la foto real a una predicción, pasando por un mapa de características real — sin ilustraciones decorativas.</p>
+    </section>
+
+    <section id="ruta">
+      <div class="section-heading"><span>Ruta de aprendizaje</span><h2>Cómo está construida esta clase</h2></div>
+      <p class="lead">Mismo formato que en clases anteriores: observas, entiendes el mecanismo, y lo aplicas.</p>
+      <div class="learn-grid">
+        <article class="observar"><span>1 · Observar</span><h3>Ves una foto real</h3><p>Todos los ejemplos parten de la misma fotografía real de un vehículo dañado.</p></article>
+        <article class="entender"><span>2 · Entender</span><h3>Abres la caja</h3><p>Filtros, mapas de características y pooling calculados de verdad sobre esa foto, no ilustraciones.</p></article>
+        <article class="aplicar"><span>3 · Aplicar</span><h3>Lo pruebas tú</h3><p>Un simulador de filtros, un notebook de Colab con Keras real, y un generador de arquitectura CNN.</p></article>
+      </div>
+    </section>
+
+    <section id="conexion">
+      <div class="section-heading"><span>Conexión con clases previas</span><h2>De números y palabras, a píxeles</h2></div>
+      <p class="lead">En las Clases 6-15 usaste tablas. En la Clase 16, texto. Una fotografía es un tercer tipo de dato: una cuadrícula de números — uno por cada pixel y canal de color.</p>
+      <div class="channel-grid">
+        <figure class="channel-card original"><img src="./assets/imagen-cnn-vehiculo.webp" alt="Foto original a color del vehículo dañado."><figcaption>Original</figcaption></figure>
+        <figure class="channel-card rojo"><img src="./assets/canal-rojo.webp" alt="Canal rojo real extraído de la fotografía."><figcaption>Rojo (R)</figcaption></figure>
+        <figure class="channel-card verde"><img src="./assets/canal-verde.webp" alt="Canal verde real extraído de la fotografía."><figcaption>Verde (G)</figcaption></figure>
+        <figure class="channel-card azul"><img src="./assets/canal-azul.webp" alt="Canal azul real extraído de la fotografía."><figcaption>Azul (B)</figcaption></figure>
+      </div>
+      <p class="microcopy">Una imagen a color son en realidad tres matrices de números superpuestas — roja, verde y azul (RGB) — extraídas de verdad de la fotografía de esta clase.</p>
+      <div class="note key">
+        <h3>La pregunta que resolvemos</h3>
+        <p>¿Cómo puede un modelo "ver" que una zona de la foto tiene un golpe, si todo lo que recibe son números de 0 a 255 por pixel? Esta clase responde eso de principio a fin.</p>
+      </div>
+    </section>
+
+    <section id="mision-1">
+      <div class="section-heading"><span>Misión 1</span><h2>Una imagen es una matriz de números</h2></div>
+      <p class="lead">Cada pixel de una foto a color tiene tres valores (rojo, verde, azul), cada uno entre 0 y 255. Una foto de 1400×875 pixeles con 3 canales son más de 3.6 millones de números.</p>
+      <div class="analogy">
+        <h3>¿Qué es una "matriz" y un "pixel"?</h3>
+        <p>Una <strong>matriz</strong> es simplemente una tabla de números, como una hoja de cálculo con filas y columnas. Un <strong>pixel</strong> (de "picture element", elemento de imagen) es cada uno de esos casilleros: el punto de color más pequeño posible en una foto digital. Una foto en blanco y negro es una sola matriz de pixeles, cada uno de 0 (negro) a 255 (blanco). Una foto a color son <strong>tres</strong> matrices superpuestas — una por cada <strong>canal</strong> de color: rojo, verde y azul (RGB) — que la computadora combina para mostrar el color final de cada pixel. Por eso decimos que una imagen "es" una matriz de números: no hay nada más ahí, ni magia ni forma — solo números que un modelo puede sumar, multiplicar y comparar.</p>
+      </div>
+      <div class="matrix" id="rgb-pixel-matrix"></div>
+      <p class="microcopy">Estos son 9 pixeles reales tomados de la fotografía de esta clase, reducidos a una cuadrícula de 3×3 para poder mostrarlos.</p>
+    </section>
+
+    <section id="mision-2">
+      <div class="section-heading"><span>Misión 2</span><h2>¿Por qué no basta una red densa?</h2></div>
+      <p class="lead">En las Clases 14 y 15 viste una red densa procesando números tabulares. Para una imagen, esa misma estrategia (aplanar todo y conectar cada pixel a cada neurona) es carísima e ineficiente.</p>
+      <div class="note">
+        <h3>Recordatorio: ¿qué es una red densa y qué es un "parámetro"?</h3>
+        <p>En una red densa, cada neurona de una capa se conecta con TODAS las neuronas de la capa anterior. Cada una de esas conexiones tiene un número que el modelo debe ir ajustando durante el entrenamiento — eso es un <strong>parámetro</strong>. Entre más conexiones, más parámetros hay que aprender, y más lento y costoso es entrenar el modelo. Si a una red densa le mandas una imagen pixel por pixel, el número de conexiones se dispara — lo ves con números reales abajo.</p>
+      </div>
+      <div class="metric-cards">
+        <article class="hot"><span>Capa densa (imagen aplanada de 100×100×3 conectada a 128 neuronas)</span><strong>3,840,128</strong><span>parámetros</span></article>
+        <article><span>Capa convolucional (32 filtros de 3×3)</span><strong>896</strong><span>parámetros</span></article>
+      </div>
+      <p class="microcopy">Para procesar la misma imagen, una capa densa necesita más de 4,000 veces más parámetros que una capa convolucional (números reales de esta clase).</p>
+      <div class="note">
+        <h3>La idea clave</h3>
+        <p>Una capa convolucional reutiliza el mismo filtro pequeño en toda la imagen, en vez de aprender un peso distinto para cada pixel. Por eso es mucho más eficiente y generaliza mejor.</p>
+      </div>
+    </section>
+
+    <section class="part-banner" id="fase-2-banner">
+      <span>Fase 2 · Convolución</span>
+      <h2>Cómo un filtro recorre una imagen</h2>
+      <p>Aquí está el corazón de la CNN: un filtro pequeño (3×3) que se desliza sobre la imagen calculando un mapa de características real.</p>
+    </section>
+
+    <section id="mision-3">
+      <div class="section-heading"><span>Misión 3</span><h2>El filtro convolucional</h2></div>
+      <p class="lead"><strong>CNN</strong> son las siglas de "Convolutional Neural Network" (Red Neuronal Convolucional): un tipo de red neuronal diseñada específicamente para imágenes. Su pieza central es un algoritmo llamado <strong>convolución</strong>. Un <strong>filtro</strong> (o <strong>kernel</strong>) es una pequeña matriz de números — piensa en él como una plantilla que busca un patrón específico, por ejemplo "una línea vertical". La convolución multiplica los números del filtro contra cada región 3×3 de la imagen y suma el resultado en un solo número: entre más alto ese número, más se parece esa región al patrón que el filtro busca.</p>
+      <div class="analogy">
+        <h3>Imagínalo como una lupa que solo reconoce una forma</h3>
+        <p>El filtro es como una lupa pequeña de 3×3 pixeles que recorre la foto de izquierda a derecha y de arriba abajo, deteniéndose en cada posición. En cada parada pregunta "¿se parece esto a una línea vertical?" y anota qué tanto — sin saltarse ninguna parte de la imagen. El resultado de recorrer la foto completa es un <strong>mapa de características</strong>: una nueva imagen, del mismo tamaño aproximado, que muestra en qué zonas encontró ese patrón (brillante) y en cuáles no (oscuro).</p>
+      </div>
+      <div class="formula">salida(x,y) = Σ imagen(x+i, y+j) × filtro(i,j) para cada posición del filtro</div>
+      <div class="note">
+        <h3>Cómo leer esta fórmula sin asustarte</h3>
+        <p><code>imagen(x+i, y+j)</code> es el valor del pixel en esa posición de la foto. <code>filtro(i,j)</code> es el número correspondiente dentro del filtro 3×3. La fórmula dice: multiplica cada pixel de la región por su número correspondiente en el filtro, y luego súmalos todos (el símbolo <strong>Σ</strong> significa "suma todo lo que sigue"). Ese total es <code>salida(x,y)</code>: un solo número para esa posición. Después el filtro se desliza un pixel a la derecha y repite el cálculo, hasta cubrir toda la imagen.</p>
+      </div>
+      <div class="cnn-filter-grid">
+        <strong>Filtro de bordes verticales</strong><strong>Filtro de bordes horizontales</strong>
+        <i style="background-image:url('./assets/cnn-vertical.webp');background-size:contain;background-repeat:no-repeat;background-position:center"></i>
+        <i style="background-image:url('./assets/cnn-horizontal.webp');background-size:contain;background-repeat:no-repeat;background-position:center"></i>
+      </div>
+    </section>
+
+    <section id="mision-4">
+      <div class="section-heading"><span>Misión 4</span><h2>Mapas de características reales</h2></div>
+      <p class="lead">Un <strong>mapa de características</strong> (feature map) es el resultado de pasar un filtro por toda la imagen: una nueva "foto" donde las zonas brillantes marcan dónde ese filtro encontró su patrón. Estos cuatro mapas se calcularon con convolución 2D real sobre la fotografía de esta clase — no son ilustraciones decorativas.</p>
+      <div class="cnn-lab">
+        <article>
+          <h3>Vertical</h3>
+          <img src="./assets/cnn-vertical.webp" alt="Mapa real de bordes verticales calculado por convolución sobre la fotografía.">
+          <p>Resalta el contorno de puertas y parachoques.</p>
+        </article>
+        <article>
+          <h3>Horizontal</h3>
+          <img src="./assets/cnn-horizontal.webp" alt="Mapa real de bordes horizontales calculado por convolución sobre la fotografía.">
+          <p>Resalta la línea del cofre y la defensa.</p>
+        </article>
+        <article>
+          <h3>Textura</h3>
+          <img src="./assets/cnn-texture.webp" alt="Mapa real de textura calculado por convolución sobre la fotografía.">
+          <p>Resalta cambios bruscos: rayones y abolladuras.</p>
+        </article>
+        <article>
+          <h3>Contorno combinado</h3>
+          <img src="./assets/cnn-contour.webp" alt="Mapa real de contorno combinado calculado por convolución sobre la fotografía.">
+          <p>Junta bordes verticales y horizontales en un solo mapa.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="mision-5">
+      <div class="section-heading"><span>Misión 5</span><h2>Pooling: quedarse con lo más fuerte</h2></div>
+      <p class="lead">Después de la convolución, el <strong>pooling</strong> reduce el tamaño quedándose con el valor máximo de cada bloque de 2×2 — usando números reales de la fotografía.</p>
+      <div class="cnn-pooling-demo">
+        <div class="pool-source grid4">
+          <span>154</span><span class="max">174</span><span class="max">146</span><span>91</span>
+          <span>105</span><span>101</span><span>90</span><span>54</span>
+          <span>121</span><span>61</span><span>73</span><span>34</span>
+          <span class="max">131</span><span>97</span><span>70</span><span class="max">88</span>
+        </div>
+        <strong>máx</strong>
+        <div class="pool-result grid2"><span>174</span><span>146</span><span>131</span><span>88</span></div>
+      </div>
+      <p class="microcopy">Los 16 valores reales de gris de esta foto (un parche de 4×4) se reducen a 2×2, conservando siempre el máximo de cada bloque de 2×2.</p>
+      <div class="note">
+        <h3>¿Para qué sirve reducir el tamaño?</h3>
+        <p>Dos razones prácticas. Primero, menos números significa menos cálculos: el modelo entrena y predice más rápido. Segundo, el pooling hace que el modelo se fije en <em>si</em> el patrón apareció en una zona, no en el pixel exacto donde apareció — lo cual ayuda a reconocer el mismo daño aunque la foto esté un poco desplazada, rotada o tomada desde otro ángulo.</p>
+      </div>
+    </section>
+
+    <section id="mision-6">
+      <div class="section-heading"><span>Misión 6</span><h2>Aplanar y capa densa final</h2></div>
+      <p class="lead">Después de varias rondas de convolución y pooling, los mapas de características se <strong>aplanan</strong> en un solo vector, que alimenta una capa densa — la misma idea de red densa que viste en las Clases 14 y 15.</p>
+      <div class="note">
+        <h3>¿Qué significa "aplanar"?</h3>
+        <p><strong>Aplanar (flatten)</strong> significa tomar una cuadrícula de números de dos dimensiones (filas y columnas, como una tabla) y convertirla en una sola lista de una dimensión, uno detrás de otro. Se hace porque la <strong>capa densa</strong> que sigue —igual que en las Clases 14 y 15— solo sabe recibir listas de números, no cuadrículas. Una vez aplanado, cada neurona de la capa densa se conecta con cada número de esa lista, combinando todas las pistas que detectaron los filtros (bordes, texturas, manchas) para tomar la decisión final.</p>
+      </div>
+      <div class="cnn-flatten-demo">
+        <div class="matrix"><span>174</span><span>146</span><span>131</span><span>88</span></div>
+        <strong>aplanar</strong>
+        <pre>[174, 146, 131, 88, ...]</pre>
+      </div>
+    </section>
+
+    <section id="mision-7">
+      <div class="section-heading"><span>Misión 7</span><h2>Softmax: la probabilidad final</h2></div>
+      <p class="lead">La capa densa final entrega una puntuación por cada clase posible. <strong>Softmax</strong> es una función matemática que convierte esas puntuaciones en probabilidades que suman 100%.</p>
+      <div class="analogy">
+        <h3>Como repartir un pastel completo</h3>
+        <p>Imagina que cada categoría posible (leve, moderado, severo) recibe una puntuación de la capa densa. Softmax reparte un pastel completo — el 100% — entre esas categorías, dándole una porción más grande a la que tuvo la puntuación más alta, pero sin dejar a ninguna en cero. El resultado ya no son puntuaciones sueltas y difíciles de comparar, sino probabilidades que puedes leer directamente: "81% de confianza en daño moderado".</p>
+      </div>
+      <div class="cnn-probability-bars">
+        <div class="winner"><span>Daño moderado</span><i style="--w:81%"></i><strong>81%</strong></div>
+        <div><span>Daño leve</span><i style="--w:13%"></i><strong>13%</strong></div>
+        <div><span>Daño severo</span><i style="--w:6%"></i><strong>6%</strong></div>
+      </div>
+    </section>
+
+    <section id="mision-8">
+      <div class="section-heading"><span>Misión 8 · Pieza central</span><h2>La CNN completa, paso a paso</h2></div>
+      <p class="lead">Ya viste cada pieza por separado: filtro, convolución, mapa de características, pooling, aplanar, capa densa y softmax. Ahora recórrelas juntas, en orden, de principio a fin, sobre la misma fotografía.</p>
+      <div class="cnn-journey" id="cnn-journey">
+        <div class="cnn-progress" id="cnn-progress"></div>
+
+        <div class="cnn-stage image-stage" data-stage="0">
+          <div>
+            <span class="stage-kicker">Etapa 1</span>
+            <h3>Imagen de entrada</h3>
+            <dl><dt>Qué entra</dt><dd>La foto real, en color, 1400×875 píxeles, 3 canales.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual"><img src="./assets/imagen-cnn-vehiculo.webp" alt="Foto real de entrada del vehículo dañado."></div>
+        </div>
+
+        <div class="cnn-stage filter-stage" data-stage="1">
+          <div>
+            <span class="stage-kicker">Etapa 2</span>
+            <h3>Convolución con filtros</h3>
+            <dl><dt>Qué pasa</dt><dd>Cada filtro 3×3 recorre la imagen calculando un mapa de activación.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="cnn-filter-grid">
+              <strong>Vertical</strong><strong>Horizontal</strong>
+              <i style="background-image:url('./assets/cnn-vertical.webp');background-size:contain;background-repeat:no-repeat;background-position:center"></i>
+              <i style="background-image:url('./assets/cnn-horizontal.webp');background-size:contain;background-repeat:no-repeat;background-position:center"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="cnn-stage feature-stage" data-stage="2">
+          <div>
+            <span class="stage-kicker">Etapa 3</span>
+            <h3>Mapas de características</h3>
+            <dl><dt>Qué revelan</dt><dd>Dónde hay bordes fuertes y dónde la textura cambia bruscamente.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual" style="grid-template-columns:repeat(3,1fr);display:grid;gap:.6rem">
+            <div class="cnn-feature-map"><img src="./assets/cnn-vertical.webp" alt="Mapa de bordes verticales real."><span>vertical</span></div>
+            <div class="cnn-feature-map"><img src="./assets/cnn-texture.webp" alt="Mapa de textura real."><span>textura</span></div>
+            <div class="cnn-feature-map"><img src="./assets/cnn-contour.webp" alt="Mapa de contorno combinado real."><span>contorno</span></div>
+          </div>
+        </div>
+
+        <div class="cnn-stage pooling-stage" data-stage="3">
+          <div>
+            <span class="stage-kicker">Etapa 4</span>
+            <h3>Pooling</h3>
+            <dl><dt>Qué hace</dt><dd>Reduce cada bloque 2×2 a su máximo, con números reales de esta foto.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="cnn-pooling-demo">
+              <div class="pool-source"><span>174</span><span class="max">146</span><span>131</span><span>88</span></div>
+              <strong>máx</strong>
+              <div class="pool-result"><span>174</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cnn-stage flatten-stage" data-stage="4">
+          <div>
+            <span class="stage-kicker">Etapa 5</span>
+            <h3>Aplanar</h3>
+            <dl><dt>Qué hace</dt><dd>Convierte la cuadrícula 2D en una lista plana de números.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="cnn-flatten-demo">
+              <div class="matrix"><span>174</span><span>146</span><span>131</span><span>88</span></div>
+              <strong>flatten</strong>
+              <pre>[174, 146, 131, 88, ...]</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="cnn-stage dense-stage" data-stage="5">
+          <div>
+            <span class="stage-kicker">Etapa 6</span>
+            <h3>Capa densa final</h3>
+            <dl><dt>Qué hace</dt><dd>Combina todas las características detectadas con pesos aprendidos.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="dense-signals"><span>bordes fuertes</span><span>abolladura</span><span>pintura rayada</span><span>pieza rota</span></div>
+            <div class="dense-combiner">Σ<br><small>combinador</small></div>
+          </div>
+        </div>
+
+        <div class="cnn-stage softmax-stage" data-stage="6">
+          <div>
+            <span class="stage-kicker">Etapa 7</span>
+            <h3>Softmax: probabilidad final</h3>
+            <dl><dt>Resultado</dt><dd>La CNN entrega "daño moderado" con 81% de confianza.</dd></dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="cnn-probability-bars">
+              <div class="winner"><span>Daño moderado</span><i style="--w:81%"></i><strong>81%</strong></div>
+              <div><span>Daño leve</span><i style="--w:13%"></i><strong>13%</strong></div>
+              <div><span>Daño severo</span><i style="--w:6%"></i><strong>6%</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cnn-stage-controls">
+          <button class="ghost" id="cnn-prev" type="button">Etapa anterior</button>
+          <button class="primary" id="cnn-next" type="button">Siguiente etapa</button>
+          <button class="ghost" id="cnn-show-all" type="button">Ver todas las etapas</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="anatomy-main-section" id="mision-9">
+      <div class="section-heading"><span>Misión 9</span><h2>Anatomía completa del pipeline</h2></div>
+      <p class="lead">Las siete etapas anteriores, en un solo diagrama de principio a fin.</p>
+      <div class="pipeline-strip">
+        <div class="pipeline-step"><span class="pipeline-badge">1</span><h4>Imagen</h4><code>1400x875x3</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">2</span><h4>Convolución</h4><code>32 filtros 3x3</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">3</span><h4>Activación</h4><code>ReLU</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">4</span><h4>Pooling</h4><code>reduce a la mitad</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">5</span><h4>Aplanar</h4><code>vector 1D</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">6</span><h4>Denso</h4><code>combina señales</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">7</span><h4>Softmax</h4><code>probabilidad final</code></div>
+      </div>
+      <pre class="code-snippet">def clasificar_imagen(foto):
+    tensor = preprocesar(foto)          # redimensiona y normaliza
+    activaciones = convolucion(tensor)  # filtros aprendidos
+    reducido = pooling(activaciones)    # max pooling
+    vector = aplanar(reducido)
+    puntuaciones = capa_densa(vector)
+    return softmax(puntuaciones)        # probabilidad por clase</pre>
+    </section>
+
+    <section id="mision-10">
+      <div class="section-heading"><span>Misión 10</span><h2>Casos de uso reales y sus límites</h2></div>
+      <p class="lead">Las CNN están detrás de mucho más que clasificación de daños. Pero también tienen límites claros.</p>
+      <div class="term-grid">
+        <article><h3>Diagnóstico médico</h3><p>Detecta anomalías en radiografías o resonancias.</p></article>
+        <article><h3>Reconocimiento facial</h3><p>Identifica personas en fotos o video.</p></article>
+        <article><h3>Autos autónomos</h3><p>Detecta peatones, señales y otros vehículos.</p></article>
+        <article><h3>Control de calidad</h3><p>Detecta defectos en productos de fábrica.</p></article>
+      </div>
+      <div class="check-list">
+        <li>Necesita miles de imágenes etiquetadas para entrenar bien.</li>
+        <li>Puede fallar con ángulos, luz o encuadres que nunca vio.</li>
+        <li>Puede heredar sesgos si el dataset de entrenamiento no es diverso.</li>
+        <li>Una probabilidad alta no siempre significa una decisión correcta.</li>
+      </div>
+    </section>
+
+    <section class="part-banner student" id="simulador-banner">
+      <span>Fase 5 · Simulador</span>
+      <h2>Prueba los filtros sobre la foto real</h2>
+      <p>Elige un filtro y observa el mapa de características real que produce sobre la misma fotografía de esta clase.</p>
+    </section>
+
+    <section id="simulador">
+      <div class="section-heading"><span>Simulador</span><h2>Explora los filtros en vivo</h2></div>
+      <div class="cnn-lab">
+        <article>
+          <h3>Foto original</h3>
+          <img src="./assets/imagen-cnn-vehiculo.webp" alt="Foto real del vehículo dañado.">
+        </article>
+        <article>
+          <h3>Elige un filtro</h3>
+          <div class="toolbar compact" id="cnn-filter-buttons">
+            <button type="button" data-filter="vertical" class="primary">Bordes verticales</button>
+            <button type="button" data-filter="horizontal">Bordes horizontales</button>
+            <button type="button" data-filter="texture">Textura</button>
+            <button type="button" data-filter="contour">Contorno combinado</button>
+          </div>
+        </article>
+        <article>
+          <h3>Mapa resultante</h3>
+          <img id="feature-map-image" src="./assets/cnn-vertical.webp" alt="Mapa de características real generado por convolución.">
+        </article>
+        <article>
+          <h3>Qué detecta</h3>
+          <p id="filter-result">El filtro de bordes verticales resalta el contorno de la puerta y el parachoques.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="part-banner design" id="diseno-banner">
+      <span>Fase 6 · Tu propio clasificador</span>
+      <h2>Diseña tu propia CNN</h2>
+      <p>Piensa en un caso real donde clasificar imágenes resuelva un problema.</p>
+    </section>
+
+    <section id="diseno">
+      <div class="section-heading"><span>Diseño</span><h2>Diseña tu clasificador de imágenes</h2></div>
+      <form class="form-grid" id="architecture-form">
+        <label class="wide" for="arch-case">¿Qué tipo de imágenes quieres clasificar?</label>
+        <input type="text" id="arch-case" placeholder="Ej. fotos de plantas enfermas, radiografías, fotos de productos con defectos...">
+        <p class="microcopy wide">Tu CNN elegirá entre dos etiquetas posibles cada vez que reciba una imagen nueva — como daño leve/severo en esta clase.</p>
+        <label for="arch-cat1">Primera etiqueta (una de las dos categorías)</label>
+        <input type="text" id="arch-cat1" placeholder="Ej. sana, aprobado, sin defecto...">
+        <label for="arch-cat2">Segunda etiqueta (la otra categoría)</label>
+        <input type="text" id="arch-cat2" placeholder="Ej. enferma, rechazado, con defecto...">
+        <label for="arch-filters">Número de filtros en la primera capa (Misión 3)</label>
+        <input type="number" id="arch-filters" value="32" min="4" max="128">
+        <p class="microcopy wide">Cada filtro aprende a detectar un patrón distinto (un tipo de borde, una textura...). Más filtros detectan más patrones, pero también tardan más en entrenar.</p>
+        <label for="arch-size">Tamaño de imagen de entrada (píxeles)</label>
+        <select id="arch-size">
+          <option value="64">64x64 — más rápido, menos detalle</option>
+          <option value="128" selected>128x128 — buen equilibrio</option>
+          <option value="224">224x224 — más detalle, más lento</option>
+        </select>
+        <button class="primary" type="submit">Guardar diseño</button>
+      </form>
+      <div id="student-architecture-map" class="architecture-map">Completa el formulario y guarda para ver el resumen de tu CNN.</div>
+    </section>
+
+    <section class="part-banner colab" id="colab-banner">
+      <span>Fase 6 · Laboratorio en Google Colab</span>
+      <h2>Construye tu CNN con Keras</h2>
+      <p>El notebook usa <code>tensorflow.keras</code> con capas <code>Conv2D</code> y <code>MaxPooling2D</code> reales, entrenando sobre imágenes etiquetadas.</p>
+    </section>
+
+    <section id="colab">
+      <pre class="code-snippet">from tensorflow.keras import layers, models
+
+modelo = models.Sequential([
+    layers.Conv2D(32, (3,3), activation="relu", input_shape=(128,128,3)),
+    layers.MaxPooling2D((2,2)),
+    layers.Conv2D(64, (3,3), activation="relu"),
+    layers.MaxPooling2D((2,2)),
+    layers.Flatten(),
+    layers.Dense(64, activation="relu"),
+    layers.Dense(3, activation="softmax")  # leve, moderado, severo
+])
+
+modelo.compile(optimizer="adam",
+               loss="sparse_categorical_crossentropy",
+               metrics=["accuracy"])
+
+modelo.fit(imagenes_entrenamiento, etiquetas_entrenamiento, epochs=10)</pre>
+      <p class="microcopy">Código real del modelo Keras central del notebook.</p>
+    </section>
+
+    <section id="colab-pasos">
+      <div class="section-heading"><span>Colab</span><h2>10 pasos del notebook</h2></div>
+      <div class="step-list">
+        <article><b>1</b><h3>Imports</h3><p>tensorflow, keras y utilidades de imágenes.</p></article>
+        <article><b>2</b><h3>Dataset</h3><p>Carpetas de imágenes organizadas por categoría.</p></article>
+        <article><b>3</b><h3>Preprocesar</h3><p>Redimensionar y normalizar los píxeles.</p></article>
+        <article><b>4</b><h3>Aumento de datos</h3><p>Rotaciones y volteos para generalizar mejor.</p></article>
+        <article><b>5</b><h3>Arquitectura</h3><p>Capas Conv2D + MaxPooling2D apiladas.</p></article>
+        <article><b>6</b><h3>Compilar</h3><p>Optimizador, función de pérdida y métricas.</p></article>
+        <article><b>7</b><h3>Entrenar</h3><p>model.fit() sobre las imágenes de entrenamiento.</p></article>
+        <article><b>8</b><h3>Evaluar</h3><p>Precisión sobre imágenes nunca vistas.</p></article>
+        <article><b>9</b><h3>Función final</h3><p>clasificar_imagen(foto).</p></article>
+        <article><b>10</b><h3>Guardar modelo</h3><p>Exportar en formato .h5 o SavedModel.</p></article>
+      </div>
+    </section>
+
+    <section id="generador">
+      <div class="section-heading"><span>Generador</span><h2>Genera el esqueleto de tu CNN en Keras</h2></div>
+      <div class="toolbar">
+        <button class="primary" id="generate-code" type="button">Generar código</button>
+        <button class="ghost" id="copy-code" type="button">Copiar</button>
+      </div>
+      <pre class="code-output" id="generated-code">Presiona "Generar código" después de guardar tu diseño en la sección Diseño.</pre>
+    </section>
+
+    <section id="prueba">
+      <div class="section-heading"><span>Prueba</span><h2>Pon a prueba tu CNN con 5 casos</h2></div>
+      <div class="toolbar" id="test-case-buttons">
+        <button class="primary" data-case="claro" type="button">Caso claro</button>
+        <button data-case="borroso" type="button">Imagen borrosa</button>
+        <button data-case="angulo" type="button">Ángulo inusual</button>
+        <button data-case="oclusion" type="button">Objeto tapado</button>
+        <button data-case="nueva-clase" type="button">Clase nunca vista</button>
+      </div>
+      <div class="status-box" id="test-case-output">Selecciona un caso de prueba arriba.</div>
+    </section>
+
+    <section class="part-banner" id="cierre-banner">
+      <span>Fase 7 · Cierre</span>
+      <h2>Integra y entrega tu clasificador</h2>
+    </section>
+
+    <section id="integracion">
+      <div class="section-heading"><span>Integración</span><h2>De tu CNN a una API real</h2></div>
+      <p class="lead">Tu función <code>clasificar_imagen(foto)</code> está lista para recibir peticiones reales de una app o formulario web.</p>
+      <div class="pipeline-strip">
+        <div class="pipeline-step"><span class="pipeline-badge">1</span><h4>App / formulario</h4><code>sube la foto</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">2</span><h4>Foto subida</h4><code>imagen real</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">3</span><h4>CNN entrenada</h4><code>clasifica_imagen(foto)</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">4</span><h4>Clase + confianza</h4><code>ej. "moderado" 81%</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">5</span><h4>Sistema / API</h4><code>recibe el resultado</code></div>
+      </div>
+      <div class="note">
+        <h3>Siguiente paso natural</h3>
+        <p>Esta misma función es la que la Clase 18 (agente híbrido) llama cuando el caso trae una foto.</p>
+      </div>
+    </section>
+
+    <section id="reporte">
+      <div class="section-heading"><span>Reporte</span><h2>Genera tu reporte final de la clase</h2></div>
+      <form class="form-grid" id="report-form">
+        <label for="report-name">Tu nombre</label>
+        <input type="text" id="report-name" placeholder="Tu nombre">
+        <label for="report-strategy">Arquitectura que elegiste</label>
+        <input type="text" id="report-strategy" placeholder="Ej. 2 capas Conv2D + MaxPooling2D">
+        <label class="wide" for="report-learning">¿Qué fue lo más difícil de entender sobre convolución?</label>
+        <textarea id="report-learning" placeholder="Escribe tu reflexión..."></textarea>
+        <label class="wide" for="report-next">¿Qué mejorarías de tu CNN si tuvieras más tiempo?</label>
+        <textarea id="report-next" placeholder="Escribe tu reflexión..."></textarea>
+        <button class="primary wide" type="submit">Generar reporte</button>
+      </form>
+      <pre class="report-output" id="report-output">Completa el formulario y presiona "Generar reporte".</pre>
+    </section>
+
+    <footer>
+      <span>Clase 17 · CNN y clasificación de imágenes</span>
+      <span>Curso de Inteligencia Artificial</span>
+    </footer>
+
+  </main>
+
+  <script src="clase17.js"></script>
+</body>
+</html>
