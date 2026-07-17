@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 18 · Agentes híbridos y decisión multimodelo</title>
+<link rel="stylesheet" href="clase18.css">
+</head>
+<body>
+
+  <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-expanded="true" aria-controls="lesson-sidebar">
+    <span aria-hidden="true">☰</span><span class="toggle-label">Menú</span>
+  </button>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <aside class="lesson-sidebar" id="lesson-sidebar">
+    <a class="course-link" href="../index.html">← Curso IA</a>
+    <div class="sidebar-heading"><span>Clase 18</span><strong>Agentes híbridos y decisión multimodelo</strong></div>
+    <div class="xp-panel">
+      <div class="xp-panel-top"><span>Progreso</span><strong id="reading-progress-label">0%</strong></div>
+      <div class="xp-bar"><span id="reading-progress-fill"></span></div>
+      <small id="reading-progress-note">Recorre la clase para completar tu progreso.</small>
+    </div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#ruta">Ruta de aprendizaje</a>
+      <a href="#conexion">Conexión con clases previas</a>
+      <span class="nav-group-label">Fase 1 · Fundamentos</span>
+      <a href="#mision-1">Agente híbrido</a>
+      <a href="#mision-2">Tipos de datos</a>
+      <span class="nav-group-label">Fase 2 · Redes neuronales</span>
+      <a href="#mision-3">Red densa</a>
+      <a href="#mision-4">CNN</a>
+      <a href="#mision-5">CNN paso a paso</a>
+      <span class="nav-group-label">Fase 3 · Combinar modelos</span>
+      <a href="#mision-6">Modelos especializados</a>
+      <a href="#mision-7">Elegir estrategia</a>
+      <a href="#mision-8">Programar en Colab</a>
+      <a href="#mision-9">Agente completo</a>
+      <a href="#mision-10">Comparar estrategias</a>
+      <span class="nav-group-label">Fase 4 · Arquitectura completa</span>
+      <a class="sidebar-feature-link" href="#mision-11">⭐ Anatomía del agente</a>
+      <a href="#mision-12">Enrutamiento</a>
+      <a href="#mision-13">Explicabilidad</a>
+      <a href="#mision-14">Cuándo no combinar</a>
+      <span class="nav-group-label">Fase 5 · Simulador</span>
+      <a href="#simulador">Simulador</a>
+      <span class="nav-group-label">Fase 6 · Tu propio agente</span>
+      <a href="#diseno">Diseño</a>
+      <a href="#colab">Colab</a>
+      <a href="#generador">Generador</a>
+      <a href="#prueba">Prueba</a>
+      <span class="nav-group-label">Fase 7 · Cierre</span>
+      <a href="#rubrica">Rúbrica</a>
+      <a href="#integracion">Integración</a>
+      <a href="#reporte">Reporte</a>
+    </nav>
+  </aside>
+
+  <main class="lesson-shell">
+
+    <section class="hero" id="inicio">
+      <span class="eyebrow">Clase 18 · Curso de Inteligencia Artificial</span>
+      <h1>Un agente que combina reglas y varios modelos para decidir mejor</h1>
+      <p class="hero-lead">Hasta ahora entrenaste modelos por separado: uno para texto, otro para tablas, otro para imágenes. En esta clase construyes el agente que los combina con reglas de negocio para tomar UNA decisión final, explicable y responsable — usando un caso real de seguros como hilo conductor.</p>
+      <div class="hero-sources">
+        <div class="hero-source"><strong>Tabla</strong><span>edad, presupuesto, reclamos</span></div>
+        <div class="hero-source"><strong>Texto</strong><span>reporte del cliente</span></div>
+        <div class="hero-source"><strong>Foto</strong><span>daño del vehículo</span></div>
+        <div class="hero-source"><strong>Regla</strong><span>presupuesto mínimo</span></div>
+      </div>
+      <div class="hero-decision-card">
+        <h3>Decisión del agente</h3>
+        <strong>Recomendar con revisión humana</strong>
+        <p>caso SIN-2291 · combina las 4 fuentes anteriores</p>
+      </div>
+      <p class="microcopy">Un mismo caso llega en formatos distintos. El agente híbrido los combina en una sola decisión.</p>
+    </section>
+
+    <section id="ruta">
+      <div class="section-heading"><span>Ruta de aprendizaje</span><h2>Cómo está construida esta clase</h2></div>
+      <p class="lead">Avanzas en tres momentos por cada tema: primero observas un ejemplo real, luego entiendes el mecanismo por dentro, y finalmente lo aplicas en un simulador o en tu propio Colab.</p>
+      <div class="learn-grid">
+        <article class="observar"><span>1 · Observar</span><h3>Ves el caso real</h3><p>Cada misión arranca con datos concretos: una tabla, un texto, una foto, una gráfica. Nada abstracto antes de tiempo.</p></article>
+        <article class="entender"><span>2 · Entender</span><h3>Abres la caja</h3><p>Diagramas reales y explicaciones paso a paso muestran qué calcula el modelo o la regla, y por qué.</p></article>
+        <article class="aplicar"><span>3 · Aplicar</span><h3>Lo pruebas tú</h3><p>Simuladores interactivos, un notebook de Colab y un generador de reporte final para que construyas tu propio agente.</p></article>
+      </div>
+      <div class="note compact"><strong>Ruta corta si hay poco tiempo:</strong> trabaja Misión 6, Misión 7, Misión 9, Simulador, Colab, Prueba y Rúbrica. Las misiones de CNN, enrutamiento y explicabilidad pueden quedar como repaso guiado o tarea de consolidación.</div>
+    </section>
+
+    <section id="conexion">
+      <div class="section-heading"><span>Conexión con clases previas</span><h2>De modelos sueltos a un agente que decide</h2></div>
+      <p class="lead">En clases anteriores entrenaste un modelo tabular (Clases 6 a 15, riesgo del cliente), un clasificador de texto (Clase 16, sentimiento de comentarios de campaña) y una CNN (Clase 17, fotos de daños). Aquí aplicamos esa misma técnica de clasificación de texto a un dominio distinto — reportes de seguros — para armar el caso de esta clase. Cada uno responde bien a su propia pregunta, pero ningún caso real llega ordenado en un solo formato.</p>
+      <div class="specialist-table">
+        <article class="case-folder"><h3>Caso SIN-2291</h3><p>Sedán 2019 · presupuesto $18,400</p></article>
+        <article><h3>Tabla</h3><p>edad 34, presupuesto $18,400</p><b>riesgo 0.23</b></article>
+        <article><h3>Texto</h3><p>"El daño fue en el estacionamiento..."</p><b>normal</b></article>
+        <article><h3>Regla</h3><p>presupuesto &gt; $500</p><b>continúa</b></article>
+        <article class="results-tray">Tres fuentes distintas del mismo caso, combinadas en una sola decisión — la base de esta clase.</article>
+      </div>
+      <div class="note key">
+        <h3>La pregunta que resolvemos</h3>
+        <p>Cuando un cliente reporta un accidente, llegan datos tabulares (edad, historial), texto (descripción del cliente) y fotos del daño. ¿Cómo combina el sistema estas tres fuentes — y las reglas del negocio — en una sola decisión que un humano pueda entender y auditar?</p>
+      </div>
+    </section>
+
+    <section id="mision-1">
+      <div class="section-heading"><span>Misión 1</span><h2>¿Qué es un agente híbrido?</h2></div>
+      <p class="lead">Un <strong>agente híbrido</strong> es un sistema de decisión que combina dos tipos de inteligencia: <strong>reglas de negocio</strong> (si esto, entonces aquello, escritas por humanos) y <strong>modelos entrenados</strong> (que aprenden patrones de datos). Ninguno de los dos basta solo.</p>
+      <div class="pipeline-strip">
+        <div class="pipeline-step"><span class="pipeline-badge">1</span><h4>Reglas de negocio</h4><code>fijas y 100% explicables</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">2</span><h4>Modelos entrenados</h4><code>flexibles, aprenden de datos</code></div>
+        <div class="pipeline-step"><span class="pipeline-badge">3</span><h4>Agente híbrido</h4><code>combina ambos</code></div>
+      </div>
+      <p class="microcopy">Las reglas son fijas y explicables. Los modelos son flexibles y aprenden de datos. El agente usa ambos.</p>
+      <div class="comparison-grid">
+        <article>
+          <h3>Solo reglas</h3>
+          <p>Rápidas y 100% explicables, pero rígidas: no distinguen matices que no fueron programados a mano (por ejemplo, qué tan grave se ve un daño en una foto).</p>
+        </article>
+        <article>
+          <h3>Solo modelos</h3>
+          <p>Detectan patrones complejos en datos, pero pueden equivocarse en casos límite y son más difíciles de explicar sin ayuda adicional.</p>
+        </article>
+      </div>
+      <div class="note key">
+        <h3>Analogía: un comité de decisión</h3>
+        <p>Piensa en el agente híbrido como un comité: un abogado aplica las reglas del contrato (reglas de negocio), y tres especialistas — uno en historiales, uno en textos y uno en fotos — dan su opinión basada en experiencia (los modelos). El comité combina ambas voces antes de decidir.</p>
+      </div>
+      <div class="route-grid">
+        <article><b>1</b><h3>Llega el caso</h3><p>Datos tabulares, texto y/o una foto del incidente.</p></article>
+        <article><b>2</b><h3>Reglas duras</h3><p>Se revisan primero: pueden bloquear el caso de inmediato.</p></article>
+        <article><b>3</b><h3>Modelos</h3><p>Los modelos disponibles procesan lo que sí llegó.</p></article>
+        <article><b>4</b><h3>Combinar</h3><p>Se combinan los resultados en una sola señal.</p></article>
+        <article><b>5</b><h3>Explicar</h3><p>Se entrega una decisión con motivo, no solo un número.</p></article>
+      </div>
+    </section>
+
+    <section id="mision-2">
+      <div class="section-heading"><span>Misión 2</span><h2>Los cuatro tipos de datos que combina el agente</h2></div>
+      <p class="lead">Antes de combinar modelos hay que reconocer qué tipo de dato entra a cada uno. Selecciona un tipo para ver un ejemplo real y qué modelo lo procesa.</p>
+      <div class="selector-inline">
+        <label for="data-type-select">Tipo de dato</label>
+        <select id="data-type-select">
+          <option value="tabular">Datos tabulares</option>
+          <option value="texto">Texto</option>
+          <option value="serie">Serie temporal</option>
+          <option value="imagen">Imagen</option>
+        </select>
+      </div>
+      <div class="data-gallery" id="data-gallery">
+        <article class="data-panel" data-type="tabular">
+          <div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Edad</th><th>Presupuesto</th><th>Reclamos previos</th><th>Riesgo</th></tr></thead><tbody>
+            <tr><td>C-001</td><td>34</td><td>$18,400</td><td>0</td><td>0.23</td></tr>
+            <tr><td>C-002</td><td>52</td><td>$9,200</td><td>2</td><td>0.61</td></tr>
+            <tr><td>C-003</td><td>28</td><td>$24,750</td><td>0</td><td>0.15</td></tr>
+            <tr><td>C-004</td><td>45</td><td>$6,800</td><td>3</td><td>0.74</td></tr>
+            <tr><td>C-005</td><td>39</td><td>$15,300</td><td>1</td><td>0.42</td></tr>
+            <tr><td>C-006</td><td>61</td><td>$31,000</td><td>0</td><td>0.19</td></tr>
+          </tbody></table></div>
+          <h3>Tabular</h3>
+          <p>Filas y columnas: edad, presupuesto, reclamos previos. Lo procesa la <strong>red densa</strong> (Misión 3).</p>
+        </article>
+        <article class="data-panel" data-type="texto">
+          <div class="report-grid">
+            <div class="report-card normal"><p>"El daño fue en el estacionamiento, un golpe frontal moderado. Adjunto fotos."</p><span class="report-tag">normal</span></div>
+            <div class="report-card urgente"><p>"Necesito que revisen mi caso lo antes posible, el auto no puede circular."</p><span class="report-tag">urgente</span></div>
+            <div class="report-card alerta"><p>"No recuerdo bien cómo pasó, no había nadie más y el reporte de policía se perdió."</p><span class="report-tag">alerta</span></div>
+            <div class="report-card normal"><p>"Gracias por la atención rápida en mi caso anterior, quedo atento a este nuevo reporte."</p><span class="report-tag">normal</span></div>
+          </div>
+          <h3>Texto</h3>
+          <p>El reporte que escribe el cliente. Lo procesa un <strong>modelo de clasificación de texto</strong> — la misma técnica de Naive Bayes que construiste en la Clase 16, entrenada aquí sobre reportes de seguros en vez de comentarios de campaña.</p>
+        </article>
+        <article class="data-panel" data-type="serie">
+          <div class="timeseries-chart">
+            <div class="ts-bar"><i style="height:32%"></i><b>18</b><span>Ene</span></div>
+            <div class="ts-bar"><i style="height:38%"></i><b>21</b><span>Feb</span></div>
+            <div class="ts-bar"><i style="height:35%"></i><b>19</b><span>Mar</span></div>
+            <div class="ts-bar"><i style="height:44%"></i><b>24</b><span>Abr</span></div>
+            <div class="ts-bar"><i style="height:50%"></i><b>27</b><span>May</span></div>
+            <div class="ts-bar"><i style="height:47%"></i><b>25</b><span>Jun</span></div>
+            <div class="ts-bar"><i style="height:58%"></i><b>31</b><span>Jul</span></div>
+            <div class="ts-bar"><i style="height:65%"></i><b>35</b><span>Ago</span></div>
+            <div class="ts-bar"><i style="height:70%"></i><b>38</b><span>Sep</span></div>
+            <div class="ts-bar"><i style="height:80%"></i><b>43</b><span>Oct</span></div>
+            <div class="ts-bar"><i style="height:92%"></i><b>49</b><span>Nov</span></div>
+            <div class="ts-bar"><i style="height:100%"></i><b>54</b><span>Dic</span></div>
+          </div>
+          <h3>Serie temporal</h3>
+          <p>Reclamos por mes a lo largo del año. Ayuda a detectar tendencias estacionales de fraude o siniestros.</p>
+        </article>
+        <article class="data-panel" data-type="imagen">
+          <img src="./assets/imagen-cnn-vehiculo.webp" alt="Fotografía real de un vehículo con daño frontal visible.">
+          <h3>Imagen</h3>
+          <p>La foto del daño. Lo procesa la <strong>CNN</strong> que construiste en la Clase 17 (aquí la repasamos en las Misiones 4 y 5), que analiza patrones visuales.</p>
+        </article>
+      </div>
+      <div class="visual-caption" id="data-type-caption">Selecciona un tipo de dato arriba para resaltarlo.</div>
+    </section>
+
+    <section class="part-banner" id="fase-2-banner">
+      <span>Fase 2 · Redes neuronales</span>
+      <h2>De los números a los patrones</h2>
+      <p>Antes de combinar modelos hay que entender cómo piensa cada uno por dentro: una red densa para datos tabulares y una red convolucional (CNN) para imágenes.</p>
+    </section>
+
+    <section id="mision-3">
+      <div class="section-heading"><span>Misión 3</span><h2>La red densa: cómo aprende de datos tabulares</h2></div>
+      <p class="lead">Una <strong>red densa</strong> (o feedforward) recibe números — edad, presupuesto, reclamos previos — y los combina capa por capa hasta producir una salida: un puntaje de riesgo entre 0 y 1.</p>
+      <div class="note">
+        <h3>Cada entrada, un peso aprendido</h3>
+        <p>Las 4 entradas numéricas (edad, presupuesto, reclamos, antigüedad) se combinan en una capa oculta: cada conexión tiene un peso que el modelo aprendió durante el entrenamiento, y la capa oculta suma esas señales antes de dar el resultado. El diagrama interactivo de abajo usa números reales — presiona "Propagar señal" para verlo en acción.</p>
+      </div>
+      <div class="formula">riesgo = activación( w1·edad + w2·presupuesto + w3·reclamos + w4·antigüedad + sesgo )</div>
+      <div class="svg-scroll">
+        <svg class="dense-network-svg" id="dense-network-svg" viewBox="0 0 980 420" role="img" aria-labelledby="dense-title dense-desc">
+          <title id="dense-title">Red densa con 4 entradas, una capa oculta de 5 neuronas y una salida</title>
+          <desc id="dense-desc">Diagrama animado que muestra las conexiones entre la capa de entrada, la capa oculta y la neurona de salida al presionar "Propagar".</desc>
+          <g class="dense-lines" id="dense-lines-in"></g>
+          <g class="dense-lines" id="dense-lines-out"></g>
+          <g id="dense-input-nodes"></g>
+          <g id="dense-hidden-nodes"></g>
+          <g class="output-node key-node"><circle cx="900" cy="210" r="55"></circle><text x="900" y="203">riesgo</text><text x="900" y="228">0.23</text></g>
+        </svg>
+      </div>
+      <div class="toolbar">
+        <button class="primary" id="dense-propagate" type="button">Propagar señal</button>
+        <button class="ghost" id="dense-reset" type="button">Reiniciar</button>
+      </div>
+      <p class="microcopy">Las líneas verdes y gruesas son las conexiones con mayor peso: la red aprendió que el presupuesto y los reclamos previos influyen más en el riesgo que la edad o la antigüedad de la póliza. Al presionar "Propagar señal", solo esos caminos verdes se iluminan y "corren" — los caminos grises se atenúan porque aportan poco a este resultado. Así se ve, en una red real, cuáles entradas terminan pesando más en la decisión final.</p>
+    </section>
+
+    <section id="mision-4">
+      <div class="section-heading"><span>Misión 4</span><h2>La CNN: cómo "ve" una foto de daño</h2></div>
+      <p class="lead">Una <strong>red convolucional (CNN)</strong> no mira la foto completa de golpe: la recorre con pequeños filtros que detectan bordes, texturas y formas. Esta es la fotografía real que usamos en toda la clase.</p>
+      <figure class="section-visual">
+        <img src="./assets/imagen-cnn-vehiculo.webp" alt="Fotografía real de un vehículo con daño frontal visible, usada como caso de estudio para la CNN.">
+        <figcaption>Foto real (CC BY-SA 4.0, Santeri Viinamäki / Wikimedia Commons) usada como entrada de la CNN en esta clase.</figcaption>
+      </figure>
+      <div class="cnn-lab">
+        <article>
+          <h3>1. Pixeles de entrada</h3>
+          <p>La foto se reduce a una matriz de números (uno por canal de color).</p>
+          <div class="matrix" id="cnn-pixel-matrix"></div>
+        </article>
+        <article>
+          <h3>2. Filtro</h3>
+          <p>Un filtro pequeño (3×3) recorre la imagen buscando un patrón específico.</p>
+          <div class="toolbar compact" id="cnn-filter-buttons">
+            <button type="button" data-filter="vertical" class="primary">Bordes verticales</button>
+            <button type="button" data-filter="horizontal">Bordes horizontales</button>
+            <button type="button" data-filter="texture">Textura</button>
+            <button type="button" data-filter="contour">Contorno combinado</button>
+          </div>
+        </article>
+        <article>
+          <h3>3. Mapa de características</h3>
+          <p>El resultado real de aplicar ese filtro a la foto — calculado con convolución 2D, no decorativo.</p>
+          <img id="feature-map-image" src="./assets/cnn-vertical.webp" alt="Mapa de características real generado por convolución.">
+        </article>
+        <article>
+          <h3>4. Lo que detecta</h3>
+          <p id="filter-result">El filtro de bordes verticales resalta el contorno de la puerta y el parachoques.</p>
+          <div class="note compact">La CNN combina docenas de estos mapas antes de decidir qué tan grave se ve el daño.</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="mision-5">
+      <div class="section-heading"><span>Misión 5</span><h2>La CNN paso a paso, de principio a fin</h2></div>
+      <p class="lead">Recorre las siete etapas reales de la CNN sobre la misma fotografía: de los píxeles crudos hasta la probabilidad final de "daño moderado".</p>
+      <div class="cnn-journey" id="cnn-journey">
+        <div class="cnn-progress" id="cnn-progress"></div>
+
+        <div class="cnn-stage image-stage" data-stage="0">
+          <div>
+            <span class="stage-kicker">Etapa 1</span>
+            <h3>Imagen de entrada</h3>
+            <dl>
+              <dt>Qué entra</dt><dd>La foto real del daño, en color (1400×875 píxeles, 3 canales RGB).</dd>
+              <dt>Por qué importa</dt><dd>Ninguna etapa siguiente existe sin esta imagen concreta — no es un vector abstracto.</dd>
+            </dl>
+          </div>
+          <div class="cnn-stage-visual"><img src="./assets/imagen-cnn-vehiculo.webp" alt="Foto real de entrada del vehículo dañado."></div>
+        </div>
+
+        <div class="cnn-stage filter-stage" data-stage="1">
+          <div>
+            <span class="stage-kicker">Etapa 2</span>
+            <h3>Convertir a escala de grises y aplicar filtros</h3>
+            <dl>
+              <dt>Qué pasa</dt><dd>La imagen se reduce a 360×225 en escala de grises para calcular los filtros.</dd>
+              <dt>Filtros aplicados</dt><dd>Vertical, horizontal y de textura (Laplaciano) — cada uno es una matriz 3×3 fija.</dd>
+            </dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="cnn-filter-grid">
+              <strong>Vertical</strong><strong>Horizontal</strong>
+              <i style="background-image:url('./assets/cnn-vertical.webp');background-size:contain;background-repeat:no-repeat;background-position:center"></i>
+              <i style="background-image:url('./assets/cnn-horizontal.webp');background-size:contain;background-repeat:no-repeat;background-position:center"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="cnn-stage feature-stage" data-stage="2">
+          <div>
+            <span class="stage-kicker">Etapa 3</span>
+            <h3>Mapas de características reales</h3>
+            <dl>
+              <dt>Qué son</dt><dd>El resultado numérico de convolucionar la foto con cada filtro — valores reales, calculados con NumPy.</dd>
+              <dt>Qué revelan</dt><dd>Dónde hay bordes fuertes (el contorno del golpe) y dónde la textura cambia bruscamente (la abolladura).</dd>
+            </dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="cnn-feature-map"><img src="./assets/cnn-vertical.webp" alt="Mapa de bordes verticales real."><span>vertical</span></div>
+            <div class="cnn-feature-map"><img src="./assets/cnn-texture.webp" alt="Mapa de textura real."><span>textura</span></div>
+            <div class="cnn-feature-map"><img src="./assets/cnn-contour.webp" alt="Mapa de contorno combinado real."><span>contorno</span></div>
+          </div>
+        </div>
+
+        <div class="cnn-stage pooling-stage" data-stage="3">
+          <div>
+            <span class="stage-kicker">Etapa 4</span>
+            <h3>Pooling: quedarse con lo más fuerte</h3>
+            <dl>
+              <dt>Qué hace</dt><dd>Reduce cada bloque de 2×2 valores a solo el máximo, conservando la señal más fuerte y reduciendo el tamaño.</dd>
+              <dt>Por qué</dt><dd>Hace la red más rápida y más tolerante a que el golpe esté un poco más a la izquierda o derecha en la foto.</dd>
+            </dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="cnn-pooling-demo">
+              <div class="pool-source"><span>12</span><span class="max">88</span><span>34</span><span>21</span></div>
+              <strong>máx</strong>
+              <div class="pool-result"><span>88</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cnn-stage flatten-stage" data-stage="4">
+          <div>
+            <span class="stage-kicker">Etapa 5</span>
+            <h3>Aplanar (flatten)</h3>
+            <dl>
+              <dt>Qué hace</dt><dd>Convierte la cuadrícula 2D de mapas de características en una sola lista de números.</dd>
+              <dt>Por qué</dt><dd>La siguiente capa (densa) necesita un vector plano, no una matriz.</dd>
+            </dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="cnn-flatten-demo">
+              <div class="matrix"><span>88</span><span>34</span><span>21</span><span>12</span></div>
+              <strong>flatten</strong>
+              <pre>[88, 34, 21, 12, ...]</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="cnn-stage dense-stage" data-stage="5">
+          <div>
+            <span class="stage-kicker">Etapa 6</span>
+            <h3>Capa densa final</h3>
+            <dl>
+              <dt>Qué hace</dt><dd>Combina todas las características detectadas (bordes, texturas, contornos) con pesos aprendidos.</dd>
+              <dt>Resultado</dt><dd>Una puntuación bruta por cada posible clase de daño.</dd>
+            </dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="dense-signals"><span>bordes fuertes</span><span>abolladura</span><span>pintura rayada</span><span>pieza rota</span></div>
+            <div class="dense-combiner">Σ<br><small>combinador</small></div>
+          </div>
+        </div>
+
+        <div class="cnn-stage softmax-stage" data-stage="6">
+          <div>
+            <span class="stage-kicker">Etapa 7</span>
+            <h3>Softmax: probabilidad final</h3>
+            <dl>
+              <dt>Qué hace</dt><dd>Convierte las puntuaciones brutas en probabilidades que suman 100%.</dd>
+              <dt>Resultado en este caso</dt><dd>La CNN entrega "daño moderado" con 81% de confianza.</dd>
+            </dl>
+          </div>
+          <div class="cnn-stage-visual">
+            <div class="cnn-probability-bars">
+              <div class="winner"><span>Daño moderado</span><i style="--w:81%"></i><strong>81%</strong></div>
+              <div><span>Daño leve</span><i style="--w:13%"></i><strong>13%</strong></div>
+              <div><span>Daño severo</span><i style="--w:6%"></i><strong>6%</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cnn-stage-controls">
+          <button class="ghost" id="cnn-prev" type="button">Etapa anterior</button>
+          <button class="primary" id="cnn-next" type="button">Siguiente etapa</button>
+          <button class="ghost" id="cnn-show-all" type="button">Ver todas las etapas</button>
+        </div>
+      </div>
+      <div class="cnn-concept-contrast">
+        <h3>En una frase, cada etapa</h3>
+        <div><strong>Entrada</strong><span>una foto real</span></div>
+        <div><strong>Filtros</strong><span>buscan patrones</span></div>
+        <div><strong>Pooling</strong><span>se queda con lo fuerte</span></div>
+        <div><strong>Denso + softmax</strong><span>decide y da confianza</span></div>
+      </div>
+    </section>
+
+    <section class="part-banner" id="fase-3-banner">
+      <span>Fase 3 · Combinar modelos y reglas</span>
+      <h2>Ninguna señal decide sola</h2>
+      <p>Con los tres modelos entrenados (tabular, texto, CNN) llega el problema real: sus resultados no siempre coinciden. Aquí aprendes las estrategias para combinarlos.</p>
+    </section>
+
+    <section id="mision-6">
+      <div class="section-heading"><span>Misión 6</span><h2>Tres especialistas, un mismo caso</h2></div>
+      <p class="lead">Cada modelo entrenado en clases anteriores es un especialista que solo ve una parte del caso. Aquí es donde sus resultados por fin se juntan.</p>
+      <div class="term-grid">
+        <article><h3>Tabular</h3><p>Red densa sobre edad, presupuesto y reclamos.</p></article>
+        <article><h3>Texto</h3><p>Clasificador Naive Bayes sobre el reporte del cliente.</p></article>
+        <article><h3>CNN</h3><p>Red convolucional sobre la foto del daño.</p></article>
+        <article><h3>Reglas</h3><p>Motor de reglas de negocio fijas.</p></article>
+      </div>
+      <p class="microcopy">Cuatro especialistas — tres modelos y un motor de reglas — reportan al mismo agente.</p>
+      <div class="specialist-table">
+        <article class="case-folder"><h3>Caso SIN-2291</h3><p>Sedán 2019 · presupuesto $18,400 · foto de daño frontal · reporte del cliente</p></article>
+        <article><h3>Tabular</h3><p>riesgo = 0.23</p><b>bajo</b></article>
+        <article><h3>Texto</h3><p>tono neutro, sin señales de fraude</p><b>normal</b></article>
+        <article><h3>CNN</h3><p>daño moderado</p><b>0.81</b></article>
+        <article><h3>Reglas</h3><p>presupuesto &gt; $500</p><b>continúa</b></article>
+        <article class="results-tray">Ningún modelo ve el caso completo — por eso se necesita un combinador.</article>
+      </div>
+      <h3>Contrato de datos entre fuentes y combinador</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Fuente</th><th>Entrada que recibe</th><th>Salida que entrega</th><th>Cómo la usa el combinador</th></tr></thead>
+          <tbody>
+            <tr><td>Tabular</td><td>edad, presupuesto, reclamos</td><td><code>{"riesgo": 0.23, "etiqueta": "bajo"}</code></td><td>Aporta una señal numérica estable.</td></tr>
+            <tr><td>Texto</td><td>reporte escrito del cliente</td><td><code>{"alerta": 0.40, "etiqueta": "normal"}</code></td><td>Detecta señales semánticas que no están en la tabla.</td></tr>
+            <tr><td>CNN</td><td>foto del daño</td><td><code>{"danio": 0.81, "etiqueta": "moderado"}</code></td><td>Aporta evidencia visual directa.</td></tr>
+            <tr><td>Regla</td><td>condiciones de negocio</td><td><code>{"accion": "continua"}</code></td><td>Puede bloquear antes de combinar o ajustar la decisión final.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note compact"><strong>Idea clave:</strong> el combinador no recibe “modelos”; recibe salidas compatibles. Si una salida no tiene etiqueta, confianza o evidencia, primero hay que normalizarla.</div>
+    </section>
+
+    <section id="mision-7">
+      <div class="section-heading"><span>Misión 7</span><h2>Elegir correctamente una estrategia de combinación</h2></div>
+      <p class="lead">Antes de programar, necesitas razonar: qué problema tiene, qué estrategia lo resuelve, cuándo conviene usarla y qué riesgo aparece si elige mal.</p>
+      <div class="strategy-lab" id="strategy-lab"></div>
+      <article class="strategy-decision-lab">
+        <h3>¿Cómo elegir la estrategia correcta?</h3>
+        <p>Responde el árbol como si estuvieras diseñando el combinador mentalmente. Cada respuesta justifica por qué conviene una ruta y no otra.</p>
+        <div class="decision-tree-lab" id="strategy-decision-tree"></div>
+      </article>
+      <article class="strategy-simulator">
+        <h3>Simulador de decisión</h3>
+        <p>Lee el escenario, elige una estrategia y revisa por qué funciona o por qué sería una mala elección.</p>
+        <div class="strategy-sim-grid">
+          <label for="strategy-scenario-select">Escenario
+            <select id="strategy-scenario-select"></select>
+          </label>
+          <label for="strategy-answer-select">Tu estrategia
+            <select id="strategy-answer-select">
+              <option value="voting">Voting</option>
+              <option value="weighted">Weighted Voting</option>
+              <option value="bagging">Bagging</option>
+              <option value="boosting">Boosting</option>
+              <option value="stacking">Stacking</option>
+            </select>
+          </label>
+          <label class="wide" for="strategy-reason-input">Antes de evaluar, justifica tu elección y descarta otra estrategia
+            <textarea id="strategy-reason-input" placeholder="Ej. elijo Stacking porque los modelos son especialistas; descarto Voting porque trataría igual una señal visual fuerte y una señal textual débil."></textarea>
+          </label>
+          <button type="button" id="strategy-check-answer">Evaluar elección</button>
+        </div>
+        <div class="strategy-scenario-card" id="strategy-scenario-card"></div>
+        <div class="strategy-feedback" id="strategy-feedback"></div>
+      </article>
+      <div class="table-wrap strategy-table-wrap" id="strategy-comparison-table"></div>
+    </section>
+
+    <section id="mision-8">
+      <div class="section-heading"><span>Misión 8</span><h2>Implementando estrategias de combinación en Google Colab</h2></div>
+      <p class="lead">Ahora sí empieza Python. Cada estrategia se programa en bloques pequeños de Colab: preparar variables, ejecutar una línea, observar qué cambia y modificar valores para comprobar el resultado.</p>
+      <div class="warning compact"><strong>Ruta única de notebook:</strong> aquí programas las estrategias por separado. En la Misión 9 las conectas dentro de <code>decidir(caso)</code>. La sección Colab final solo reúne todo en un notebook completo.</div>
+      <div class="colab-lab" id="colab-strategy-lab"></div>
+    </section>
+
+    <section id="mision-9">
+      <div class="section-heading"><span>Misión 9</span><h2>Construyendo nuestro primer Agente Híbrido</h2></div>
+      <p class="lead">Ya conoces los modelos, reglas, estrategias y Colab. Ahora une todo en un flujo completo: entrada, validación, modelos, combinación, reglas, explicación y decisión.</p>
+      <div class="agent-builder" id="hybrid-agent-builder"></div>
+    </section>
+
+    <section id="mision-10">
+      <div class="section-heading"><span>Misión 10</span><h2>Cuándo combinar y cuándo detenerse</h2></div>
+      <p class="lead">Antes de agregar más modelos, el agente debe decidir si combinar realmente aporta valor. Esta misión resume las cinco estrategias de la Misión 7 y separa las reglas/fallback de las estrategias de combinación.</p>
+      <div class="strategy-visuals">
+        <article>
+          <h3>Weighted Voting</h3>
+          <div class="mini-average"><span>0.23</span><span>0.40</span><span>0.81</span><strong>0.55</strong></div>
+          <p>Úsala cuando las salidas son comparables y algunos modelos merecen más peso.</p>
+        </article>
+        <article>
+          <h3>Voting</h3>
+          <div class="vote-board"><span>sin riesgo</span><span>sin riesgo</span><span>riesgo</span><strong>gana: sin riesgo</strong></div>
+          <p>Úsala cuando todos votan la misma tarea y no hay pesos confiables.</p>
+        </article>
+        <article>
+          <h3>Stacking</h3>
+          <div class="fallback-card"><span>tabla</span><span>texto</span><span>foto</span><strong>meta-modelo</strong></div>
+          <p>Úsala cuando cada modelo es especialista en una fuente distinta.</p>
+        </article>
+        <article>
+          <h3>No combinar</h3>
+          <div class="fallback-card"><span>regla crítica</span><span>modelo suficiente</span><strong>decisión simple</strong></div>
+          <p>Si una regla dura bloquea o un modelo ya basta, combinar solo agrega ruido.</p>
+        </article>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opción</th><th>Qué resuelve</th><th>Cuándo usarla</th><th>Cuándo evitarla</th></tr></thead>
+          <tbody>
+            <tr><td>Voting</td><td>Consenso por mayoría</td><td>Todos predicen la misma etiqueta</td><td>Un modelo es claramente más confiable</td></tr>
+            <tr><td>Weighted Voting</td><td>Consenso con confianza</td><td>Hay puntajes comparables y pesos justificados</td><td>No sabes justificar los pesos</td></tr>
+            <tr><td>Bagging</td><td>Reducir inestabilidad</td><td>Modelos parecidos entrenados con datos ruidosos</td><td>Fuentes multimodales muy distintas</td></tr>
+            <tr><td>Boosting</td><td>Corregir errores secuenciales</td><td>Errores repetidos y validación clara</td><td>Etiquetas ruidosas o sobreajuste</td></tr>
+            <tr><td>Stacking</td><td>Combinar especialistas</td><td>Tabla + texto + imagen aportan señales distintas</td><td>No tienes datos para aprender el combinador</td></tr>
+            <tr><td>No combinar</td><td>Evitar complejidad innecesaria</td><td>Una regla o un modelo ya decide bien</td><td>Hay conflicto real entre señales importantes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note compact"><strong>Uso recomendado en esta clase:</strong> Weighted Voting y Stacking son las rutas más naturales para el caso multimodal de seguros. Bagging y Boosting se incluyen para reconocerlos y compararlos, pero no son la primera opción cuando tabla, texto e imagen vienen de especialistas distintos.</div>
+    </section>
+
+    <section class="part-banner" id="fase-4-banner">
+      <span>Fase 4 · Arquitectura completa</span>
+      <h2>Todas las piezas, un solo sistema</h2>
+      <p>Es momento de ver el agente híbrido completo: entradas, validación, enrutador, modelos, combinador, explicación y salida — y dos capacidades más que todo agente responsable necesita: enrutamiento inteligente y explicabilidad.</p>
+    </section>
+
+    <section class="anatomy-main-section" id="mision-11">
+      <div class="section-heading"><span>Misión 11 · Resumen técnico</span><h2>Anatomía del agente que acabas de construir</h2></div>
+      <p class="lead">Esta misión ya no introduce un agente nuevo: resume el flujo que construiste en la Misión 9 y lo prepara para enrutamiento, explicación e integración.</p>
+
+      <article class="anatomy-subsection" id="anatomy-overview">
+        <h3>Vista general: seis etapas</h3>
+        <p>De izquierda a derecha: entrada, validación/limpieza, regla de presupuesto, modelos, combinador y salida en JSON. Cada etapa solo le pasa a la siguiente lo que necesita.</p>
+        <div class="pipeline-strip">
+          <div class="pipeline-step"><span class="pipeline-badge">1</span><h4>Entrada</h4><code>tabla + texto + foto</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">2</span><h4>Validar / limpiar</h4><code>campos requeridos</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">3</span><h4>Regla de presupuesto</h4><code>&lt; $500 bloquea</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">4</span><h4>Modelos</h4><code>tabular, texto, CNN</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">5</span><h4>Combinador</h4><code>promedio ponderado</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">6</span><h4>Salida JSON</h4><code>decisión + explicación</code></div>
+        </div>
+        <p class="microcopy">Las seis etapas reales del agente, con contenido concreto en cada carril — no cajas vacías.</p>
+      </article>
+
+      <article class="anatomy-subsection" id="anatomy-journey">
+        <h3>El viaje completo de un caso real</h3>
+        <p>Sigue al caso SIN-2291 desde que el cliente lo reporta hasta que recibe una decisión explicada.</p>
+        <div class="pipeline-strip">
+          <div class="pipeline-step"><span class="pipeline-badge">1</span><h4>Reporta</h4><code>cliente envía SIN-2291</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">2</span><h4>Valida</h4><code>datos completos</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">3</span><h4>Reglas duras</h4><code>presupuesto ok</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">4</span><h4>Modelos</h4><code>0.23 / normal / 0.81</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">5</span><h4>Combina</h4><code>promedio ponderado</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">6</span><h4>Explica</h4><code>recomendar + revisión</code></div>
+        </div>
+      </article>
+
+      <article class="anatomy-subsection" id="anatomy-code">
+        <h3>Cómo se ve en código</h3>
+        <p>Una versión simplificada de la función principal. Las funciones marcadas como modelo, combinar o explicar son piezas que debes implementar o simular en Colab.</p>
+        <pre class="code-snippet">def decidir_con_agente_hibrido(caso):
+    if caso["presupuesto"] &lt; 500:
+        return bloquear("presupuesto insuficiente")
+
+    resultados = {}
+    if caso.get("tabla"):
+        resultados["tabular"] = modelo_tabular(caso["tabla"])
+    if caso.get("texto"):
+        resultados["texto"] = modelo_texto(caso["texto"])
+    if caso.get("imagen"):
+        resultados["imagen"] = modelo_cnn(caso["imagen"])
+
+    decision = combinar_ponderado(resultados, pesos=PESOS)
+    return {
+        "decision": decision.etiqueta,
+        "confianza": decision.confianza,
+        "explicacion": explicar(decision, resultados)
+    }</pre>
+      </article>
+
+      <article class="anatomy-subsection" id="anatomy-integration">
+        <h3>Preparación para integración</h3>
+        <p>Este mismo agente, empaquetado en una función, es lo que conectarás a una API real en la Fase 7.</p>
+        <div class="pipeline-strip">
+          <div class="pipeline-step"><span class="pipeline-badge">1</span><h4>Formulario</h4><code>app o sitio web</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">2</span><h4>JSON de entrada</h4><code>caso estructurado</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">3</span><h4>Agente híbrido</h4><code>decidir_con_agente_hibrido</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">4</span><h4>JSON de salida</h4><code>decisión + explicación</code></div>
+          <div class="pipeline-step"><span class="pipeline-badge">5</span><h4>Usuario / API</h4><code>recibe el resultado</code></div>
+        </div>
+      </article>
+    </section>
+
+    <section id="mision-12">
+      <div class="section-heading"><span>Misión 12</span><h2>Enrutamiento: no todos los casos necesitan todos los modelos</h2></div>
+      <p class="lead">Correr los tres modelos siempre es un desperdicio si el caso no trae foto o no trae texto. Un <strong>enrutador</strong> decide, caso por caso, cuáles especialistas llamar.</p>
+      <div class="svg-scroll">
+        <svg class="router-tree-svg" viewBox="0 0 980 420" role="img" aria-labelledby="router-t router-d">
+          <title id="router-t">Árbol de enrutamiento del agente híbrido</title>
+          <desc id="router-d">Árbol de decisión que revisa qué datos trae el caso y activa solo los modelos necesarios.</desc>
+          <defs><marker id="mr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10Z"></path></marker></defs>
+          <path d="M490,105 L250,220" marker-end="url(#mr)"></path>
+          <path d="M490,105 L490,220" marker-end="url(#mr)"></path>
+          <path d="M490,105 L730,220" marker-end="url(#mr)"></path>
+          <g class="tree-node root"><rect x="390" y="35" width="200" height="70" rx="16"></rect><text x="490" y="77">¿Qué trae el caso?</text></g>
+          <g class="tree-node"><rect x="150" y="220" width="200" height="70" rx="16"></rect><text x="250" y="262">Solo tabla</text></g>
+          <g class="tree-node"><rect x="390" y="220" width="200" height="70" rx="16"></rect><text x="490" y="262">Tabla + texto</text></g>
+          <g class="tree-node"><rect x="630" y="220" width="200" height="70" rx="16"></rect><text x="730" y="262">Tabla + texto + foto</text></g>
+          <path d="M250,290 L250,330" marker-end="url(#mr)"></path>
+          <path d="M490,290 L490,330" marker-end="url(#mr)"></path>
+          <path d="M730,290 L730,330" marker-end="url(#mr)"></path>
+          <g class="tree-node result"><rect x="150" y="330" width="200" height="64" rx="18"></rect><text x="250" y="368">Solo modelo tabular</text></g>
+          <g class="tree-node result"><rect x="390" y="330" width="200" height="64" rx="18"></rect><text x="490" y="368">Tabular + texto</text></g>
+          <g class="tree-node result"><rect x="630" y="330" width="200" height="64" rx="18"></rect><text x="730" y="368">Los tres modelos</text></g>
+        </svg>
+      </div>
+      <div class="note key">
+        <h3>Por qué importa</h3>
+        <p>Enrutar ahorra cómputo (no llamas a la CNN si no hay foto) y evita errores: un modelo sin sus datos de entrada no debería opinar.</p>
+      </div>
+    </section>
+
+    <section id="mision-13">
+      <div class="section-heading"><span>Misión 13</span><h2>Explicabilidad: un número no basta</h2></div>
+      <p class="lead">Un agente que solo responde "0.81" no sirve para un negocio real. Un humano necesita saber <strong>por qué</strong> se tomó esa decisión.</p>
+      <div class="comparison-grid">
+        <article>
+          <h3>Sin explicar</h3>
+          <div class="code-output" style="min-height:auto;padding:.75rem">{"decision": "recomendar", "confianza": 0.81}</div>
+        </article>
+        <article>
+          <h3>Con explicación</h3>
+          <div class="code-output" style="min-height:auto;padding:.75rem">{"decision": "recomendar", "confianza": 0.81, "explicacion": "Se consultaron los modelos tabular, texto y CNN. Ninguna regla dura se activó. La foto (CNN) mostró daño moderado con 81% de confianza, la señal más fuerte. Se recomienda revisión humana por ser un monto elevado."}</div>
+        </article>
+      </div>
+      <p class="microcopy">Misma decisión, dos formas de presentarla — solo una es útil para un ajustador de seguros.</p>
+      <div class="check-list">
+        <li>Menciona qué modelos se consultaron.</li>
+        <li>Explica qué regla, si alguna, se activó.</li>
+        <li>Da un motivo en lenguaje natural, no solo un puntaje.</li>
+        <li>Indica si se recomienda revisión humana.</li>
+      </div>
+    </section>
+
+    <section id="mision-14">
+      <div class="section-heading"><span>Misión 14</span><h2>Cuándo NO combinar modelos</h2></div>
+      <p class="lead">Combinar modelos no es gratis: agrega complejidad, tiempo y a veces confusión. Estos son los casos donde un solo modelo (o una sola regla) es la mejor opción.</p>
+      <div class="term-grid">
+        <article><h3>Ya alcanza</h3><p>Un solo modelo ya da la precisión que el negocio necesita.</p></article>
+        <article><h3>La latencia importa</h3><p>Correr varios modelos cuesta tiempo que el caso de uso no puede pagar.</p></article>
+        <article><h3>Poca diversidad</h3><p>Los modelos casi siempre coinciden: combinar no cambia la decisión.</p></article>
+        <article><h3>No se justifica el costo</h3><p>Mantener varios modelos en producción cuesta más de lo que mejora.</p></article>
+      </div>
+      <div class="warning">
+        <h3>Regla práctica</h3>
+        <p>Si combinar modelos no cambia la decisión final en la mayoría de los casos de prueba, probablemente no vale la complejidad extra que agrega al sistema.</p>
+      </div>
+    </section>
+
+    <section class="part-banner student" id="simulador-banner">
+      <span>Fase 5 · Simulador</span>
+      <h2>Pon a prueba al agente híbrido completo</h2>
+      <p>Arma un caso a mano — con o sin foto, con o sin texto, con o sin datos completos — y observa en vivo qué decide el agente y por qué.</p>
+    </section>
+
+    <section id="simulador">
+      <div class="section-heading"><span>Simulador</span><h2>Arma un caso y ejecuta el agente</h2></div>
+      <p class="lead">Marca qué datos trae el caso y si hay una regla crítica activa. El agente decide en vivo qué modelos llamar, cómo combinarlos y qué explicación entregar.</p>
+      <div class="simulator-layout">
+        <div class="sim-column sim-left">
+          <h3>Arma el caso</h3>
+          <div class="toolbar">
+            <label><input type="checkbox" id="sim-has-tabular" checked> Datos tabulares disponibles</label>
+            <label><input type="checkbox" id="sim-has-text" checked> Texto del cliente disponible</label>
+            <label><input type="checkbox" id="sim-has-image"> Foto del daño disponible</label>
+            <label><input type="checkbox" id="sim-data-complete" checked> Datos completos (sin campos faltantes)</label>
+            <label><input type="checkbox" id="sim-critical-rule"> Regla crítica activa (presupuesto &lt; $500)</label>
+          </div>
+          <label for="sim-strategy">Estrategia de combinación
+            <select id="sim-strategy">
+              <option value="weighted">Weighted Voting</option>
+              <option value="stacking">Stacking</option>
+              <option value="voting">Voting</option>
+            </select>
+          </label>
+          <label for="sim-prediction">Antes de ejecutar, predice qué modelos responderán y cuál será la decisión</label>
+          <textarea id="sim-prediction" placeholder="Ej. responderán Tabular y Texto; la decisión será recomendar con confianza media."></textarea>
+          <button class="primary" id="sim-run" type="button">Ejecutar agente</button>
+        </div>
+        <div class="sim-column sim-center">
+          <h3>Modelos activados</h3>
+          <div class="option-grid" id="sim-models-output">
+            <div class="option-card"><h3>Sin ejecutar</h3><p>Presiona "Ejecutar agente" para ver qué modelos responden.</p></div>
+          </div>
+        </div>
+        <div class="sim-column sim-right">
+          <h3>Decisión y explicación</h3>
+          <div class="log-box" id="sim-log">Aquí aparecerá la decisión final con su explicación completa.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="part-banner design" id="diseno-banner">
+      <span>Fase 6 · Tu propio agente</span>
+      <h2>Diseña tu arquitectura y constrúyela en Colab</h2>
+      <p>Ahora te toca a ti: diseña qué modelos y reglas necesitas para tu propio caso, y construye la función real en un notebook de Google Colab.</p>
+    </section>
+
+    <section id="diseno">
+      <div class="section-heading"><span>Diseño</span><h2>Diseña la arquitectura de tu propio agente</h2></div>
+      <p class="lead">Piensa en un caso real de tu propio interés (no tiene que ser seguros) y define qué modelos y reglas necesitaría un agente híbrido para resolverlo.</p>
+      <form class="form-grid" id="architecture-form">
+        <label class="wide" for="arch-case">¿Qué caso quieres resolver?</label>
+        <input type="text" id="arch-case" placeholder="Ej. aprobar créditos, priorizar tickets de soporte...">
+        <label for="arch-rule">Una regla dura innegociable</label>
+        <input type="text" id="arch-rule" placeholder="Ej. si el monto > $50,000, requiere revisión humana">
+        <label for="arch-model1">Modelo 1 (y qué datos usa)</label>
+        <input type="text" id="arch-model1" placeholder="Ej. modelo tabular con historial de pagos">
+        <label for="arch-model2">Modelo 2 (y qué datos usa)</label>
+        <input type="text" id="arch-model2" placeholder="Ej. clasificador de texto con quejas del cliente">
+        <label for="arch-strategy">Estrategia de combinación</label>
+        <select id="arch-strategy">
+          <option value="promedio">Promedio ponderado</option>
+          <option value="votacion">Votación</option>
+          <option value="reglas">Reglas primero, modelos después</option>
+        </select>
+        <button class="primary" type="submit">Guardar arquitectura</button>
+      </form>
+      <div class="check-list">
+        <label><input type="checkbox"> Mi regla se puede evaluar con datos del caso.</label>
+        <label><input type="checkbox"> Cada modelo tiene entrada y salida definidas.</label>
+        <label><input type="checkbox"> La estrategia elegida coincide con el tipo de salidas.</label>
+        <label><input type="checkbox"> Puedo explicar la decisión a un usuario no técnico.</label>
+      </div>
+      <div id="student-architecture-map" class="architecture-map">Completa el formulario y guarda para ver el mapa de tu agente.</div>
+    </section>
+
+    <section class="part-banner colab" id="colab-banner">
+      <span>Fase 6 · Laboratorio en Google Colab</span>
+      <h2>Construye la función decidir_con_agente_hibrido(caso)</h2>
+      <p>El notebook será funcional incluso si todavía tienes un solo modelo entrenado: puedes simular resultados, cargar predicciones guardadas o conectar modelos reales después.</p>
+    </section>
+
+    <section id="colab">
+      <div class="note compact"><strong>Importante:</strong> este bloque ya corre como notebook mínimo porque incluye modelos simulados. En un proyecto real, reemplaza <code>modelo_tabular</code>, <code>modelo_texto</code> y <code>modelo_cnn</code> por modelos entrenados.</div>
+      <pre class="code-snippet">PESOS = {"tabular": 0.25, "texto": 0.25, "imagen": 0.50}
+
+def bloquear(motivo):
+    return {
+        "decision": "BLOQUEAR",
+        "confianza": 1.0,
+        "modelos": [],
+        "explicacion": motivo
+    }
+
+def pedir_mas_informacion(motivo):
+    return {
+        "decision": "PEDIR MÁS INFORMACIÓN",
+        "confianza": 0.0,
+        "modelos": [],
+        "explicacion": motivo
+    }
+
+def modelo_tabular(tabla):
+    riesgo = 0.23 if tabla.get("reclamos", 0) == 0 else 0.62
+    return {"etiqueta": "riesgo_bajo", "confianza": 1 - riesgo, "riesgo": riesgo}
+
+def modelo_texto(texto):
+    alerta = 0.75 if "fraude" in texto.lower() else 0.40
+    return {"etiqueta": "normal" if alerta &lt; 0.60 else "alerta", "confianza": alerta}
+
+def modelo_cnn(imagen):
+    return {"etiqueta": "daño_moderado", "confianza": 0.81}
+
+def combinar_ponderado(resultados, pesos):
+    total_pesos = 0
+    score = 0
+    for nombre, resultado in resultados.items():
+        peso = pesos.get(nombre, 0)
+        total_pesos += peso
+        score += resultado["confianza"] * peso
+    confianza = round(score / total_pesos, 2) if total_pesos else 0
+    etiqueta = "REVISIÓN HUMANA" if confianza &gt;= 0.55 else "APROBAR"
+    return {"etiqueta": etiqueta, "confianza": confianza}
+
+def explicar(decision, resultados):
+    usados = ", ".join(resultados.keys())
+    detalles = "; ".join([f"{k}: {v['etiqueta']} ({v['confianza']})" for k, v in resultados.items()])
+    return f"Se consultaron: {usados}. Señales: {detalles}. Decisión final: {decision['etiqueta']}."
+
+def decidir_con_agente_hibrido(caso):
+    # 1. Reglas duras primero: siempre ganan, sin consultar modelos
+    if caso["tabla"]["presupuesto"] &lt; 500:
+        return bloquear("presupuesto insuficiente")
+
+    # 2. Enrutador: solo llama a los modelos con datos disponibles
+    resultados = {}
+    if caso.get("tabla"):
+        resultados["tabular"] = modelo_tabular(caso["tabla"])
+    if caso.get("texto"):
+        resultados["texto"] = modelo_texto(caso["texto"])
+    if caso.get("imagen"):
+        resultados["imagen"] = modelo_cnn(caso["imagen"])
+
+    if not resultados:
+        return pedir_mas_informacion("ningún modelo tiene datos de entrada")
+
+    # 3. Combinar las señales disponibles (promedio ponderado)
+    decision = combinar_ponderado(resultados, pesos=PESOS)
+
+    # 4. Explicar en lenguaje natural, no solo un número
+    return {
+        "decision": decision["etiqueta"],
+        "confianza": decision["confianza"],
+        "explicacion": explicar(decision, resultados)
+    }
+
+caso_demo = {
+    "tabla": {"edad": 34, "presupuesto": 18400, "reclamos": 0},
+    "texto": "El daño fue en el estacionamiento, sin señales de fraude.",
+    "imagen": "sin-2291-foto.jpg"
+}
+
+print(decidir_con_agente_hibrido(caso_demo))</pre>
+      <p class="microcopy">La función central del notebook: reglas, enrutador, modelos, combinador y explicación, en ese orden.</p>
+    </section>
+
+    <section id="colab-pasos">
+      <div class="section-heading"><span>Colab</span><h2>13 pasos del notebook</h2></div>
+      <div class="step-list">
+        <article><b>1</b><h3>Imports</h3><p>json, datetime, typing y numpy opcional.</p></article>
+        <article><b>2</b><h3>Caso</h3><p>Diccionario estructurado con datos y banderas.</p></article>
+        <article><b>3</b><h3>Reglas</h3><p>validar, bloquear y ajustar.</p></article>
+        <article><b>4</b><h3>Modelos</h3><p>Funciones simuladas o reales.</p></article>
+        <article><b>5</b><h3>Enrutador</h3><p>Selecciona modelos relevantes.</p></article>
+        <article><b>6</b><h3>Aportes</h3><p>predicción × confianza × peso.</p></article>
+        <article><b>7</b><h3>Ponderado</h3><p>Combinación robusta sin dividir entre cero.</p></article>
+        <article><b>8</b><h3>Votación</h3><p>Conteo positivo/negativo.</p></article>
+        <article><b>9</b><h3>Decisión</h3><p>recomendar, pedir más información o no recomendar.</p></article>
+        <article><b>10</b><h3>Explicación</h3><p>Texto comprensible.</p></article>
+        <article><b>11</b><h3>Función final</h3><p>decidir_con_agente_hibrido(caso).</p></article>
+        <article><b>12</b><h3>Pruebas</h3><p>Completo, bloqueado, incompleto, baja confianza e imagen.</p></article>
+        <article><b>13</b><h3>JSON</h3><p>Guardar resultado para integración.</p></article>
+      </div>
+    </section>
+
+    <section id="generador">
+      <div class="section-heading"><span>Generador</span><h2>Genera el esqueleto de tu función en Python</h2></div>
+      <p class="lead">Usa lo que diseñaste en la Fase 6 para generar automáticamente el esqueleto de código que puedes pegar en tu notebook de Colab.</p>
+      <div class="toolbar">
+        <button class="primary" id="generate-code" type="button">Generar código</button>
+        <button class="ghost" id="copy-code" type="button">Copiar</button>
+      </div>
+      <pre class="code-output" id="generated-code">Presiona "Generar código" después de guardar tu arquitectura en la sección Diseño.</pre>
+    </section>
+
+    <section id="prueba">
+      <div class="section-heading"><span>Prueba</span><h2>Pon a prueba tu función con 5 casos</h2></div>
+      <p class="lead">Un buen agente híbrido debe sobrevivir a estos cinco casos de prueba sin romperse. Selecciona uno, lee la entrada JSON y compara la salida esperada con lo que produciría tu función.</p>
+      <div class="toolbar" id="test-case-buttons">
+        <button class="primary" data-case="completo" type="button">Caso completo</button>
+        <button data-case="bloqueado" type="button">Caso bloqueado</button>
+        <button data-case="incompleto" type="button">Datos incompletos</button>
+        <button data-case="baja-confianza" type="button">Baja confianza</button>
+        <button data-case="con-imagen" type="button">Con imagen</button>
+      </div>
+      <div class="status-box" id="test-case-output">Selecciona un caso de prueba arriba.</div>
+    </section>
+
+    <section id="rubrica">
+      <div class="section-heading"><span>Rúbrica</span><h2>Cómo evaluar el agente final</h2></div>
+      <p class="lead">Usa esta rúbrica para revisar si el agente híbrido está completo, explicable y listo para integrarse.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Criterio</th><th>Excelente</th><th>Suficiente</th><th>Debe mejorar</th></tr></thead>
+          <tbody>
+            <tr><td>Entrada JSON</td><td>Define tabla, texto, imagen y campos requeridos.</td><td>Define la mayoría de entradas.</td><td>No queda claro qué recibe el agente.</td></tr>
+            <tr><td>Reglas duras</td><td>Bloquea antes de llamar modelos cuando aplica.</td><td>Incluye reglas, pero el orden no siempre es claro.</td><td>Mezcla reglas con predicciones sin prioridad.</td></tr>
+            <tr><td>Modelos</td><td>Cada modelo tiene entrada, salida, etiqueta y confianza.</td><td>Los modelos existen, pero alguna salida es ambigua.</td><td>No se distinguen los especialistas.</td></tr>
+            <tr><td>Estrategia</td><td>La combinación elegida está justificada por el tipo de señales.</td><td>La estrategia funciona, pero la justificación es débil.</td><td>La estrategia parece elegida al azar.</td></tr>
+            <tr><td>Salida</td><td>Devuelve decisión, confianza, modelos usados y explicación.</td><td>Devuelve decisión y confianza.</td><td>Devuelve solo un número o una etiqueta.</td></tr>
+            <tr><td>Pruebas</td><td>Supera completo, bloqueado, incompleto, baja confianza e imagen.</td><td>Supera al menos tres casos.</td><td>No hay evidencia de prueba.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part-banner" id="cierre-banner">
+      <span>Fase 7 · Cierre</span>
+      <h2>Integra y entrega tu agente</h2>
+      <p>Última etapa: prepara la integración funcional con una API y genera tu reporte final de la clase.</p>
+    </section>
+
+    <section id="integracion">
+      <div class="section-heading"><span>Integración</span><h2>De tu función a una API real</h2></div>
+      <p class="lead">Tu función <code>decidir_con_agente_hibrido(caso)</code> ya está lista para recibir peticiones reales. Así se ve el contrato de entrada y salida.</p>
+      <div class="json-pair">
+        <div>
+          <h4>Petición</h4>
+          <pre class="code-snippet" style="min-height:auto">{
+  "caso_id": "SIN-2291",
+  "tabla": {"edad": 34, "presupuesto": 18400, "reclamos": 0},
+  "texto": "El daño fue en el estacionamiento...",
+  "imagen": "sin-2291-foto.jpg"
+}</pre>
+        </div>
+        <div>
+          <h4>Respuesta</h4>
+          <pre class="code-snippet" style="min-height:auto">{
+  "decision": "recomendar",
+  "confianza": 0.81,
+  "revision_humana": true,
+  "explicacion": "CNN detectó daño moderado (81%), sin reglas duras activadas."
+}</pre>
+        </div>
+      </div>
+      <p class="microcopy">El mismo formato JSON que verías en una API real de producción.</p>
+      <div class="note">
+        <h3>Siguiente paso natural</h3>
+        <p>Envolver esta función en un endpoint (por ejemplo con FastAPI o Flask) para que un formulario web o una app móvil puedan enviarle casos y recibir la decisión en tiempo real.</p>
+      </div>
+    </section>
+
+    <section id="reporte">
+      <div class="section-heading"><span>Reporte</span><h2>Genera tu reporte final de la clase</h2></div>
+      <p class="lead">Responde estas preguntas para generar un reporte que resuma lo que construiste y aprendiste en esta clase.</p>
+      <form class="form-grid" id="report-form">
+        <label for="report-name">Tu nombre</label>
+        <input type="text" id="report-name" placeholder="Tu nombre">
+        <label for="report-strategy">Estrategia que elegiste</label>
+        <input type="text" id="report-strategy" placeholder="Ej. promedio ponderado">
+        <label class="wide" for="report-learning">¿Qué fue lo más difícil de combinar reglas y modelos?</label>
+        <textarea id="report-learning" placeholder="Escribe tu reflexión..."></textarea>
+        <label class="wide" for="report-next">¿Qué mejorarías de tu agente si tuvieras más tiempo?</label>
+        <textarea id="report-next" placeholder="Escribe tu reflexión..."></textarea>
+        <button class="primary wide" type="submit">Generar reporte</button>
+      </form>
+      <pre class="report-output" id="report-output">Completa el formulario y presiona "Generar reporte".</pre>
+    </section>
+
+    <footer>
+      <span>Clase 18 · Agentes híbridos y decisión multimodelo</span>
+      <span>Curso de Inteligencia Artificial</span>
+    </footer>
+
+  </main>
+
+  <script src="clase18.js?v=estrategias-lab"></script>
+</body>
+</html>
