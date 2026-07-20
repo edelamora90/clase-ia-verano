@@ -181,8 +181,12 @@
   function initFields(root = document) {
     $$("[data-field]", root).forEach((el) => {
       el.value = getPath(el.dataset.field) || "";
-      el.addEventListener("input", () => { setPath(el.dataset.field, el.value.trim()); save(); });
-      el.addEventListener("change", () => { setPath(el.dataset.field, el.value.trim()); save(); });
+      const update = () => {
+        setPath(el.dataset.field, el.value.trim());
+        save();
+      };
+      el.addEventListener("input", update);
+      el.addEventListener("change", update);
     });
   }
   function initChecks(root = document) {
@@ -310,7 +314,7 @@
           <div class="toolbar"><button type="button" data-op-up="${index}">Subir</button><button type="button" data-op-down="${index}">Bajar</button><button type="button" data-op-remove="${index}">Eliminar</button></div>
         </div>
         <div class="form-grid compact-form-grid">
-          ${mission1OpportunityField(index, "proposer", "Integrante que propone", opportunity.proposer)}
+          ${mission1OpportunityField(index, "proposer", "Quién propone", opportunity.proposer)}
           ${mission1OpportunityField(index, "context", "Lugar o contexto", opportunity.context)}
           ${mission1OpportunityField(index, "user", "Persona afectada", opportunity.user)}
           ${mission1OpportunityArea(index, "observed", "Problema observable", opportunity.observed)}
@@ -319,12 +323,16 @@
           ${mission1OpportunityArea(index, "limit", "Límite inicial", opportunity.limit)}
         </div>
       </article>`).join("");
-    $$("[data-mission1-opportunity]", box).forEach((el) => el.addEventListener("input", () => {
+    $$("[data-mission1-opportunity]", box).forEach((el) => {
+      const update = () => {
       const [index, key] = el.dataset.mission1Opportunity.split(".");
       state.mission1.opportunities[index][key] = el.value.trim();
       updateMission1Product();
       save();
-    }));
+      };
+      el.addEventListener("input", update);
+      el.addEventListener("change", update);
+    });
     $$("[data-op-up]", box).forEach((button) => button.addEventListener("click", () => moveMission1Opportunity(Number(button.dataset.opUp), -1)));
     $$("[data-op-down]", box).forEach((button) => button.addEventListener("click", () => moveMission1Opportunity(Number(button.dataset.opDown), 1)));
     $$("[data-op-remove]", box).forEach((button) => button.addEventListener("click", () => {
@@ -421,18 +429,21 @@
     const complete = opportunities.filter((op) => op.user && op.observed && op.agentHelp);
     const evaluated = opportunities.filter((op) => (op.scores || []).some((score) => Number(score) > 0));
     const selected = opportunities.filter((op) => op.selected);
+    const members = [1, 2, 3, 4].map((n) => state.team[`member${n}`]).filter(Boolean);
     const completedCases = mission1Cases.filter((_, index) => {
       const item = state.mission1.cases[index] || {};
       return item.answer && item.reason;
     });
     const issues = [];
+    if (!state.team.name || members.length < 4) issues.push("registren nombre del equipo y cuatro integrantes");
     if (completedCases.length < mission1Cases.length) issues.push("analicen los tres casos del Ejercicio 2 con respuesta y justificación breve");
     if (complete.length < 5) issues.push("registren al menos cinco oportunidades con usuario, situación y función del agente");
+    if (complete.some((op) => !op.proposer)) issues.push("asocien cada oportunidad completa con quien la propone");
     if (opportunities.some((op) => !op.user)) issues.push("faltan usuarios");
     if (opportunities.some((op) => !op.agentHelp)) issues.push("faltan funciones del agente");
     if (evaluated.length < complete.length) issues.push("evalúen las oportunidades completas");
     if (selected.length !== 3) issues.push("marquen exactamente tres oportunidades preseleccionadas");
-    return { issues, selected, complete, evaluated, completedCases };
+    return { issues, selected, complete, evaluated, completedCases, members };
   }
   function updateMission1Product() {
     const checkpoint = $("#mission1-checkpoint");
@@ -445,7 +456,8 @@
       ${[
         ["comprendimos qué diferencia un agente de un chatbot", validation.completedCases.length >= mission1Cases.length],
         ["analizamos situaciones que sí y no justifican un agente", validation.completedCases.length >= mission1Cases.length],
-        ["hay aportaciones identificadas", state.mission1.opportunities.some((op) => op.proposer)],
+        ["registramos equipo e integrantes", state.team.name && validation.members.length >= 4],
+        ["hay oportunidades asociadas a integrantes", validation.complete.length >= 5 && validation.complete.every((op) => op.proposer)],
         ["registramos al menos cinco oportunidades", validation.complete.length >= 5],
         ["evaluamos cada oportunidad", validation.evaluated.length >= validation.complete.length && validation.complete.length >= 5],
         ["descartamos ideas poco viables", state.mission1.opportunities.some((op) => mission1Score(op) <= 4)],
@@ -461,9 +473,9 @@
     if (!box) return;
     const rows = state.mission1.opportunities.map((op, index) => {
       const total = mission1Score(op);
-      return `<tr><td data-label="Número">${index + 1}</td><td data-label="Integrante">${esc(op.proposer || "Pendiente")}</td><td data-label="Situación">${esc(op.observed || "Pendiente")}</td><td data-label="Usuario">${esc(op.user || "Pendiente")}</td><td data-label="Problema">${esc(op.consequence || "Pendiente")}</td><td data-label="Función">${esc(op.agentHelp || "Pendiente")}</td><td data-label="Puntuación">${total}/10</td><td data-label="Nivel">${mission1Level(total)}</td><td data-label="Preseleccionada">${op.selected ? "Sí" : "No"}</td></tr>`;
+      return `<tr><td data-label="Número">${index + 1}</td><td data-label="Propone">${esc(op.proposer || "Pendiente")}</td><td data-label="Situación">${esc(op.observed || "Pendiente")}</td><td data-label="Usuario">${esc(op.user || "Pendiente")}</td><td data-label="Problema">${esc(op.consequence || "Pendiente")}</td><td data-label="Función">${esc(op.agentHelp || "Pendiente")}</td><td data-label="Puntuación">${total}/10</td><td data-label="Nivel">${mission1Level(total)}</td><td data-label="Preseleccionada">${op.selected ? "Sí" : "No"}</td></tr>`;
     }).join("");
-    box.innerHTML = `<table><thead><tr><th>Número</th><th>Integrante</th><th>Situación</th><th>Usuario</th><th>Problema</th><th>Función del agente</th><th>Puntuación</th><th>Nivel</th><th>Preseleccionada</th></tr></thead><tbody>${rows}</tbody></table>`;
+    box.innerHTML = `<table><thead><tr><th>Número</th><th>Propone</th><th>Situación</th><th>Usuario</th><th>Problema</th><th>Función del agente</th><th>Puntuación</th><th>Nivel</th><th>Preseleccionada</th></tr></thead><tbody>${rows}</tbody></table>`;
   }
   function syncMission1Preselection() {
     const selected = state.mission1.opportunities.filter((op) => op.selected).slice(0, 3);
@@ -487,9 +499,9 @@ Equipo: ${state.team.name || "Pendiente"}
 Integrantes: ${[1, 2, 3, 4].map((n) => state.team[`member${n}`] || "Pendiente").join(", ")}
 
 Oportunidades registradas:
-${state.mission1.opportunities.map((op, index) => `${index + 1}. Integrante: ${op.proposer || "Pendiente"}
-   Usuario: ${op.user || "Pendiente"}
+${state.mission1.opportunities.map((op, index) => `${index + 1}. Propone: ${op.proposer || "Pendiente"}
    Situación: ${op.observed || "Pendiente"}
+   Usuario: ${op.user || "Pendiente"}
    Problema/consecuencia: ${op.consequence || "Pendiente"}
    Función posible del agente: ${op.agentHelp || "Pendiente"}
    Puntuación: ${mission1Score(op)}/10
