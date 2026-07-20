@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clase 19 · Proyecto final: descubrir y diseñar</title>
+  <link rel="stylesheet" href="clase19.css">
+</head>
+<body>
+  <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-expanded="true">☰ Menú</button>
+  <aside class="lesson-sidebar" id="lesson-sidebar">
+    <a class="course-link" href="../index.html">← Curso IA</a>
+    <a class="course-link" href="../proyecto-final-ejemplo/" target="_blank" rel="noopener">Ver proyecto completo de referencia</a>
+    <div class="sidebar-heading"><span>Clase 19</span><strong>Proyecto final · Descubrir, definir y diseñar</strong></div>
+    <div class="progress-panel">
+      <div class="progress-top"><span>Avance</span><strong id="progress-label">0%</strong></div>
+      <div class="progress-bar"><span id="progress-fill"></span></div>
+      <small id="progress-note">Completa evidencias, no solo visites secciones.</small>
+    </div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#mision-1">Oportunidades</a>
+      <a href="#mision-2">Equipo y roles</a>
+      <a href="#mision-3">Problemáticas</a>
+      <a href="#mision-4">Validación</a>
+      <a href="#control-1">Punto de control</a>
+      <a href="#mision-5">Canvas</a>
+      <a href="#mision-6">Flujo</a>
+      <a href="#mision-7">Arquitectura</a>
+      <a href="#mision-8">Prompt</a>
+      <a href="#mision-9">Reglas</a>
+      <a href="#mision-10">Prototipo</a>
+      <a href="#cierre">Cierre</a>
+      <a href="#seguimiento">Docente</a>
+    </nav>
+  </aside>
+
+  <main class="lesson-shell">
+    <section class="hero" id="inicio">
+      <span class="eyebrow">Proyecto final · Día 1 de 3 · 3 horas</span>
+      <h1>Conviertan una idea abierta en un agente de IA diseñable y comprobable</h1>
+      <p class="lead">Hoy no entregan “una idea bonita”. Entregan un problema real validado, un usuario claro, un agente con función concreta, arquitectura, prompt, reglas, casos de prueba y un primer prototipo mínimo.</p>
+      <div class="phase-strip">
+        <article class="current"><span>Clase 19</span><h3>Descubrir y diseñar</h3><p>Problema, usuario, canvas, flujo, arquitectura y prototipo inicial.</p></article>
+        <article><span>Clase 20</span><h3>Construir y probar</h3><p>MVP, ocho pruebas, resultados, errores y mejoras.</p></article>
+        <article><span>Clase 21</span><h3>Presentar y defender</h3><p>Demo, evidencia, defensa, coevaluación y reflexión final.</p></article>
+      </div>
+      <div class="toolbar">
+        <button class="primary" type="button" data-save>Guardar avance</button>
+        <button type="button" data-export>Exportar JSON</button>
+        <label class="button-link" for="import-file">Importar JSON</label>
+        <input class="hidden" id="import-file" type="file" accept="application/json" data-import>
+        <button class="danger-btn" type="button" data-reset>Reiniciar proyecto</button>
+      </div>
+      <div class="timer" data-timer="180">
+        <span>Temporizador orientativo de la sesión</span>
+        <strong data-timer-display>03:00:00</strong>
+        <div class="toolbar"><button type="button" data-timer-start>Iniciar</button><button type="button" data-timer-pause>Pausar</button><button type="button" data-timer-reset>Reiniciar</button></div>
+      </div>
+      <div class="route-plan">
+        <article class="route-core">
+          <span class="eyebrow">Ruta mínima para 3 horas</span>
+          <h2>Si el tiempo aprieta, terminen esto primero</h2>
+          <ol>
+            <li>Detectar oportunidades y elegir tres candidatas.</li>
+            <li>Registrar equipo y roles.</li>
+            <li>Comparar problemáticas y validar una.</li>
+            <li>Completar un Canvas breve.</li>
+            <li>Dibujar un flujo básico con un caso guiado.</li>
+            <li>Crear un prompt con reglas mínimas.</li>
+            <li>Probar un primer caso, aunque sea simulado.</li>
+          </ol>
+        </article>
+        <article>
+          <span class="eyebrow">Profundización</span>
+          <h2>Si van rápido, mejoren calidad</h2>
+          <p>Completen arquitectura detallada, reglas avanzadas, recuperación ante errores y una ficha más sólida. Estas partes suben la calidad, pero no deben bloquear a un equipo que todavía está construyendo claridad.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="mision-1" class="observation-lab" data-required="mission1.ready">
+      <div class="section-heading"><span>Misión 1 · Ruta mínima · 15 min</span><h2>Misión 1 · Detecten oportunidades para crear un agente</h2></div>
+      <div class="mission-result">
+        <h3>Al terminar esta misión tendrán...</h3>
+        <ul>
+          <li>Al menos cinco situaciones observadas.</li>
+          <li>Un criterio claro para saber si requieren agente.</li>
+          <li>Tres oportunidades preseleccionadas para la Misión 3.</li>
+        </ul>
+      </div>
+
+      <p class="lead">Durante las siguientes tres clases no construirán únicamente una página web o un chatbot. Construirán una solución capaz de recibir información, interpretar una situación, aplicar conocimiento o reglas, apoyar una decisión, entregar un resultado útil y reconocer sus límites.</p>
+
+      <div class="agent-value-strip" aria-label="Funciones donde un agente aporta valor">
+        <span>orientar</span><span>clasificar</span><span>recomendar</span><span>detectar</span><span>priorizar</span><span>explicar</span>
+      </div>
+
+      <div class="mission-path" aria-label="Conexión con las siguientes misiones">
+        <article><strong>Misión 1</strong><span>Observar oportunidades</span></article>
+        <article><strong>Misión 2</strong><span>Formar el equipo</span></article>
+        <article><strong>Misión 3</strong><span>Comparar problemáticas</span></article>
+        <article><strong>Misión 4</strong><span>Seleccionar y validar una</span></article>
+      </div>
+      <p class="status-box">Las oportunidades que registren aquí se utilizarán más adelante para elegir el proyecto definitivo.</p>
+
+      <div class="lab-block compact-lab">
+        <div class="section-heading"><span>Ejercicio 1</span><h3>Idea vaga o problema real</h3></div>
+        <p>Conversar no basta. Un agente aporta valor cuando interpreta información variable y ayuda a decidir, clasificar, recomendar, detectar o explicar dentro de un límite claro.</p>
+        <div id="mission1-comparisons" class="comparison-lab"></div>
+      </div>
+
+      <div class="lab-block compact-lab">
+        <div class="section-heading"><span>Ejercicio 2</span><h3>¿Esta situación necesita un agente?</h3></div>
+        <p>Respondan sí, no o depende. Justifiquen con una frase: ¿qué interpreta?, ¿qué decisión apoya?, ¿qué límite debe respetar?</p>
+        <div id="mission1-agent-cases" class="agent-case-grid"></div>
+      </div>
+
+      <div class="lab-block">
+        <div class="section-heading"><span>Ejercicio 3</span><h3>Registren y filtren oportunidades</h3></div>
+        <p class="status-box">Guía: “He observado que _____. La persona afectada es _____. Esto provoca _____. Un agente podría ayudar a _____. El agente no debería _____.”</p>
+        <div class="agent-value-strip" aria-label="Ámbitos sugeridos">
+          <span>escuela</span><span>trabajo</span><span>negocio</span><span>comunidad</span><span>servicios</span><span>soporte</span><span>productividad</span>
+        </div>
+        <div class="toolbar"><button type="button" id="mission1-add-opportunity">Agregar oportunidad</button><button type="button" id="mission1-save">Guardar evidencia</button></div>
+        <div id="mission1-opportunities" class="list-stack"></div>
+        <p>Evalúen con 0 = no, 1 = parcial, 2 = claro. El puntaje orienta, pero no reemplaza el análisis del equipo.</p>
+        <div id="mission1-evaluation" class="opportunity-matrix"></div>
+      </div>
+
+      <div class="lab-block">
+        <div class="section-heading"><span>Producto</span><h3>Producto de la Misión 1</h3></div>
+        <div id="mission1-checkpoint" class="status-box" aria-live="polite"></div>
+        <div id="mission1-summary" class="table-wrap mission1-summary"></div>
+        <div class="toolbar"><button class="primary" type="button" id="mission1-generate-evidence">Generar evidencia de la Misión 1</button><button type="button" id="mission1-download-evidence">Descargar evidencia</button><a class="button-link" href="#mision-2">Continuar con la formación del equipo</a></div>
+        <pre class="report-output" id="mission1-report">Generen la evidencia al cerrar la misión.</pre>
+        <p class="lead">Ya identificaron situaciones donde un agente podría aportar valor. Aún no han elegido el proyecto definitivo. Sus tres oportunidades preseleccionadas serán analizadas con mayor profundidad en las siguientes misiones.</p>
+      </div>
+
+      <div class="help-list">
+        <details><summary>No encontramos problemas.</summary><p>Observen una fila, una revisión, una solicitud repetida o una decisión que alguien toma varias veces. Pregunten quién se confunde, qué información falta y qué consecuencia aparece.</p></details>
+        <details><summary>Todas nuestras ideas son chatbots.</summary><p>Cambien “responder preguntas” por una función: clasificar, orientar, detectar, priorizar, recomendar o explicar con límites.</p></details>
+        <details><summary>Nuestra idea es demasiado grande.</summary><ol><li>Identifica una sola tarea.</li><li>Elige un solo usuario.</li><li>Define una entrada.</li><li>Define una decisión.</li><li>Define una salida.</li><li>Deja fuera integraciones no indispensables.</li></ol></details>
+      </div>
+    </section>
+
+    <section id="mision-2" data-required="team.name,team.member1,team.member2,team.member3,team.member4,team.contribution1,team.contribution2,team.contribution3,team.contribution4">
+      <div class="section-heading"><span>Misión 2 · Ruta mínima · 10 min</span><h2>Construyan su equipo</h2></div>
+      <p class="lead">Registren cuatro integrantes. Los roles distribuyen la responsabilidad, pero todos deben poder explicar el proyecto completo.</p>
+      <div class="mission-clarity">
+        <article><strong>Qué harán</strong><p>Asignar responsabilidades para que el proyecto avance sin que una sola persona cargue todo.</p></article>
+        <article><strong>Evidencia</strong><p>Nombre del equipo, cuatro integrantes, rol y aportación concreta de cada uno.</p></article>
+        <article><strong>Bien hecho si...</strong><p>Cualquier integrante puede explicar problema, agente, demo, pruebas y límites.</p></article>
+      </div>
+      <div class="role-grid">
+        <article class="card"><h3>Líder de problema</h3><p>Mantiene clara la necesidad del usuario y evita que el proyecto se vuelva genérico.</p></article>
+        <article class="card"><h3>Diseñador del agente</h3><p>Cuida flujo, arquitectura, reglas y comportamiento esperado.</p></article>
+        <article class="card"><h3>Constructor del prototipo</h3><p>Configura la herramienta o programa la demostración funcional.</p></article>
+        <article class="card"><h3>Evaluador y documentalista</h3><p>Diseña pruebas, guarda evidencias y prepara la presentación.</p></article>
+      </div>
+      <div class="form-card">
+        <div class="form-grid">
+          <label class="wide">Nombre del equipo<input data-field="team.name" placeholder="Ej. Equipo Horizonte"></label>
+          <label>Integrante 1<input data-field="team.member1"></label>
+          <label>Rol 1<select data-field="team.role1"><option>Líder de problema</option><option>Diseñador del agente</option><option>Constructor del prototipo</option><option>Evaluador y documentalista</option></select></label>
+          <label class="wide">¿Qué aportará?<textarea data-field="team.contribution1"></textarea></label>
+          <label>Integrante 2<input data-field="team.member2"></label>
+          <label>Rol 2<select data-field="team.role2"><option>Diseñador del agente</option><option>Líder de problema</option><option>Constructor del prototipo</option><option>Evaluador y documentalista</option></select></label>
+          <label class="wide">¿Qué aportará?<textarea data-field="team.contribution2"></textarea></label>
+          <label>Integrante 3<input data-field="team.member3"></label>
+          <label>Rol 3<select data-field="team.role3"><option>Constructor del prototipo</option><option>Líder de problema</option><option>Diseñador del agente</option><option>Evaluador y documentalista</option></select></label>
+          <label class="wide">¿Qué aportará?<textarea data-field="team.contribution3"></textarea></label>
+          <label>Integrante 4<input data-field="team.member4"></label>
+          <label>Rol 4<select data-field="team.role4"><option>Evaluador y documentalista</option><option>Líder de problema</option><option>Diseñador del agente</option><option>Constructor del prototipo</option></select></label>
+          <label class="wide">¿Qué aportará?<textarea data-field="team.contribution4"></textarea></label>
+        </div>
+      </div>
+      <div class="output-card"><h3>Resumen visual del equipo</h3><div id="team-summary" class="cards-grid"></div></div>
+    </section>
+
+    <section id="mision-3" data-required="ideas.0.name,ideas.1.name,ideas.2.name">
+      <div class="section-heading"><span>Misión 3 · Ruta mínima · 15 min</span><h2>Encuentren una problemática real</h2></div>
+      <p class="lead">Exploren al menos tres problemáticas. El puntaje orienta la conversación, no decide por ustedes.</p>
+      <div class="mission-clarity">
+        <article><strong>Qué harán</strong><p>Comparar tres problemáticas para decidir cuáles tienen mejor potencial como proyecto final.</p></article>
+        <article><strong>Evidencia</strong><p>Nombre, usuario, situación, consecuencia, solución actual, función del agente y puntaje por criterio.</p></article>
+        <article><strong>Bien hecho si...</strong><p>El equipo puede explicar por qué una opción es más clara, viable o demostrable que otra.</p></article>
+      </div>
+      <div class="criteria-guide">
+        <article><strong>Claridad</strong><span>¿Se entiende quién tiene el problema y qué ocurre?</span></article>
+        <article><strong>Impacto</strong><span>¿La consecuencia importa o solo es una molestia menor?</span></article>
+        <article><strong>Viabilidad</strong><span>¿Puede demostrarse una primera versión en estas tres clases?</span></article>
+        <article><strong>Información</strong><span>¿Hay datos, reglas, ejemplos o criterios para que el agente trabaje?</span></article>
+        <article><strong>Demo</strong><span>¿Puede mostrarse con un caso normal y uno difícil?</span></article>
+        <article><strong>IA/agente</strong><span>¿Necesita interpretar, clasificar, recomendar, detectar o explicar?</span></article>
+      </div>
+      <div class="status-box">
+        <strong>Si todo recibe la misma calificación:</strong> el puntaje deja de ayudar. En ese caso comparen una opción contra otra y ajusten: una debe ser más clara, más viable o más demostrable que las demás. Si realmente empatan, usen el desempate: mejor usuario definido, problema más repetitivo, datos más disponibles y demo más fácil de mostrar.
+      </div>
+      <div class="help-card">
+        <h3>Preguntas guía</h3>
+        <ol>
+          <li>¿Qué actividad repetitiva observan?</li><li>¿Quién tiene ese problema?</li><li>¿Dónde ocurre?</li><li>¿Con qué frecuencia?</li><li>¿Qué consecuencias provoca?</li><li>¿Cómo se resuelve actualmente?</li><li>¿Qué parte consume más tiempo?</li><li>¿Qué decisiones se repiten?</li><li>¿Qué información suele faltar?</li><li>¿Un agente podría orientar, clasificar, recomendar, detectar o explicar?</li>
+        </ol>
+      </div>
+      <div id="ideas-list" class="list-stack"></div>
+      <div class="toolbar"><button type="button" id="add-idea">Agregar problemática</button><button type="button" id="score-ideas">Calcular resultado orientativo</button></div>
+      <div class="status-box" id="ideas-score">Registra tres problemáticas y puntúalas de 1 a 5.</div>
+    </section>
+
+    <section id="mision-4" data-required="problem.statement,project.name">
+      <div class="section-heading"><span>Misión 4 · Ruta mínima · 20 min</span><h2>Validen antes de construir</h2></div>
+      <p class="lead">Seleccionen una problemática y conviértanla en una declaración precisa. Si no se puede explicar en un minuto, todavía está demasiado amplia.</p>
+      <div class="mission-clarity">
+        <article><strong>Qué harán</strong><p>Elegir una oportunidad y redactarla como problema real, no como herramienta.</p></article>
+        <article><strong>Evidencia</strong><p>Una declaración que incluya usuario, problema, contexto, consecuencia, función del agente, información y límite.</p></article>
+        <article><strong>Bien hecho si...</strong><p>Otra persona entiende qué pasa, a quién afecta y qué decisión apoyará el agente.</p></article>
+      </div>
+      <div class="status-box"><strong>Ejemplo de lectura:</strong> “Actualmente, estudiantes de nuevo ingreso no saben a qué área acudir cuando tienen dudas administrativas, lo que provoca vueltas innecesarias. El agente ayudará a identificar el trámite probable usando una descripción del caso, sin inventar requisitos oficiales.”</div>
+      <div class="form-card form-grid">
+        <label>Nombre provisional del proyecto<input data-field="project.name" placeholder="Ej. TramitaBot"></label>
+        <label>Problemática seleccionada<input data-field="problem.title"></label>
+        <label class="wide">Declaración con plantilla<textarea data-field="problem.statement" placeholder="Actualmente, [usuario] tiene dificultad para [actividad] cuando [situación], lo que provoca [consecuencia]. Nuestro agente ayudará a [resultado], utilizando [información principal], sin [límite importante]."></textarea></label>
+        <button class="primary" type="button" id="validate-statement">Validar declaración</button>
+      </div>
+      <div class="status-box" id="statement-feedback">La retroalimentación aparecerá aquí.</div>
+      <div class="checklist">
+        <label><input type="checkbox" data-check="validation.exists"> El problema existe.</label>
+        <label><input type="checkbox" data-check="validation.minute"> Se explica en menos de un minuto.</label>
+        <label><input type="checkbox" data-check="validation.moreThanChat"> El agente hace algo más que conversar.</label>
+        <label><input type="checkbox" data-check="validation.demo"> Puede demostrarse en Clase 21.</label>
+        <label><input type="checkbox" data-check="validation.today"> Puede construirse una primera versión hoy.</label>
+      </div>
+    </section>
+
+    <section id="control-1">
+      <div class="section-heading"><span>Punto de control 1</span><h2>Semáforo de definición</h2></div>
+      <p class="lead">No avancen al diseño si faltan problemática, usuario, consecuencia, función del agente, límite y justificación.</p>
+      <div class="status-box red" id="checkpoint-box"><strong>Rojo:</strong> incompleto.</div>
+    </section>
+
+    <section id="mision-5" data-required="canvas.agentName,canvas.user,canvas.problem,canvas.goal,canvas.input,canvas.processing,canvas.output,canvas.success">
+      <div class="section-heading"><span>Misión 5 · Ruta mínima · 20 min</span><h2>Definan lo que hará el agente</h2></div>
+      <p class="lead">Completen el Canvas del Agente. Sean breves y precisos: cada campo debe ayudar a construir o probar el prototipo.</p>
+      <div class="mission-clarity">
+        <article><strong>Qué harán</strong><p>Traducir el problema a piezas de funcionamiento: entrada, procesamiento, decisión, salida, reglas y límites.</p></article>
+        <article><strong>Evidencia</strong><p>Canvas completo con frases cortas que puedan convertirse en flujo, arquitectura y prompt.</p></article>
+        <article><strong>Bien hecho si...</strong><p>El canvas permite imaginar cómo probar el agente con un caso real.</p></article>
+      </div>
+      <div class="status-box"><strong>Idea clave:</strong> el Canvas no es teoría. Es una lista de decisiones para evitar que el agente sea “un chatbot que responde cosas”.</div>
+      <div class="form-card form-grid" id="canvas-form"></div>
+    </section>
+
+    <section id="mision-6" data-required="flow.0.name">
+      <div class="section-heading"><span>Misión 6 · Ruta mínima · 20 min</span><h2>Diseñen el recorrido del usuario</h2></div>
+      <p class="lead">Construyan un flujo editable. Cada etapa debe decir qué recibe, qué hace, qué produce, qué puede fallar y cómo responde.</p>
+      <div class="mission-clarity">
+        <article><strong>Qué harán</strong><p>Ordenar el camino desde que el usuario presenta su caso hasta que recibe una respuesta útil.</p></article>
+        <article><strong>Evidencia</strong><p>Etapas del flujo, vista previa del recorrido y un caso guiado con detección, regla, decisión y explicación.</p></article>
+        <article><strong>Bien hecho si...</strong><p>Se entiende qué hace el agente en cada paso y dónde podría fallar.</p></article>
+      </div>
+      <div class="flow-subsection">
+        <h3>Sección 1 · Construyan las etapas</h3>
+        <p>Una etapa representa una acción concreta del agente o del usuario. Eviten etapas vagas como “procesa”; escriban qué procesa y qué produce.</p>
+      </div>
+      <div id="flow-list" class="list-stack"></div>
+      <div class="toolbar"><button type="button" id="add-flow-step">Agregar etapa</button><button type="button" id="render-flow">Actualizar flujo</button></div>
+      <div class="flow-subsection">
+        <h3>Sección 2 · Revisen el recorrido completo</h3>
+        <p>Esta vista resume las etapas en orden para comprobar si el usuario avanza de forma lógica desde su necesidad inicial hasta una salida útil. Si una etapa no aporta una acción clara, edítenla o elimínenla.</p>
+      </div>
+      <div class="flow-preview" id="flow-preview"></div>
+      <div class="flow-subsection">
+        <h3>Sección 3 · Prueben el flujo con un caso guiado</h3>
+        <p>Usen un ejemplo concreto para verificar que el agente detecta información, aplica una regla, toma una decisión y puede explicar por qué respondió así. Este caso servirá como puente hacia el prototipo y las pruebas de las siguientes clases.</p>
+      </div>
+      <div class="form-card form-grid">
+        <label class="wide">Caso guiado: entrada del usuario<textarea data-field="guidedCase.input"></textarea></label>
+        <label>Información detectada<textarea data-field="guidedCase.detected"></textarea></label>
+        <label>Regla aplicada<textarea data-field="guidedCase.rule"></textarea></label>
+        <label>Decisión generada<textarea data-field="guidedCase.decision"></textarea></label>
+        <label>Explicación<textarea data-field="guidedCase.explanation"></textarea></label>
+      </div>
+    </section>
+
+    <section id="mision-7">
+      <div class="section-heading"><span>Misión 7 · Profundización · 15 min</span><h2>Arquitectura del agente</h2></div>
+      <p class="lead">La arquitectura es el mapa de cómo trabaja el agente: qué recibe, qué revisa, qué decide, qué información consulta y qué entrega. No es una lista de tecnología; es una explicación del comportamiento.</p>
+      <div class="architecture-guide">
+        <article><span>1</span><h3>Entrada</h3><p>¿Qué escribe, sube o elige el usuario?</p></article>
+        <article><span>2</span><h3>Proceso</h3><p>¿Qué valida, clasifica, consulta o compara el agente?</p></article>
+        <article><span>3</span><h3>Salida</h3><p>¿Qué recomendación, explicación, alerta o siguiente paso entrega?</p></article>
+      </div>
+      <div class="status-box">
+        <strong>Regla rápida:</strong> si un componente no cambia la respuesta del agente, probablemente no lo necesitan. Seleccionen solo piezas que puedan explicar durante la presentación.
+      </div>
+
+      <div class="architecture-section">
+        <h3>Sección 1 · Elijan los componentes necesarios</h3>
+        <p>Marquen únicamente los bloques que su agente realmente usará. Cada tarjeta explica para qué sirve y cuándo conviene incluirla.</p>
+        <div class="grid-4 architecture-picker" id="component-picker"></div>
+      </div>
+
+      <div class="architecture-section">
+        <h3>Sección 2 · Justifiquen la selección</h3>
+        <p>Escriban una justificación breve. Debe responder: para qué sirve cada componente, qué recibe, qué devuelve y qué pasaría si lo eliminaran.</p>
+        <label class="wide">Justificación de componentes<textarea data-field="architecture.justification" placeholder="Ejemplo: Usaremos entrada porque el estudiante describe su situación. Usaremos validador para detectar datos faltantes. Usaremos reglas para evitar inventar requisitos. Si quitamos el validador, el agente podría recomendar con información incompleta."></textarea></label>
+      </div>
+
+      <div class="architecture-section">
+        <h3>Sección 3 · Revisen el diagrama resultante</h3>
+        <p>El diagrama debe leerse como una secuencia. Si no pueden explicar cómo pasa la información de un bloque al siguiente, ajusten la selección.</p>
+      </div>
+      <div class="architecture-diagram" id="architecture-diagram"></div>
+    </section>
+
+    <section id="mision-8" data-required="prompt.identity,prompt.tasks,prompt.rules,prompt.limits,prompt.format">
+      <div class="section-heading"><span>Misión 8 · Ruta mínima · 20 min</span><h2>Escriban el cerebro del agente</h2></div>
+      <p class="lead">Construyan el prompt por bloques. Un buen prompt reduce ambigüedad, no reemplaza el diseño.</p>
+      <div class="mission-clarity">
+        <article><strong>Qué harán</strong><p>Convertir el diseño en instrucciones para que el agente se comporte de forma consistente.</p></article>
+        <article><strong>Evidencia</strong><p>Prompt dividido en identidad, tareas, información disponible, reglas, límites, incertidumbre y formato.</p></article>
+        <article><strong>Bien hecho si...</strong><p>El prompt le dice al agente qué hacer, qué no hacer y cómo responder cuando no sabe.</p></article>
+      </div>
+      <div class="grid-2">
+        <article class="card"><h3>Prompt débil</h3><p>“Ayuda al usuario y responde bien”.</p><p>No define usuario, reglas, límites, formato ni incertidumbre.</p></article>
+        <article class="card"><h3>Prompt mejorado</h3><p>“Actúa como agente de orientación para estudiantes de primer semestre. Primero identifica trámite, documentos y área. Si falta información, pregunta antes de recomendar. No inventes horarios ni requisitos”.</p></article>
+      </div>
+      <div class="form-card form-grid" id="prompt-form"></div>
+      <div class="toolbar"><button type="button" id="build-prompt">Generar prompt completo</button><button type="button" data-copy="#prompt-output">Copiar prompt</button></div>
+      <pre class="code-output" id="prompt-output">Completen los bloques y generen el prompt.</pre>
+    </section>
+
+    <section id="mision-9">
+      <div class="section-heading"><span>Misión 9 · Profundización · 10 min</span><h2>Reglas, límites y seguridad</h2></div>
+      <p class="lead">Definan reglas concretas. “Responder bien” es vago; “si falta código postal, pedirlo antes de recomendar” es verificable.</p>
+      <div class="mission-clarity">
+        <article><strong>Qué harán</strong><p>Escribir condiciones que controlen el comportamiento del agente antes, durante y después de responder.</p></article>
+        <article><strong>Evidencia</strong><p>Reglas obligatorias, prohibiciones, casos donde pide datos, incertidumbre y recuperación ante error.</p></article>
+        <article><strong>Bien hecho si...</strong><p>Cada regla puede probarse con una entrada concreta en Clase 20.</p></article>
+      </div>
+      <div class="criteria-guide">
+        <article><strong>Regla concreta</strong><span>“Si falta semestre, pedirlo antes de recomendar trámite.”</span></article>
+        <article><strong>Límite claro</strong><span>“No inventar costos, fechas ni requisitos oficiales.”</span></article>
+        <article><strong>Recuperación</strong><span>“Si hay dos opciones posibles, explicar diferencias y pedir aclaración.”</span></article>
+      </div>
+      <div class="form-card form-grid">
+        <label class="wide">Cinco reglas obligatorias<textarea data-field="rules.required" placeholder="- No inventar datos&#10;- Pedir datos faltantes..."></textarea></label>
+        <label>Tres cosas que no debe hacer<textarea data-field="rules.forbidden"></textarea></label>
+        <label>Dos situaciones donde pide más información<textarea data-field="rules.moreInfo"></textarea></label>
+        <label>Dos situaciones donde reconoce incertidumbre<textarea data-field="rules.uncertainty"></textarea></label>
+        <label class="wide">Estrategia de recuperación ante error<textarea data-field="rules.recovery"></textarea></label>
+        <button type="button" id="detect-vague-rules">Detectar reglas vagas</button>
+      </div>
+      <div class="status-box" id="rules-feedback">Escriban reglas y revisen si son observables.</div>
+    </section>
+
+    <section id="mision-10" data-required="prototype.route,prototype.evidence,prototype.demoInput,prototype.demoOutput">
+      <div class="section-heading"><span>Misión 10 · Ruta mínima · 20 min</span><h2>Primer prototipo mínimo</h2></div>
+      <p class="lead">Elijan una ruta. La herramienta no es el centro de la evaluación: importan problema, diseño, comportamiento, pruebas y explicación.</p>
+      <div class="mission-clarity">
+        <article><strong>Qué harán</strong><p>Preparar una primera demostración, aunque sea simulada, para mostrar cómo respondería el agente.</p></article>
+        <article><strong>Evidencia</strong><p>Ruta elegida, ubicación o captura del prototipo, una entrada de prueba y la salida obtenida.</p></article>
+        <article><strong>Bien hecho si...</strong><p>El prototipo muestra entrada, decisión, explicación y límite. No necesita ser un sistema completo.</p></article>
+      </div>
+      <div class="grid-4">
+        <article class="card"><h3>Ruta A</h3><p>Usar ChatGPT, Gemini u otra herramienta con el prompt creado.</p></article>
+        <article class="card"><h3>Ruta B</h3><p>Crear prototipo web con HTML, CSS y JavaScript.</p></article>
+        <article class="card"><h3>Ruta C</h3><p>Crear flujo con n8n u otra herramienta visual.</p></article>
+        <article class="card"><h3>Ruta D</h3><p>Simular el agente con flujo y respuestas estructuradas.</p></article>
+      </div>
+      <div class="form-card form-grid">
+        <label>Ruta elegida<select data-field="prototype.route"><option>Ruta A · Herramienta generativa</option><option>Ruta B · Web HTML/CSS/JS</option><option>Ruta C · Flujo visual</option><option>Ruta D · Simulación estructurada</option></select></label>
+        <label>Evidencia del prototipo<input data-field="prototype.evidence" placeholder="Liga, captura, archivo, descripción o ubicación"></label>
+        <label>Entrada del caso procesado<textarea data-field="prototype.demoInput"></textarea></label>
+        <label>Salida obtenida<textarea data-field="prototype.demoOutput"></textarea></label>
+      </div>
+    </section>
+
+    <section id="cierre">
+      <div class="section-heading"><span>Cierre · 10 min</span><h2>Ficha descargable del proyecto</h2></div>
+      <p class="lead">La clase no termina con una idea: termina con una ficha de diseño lista para continuar en Clase 20.</p>
+      <div class="mission-clarity">
+        <article><strong>Qué harán</strong><p>Reunir en una ficha lo que el equipo decidió durante la Clase 19.</p></article>
+        <article><strong>Evidencia</strong><p>Reporte descargable con problema, canvas, flujo, arquitectura, prompt, reglas y primer prototipo.</p></article>
+        <article><strong>Bien hecho si...</strong><p>El equipo puede abrir Clase 20 y construir pruebas sin volver a definir el proyecto desde cero.</p></article>
+      </div>
+      <div class="checklist" id="closing-checklist"></div>
+      <div class="toolbar"><button class="primary" type="button" id="generate-card">Generar ficha</button><button type="button" data-download-report="clase19-ficha-proyecto.txt">Descargar ficha</button><a class="button-link" href="../clase20/">Continuar a Clase 20</a></div>
+      <pre class="report-output" id="class-report">Generen la ficha al cerrar la sesión.</pre>
+    </section>
+
+    <section id="seguimiento">
+      <div class="section-heading"><span>Docente</span><h2>Seguimiento visual de equipos</h2></div>
+      <p class="lead">Panel local y discreto. No usa backend ni autenticación; sirve como vista rápida del avance de este navegador.</p>
+      <div class="teacher-panel status-card" id="teacher-panel"></div>
+    </section>
+
+    <section class="help-list" id="ayudas">
+      <div class="section-heading"><span>Ayudas rápidas</span><h2>Cuando el equipo se atora</h2></div>
+      <details><summary>No sabemos qué hacer</summary><p>Elijan un área cercana, observen una actividad repetitiva y redacten quién sufre qué problema, cuándo y qué decisión se repite.</p></details>
+      <details><summary>Nuestra idea es demasiado grande</summary><p>Reduzcan a una sola tarea demostrable en siete horas. Cambien “sistema completo” por “agente que resuelve un primer caso”.</p></details>
+      <details><summary>El agente solo conversa</summary><p>Agreguen una función clara: clasificar, recomendar, validar, priorizar, detectar, explicar o pedir datos faltantes.</p></details>
+      <details><summary>No sabemos qué herramienta utilizar</summary><p>Empiecen con simulación o herramienta generativa. La evidencia principal es el comportamiento, no la tecnología.</p></details>
+      <details><summary>No funciona nuestro prototipo</summary><p>Documenten la falla, preparen un caso simulado y definan qué parte sí pueden demostrar.</p></details>
+      <details><summary>No sabemos cómo probarlo</summary><p>Usen un caso normal, uno incompleto, uno ambiguo y uno fuera de alcance. Clase 20 ampliará a ocho pruebas.</p></details>
+      <details><summary>No sabemos qué presentar</summary><p>Problema, usuario, demo de dos casos, pruebas, mejora, limitación y aprendizaje.</p></details>
+    </section>
+
+    <footer><span>Clase 19 · Proyecto final</span><span>Descubrir, definir y diseñar</span></footer>
+  </main>
+  <script src="clase19.js"></script>
+</body>
+</html>
