@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Laboratorio técnico para construir un agente web con HTML, CSS, JavaScript, Express y Ollama.">
+  <title>Clase 20 · Desarrollo e integración del agente inteligente</title>
+  <link rel="stylesheet" href="clase20.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="lesson-nav">☰ Misiones</button>
+  <aside class="lesson-nav" id="lesson-nav" aria-label="Navegación de Clase 20">
+    <a class="back-link" href="../index.html">← Curso IA</a>
+    <p class="nav-kicker">Clase 20</p>
+    <strong>Integración del agente</strong>
+    <div class="progress-card" aria-live="polite"><span>Progreso técnico</span><strong id="progress-value">0%</strong><div class="progress-track"><span id="progress-fill"></span></div><small id="progress-detail">0 de 14 misiones</small></div>
+    <nav id="mission-links"></nav>
+    <button class="ghost danger" id="reset-progress" type="button">Restablecer progreso</button>
+  </aside>
+
+  <main id="contenido" class="lesson-shell">
+    <header class="hero" id="inicio">
+      <div><span class="eyebrow">Laboratorio de producto · Ollama + Express</span><h1>Clase 20 · Desarrollo e integración del agente inteligente</h1><p class="subtitle">Construyan una aplicación web funcional conectada con una API de inteligencia artificial.</p></div>
+      <p class="opening">En la Clase 19 definieron el problema, el usuario y la función de su agente. En esta clase dejarán de planear y comenzarán a integrar el producto completo: interfaz, servidor, API, modelo de IA, respuesta, validaciones y pruebas.</p>
+      <blockquote>“Ya definieron qué construir. Ahora deben convertirlo en un producto funcional.”</blockquote>
+      <div class="warning-callout"><strong>Importante</strong><p>No basta con que el agente responda dentro de ChatGPT. El producto final debe tener su propia interfaz y su propio flujo de funcionamiento.</p></div>
+      <ol class="phase-line" aria-label="Ruta técnica"><li>Preparar</li><li>Construir backend</li><li>Conectar IA</li><li>Construir frontend</li><li>Integrar</li><li>Probar</li><li>Terminar producto</li></ol>
+    </header>
+
+    <section class="section environment" id="preparacion">
+      <div class="section-title"><span>Antes de comenzar</span><h2>Preparación del entorno</h2><p>La ruta principal funciona sin una clave comercial: el modelo se ejecuta con Ollama en el equipo y el navegador se comunica únicamente con su servidor Express.</p></div>
+      <div class="tool-grid">
+        <article><span class="requirement">Obligatorio</span><h3>Node.js LTS</h3><p>Ejecuta el backend y administra dependencias.</p><a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer">Abrir sitio oficial <span aria-hidden="true">↗</span></a></article>
+        <article><span class="requirement">Obligatorio</span><h3>Ollama</h3><p>Ejecuta el modelo de IA de manera local.</p><a href="https://ollama.com/download" target="_blank" rel="noopener noreferrer">Abrir sitio oficial <span aria-hidden="true">↗</span></a></article>
+        <article><span class="optional">Recomendado</span><h3>Visual Studio Code</h3><p>Edita los archivos del producto.</p><a href="https://code.visualstudio.com/download" target="_blank" rel="noopener noreferrer">Abrir sitio oficial <span aria-hidden="true">↗</span></a></article>
+        <article><span class="optional">Opcional</span><h3>Git</h3><p>Registra versiones; no es necesario para ejecutar.</p><a href="https://git-scm.com/install/" target="_blank" rel="noopener noreferrer">Abrir sitio oficial <span aria-hidden="true">↗</span></a></article>
+        <article><span class="optional">Alternativa opcional</span><h3>OpenAI Platform</h3><p>Proveedor remoto con cuenta, clave y facturación separadas de ChatGPT.</p><a href="https://platform.openai.com/docs/" target="_blank" rel="noopener noreferrer">Abrir documentación oficial <span aria-hidden="true">↗</span></a></article>
+      </div>
+      <div class="terminal-panel"><div class="panel-bar"><span>Terminal · verificación</span><button class="copy-button" data-copy-target="verify-commands" type="button">Copiar</button></div><pre><code id="verify-commands">node --version
+npm --version
+git --version
+ollama --version
+ollama list</code></pre></div>
+      <div class="diagnostic-grid"><p><strong>Resultado esperado:</strong> Node, npm y Ollama muestran un número de versión. Git es opcional. Use una versión LTS actualmente soportada de Node.</p><details><summary>Si node no existe</summary><p>Node.js no está instalado o la terminal todavía no reconoce la instalación. Instálelo y abra una terminal nueva.</p></details><details><summary>Si npm no existe</summary><p>Reinstale Node.js y abra una terminal nueva.</p></details><details><summary>Si Ollama no responde</summary><p>Instale Ollama, abra la aplicación y ejecute nuevamente <code>ollama list</code>.</p></details></div>
+      <div class="windows-route"><div><span class="requirement">Ruta principal del curso</span><h3>Windows + VS Code + PowerShell</h3><ol><li>Instalen Node.js LTS y Ollama con sus instaladores oficiales.</li><li>Cierren y vuelvan a abrir VS Code después de instalar.</li><li>En VS Code elijan <strong>Archivo → Abrir carpeta</strong>; no abran solamente un archivo.</li><li>Abran <strong>Terminal → Nueva terminal</strong> y comprueben que el perfil sea PowerShell.</li><li>Ejecuten los comandos dentro de la carpeta del proyecto.</li></ol></div><aside><strong>Reconozcan su terminal</strong><p>PowerShell muestra normalmente <code>PS C:\...</code>. Los comandos <code>New-Item</code> e <code>Invoke-RestMethod</code> pertenecen a PowerShell y no deben pegarse en CMD.</p></aside></div>
+      <aside class="truth-box"><h3>¿ChatGPT puede crear la API de los alumnos?</h3><p>Puede ayudar a generar y explicar <code>server.js</code>, el endpoint, el prompt y las pruebas. Pero el alumno debe guardar los archivos, instalar dependencias y ejecutar el servidor. ChatGPT no convierte una conversación en una API pública ni aporta automáticamente crédito de OpenAI. En esta clase, la API propia es Express y el proveedor principal es Ollama.</p></aside>
+    </section>
+
+    <section class="section mission" id="mision-1" data-mission="1"><div class="mission-head"><span>Misión 1</span><h2>Comprendan la arquitectura que construirán</h2></div>
+      <p>El frontend recibe y presenta datos. Express valida, protege la configuración, arma el prompt y conserva el contrato. Ollama procesa la solicitud localmente. El navegador nunca se conecta directamente al proveedor.</p>
+      <div class="architecture" role="img" aria-label="Usuario envía entrada al frontend, frontend hace POST al backend Express, backend consulta Ollama y devuelve JSON estructurado"><svg viewBox="0 0 1120 360" aria-hidden="true"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z"/></marker></defs><g class="node user"><circle cx="95" cy="125" r="42"/><text x="95" y="130">Usuario</text></g><g class="node front"><rect x="190" y="55" width="250" height="145" rx="22"/><text x="315" y="96">FRONTEND</text><text x="315" y="130">HTML · CSS · JavaScript</text><text x="315" y="164">Entrada y resultado</text></g><g class="node back"><rect x="520" y="55" width="250" height="145" rx="22"/><text x="645" y="96">BACKEND</text><text x="645" y="130">Node.js · Express</text><text x="645" y="164">POST /api/agent</text></g><g class="node ai"><path d="M870 55h180l35 72-35 73H870l-35-73z"/><text x="960" y="106">PROVEEDOR LOCAL</text><text x="960" y="143">Ollama</text><text x="960" y="174">Modelo instalado</text></g><g class="flow"><path d="M138 112h48"/><path d="M440 112h76"/><path d="M770 112h61"/><text x="477" y="94">POST + JSON</text><path class="return" d="M835 236H195"/><text x="515" y="263">JSON estructurado de salida</text></g><g class="security"><rect x="520" y="294" width="250" height="42" rx="12"/><text x="645" y="320">Configuración permanece en el servidor</text></g></svg></div>
+      <ol class="flow-list"><li>El usuario escribe su situación.</li><li>JavaScript valida el formulario.</li><li><code>fetch()</code> envía POST a <code>/api/agent</code>.</li><li>Express recibe y valida el body.</li><li>El backend agrega el prompt del sistema.</li><li>El servidor consulta Ollama.</li><li>El modelo devuelve texto.</li><li>El backend extrae y normaliza JSON.</li><li>El frontend recibe JSON.</li><li>La página presenta el resultado.</li></ol>
+      <div class="decision-path"><h3>Antes de avanzar, explíquenlo con sus propias palabras</h3><p>¿Qué dato escribe el usuario, qué ruta recibe la solicitud y qué resultado debe presentar la página? Si el equipo puede recorrer esos tres puntos sobre el diagrama, está listo para crear los archivos.</p></div>
+    </section>
+
+    <section class="section mission" id="mision-2" data-mission="2"><div class="mission-head"><span>Misión 2</span><h2>Creen la estructura del proyecto</h2></div><p>Construyan una sola carpeta servida por Express. Todos los bloques siguientes usarán estos mismos archivos.</p>
+      <div class="split"><div class="terminal-panel primary-terminal"><div class="panel-bar"><span>Windows PowerShell · ruta completa</span><button class="copy-button" data-copy-target="setup-windows" type="button">Copiar</button></div><pre><code id="setup-windows">mkdir agente-web
+cd agente-web
+npm init -y
+npm install express dotenv
+mkdir public
+New-Item server.js -ItemType File
+New-Item .env -ItemType File
+New-Item .env.example -ItemType File
+New-Item .gitignore -ItemType File
+New-Item public/index.html -ItemType File
+New-Item public/styles.css -ItemType File
+New-Item public/app.js -ItemType File
+code .</code></pre></div><div class="terminal-panel"><div class="panel-bar"><span>macOS / Linux · alternativa</span><button class="copy-button" data-copy-target="setup-posix" type="button">Copiar</button></div><pre><code id="setup-posix">mkdir agente-web
+cd agente-web
+npm init -y
+npm install express dotenv
+mkdir public
+touch server.js .env .env.example .gitignore
+touch public/index.html public/styles.css public/app.js
+code .</code></pre></div></div>
+      <div class="windows-warning"><strong>Antes de continuar en Windows</strong><ul><li>Active <strong>Ver → Mostrar → Extensiones de nombre de archivo</strong> en el Explorador.</li><li>Compruebe que el archivo se llame <code>.env</code>, no <code>.env.txt</code>.</li><li>Si <code>code .</code> no existe, abra VS Code y use <strong>Archivo → Abrir carpeta</strong>.</li><li>Si PowerShell bloquea <code>npm.ps1</code>, pruebe <code>npm.cmd</code> o use CMD para los comandos npm; no cambie políticas de un equipo escolar sin autorización.</li></ul></div>
+      <div class="file-explorer"><div class="panel-bar"><span>Explorador · agente-web/</span></div><pre>agente-web/
+├── node_modules/       dependencias instaladas
+├── public/             archivos visibles al usuario
+│   ├── index.html      estructura de la interfaz
+│   ├── styles.css      diseño responsive
+│   └── app.js          validación, fetch e historial
+├── .env                configuración local, no compartir
+├── .env.example        nombres de variables sin secretos
+├── .gitignore          archivos que Git debe ignorar
+├── package.json        scripts y dependencias
+└── server.js           servidor, endpoint y conexión a Ollama</pre></div>
+      <fieldset class="file-checks"><legend>Confirmen que cada archivo existe</legend><label><input type="checkbox" data-check="files.server"> server.js</label><label><input type="checkbox" data-check="files.package"> package.json</label><label><input type="checkbox" data-check="files.env"> .env</label><label><input type="checkbox" data-check="files.example"> .env.example</label><label><input type="checkbox" data-check="files.ignore"> .gitignore</label><label><input type="checkbox" data-check="files.html"> public/index.html</label><label><input type="checkbox" data-check="files.css"> public/styles.css</label><label><input type="checkbox" data-check="files.js"> public/app.js</label></fieldset><p class="gate-message" data-gate="files">Confirmen los 8 archivos para completar esta misión.</p>
+    </section>
+
+    <section class="section mission" id="mision-3" data-mission="3"><div class="mission-head"><span>Misión 3</span><h2>Construyan el servidor</h2></div><p>Express entrega el frontend, interpreta JSON y expone una ruta de salud antes de conectar el modelo.</p><div class="code-slot" data-code="server-health"></div><div class="code-slot" data-code="package"></div><div class="action-callout"><strong>No sustituyan las dependencias de package.json.</strong><p>Los comandos de configuración conservan las versiones reales instaladas por npm. Después, guarden <code>server.js</code> y ejecuten <code>npm run dev</code>.</p></div>
+      <div class="run-check"><div><h3>Ejecutar</h3><code>npm run dev</code></div><div><h3>Comprobar</h3><a href="http://localhost:3000/api/health" target="_blank" rel="noopener noreferrer">http://localhost:3000/api/health ↗</a></div><pre>{ "ok": true, "service": "agente-web", "provider": "ollama", "timestamp": "..." }</pre></div>
+      <details><summary>Conceptos del servidor</summary><p><code>express.json()</code> interpreta el body; <code>express.static()</code> publica la interfaz; GET consulta, POST envía datos; <code>req</code> representa la solicitud y <code>res</code> construye la respuesta. El middleware final evita revelar errores técnicos.</p></details>
+    </section>
+
+    <section class="section mission" id="mision-4" data-mission="4"><div class="mission-head"><span>Misión 4</span><h2>Configuren Ollama según los recursos del equipo</h2></div><p>Ollama no exige una clave, pero sí necesita memoria, espacio en disco y un modelo instalado. Primero revisen el equipo; después elijan y prueben el modelo.</p>
+      <div class="windows-specs"><h3>Cómo revisar su computadora en Windows</h3><ol><li>Presionen <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Esc</kbd>.</li><li>En <strong>Rendimiento → Memoria</strong>, anoten la RAM total y la disponible.</li><li>En <strong>GPU</strong>, revisen la “Memoria de GPU dedicada”. Si no aparece o es pequeña, Ollama puede usar CPU/RAM, pero responderá más lento.</li><li>En <strong>Este equipo</strong>, comprueben el espacio libre de la unidad donde Ollama guarda modelos.</li><li>Cierren juegos, editores pesados y pestañas innecesarias antes de probar.</li></ol></div>
+      <div class="compatibility-table"><table><thead><tr><th>Equipo orientativo</th><th>Modelo inicial sugerido</th><th>Descarga aproximada</th><th>Qué esperar</th></tr></thead><tbody><tr><td>8 GB RAM, sin GPU dedicada</td><td><code>qwen3:0.6b</code> o <code>gemma3:1b</code></td><td>0.5–0.9 GB</td><td>Pruebas de texto simples. Calidad limitada, pero útil para verificar la integración.</td></tr><tr><td>12–16 GB RAM</td><td><code>qwen3:1.7b</code></td><td>1.4 GB</td><td>Ruta conservadora para equipos escolares y respuestas breves.</td></tr><tr><td>16 GB RAM con suficiente memoria disponible</td><td><code>qwen3:4b</code> o <code>gemma3:4b</code></td><td>2.5–3.3 GB</td><td>Mejor calidad. Puede ser lento si comparte RAM con muchas aplicaciones.</td></tr><tr><td>24–32 GB RAM o GPU adecuada</td><td><code>qwen3:8b</code></td><td>aprox. 5.2 GB</td><td>Mayor capacidad, pero no es necesario para aprobar la clase.</td></tr></tbody></table></div>
+      <div class="warning-callout"><strong>La tabla es una orientación, no una garantía.</strong><p>El archivo descargado no representa toda la memoria usada durante la ejecución. El contexto, la cuantización, la GPU, otras aplicaciones y el sistema también consumen recursos. Empiecen con el modelo más pequeño que resuelva la tarea y confirmen con una prueba real.</p></div>
+      <div class="terminal-panel"><div class="panel-bar"><span>PowerShell · instalar y comprobar el modelo</span><button class="copy-button" data-copy-target="ollama-setup" type="button">Copiar</button></div><pre><code id="ollama-setup">ollama --version
+ollama list
+ollama pull qwen3:1.7b
+ollama run qwen3:1.7b</code></pre></div><p>Dentro del chat de Ollama escriban una pregunta breve. Para salir, escriban <code>/bye</code>. Si el equipo no puede ejecutar <code>qwen3:1.7b</code>, prueben <code>qwen3:0.6b</code>. El docente puede sustituir estos nombres por un modelo previamente descargado en el laboratorio.</p>
+      <div class="terminal-panel"><div class="panel-bar"><span>PowerShell · comprobar la API local</span><button class="copy-button" data-copy-target="ollama-api-test" type="button">Copiar</button></div><pre><code id="ollama-api-test">Invoke-RestMethod -Uri http://localhost:11434/api/tags
+
+$body = @{
+  model = "qwen3:1.7b"
+  stream = $false
+  messages = @(@{ role = "user"; content = "Responde únicamente: Ollama funciona" })
+} | ConvertTo-Json -Depth 4
+
+Invoke-RestMethod -Uri http://localhost:11434/api/chat `
+  -Method Post -ContentType "application/json" -Body $body</code></pre></div>
+      <div class="decision-path"><h3>Decisión del equipo</h3><p><strong>Si la respuesta llega:</strong> usen exactamente ese nombre en <code>OLLAMA_MODEL</code>. <strong>Si tarda demasiado:</strong> bajen al modelo anterior. <strong>Si el equipo no puede ejecutarlo:</strong> trabajen desde la computadora funcional de otro integrante o soliciten el equipo/servidor local definido por el docente; no cambien a una API de pago sin autorización.</p></div>
+      <div class="code-grid"><div class="code-slot" data-code="env-example"></div><div class="code-slot" data-code="gitignore"></div></div><div class="warning-callout"><strong>No guarden secretos</strong><p>No registren tokens, contraseñas ni información sensible en el frontend, historial, consola o repositorio. Después de cambiar <code>.env</code>, detengan Express con <kbd>Ctrl</kbd> + <kbd>C</kbd> y ejecuten nuevamente <code>npm run dev</code>.</p></div></section>
+
+    <section class="section mission" id="mision-5" data-mission="5"><div class="mission-head"><span>Misión 5</span><h2>Diseñen el contrato de la API</h2></div>
+      <div class="contract-intro"><div><span class="eyebrow">La regla compartida del sistema</span><h3>¿Qué es un contrato?</h3><p>Es el acuerdo que define <strong>qué debe enviar el frontend</strong> y <strong>qué promete devolver el backend</strong>. No es un documento legal ni una función adicional: es la forma estable de los datos que permite que dos partes programadas por separado se entiendan.</p></div><aside><strong>Una analogía</strong><p>Piensen en un contacto eléctrico: el enchufe y la toma funcionan juntos porque coinciden en forma y conexión. Si el frontend espera <code>answer</code> pero Express devuelve <code>respuesta</code>, ambos archivos pueden estar “bien” por separado y aun así el producto no mostrará nada.</p></aside></div>
+      <div class="contract-users"><article><span>1</span><h3>El frontend lo usa</h3><p>Para saber qué propiedades incluir en <code>JSON.stringify()</code> y qué campos leer al presentar el resultado.</p></article><article><span>2</span><h3>Express lo protege</h3><p>Para validar tipos, rechazar entradas incorrectas y normalizar la salida del modelo.</p></article><article><span>3</span><h3>Ollama se adapta</h3><p>Puede producir texto variable, pero el backend lo transforma a la estructura estable que la interfaz conoce.</p></article></div>
+      <div class="why-first"><h3>¿Por qué definirlo antes de seguir programando?</h3><ul><li>Evita que frontend y backend inventen nombres distintos para el mismo dato.</li><li>Permite construir y probar la interfaz aunque el modelo todavía no responda.</li><li>Hace posible cambiar Ollama por otro proveedor sin rediseñar la página.</li><li>Define qué errores debe poder interpretar el usuario.</li><li>Reduce cambios en cadena: prompt, servidor, interfaz e historial trabajan sobre la misma estructura.</li></ul></div>
+      <div class="contract-flow" aria-label="Flujo del contrato"><div><strong>Frontend</strong><span>crea el request</span></div><b>→</b><div><strong>POST /api/agent</strong><span>valida y procesa</span></div><b>→</b><div><strong>Response JSON</strong><span>estructura estable</span></div><b>→</b><div><strong>Interfaz</strong><span>presenta el resultado</span></div></div>
+      <div class="contract-grid"><div><h3>Request · lo que entra</h3><p><code>message</code> contiene la consulta. <code>context</code> agrega datos opcionales que ayudan a interpretar la solicitud.</p><pre><code id="request-preview"></code></pre></div><div><h3>Response 200 · lo que sale</h3><p><code>ok</code> confirma el resultado; <code>result</code> contiene datos para la interfaz y <code>meta</code> describe la operación.</p><pre><code id="response-preview"></code></pre></div></div>
+      <div class="contract-anatomy"><h3>Anatomía del contrato base</h3><dl><div><dt><code>message</code></dt><dd>Texto principal que el usuario desea procesar.</dd></div><div><dt><code>context</code></dt><dd>Objeto opcional con información complementaria; nunca debe considerarse confiable sin validarlo.</dd></div><div><dt><code>ok</code></dt><dd>Indica si la API completó la operación según el contrato.</dd></div><div><dt><code>result</code></dt><dd>Objeto estable que la interfaz puede presentar sin interpretar texto libre.</dd></div><div><dt><code>meta</code></dt><dd>Información técnica no sensible, como la fecha y el proveedor.</dd></div><div><dt><code>error</code></dt><dd>Mensaje claro cuando la operación no puede completarse.</dd></div></dl></div>
+      <div class="request-lab"><h3>Exploren el request sin llamar al modelo</h3><p>Cambien el mensaje y el nombre del proyecto. La herramienta solo muestra cómo quedaría el JSON; todavía no envía información a Express ni a Ollama.</p><label>Mensaje de ejemplo<textarea id="contract-message">Necesito orientación sobre mi situación</textarea></label><label>Nombre del proyecto<input id="contract-project" value="Mi agente"></label><button id="refresh-contract" type="button">Actualizar JSON simulado</button></div>
+      <div class="status-explanation"><h3>El contrato también incluye los errores</h3><p>El status HTTP explica la categoría del resultado; el JSON explica qué ocurrió con palabras comprensibles. El frontend usa ambos para decidir qué mostrar.</p><div class="status-legend"><span><b>200</b> respuesta correcta</span><span><b>400</b> entrada inválida</span><span><b>404</b> ruta inexistente</span><span><b>429</b> límite temporal</span><span><b>500</b> error interno</span><span><b>502</b> Ollama no respondió correctamente</span></div><pre><code>{
+  "ok": false,
+  "error": "Escribe una consulta antes de continuar."
+}</code></pre></div>
+      <div class="contract-mismatch"><h3>Qué ocurre si no coinciden</h3><div><p><strong>Backend devuelve:</strong> <code>{ "respuesta": "..." }</code></p><p><strong>Frontend intenta leer:</strong> <code>data.result.answer</code></p><p><strong>Resultado:</strong> la respuesta existe en la red, pero la pantalla queda vacía o produce un error.</p></div><p>Cuando cambien un campo del contrato, busquen ese nombre en <code>SYSTEM_PROMPT</code>, <code>normalizeResult()</code>, <code>renderResult()</code> y el historial. Los cuatro lugares deben seguir hablando el mismo idioma.</p></div>
+      <div class="minimum-personality"><h3>Definan la personalidad mínima antes de copiar el servidor completo</h3><ul><li><strong>Nombre:</strong> cómo se identifica el producto.</li><li><strong>Usuario:</strong> quién lo utilizará.</li><li><strong>Propósito:</strong> una tarea concreta.</li><li><strong>Reglas:</strong> qué criterios debe aplicar.</li><li><strong>Límites:</strong> qué no puede decidir o afirmar.</li><li><strong>Salida:</strong> campos JSON que la interfaz sabrá presentar.</li></ul><p>En la Misión 12 profundizarán la personalización visual, pero estos elementos ya son necesarios para completar <code>SYSTEM_PROMPT</code> en la siguiente misión.</p></div>
+      <div class="contract-ready"><strong>La misión está lista cuando el equipo puede responder:</strong><ol><li>¿Qué envía el navegador?</li><li>¿Qué valida Express?</li><li>¿Qué estructura recibe de regreso la interfaz?</li><li>¿Qué respuesta llega cuando algo falla?</li><li>¿Qué archivos deben cambiar juntos si renombramos un campo?</li></ol></div>
+    </section>
+
+    <section class="section mission" id="mision-6" data-mission="6"><div class="mission-head"><span>Misión 6</span><h2>Conecten el servidor con la inteligencia artificial</h2></div><p>El endpoint valida la entrada, arma el prompt, consulta <code>/api/chat</code> de Ollama y transforma la salida en el contrato estable del producto.</p><div class="replace-instruction"><strong>Secuencia exacta</strong><ol><li>Detengan Express con <kbd>Ctrl</kbd> + <kbd>C</kbd>.</li><li>Reemplacen todo el contenido de <code>server.js</code> por la versión siguiente.</li><li>Sustituyan los textos entre corchetes del <code>SYSTEM_PROMPT</code>.</li><li>Guarden el archivo.</li><li>Ejecuten <code>npm run check</code> y después <code>npm run dev</code>.</li></ol></div><div class="code-slot" data-code="server-complete"></div><div class="split"><div class="terminal-panel"><div class="panel-bar"><span>Prueba curl</span><button class="copy-button" data-copy-target="curl-test" type="button">Copiar</button></div><pre><code id="curl-test">curl -X POST http://localhost:3000/api/agent \
+  -H "Content-Type: application/json" \
+  -d '{"message":"Necesito orientación sobre mi situación"}'</code></pre></div><div class="terminal-panel"><div class="panel-bar"><span>PowerShell</span><button class="copy-button" data-copy-target="ps-test" type="button">Copiar</button></div><pre><code id="ps-test">Invoke-RestMethod -Uri http://localhost:3000/api/agent `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body '{"message":"Necesito orientación sobre mi situación"}'</code></pre></div></div><details><summary>Qué deben entender</summary><p><code>fetch</code> del servidor consulta Ollama; <code>system</code> contiene las reglas; <code>format: "json"</code> solicita JSON; el fallback conserva una respuesta útil; los códigos HTTP distinguen errores del alumno, servidor y proveedor. El usuario nunca recibe el error técnico completo.</p></details></section>
+
+    <section class="section mission" id="mision-7" data-mission="7"><div class="mission-head"><span>Misión 7</span><h2>Construyan la interfaz del producto</h2></div><p>La interfaz base es completa pero debe adaptarse a la tarea. Un recomendador puede usar tarjetas; un clasificador, categorías; un orientador, pasos.</p><div class="correct-url"><strong>Abran la aplicación desde Express</strong><p>Usen <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer"><code>http://localhost:3000</code> ↗</a>. No abran <code>public/index.html</code> con doble clic y no utilicen Live Server: <code>fetch('/api/agent')</code> necesita que Express sirva frontend y API desde el mismo origen.</p></div><div class="code-slot" data-code="public-html"></div><div class="code-slot" data-code="public-css"></div><div class="personalize"><h3>Personalicen esta interfaz</h3><ul><li>Nombre, logotipo y descripción.</li><li>Texto, ejemplos y campos del formulario.</li><li>Forma de presentar resultados y terminología.</li><li>Colores y jerarquía del dominio.</li></ul><p>No todos los proyectos deben parecer chat.</p></div></section>
+
+    <section class="section mission" id="mision-8" data-mission="8"><div class="mission-head"><span>Misión 8</span><h2>Conecten el frontend con fetch()</h2></div><p>El formulario valida, evita dobles envíos, impone timeout y conserva el texto cuando ocurre un error.</p><div class="code-slot" data-code="public-js"></div><div class="security-note"><strong>Seguridad de renderizado:</strong> las respuestas del modelo se insertan con <code>textContent</code> y elementos creados con JavaScript. No usen <code>innerHTML</code> con contenido no confiable.</div></section>
+
+    <section class="section mission" id="mision-9" data-mission="9"><div class="mission-head"><span>Misión 9</span><h2>Comprueben y adapten la respuesta estructurada</h2></div><p>Las funciones de presentación ya se agregaron en la Misión 8. Ahora comprueben que el usuario vea título, respuesta, recomendaciones, advertencia, confianza y fecha, no el JSON crudo.</p><div class="result-demo"><span class="confidence">Confianza media</span><h3>Resultado de la consulta</h3><p>Respuesta principal del agente adaptada al producto.</p><ul><li>Primera recomendación verificable.</li><li>Siguiente paso concreto.</li></ul><aside>Advertencia o límite del resultado.</aside><small>Generado: fecha y hora</small><details><summary>Ver respuesta técnica</summary><pre>{ "ok": true, "result": { "...": "..." } }</pre></details></div><div class="verification-steps"><h3>Acción técnica</h3><ol><li>Ejecuten una consulta real desde <code>http://localhost:3000</code>.</li><li>Comprueben que cada campo del contrato aparece en el lugar correcto.</li><li>Prueben recomendaciones vacías y una respuesta con advertencia.</li><li>Si cambian el JSON, actualicen juntos <code>SYSTEM_PROMPT</code>, <code>normalizeResult()</code>, <code>renderResult()</code> y el historial.</li></ol></div></section>
+
+    <section class="section prompt-safety" id="usar-ia"><div class="section-title"><span>Antes de usar los prompts</span><h2>Compartan código sin compartir secretos</h2></div><div class="safe-share-grid"><div><h3>Sí pueden compartir</h3><ul><li><code>server.js</code> sin valores secretos.</li><li>Los tres archivos de <code>public/</code>.</li><li><code>.env.example</code>.</li><li>Errores sin datos personales.</li></ul></div><div><h3>No deben compartir</h3><ul><li><code>.env</code>.</li><li><code>node_modules</code>.</li><li>Claves, tokens o contraseñas.</li><li>Rutas o consultas con información sensible.</li></ul></div></div><p>Si los archivos no caben en un mensaje, envíen primero la estructura y después un archivo por mensaje, indicando su nombre. La IA puede revisar y proponer pruebas; solamente la ejecución local demuestra que funciona.</p></section>
+
+    <section class="section mission" id="mision-10" data-mission="10"><div class="mission-head"><span>Misión 10</span><h2>Validen entradas y manejo de errores con ayuda de IA</h2></div><p>En lugar de llenar una matriz, entreguen sus archivos a ChatGPT o Codex y pídanle que audite los casos que el producto debe resistir.</p><div class="prompt-workflow"><div class="prompt-card"><div class="panel-bar"><span>Prompt 10A · Auditar validaciones</span><button class="copy-button" data-copy-target="prompt-10a" data-completes-mission="10" type="button">Copiar prompt</button></div><pre><code id="prompt-10a">Actúa como revisor técnico de una aplicación web con frontend JavaScript, backend Express y Ollama.
+
+Voy a compartir server.js y public/app.js. Revisa si el producto maneja correctamente:
+- campo vacío, texto demasiado corto y texto mayor a 4000 caracteres;
+- doble clic en enviar;
+- servidor apagado, endpoint incorrecto y falta de conexión;
+- respuestas HTTP 400, 429, 500 y 502;
+- respuesta que no contiene JSON válido;
+- timeout del frontend y del backend;
+- mensajes comprensibles que no revelen información técnica o secretos.
+
+No reescribas todo el proyecto. Devuelve:
+1. Problemas encontrados, ordenados por gravedad.
+2. Archivo y función donde está cada problema.
+3. Cambio exacto recomendado.
+4. Prueba manual para comprobar la corrección.
+5. Código corregido solo de las funciones que realmente necesiten cambios.
+
+Aquí están mis archivos:
+[PEGAR server.js]
+[PEGAR public/app.js]</code></pre></div><div class="prompt-card"><div class="panel-bar"><span>Prompt 10B · Validar la corrección</span><button class="copy-button" data-copy-target="prompt-10b" type="button">Copiar prompt</button></div><pre><code id="prompt-10b">Revisa nuevamente la corrección que apliqué. Compara el problema original con el código actualizado y dime:
+- si quedó resuelto;
+- cómo reproducir la prueba;
+- cuál debe ser el status HTTP;
+- qué debe ver el usuario;
+- qué debe aparecer en Console y Network;
+- si queda algún riesgo.
+
+No afirmes que funciona si no puedes demostrarlo con una prueba concreta.
+
+[PEGAR CÓDIGO ACTUALIZADO Y RESULTADO DE LA PRUEBA]</code></pre></div></div><div class="result-callout"><strong>Antes de continuar:</strong> ejecuten al menos un error controlado y revisen su respuesta en Network.</div><button class="validation-button" data-validate-mission="10" type="button">Confirmar: ejecutamos la validación</button></section>
+
+    <section class="section mission" id="mision-11" data-mission="11"><div class="mission-head"><span>Misión 11</span><h2>Implementen y validen el historial local</h2></div><p><code>localStorage</code> pertenece al navegador, no reemplaza una base de datos y nunca debe almacenar claves o información sensible.</p><div class="prompt-workflow"><div class="prompt-card"><div class="panel-bar"><span>Prompt 11 · Revisar localStorage</span><button class="copy-button" data-copy-target="prompt-11" data-completes-mission="11" type="button">Copiar prompt</button></div><pre><code id="prompt-11">Analiza mi public/app.js y verifica la implementación del historial con localStorage.
+
+El historial debe:
+- usar una clave exclusiva para mi producto;
+- guardar como máximo 20 consultas;
+- guardar id, mensaje, resultado y fecha;
+- restaurar una consulta anterior;
+- eliminar una sola entrada;
+- limpiar todo únicamente después de confirmar;
+- recuperarse si localStorage contiene JSON inválido;
+- renderizar texto con textContent, nunca con innerHTML;
+- no guardar claves, tokens, contraseñas ni contenido sensible.
+
+Devuelve:
+1. Qué requisitos ya cumple.
+2. Qué requisitos faltan.
+3. Código mínimo necesario para completarlos.
+4. Una secuencia de prueba desde DevTools → Application → Local Storage.
+5. Qué debe ocurrir después de recargar la página.
+
+[PEGAR public/app.js]</code></pre></div></div><div class="verification-steps"><h3>Comprobación directa</h3><ol><li>Realicen una consulta exitosa.</li><li>Abran DevTools → Application → Local Storage.</li><li>Comprueben que apareció el registro y que no contiene secretos.</li><li>Recarguen la página y abran el resultado anterior.</li><li>Eliminen una entrada y después prueben “Limpiar historial”.</li></ol></div><button class="validation-button" data-validate-mission="11" type="button">Confirmar: ejecutamos las cinco comprobaciones</button></section>
+
+    <section class="section mission" id="mision-12" data-mission="12"><div class="mission-head"><span>Misión 12</span><h2>Transformen la plantilla en su propio producto</h2></div><p>Usen un prompt de refactorización guiada para impedir que todos entreguen el mismo chatbot genérico.</p><div class="template-tabs" role="tablist" aria-label="Plantillas de agente"><button role="tab" aria-selected="true" data-template="orientador">Orientador</button><button role="tab" aria-selected="false" data-template="recomendador">Recomendador</button><button role="tab" aria-selected="false" data-template="clasificador">Clasificador</button><button role="tab" aria-selected="false" data-template="evaluador">Evaluador</button><button role="tab" aria-selected="false" data-template="soporte">Soporte</button></div><div id="template-panel" class="template-panel"></div><div class="prompt-workflow"><div class="prompt-card"><div class="panel-bar"><span>Prompt 12 · Personalizar sin romper</span><button class="copy-button" data-copy-target="prompt-12" data-completes-mission="12" type="button">Copiar prompt</button></div><pre><code id="prompt-12">Ayúdame a adaptar una plantilla de agente web a un producto específico sin cambiar su arquitectura HTML + CSS + JavaScript + Express + Ollama.
+
+Datos de mi producto:
+- Nombre: [NOMBRE]
+- Tipo de usuario: [USUARIO]
+- Función del agente: [ORIENTADOR / RECOMENDADOR / CLASIFICADOR / EVALUADOR / SOPORTE]
+- Entrada necesaria: [CAMPOS]
+- Resultado útil: [ESTRUCTURA DE SALIDA]
+- Reglas: [REGLAS]
+- Límites: [LO QUE NO DEBE HACER]
+
+Revisa mis archivos y propón cambios conectados para:
+1. Nombre, descripción, terminología y ejemplos rápidos.
+2. Campos de entrada adecuados; no obligues a que todo sea un chat.
+3. SYSTEM_PROMPT específico, con propósito, reglas y límites.
+4. Contrato JSON adaptado al producto.
+5. Presentación visual del resultado.
+6. Mensajes de error del dominio.
+7. Casos de prueba propios del producto.
+
+Entrega los cambios archivo por archivo. Conserva la seguridad, fetch(), loading, errores e historial. No inventes funcionalidades que no pueda demostrar.
+
+[PEGAR index.html, styles.css, app.js y server.js]</code></pre></div></div><div class="result-callout"><strong>Resultado esperado:</strong> la interfaz y la salida deben representar la función real del agente, no solo cambiar colores y nombre. Si cambian el contrato, actualicen backend, frontend e historial como una sola modificación.</div><button class="validation-button" data-validate-mission="12" type="button">Confirmar: aplicamos y probamos la personalización</button></section>
+
+    <section class="section mission" id="mision-13" data-mission="13"><div class="mission-head"><span>Misión 13</span><h2>Generen y ejecuten pruebas funcionales</h2></div><p>La IA ayuda a diseñar las pruebas; el equipo debe ejecutarlas en su aplicación. Una prueba fallida revela qué corregir.</p><div class="prompt-workflow"><div class="prompt-card"><div class="panel-bar"><span>Prompt 13A · Diseñar plan de pruebas</span><button class="copy-button" data-copy-target="prompt-13a" data-completes-mission="13" type="button">Copiar prompt</button></div><pre><code id="prompt-13a">Actúa como QA de mi agente web. A partir del propósito, contrato y código que compartiré, genera un plan de pruebas ejecutable.
+
+Incluye como mínimo:
+- caso normal;
+- entrada vacía, ambigua y demasiado larga;
+- información insuficiente y solicitud fuera de alcance;
+- servidor Express apagado;
+- Ollama apagado o modelo no disponible;
+- respuesta inesperada del modelo;
+- dos solicitudes consecutivas;
+- restaurar y borrar historial;
+- vista móvil a 390 px.
+
+Para cada prueba indica únicamente:
+1. Acción exacta que debe realizar el alumno.
+2. Entrada concreta.
+3. Resultado esperado visible.
+4. Status o señal que debe revisar en Network/Console/Application.
+5. Señal concreta que debe observar para decidir si pasó.
+
+Agrega al final una inspección separada de backend, frontend y comportamiento del agente. No declares una prueba aprobada: eso solo puede decidirse después de ejecutarla.
+
+[PEGAR PROPÓSITO, CONTRATO Y ARCHIVOS]</code></pre></div><div class="prompt-card"><div class="panel-bar"><span>Prompt 13B · Analizar resultados reales</span><button class="copy-button" data-copy-target="prompt-13b" type="button">Copiar prompt</button></div><pre><code id="prompt-13b">Analiza estos resultados reales de pruebas. No supongas resultados que no estén documentados.
+
+Por cada fallo:
+- explica la causa probable;
+- señala el archivo y función que debo revisar;
+- propone la corrección mínima;
+- indica cómo repetir la prueba;
+- advierte si la prueba todavía no demuestra que quedó resuelto.
+
+Después resume:
+- pruebas aprobadas;
+- pruebas fallidas;
+- pruebas corregidas y repetidas;
+- pruebas pendientes;
+- limitaciones conocidas antes de la demostración.
+
+[PEGAR RESULTADOS, STATUS Y MENSAJES]</code></pre></div></div><div class="result-callout"><strong>Regla:</strong> ejecuten al menos una prueba que produzca un error controlado y vuelvan a ejecutarla después de corregirla.</div><button class="validation-button" data-validate-mission="13" type="button">Confirmar: ejecutamos pruebas y repetimos una corrección</button></section>
+
+    <section class="section mission final-mission" id="mision-14" data-mission="14"><div class="mission-head"><span>Misión 14</span><h2>Realicen la auditoría final del producto</h2></div><p>La auditoría reúne archivos, salidas de terminal y resultados de pruebas. El revisor debe señalar faltantes, no aprobar por cortesía.</p><div class="prompt-workflow"><div class="prompt-card"><div class="panel-bar"><span>Prompt 14 · Auditoría de entrega</span><button class="copy-button" data-copy-target="prompt-14" data-completes-mission="14" type="button">Copiar prompt</button></div><pre><code id="prompt-14">Realiza una auditoría final estricta de mi producto web con Express y Ollama. No modifiques archivos todavía y no marques como aprobado algo sin una comprobación ejecutada.
+
+Verifica:
+ENTORNO: Node, dependencias, .env, Ollama y modelo instalado.
+BACKEND: inicio, /api/health, POST /api/agent, validación, configuración en servidor, contrato estable y errores seguros.
+FRONTEND: interfaz propia, formulario, fetch, loading, resultado estructurado, errores, historial y móvil.
+AGENTE: propósito específico, reglas, límites, información insuficiente, fuera de alcance y JSON esperado.
+PRUEBAS: casos normales, límites, errores simulados, correcciones repetidas y limitaciones.
+PRODUCTO: nombre, identidad, demostración, explicación e instrucciones de ejecución.
+
+Devuelve:
+1. Bloqueadores: impiden demostrar el producto.
+2. Correcciones importantes.
+3. Mejoras opcionales.
+4. Comprobación exacta que falta.
+5. Secuencia final de demostración.
+6. Veredicto: NO LISTO o PRODUCTO FUNCIONAL LISTO.
+
+Usa PRODUCTO FUNCIONAL LISTO solo si todos los requisitos principales fueron comprobados.
+
+[PEGAR ARCHIVOS, SALIDAS DE TERMINAL Y RESULTADOS DE PRUEBAS]</code></pre></div></div><button class="validation-button" data-validate-mission="14" type="button">Registrar el veredicto obtenido</button><div id="product-status" class="product-status prompt-status" aria-live="polite"><span>Estado de la guía</span><strong>Ejecuten la auditoría antes de declarar el producto listo</strong><p>El veredicto debe provenir de archivos, terminal y pruebas reales.</p></div></section>
+
+    <section class="section demo-scope" id="alcance-demo"><div class="section-title"><span>Alcance del entregable</span><h2>La demostración de Clase 20 es local</h2></div><p>El producto se demuestra en la computadora que ejecuta Ollama y Express mediante <code>http://localhost:3000</code>. Eso cumple el objetivo de esta clase, pero no publica la aplicación en internet. Un despliegue público requiere un servidor disponible, controles de acceso, límites de consumo y una estrategia distinta para alojar el modelo; no intenten exponer el puerto 11434 ni configurar el router durante este laboratorio.</p></section>
+
+    <section class="section" id="plantilla"><div class="section-title"><span>Proyecto copiable</span><h2>Plantilla base del producto</h2><p>Cada archivo está completo y conectado con los demás. Los botones copian el contenido visible.</p></div><div id="all-code-files"></div></section>
+
+    <section class="section" id="terminal"><div class="section-title"><span>Demostración honesta</span><h2>Terminal interactiva simulada</h2><p>Esta terminal no ejecuta comandos reales; muestra la secuencia y la salida esperada.</p></div><div class="terminal-simulator"><div id="terminal-output" aria-live="polite"></div><div class="terminal-actions"><button data-terminal-command="mkdir agente-web">mkdir agente-web</button><button data-terminal-command="cd agente-web">cd agente-web</button><button data-terminal-command="npm init -y">npm init -y</button><button data-terminal-command="npm install express dotenv">npm install…</button><button data-terminal-command="mkdir public">mkdir public</button><button data-terminal-command="npm run dev">npm run dev</button></div></div></section>
+
+    <section class="section" id="diagnostico"><div class="section-title"><span>Depuración</span><h2>Diagnóstico de errores</h2></div><label class="search-label">Buscar error<input id="error-search" type="search" placeholder="Ej. EADDRINUSE o Failed to fetch"></label><div id="diagnostic-list" class="details-list"></div></section>
+
+    <section class="section" id="devtools"><div class="section-title"><span>Herramientas del navegador</span><h2>Comprueben la comunicación real</h2></div><div class="devtools-grid"><article><h3>Console</h3><p>Errores JavaScript, mensajes de diagnóstico y stack trace.</p></article><article><h3>Network</h3><p>URL, POST, status, payload, response y duración. Si aparece HTML en vez de JSON, comprueben la ruta.</p></article><article><h3>Application</h3><p>Local Storage y el historial guardado.</p></article></div><p>Chrome/Edge: F12 o Inspeccionar. macOS: Option + Command + I. Windows/Linux: Ctrl + Shift + I. Safari requiere activar el menú Desarrollo.</p></section>
+
+    <section class="section optional-route" id="openai-opcional"><div class="section-title"><span>Proveedor remoto opcional</span><h2>Alternativa con OpenAI</h2><p>Solo para equipos con acceso configurado. ChatGPT y la API de OpenAI son productos separados; una suscripción de ChatGPT no incluye automáticamente uso de API.</p></div><div class="warning-callout"><strong>La arquitectura no cambia</strong><p>Frontend → Express → OpenAI. La clave permanece en <code>.env</code> y nunca en <code>public/app.js</code>. El contrato del frontend se conserva.</p></div><p>Instalen <code>openai</code>, definan <code>OPENAI_API_KEY</code> y un modelo disponible en su cuenta, y reemplacen únicamente la función que consulta al proveedor. Consulten siempre la <a href="https://platform.openai.com/docs/" target="_blank" rel="noopener noreferrer">documentación oficial ↗</a>.</p></section>
+
+    <section class="section report-section" id="reporte"><div class="section-title"><span>Cierre técnico</span><h2>Generen el reporte técnico con un prompt</h2><p>No vuelvan a capturar información en otro formulario. Entreguen a la IA los archivos y resultados que ya produjeron.</p></div><div class="prompt-card"><div class="panel-bar"><span>Prompt final · Reporte técnico</span><button class="copy-button" data-copy-target="prompt-report" type="button">Copiar prompt</button></div><pre><code id="prompt-report">Genera un reporte técnico claro y verificable de nuestro agente web. Usa exclusivamente la información y resultados que proporcionaré; escribe “No documentado” cuando falte algo.
+
+Incluye:
+1. Equipo, producto, problema y usuario.
+2. Arquitectura completa.
+3. Endpoint, request y response.
+4. Prompt del sistema sin secretos.
+5. Descripción de la interfaz.
+6. Validaciones y manejo de errores.
+7. Historial local.
+8. Casos de prueba y resultados reales.
+9. Problemas corregidos.
+10. Limitaciones.
+11. Estado final.
+12. Repositorio, si existe.
+13. Instrucciones exactas para ejecutar.
+
+No incluyas claves, tokens ni datos sensibles. Separa claramente hechos comprobados, pendientes y recomendaciones.
+
+[PEGAR ARCHIVOS, RESULTADOS Y DATOS DEL EQUIPO]</code></pre></div></section>
+
+    <footer><p>Clase 20 · Desarrollo e integración del agente inteligente</p><p>El progreso se guarda solo en <code>clase20DesarrolloAgente</code>. Nunca guarda claves ni contraseñas.</p></footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="clase20.js"></script>
+</body>
+</html>
